@@ -9,22 +9,22 @@ import { ProfileComponent } from './profile/profile.component';
 import { PostComponent } from './post/post.component';
 import {HttpClientModule} from "@angular/common/http";
 import { FormLoginComponent } from './form-login/form-login.component';
+import {AuthModule} from "./auth/auth.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     FormHobbyPostComponent,
-    FormCreateAccountComponent,
     ProfileComponent,
     PostComponent,
-    FormLoginComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
-    HttpClientModule
+    FormsModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

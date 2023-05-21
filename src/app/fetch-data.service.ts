@@ -15,7 +15,7 @@ export class FetchDataService {
     })
   };
 
-  baseUrl : string = 'http://localhost/api';
+  baseUrl : string = 'http://localhost/Backend';
   constructor(private http: HttpClient) { }
 
   getAll() {

@@ -9,7 +9,7 @@ export class FormHobbyPostComponent {
 
   hobbies : string[] = ["potterie", "dessin", "velo", "marche"];
 
-  selection: string = "";
+  selection!: string;
 
   submitted() {
     console.log("selection: " + this.selection);

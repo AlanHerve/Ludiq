@@ -1,65 +1,49 @@
-import { Component } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {confirmEqualValidator, matchPassword} from "../custom-validators";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {confirmEqualValidator} from "../custom-validators";
 
 @Component({
   selector: 'app-form-create-account',
   templateUrl: './form-create-account.component.html',
   styleUrls: ['./form-create-account.component.css']
 })
-export class FormCreateAccountComponent {
+export class FormCreateAccountComponent implements OnInit {
+  createForm!: FormGroup;
+  constructor(private formBuilder: FormBuilder) {}
 
-
-  nameControl: FormControl;
-  pseudoControl: FormControl;
-  emailControl: FormControl;
-  passwordControl: FormControl;
-  confirmControl: FormControl;
-
-  createForm: FormGroup;
-  constructor(private builder: FormBuilder) {
-    this.nameControl = new FormControl('', [Validators.required
-      , Validators.minLength(4)
-      , Validators.maxLength(20)
-      , Validators.pattern(/^[a-zA-Z0-9]*$/)
-    ]);
-
-    this.pseudoControl = new FormControl('', [Validators.required
-      , Validators.minLength(4)
-      , Validators.maxLength(20)
-      , Validators.pattern(/^[a-zA-Z0-9]*$/)
-    ]);
-
-    this.emailControl = new FormControl('', [Validators.required
-      , Validators.minLength(4)
-      , Validators.maxLength(20)
-      , Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
-    ]);
-
-    this.passwordControl = new FormControl('', [Validators.required
-      , Validators.minLength(8)
-      , Validators.maxLength(20)
-      , Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/)]);
-
-    this.confirmControl = new FormControl('', [Validators.required
-      ]);
-
-    this.createForm = builder.group({
-      name: this.nameControl
-      , pseudo: this.pseudoControl
-      , email: this.emailControl
-      , password: this.passwordControl
-      , confirm: this.confirmControl
+  ngOnInit(): void {
+    this.createForm = this.formBuilder.group( {
+      name: [null, Validators.required
+        , Validators.minLength(4)
+        , Validators.maxLength(20)
+        , Validators.pattern(/^[a-zA-Z0-9]*$/)
+      ],
+      pseudo: [null, Validators.required
+        , Validators.minLength(4)
+        , Validators.maxLength(20)
+        , Validators.pattern(/^[a-zA-Z0-9]*$/)
+      ],
+      email: [null, Validators.required
+        , Validators.minLength(4)
+        , Validators.maxLength(20)
+        , Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+      ],
+      password: [null, Validators.required
+        , Validators.minLength(8)
+        , Validators.maxLength(20)
+        , Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/)
+      ],
+      confirm: [null, Validators.required]
     },{
-        validators: [confirmEqualValidator('password', 'confirm')]
-      }
-      )
+      validators: [confirmEqualValidator('password', 'confirm')]
+    })
   }
+
   createAccount() {
-    console.log("nom "+this.nameControl.getRawValue()
-                +"\npseudo: "+this.pseudoControl.getRawValue()
-                +"\nemail: "+this.emailControl.getRawValue()
-                +"\npassword: "+this.passwordControl.getRawValue()
+    console.log("nom "+this.createForm.get('name')?.value
+                +"\npseudo: "+this.createForm.get('pseudo')?.getRawValue()
+                +"\nemail: "+this.createForm.get('email')?.getRawValue()
+                +"\npassword: "+this.createForm.get('password')?.getRawValue()
                 );
   }
 
