@@ -1,0 +1,29 @@
+<form (ngSubmit)="login()" [formGroup]="loginForm">
+  <input required type="text" id="authentification" name="authentification" formControlName="authentification">
+  <div *ngIf="loginForm.controls['authentification'].dirty && !loginForm.controls['authentification'].valid">
+    <p *ngIf="loginForm.controls['authentification'].hasError('minlength')">
+      La taille minimum n'est pas respectée (4)
+    </p>
+    <p *ngIf="loginForm.controls['authentification'].hasError('maxlength')">
+      La taille maximum n'est pas respectée (20)
+    </p>
+    <p *ngIf="loginForm.controls['authentification'].hasError('pattern')">
+      N'est ni un nom d'utilisateur valide, ni une addresse mail valide
+    </p>
+  </div>
+
+  <input required type="password" id="password" name="password" formControlName="password">
+  <div *ngIf="loginForm.controls['password'].dirty && !loginForm.controls['authentification'].valid">
+    <p *ngIf="loginForm.controls['password'].hasError('minlength')">
+      La taille minimum n'est pas respectée (4)
+    </p>
+    <p *ngIf="loginForm.controls['password'].hasError('maxlength')">
+      La taille maximum n'est pas respectée (20)
+    </p>
+  </div>
+
+  <p *ngIf="loginForm.valid">valid</p>
+
+  <button type="submit" [disabled]="!loginForm.valid">Submit</button>
+
+</form>
