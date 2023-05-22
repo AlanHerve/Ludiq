@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {confirmEqualValidator} from "../custom-validators";
+import {CustomValidators} from "../../custom-validators";
 
 @Component({
   selector: 'app-form-create-account',
@@ -35,7 +35,7 @@ export class FormCreateAccountComponent implements OnInit {
       ],
       confirm: [null, Validators.required]
     },{
-      validators: [confirmEqualValidator('password', 'confirm')]
+      validators: [CustomValidators.confirmEqualValidator('password', 'confirm')]
     })
   }
 
