@@ -1,1 +1,78 @@
 /* You can add global styles to this file, and also import other style files */
+h1 {
+  font-size: 40px;
+  margin: 10px;
+}
+
+button {
+  align-items: center;
+  padding: 10px 32px;
+
+  color: white;
+  background-color:#7421C2;
+  font-size: 20px;
+  border: none;
+
+  border-radius :50px;
+  transition: background-color 0.2s ease-out;
+}
+
+button:hover {
+  color:#7421C2;
+  background-color:#FFFFFF;
+  outline: 3px solid #7421C2;
+  outline-offset: -3px;
+}
+
+.button2 {
+  align-items:center;
+  padding :10px 32px;
+
+  font-size :20px;
+
+  color:#7421C2;
+  background-color:#FFFFFF;
+  outline: 3px solid #7421C2;
+  outline-offset: -3px;
+  border-radius :50px;
+  transition: background-color 0.2s ease-out;
+}
+
+.button2:hover {
+  color: white;
+  background-color:#7421C2;
+}
+
+.background-form {
+  background-color: #858585;
+  position: fixed;
+}
+
+form {
+  z-index: 999;
+  position: fixed;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 50px;
+  gap: 20px;
+  isolation: isolate;
+
+  width: 400px;
+
+  background: antiquewhite;
+  border-radius: 30px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input {
+  width: 300px;
+  height: 40px;
+  border: #858585 solid 1px;
+  border-radius: 14px;
+}
+
+.submit {
+  width: 300px;
+}

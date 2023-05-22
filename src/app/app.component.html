@@ -1,14 +1,18 @@
-<div class = "title">
+<div class = "container">
   <h1>Ludiq</h1>
   <h2>THE BEST WAY TO SHARE YOUR HOBBIES</h2>
+  <div class = "buttons">
+    <button (click)="onRegister()">Register</button>
+    <button (click)="onLogin()" class = "button2">Connection</button>
+  </div>
+  <img src = "../assets/images/Cooking.jpg">
+  <div class = "flashcard-group">
+    <p class = "flashcard">Ludiq allows you to share your hobbies with the whole community.</p>
+    <p class = "flashcard">Users can check your availability for group participation and contact you accordingly.</p>
+    <p class = "flashcard">You can also post on a topic related to one of your hobbies, or participate in an organized activity.</p>
+  </div>
 </div>
-<button class = "register">Register</button>
-<button class = "connexion">Connection</button>
-<div class = "flashcard-group">
-  <p class = "flashcard">Bla bla</p>
-  <p class = "flashcard">Bla bla</p>
-  <p class = "flashcard">Bla bla</p>
+<div class = "background-form">
+  <app-form-create-account *ngIf="buttonRegister"></app-form-create-account>
+  <app-form-login *ngIf="buttonLogin"></app-form-login>
 </div>
-<app-form-create-account></app-form-create-account>
-<app-post></app-post>
-<app-form-login></app-form-login>

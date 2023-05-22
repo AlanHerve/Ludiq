@@ -1,4 +1,5 @@
 <form (ngSubmit)="login()" [formGroup]="loginForm">
+  <h1>Connection</h1>
   <input required type="text" id="authentification" name="authentification" formControlName="authentification">
   <div *ngIf="loginForm.controls['authentification'].dirty && !loginForm.controls['authentification'].valid">
     <p *ngIf="loginForm.controls['authentification'].hasError('minlength')">
@@ -24,6 +25,6 @@
 
   <p *ngIf="loginForm.valid">valid</p>
 
-  <button type="submit" [disabled]="!loginForm.valid">Submit</button>
+  <button type="submit" class = "submit" [disabled]="!loginForm.valid">Submit</button>
 
 </form>
