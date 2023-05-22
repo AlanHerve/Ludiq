@@ -1,7 +1,7 @@
 <form (ngSubmit)="onCreateAccount()" [formGroup]="createForm">
   <h1>Register</h1>
   <a class ="cross" (click)="onClose()">&times;</a>
-  <input required type="text" id="name" name="name" formControlName="name" placeholder="Name">
+  <input required type="text" [(ngModel)]="userDTO.name" id="name" name="name" formControlName="name" placeholder="Name">
     <div *ngIf="createForm.controls['name'].dirty && !createForm.controls['name'].valid">
       not valid nom
       <p *ngIf="createForm.controls['name'].hasError('minlength')">
@@ -12,7 +12,7 @@
       </p>
     </div>
 
-  <input type="text" id="pseudo" name="pseudo" formControlName="pseudo" placeholder="Username">
+  <input type="text" [(ngModel)]="userDTO.username" id="pseudo" name="pseudo" formControlName="pseudo" placeholder="Username">
     <div *ngIf="createForm.controls['pseudo'].dirty && !createForm.controls['pseudo'].valid">
       not valid pseudo
       <p *ngIf="createForm.controls['pseudo'].hasError('minlength')">
@@ -23,7 +23,7 @@
       </p>
     </div>
 
-  <input type="email" id="email" name="email" formControlName="email" placeholder="E-mail">
+  <input type="email" [(ngModel)]="userDTO.email" id="email" name="email" formControlName="email" placeholder="E-mail">
     <div *ngIf="createForm.controls['email'].dirty && !createForm.controls['email'].valid">
       not valid mail
       <p *ngIf="createForm.controls['email'].hasError('pattern')">
@@ -31,7 +31,7 @@
       </p>
     </div>
 
-  <input type="password" id="password" name="password" formControlName="password" placeholder="Password">
+  <input type="password" [(ngModel)]="userDTO.password" id="password" name="password" formControlName="password" placeholder="Password">
     <div *ngIf="createForm.controls['password'].dirty && !createForm.controls['password'].valid">
       not valid password
       <p *ngIf="!createForm.controls['password'].hasError('pattern')">

@@ -13,9 +13,14 @@ import {UserService} from "../services/user.service";
 export class FormCreateAccountComponent implements OnInit {
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
   createForm!: FormGroup;
-  userDTO!: UserDTO;
+  userDTO: UserDTO = {
+    name: '',
+    username: '',
+    email: '',
+    password: ''
+  };
   constructor(private formBuilder: FormBuilder,
-              private userService: UserService) {  }
+              private userService: UserService) {}
 
   onClose(): void {
     this.close.emit();
@@ -50,15 +55,6 @@ export class FormCreateAccountComponent implements OnInit {
   }
 
   onCreateAccount() {
-    console.log(this.createForm.value);
-    this.userDTO = {
-      name: this.createForm.get('name')?.value,
-      username: this.createForm.get('pseudo')?.value,
-      email: this.createForm.get('email')?.value,
-      password: this.createForm.get('password')?.value
-    }
-    this.userDTO.username = this.createForm.get('pseudo')?.value;
-
     this.userService.registerUser(this.userDTO).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès

@@ -12,6 +12,11 @@ class Database {
     $this->conn = mysqli_connect($this->host, $this->user, $this->password, $this->name);
   }
 
+    /**
+     * Singleton syntax in order to  only have 1 instance of the database
+     *
+     * @return Database|null
+     */
   public static function getInstance() {
     if(!self::$instance) {
       self::$instance = new Database();

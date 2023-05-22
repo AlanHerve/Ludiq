@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {UserDTO} from "../models/user-dto";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-form-login',
@@ -8,13 +10,16 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class FormLoginComponent {
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
-
-  onClose(): void {
-    this.close.emit();
-  }
+  userDTO: UserDTO = {
+    name: '',
+    username: '',
+    email: '',
+    password: ''
+  };
 
   loginForm: FormGroup;
-  constructor(private formBuilder: FormBuilder){
+  constructor(private formBuilder: FormBuilder,
+              private userService: UserService){
     this.loginForm = this.formBuilder.group({
       authentification: [null, [Validators.required
         , Validators.minLength(4)
@@ -28,8 +33,22 @@ export class FormLoginComponent {
     })
   }
 
-  login():void{
+  onClose(): void {
+    this.close.emit();
+  }
+
+  onLogin():void{
     console.log(this.loginForm.value)
+    this.userService.loginUser(this.userDTO).subscribe({
+      next: (response) => {
+        // Traitement de la réponse du serveur en cas de succès
+        console.log('Utilisateur connecté avec succès:', response);
+      },
+      error: (error) => {
+        // Gestion des erreurs en cas d'échec
+        console.error('Erreur lors de la connexion de l\'utilisateur:', error);
+      }
+    })
   }
 
 }
