@@ -1,6 +1,7 @@
 <form (ngSubmit)="createAccount()" [formGroup]="createForm">
   <h1>Register</h1>
-  <input required type="text" id="name" name="name" formControlName="name">
+  <a class ="cross" (click)="onClose()">&times;</a>
+  <input required type="text" id="name" name="name" formControlName="name" placeholder="Name">
     <div *ngIf="createForm.controls['name'].dirty && !createForm.controls['name'].valid">
       not valid nom
       <p *ngIf="createForm.controls['name'].hasError('minlength')">
@@ -11,7 +12,7 @@
       </p>
     </div>
 
-  <input type="text" id="pseudo" name="pseudo" formControlName="pseudo">
+  <input type="text" id="pseudo" name="pseudo" formControlName="pseudo" placeholder="Username">
     <div *ngIf="createForm.controls['pseudo'].dirty && !createForm.controls['pseudo'].valid">
       not valid pseudo
       <p *ngIf="createForm.controls['pseudo'].hasError('minlength')">
@@ -22,7 +23,7 @@
       </p>
     </div>
 
-  <input type="email" id="email" name="email" formControlName="email">
+  <input type="email" id="email" name="email" formControlName="email" placeholder="E-mail">
     <div *ngIf="createForm.controls['email'].dirty && !createForm.controls['email'].valid">
       not valid mail
       <p *ngIf="createForm.controls['email'].hasError('pattern')">
@@ -30,7 +31,7 @@
       </p>
     </div>
 
-  <input type="password" id="password" name="password" formControlName="password">
+  <input type="password" id="password" name="password" formControlName="password" placeholder="Password">
     <div *ngIf="createForm.controls['password'].dirty && !createForm.controls['password'].valid">
       not valid password
       <p *ngIf="!createForm.controls['password'].hasError('pattern')">
@@ -44,7 +45,7 @@
       </p>
     </div>
 
-  <input type="password" id="confirm" name="confirm" formControlName="confirm">
+  <input type="password" id="confirm" name="confirm" formControlName="confirm" placeholder="Confirm password">
   <div *ngIf="createForm.controls['password'].dirty && createForm.getError('noMatch')">
     not valid confirm
     <p *ngIf="!createForm.controls['confirm'].dirty ">

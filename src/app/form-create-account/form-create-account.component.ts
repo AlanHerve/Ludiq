@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {confirmEqualValidator} from "../custom-validators";
+import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-form-create-account',
@@ -8,30 +9,35 @@ import {confirmEqualValidator} from "../custom-validators";
   styleUrls: ['./form-create-account.component.css']
 })
 export class FormCreateAccountComponent implements OnInit {
+  @Output() close: EventEmitter<void> = new EventEmitter<void>();
   createForm!: FormGroup;
   constructor(private formBuilder: FormBuilder) {}
 
+  onClose(): void {
+    this.close.emit();
+  }
+
   ngOnInit(): void {
     this.createForm = this.formBuilder.group( {
-      name: [null, Validators.required
+      name: [null, [Validators.required
         , Validators.minLength(4)
         , Validators.maxLength(20)
-        , Validators.pattern(/^[a-zA-Z0-9]*$/)
+        , Validators.pattern(/^[a-zA-Z0-9]*$/)]
       ],
-      pseudo: [null, Validators.required
+      pseudo: [null, [Validators.required
         , Validators.minLength(4)
         , Validators.maxLength(20)
-        , Validators.pattern(/^[a-zA-Z0-9]*$/)
+        , Validators.pattern(/^[a-zA-Z0-9]*$/)]
       ],
-      email: [null, Validators.required
+      email: [null, [Validators.required
         , Validators.minLength(4)
         , Validators.maxLength(20)
-        , Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+        , Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]
       ],
-      password: [null, Validators.required
+      password: [null, [Validators.required
         , Validators.minLength(8)
         , Validators.maxLength(20)
-        , Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/)
+        , Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/)]
       ],
       confirm: [null, Validators.required]
     },{
@@ -40,11 +46,7 @@ export class FormCreateAccountComponent implements OnInit {
   }
 
   createAccount() {
-    console.log("nom "+this.createForm.get('name')?.value
-                +"\npseudo: "+this.createForm.get('pseudo')?.getRawValue()
-                +"\nemail: "+this.createForm.get('email')?.getRawValue()
-                +"\npassword: "+this.createForm.get('password')?.getRawValue()
-                );
+    console.log(this.createForm.value);
   }
 
   getFormValidationErrors() {

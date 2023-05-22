@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +13,14 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onClose(): void {
+    this.buttonRegister = false;
+    this.buttonLogin = false;
+  }
   onRegister(): void {
     this.buttonRegister = true;
   }
   onLogin(): void {
     this.buttonLogin = true;
   }
-
-
 }

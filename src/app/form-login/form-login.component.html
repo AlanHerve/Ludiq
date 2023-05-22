@@ -1,6 +1,8 @@
 <form (ngSubmit)="login()" [formGroup]="loginForm">
   <h1>Connection</h1>
-  <input required type="text" id="authentification" name="authentification" formControlName="authentification">
+  <a class ="cross" (click)="onClose()">&times;</a>
+  <input required type="text" id="authentification" name="authentification" formControlName="authentification"
+  placeholder="E-mail or Username">
   <div *ngIf="loginForm.controls['authentification'].dirty && !loginForm.controls['authentification'].valid">
     <p *ngIf="loginForm.controls['authentification'].hasError('minlength')">
       La taille minimum n'est pas respectée (4)
@@ -13,7 +15,7 @@
     </p>
   </div>
 
-  <input required type="password" id="password" name="password" formControlName="password">
+  <input required type="password" id="password" name="password" formControlName="password" placeholder="Password">
   <div *ngIf="loginForm.controls['password'].dirty && !loginForm.controls['authentification'].valid">
     <p *ngIf="loginForm.controls['password'].hasError('minlength')">
       La taille minimum n'est pas respectée (4)

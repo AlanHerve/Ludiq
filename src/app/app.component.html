@@ -12,7 +12,10 @@
     <p class = "flashcard">You can also post on a topic related to one of your hobbies, or participate in an organized activity.</p>
   </div>
 </div>
-<div class = "background-form">
-  <app-form-create-account *ngIf="buttonRegister"></app-form-create-account>
-  <app-form-login *ngIf="buttonLogin"></app-form-login>
+<div *ngIf="buttonRegister" class="background-form">
+  <app-form-create-account (close)="onClose()"></app-form-create-account>
+</div>
+
+<div *ngIf="buttonLogin" class = "background-form">
+  <app-form-login (close)="onClose()"></app-form-login>
 </div>
