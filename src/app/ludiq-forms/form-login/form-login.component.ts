@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserDTO} from "../models/user-dto";
-import {UserService} from "../services/user.service";
+import {UserDTO} from "../../models/user-dto";
+import {UserService} from "../../services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-form-login',
@@ -18,6 +19,7 @@ export class FormLoginComponent {
   };
 
   loginForm: FormGroup;
+
   constructor(private formBuilder: FormBuilder,
               private userService: UserService){
     this.loginForm = this.formBuilder.group({
@@ -50,5 +52,7 @@ export class FormLoginComponent {
       }
     })
   }
+
+
 
 }

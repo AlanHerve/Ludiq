@@ -36,6 +36,10 @@ h2 {
   color: #000000;
 }
 
+img {
+  margin-top: 20px;
+}
+
 .buttons {
   margin-top: 70px;
   display: flex;
@@ -90,4 +94,3 @@ h2 {
     height:auto ;
   }
 }
-
