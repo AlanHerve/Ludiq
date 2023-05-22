@@ -1,4 +1,4 @@
-<form (ngSubmit)="createAccount()" [formGroup]="createForm">
+<form (ngSubmit)="onCreateAccount()" [formGroup]="createForm">
   <h1>Register</h1>
   <a class ="cross" (click)="onClose()">&times;</a>
   <input required type="text" id="name" name="name" formControlName="name" placeholder="Name">
