@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-form-login',
@@ -12,7 +13,7 @@ export class FormLoginComponent {
   authentificationControl: FormControl;
 
   loginForm: FormGroup;
-  constructor(private builder: FormBuilder){
+  constructor(private builder: FormBuilder, private router: Router){
     this.authentificationControl =  new FormControl('', [Validators.required
       , Validators.minLength(4)
       , Validators.maxLength(20)
@@ -21,7 +22,7 @@ export class FormLoginComponent {
 
     this.passwordControl =  new FormControl('', [Validators.required
       , Validators.minLength(4)
-      , Validators.maxLength(20)]);
+      , Validators.maxLength(50)]);
 
 
     this.loginForm = builder.group({
@@ -30,9 +31,12 @@ export class FormLoginComponent {
     })
   }
 
-  login():void{
+  onLogin():void{
     console.log("authent :"+this.authentificationControl.getRawValue()
                +"\npassword :"+this.passwordControl.getRawValue());
+    this.router.navigateByUrl('home');
   }
+
+
 
 }

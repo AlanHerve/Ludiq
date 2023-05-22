@@ -13,27 +13,27 @@ export class FormCreateAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm = this.formBuilder.group( {
-      name: [null, Validators.required
+      name: [null, [Validators.required
         , Validators.minLength(4)
         , Validators.maxLength(20)
         , Validators.pattern(/^[a-zA-Z0-9]*$/)
-      ],
-      pseudo: [null, Validators.required
+      ]],
+      pseudo: [null, [Validators.required
         , Validators.minLength(4)
         , Validators.maxLength(20)
         , Validators.pattern(/^[a-zA-Z0-9]*$/)
-      ],
-      email: [null, Validators.required
+      ]],
+      email: [null, [Validators.required
         , Validators.minLength(4)
-        , Validators.maxLength(20)
+        , Validators.maxLength(50)
         , Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
-      ],
-      password: [null, Validators.required
+      ]],
+      password: [null, [Validators.required
         , Validators.minLength(8)
         , Validators.maxLength(20)
         , Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/)
-      ],
-      confirm: [null, Validators.required]
+      ]],
+      confirm: [null, [Validators.required]]
     },{
       validators: [CustomValidators.confirmEqualValidator('password', 'confirm')]
     })
