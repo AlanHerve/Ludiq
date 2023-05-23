@@ -17,6 +17,28 @@ button {
   transition: background-color 0.2s ease-out;
 }
 
+.tag {
+  align-items: center;
+  padding: 10px 32px;
+
+  color: white;
+  background-color:#A85751 ;
+  font-size: 20px;
+  border: none;
+
+  border-radius :50px;
+  transition: background-color 0.2s ease-out;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.tag:hover {
+  color:#874641;
+  background-color:#FFFFFF;
+  outline: 3px solid #874641;
+  outline-offset: -3px;
+}
+
 button:disabled {
   color: white;
   background-color: rgba(44, 36, 51, 0.4);
@@ -110,3 +132,10 @@ input {
 .cross:hover {
   color: #333333;
 }
+
+.interaction {
+  width: 30px;
+  height: 30px;
+  margin-left: 35px;
+}
+
