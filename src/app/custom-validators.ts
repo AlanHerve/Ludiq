@@ -24,8 +24,6 @@ export class CustomValidators {
     };
   }
 }
-
-
 interface ValidationResult {
   [key: string]: boolean;
 }
@@ -39,7 +37,4 @@ export const matchPassword : ValidatorFn = (control: AbstractControl) => {
   }
   return null;
 }
-
-
-
 

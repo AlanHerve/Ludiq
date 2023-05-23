@@ -21,7 +21,9 @@ export class FormLoginComponent {
   loginForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              private userService: UserService){
+
+              private userService: UserService,
+              private router: Router){
     this.loginForm = this.formBuilder.group({
       authentification: [null, [Validators.required
         , Validators.minLength(4)
@@ -34,6 +36,8 @@ export class FormLoginComponent {
       ],
     })
   }
+
+  @Output("login") loginEvent: EventEmitter<any> = new EventEmitter();
 
   onClose(): void {
     this.close.emit();
@@ -51,6 +55,8 @@ export class FormLoginComponent {
         console.error('Erreur lors de la connexion de l\'utilisateur:', error);
       }
     })
+
+    this.loginEvent.emit();
   }
 
 

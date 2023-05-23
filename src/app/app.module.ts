@@ -1,30 +1,24 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { FormHobbyPostComponent } from './ludiq-forms/form-hobby-post/form-hobby-post.component';
-import { ProfileComponent } from './profile/profile.component';
-import { PostComponent } from './post/post.component';
-import {HttpClientModule} from "@angular/common/http";
-import {LudiqFormsModule} from "./ludiq-forms/ludiq-forms.module";
-import {NavigationBarComponent} from "./core/components/navigation-bar/navigation-bar.component";
-import {RouterLink, RouterLinkActive} from "@angular/router";
-import {SearchBarComponent} from "./core/components/search-bar/search-bar.component";
-import {CoreModule} from "./core/core.module";
 
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import {PagesModule} from "./pages/pages.module";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {LudiqFormsModule} from "./ludiq-forms/ludiq-forms.module";
+import {CoreModule} from "./core/core.module";
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ProfileComponent,
-    PostComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
+    PagesModule,
     HttpClientModule,
     LudiqFormsModule,
-    RouterLink,
-    RouterLinkActive,
     CoreModule
   ],
   providers: [],

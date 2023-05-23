@@ -1,4 +1,6 @@
+
 import {Component, Input, OnInit} from '@angular/core';
+
 
 @Component({
   selector: 'app-root',
@@ -6,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'tests';
+  title = 'Ludiq';
   buttonRegister: boolean = false;
   buttonLogin: boolean = false;
 

@@ -4,8 +4,7 @@ import {FormCreateAccountComponent} from "./form-create-account/form-create-acco
 import {FormHobbyPostComponent} from "./form-hobby-post/form-hobby-post.component";
 import {FormLoginComponent} from "./form-login/form-login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RouterOutlet} from "@angular/router";
-import {AppRoutingModule} from "../app-routing/app-routing.module"
+import {RouterLink, RouterOutlet} from "@angular/router";
 
 
 
@@ -24,7 +23,7 @@ import {AppRoutingModule} from "../app-routing/app-routing.module"
     FormsModule,
     ReactiveFormsModule,
     RouterOutlet,
-    AppRoutingModule
+    RouterLink
   ]
 })
 export class LudiqFormsModule { }

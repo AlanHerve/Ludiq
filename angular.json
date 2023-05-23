@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ludiq": {
+    "Ludiq": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ludiq:build:production"
+              "browserTarget": "Ludiq:build:production"
             },
             "development": {
-              "browserTarget": "ludiq:build:development"
+              "browserTarget": "Ludiq:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ludiq:build"
+            "browserTarget": "Ludiq:build"
           }
         },
         "test": {

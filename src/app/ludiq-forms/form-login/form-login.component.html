@@ -26,9 +26,9 @@
   </div>
 
   <p *ngIf="loginForm.valid">valid</p>
-  <button type="submit" class = "submit" [disabled]="!loginForm.valid">Submit</button>
+  <a [routerLink]="['/test']">try</a>
+  <button type="submit" [disabled]="!loginForm.valid">Submit</button>
 
-  <a routerLink="/test">try</a>
 </form>
-<router-outlet></router-outlet>
+
 
