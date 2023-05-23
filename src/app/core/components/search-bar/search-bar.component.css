@@ -85,3 +85,19 @@ button {
   padding: 20px;
 }
 
+@media (max-width: 700px) {
+  .search-bar {
+    width: 100vw;
+    left: 0;
+    right: 0;
+  }
+
+  .explorer {
+    width: 50%; /* Prend toute la largeur de la fenêtre */
+  }
+
+  button {
+    font-size: 20px;
+    padding: 1px 20px;
+  }
+}

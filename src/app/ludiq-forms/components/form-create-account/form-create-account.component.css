@@ -1,0 +1,57 @@
+
+
+.background-form {
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: auto;
+  text-align: center;
+  background-color: rgba(0,0,0,0.4);
+  height: 100%;
+  width: 100%;
+}
+
+
+form {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  border-radius: 30px;
+  background-color: #fefefe;
+  padding: 20px 30px;
+  width: 30.5%;
+}
+
+input {
+  margin: 5px;
+  width: 70%;
+  height: 45px;
+  border: #9B9B9B solid 1px;
+  border-radius: 14px;
+
+  text-align: center;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.submit {
+  width: 70%;
+  margin: 20px 20px;
+}
+
+.cross {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-family: Arial, sans-serif;
+  color: #9B9B9B;
+  font-size: 50px;
+  cursor: pointer;
+  transition: color 0.2s ease-out;
+}
+
+.cross:hover {
+  color: #333333;
+}

@@ -44,4 +44,12 @@
   flex-direction: column;
 }
 
+.interaction {
+  width: 30px;
+  height: 30px;
+  margin-left: 35px;
+}
 
+.count {
+  margin-left: 5px;
+}

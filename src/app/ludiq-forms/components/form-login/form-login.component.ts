@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserDTO} from "../../models/user-dto";
-import {UserService} from "../../services/user.service";
+import {UserDTO} from "../../../models/user-dto";
+import {UserService} from "../../../services/user.service";
 import {Router} from "@angular/router";
 
 @Component({

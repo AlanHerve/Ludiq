@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-hub',
   templateUrl: './hub.component.html',
-  styleUrls: ['./hub.component.css', '../pages.css']
+  styleUrls: ['./hub.component.css', '../../pages.css']
 })
 export class HubComponent {
   buttonRegister: boolean = false;

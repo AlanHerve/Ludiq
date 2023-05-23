@@ -1,5 +1,4 @@
 ul {
-  position: fixed;
   top:15%;
 }
 
@@ -45,4 +44,18 @@ a:visited {
   top: 0;
   left: 0;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+   .left-sidebar {
+    width: 100%; /* Utilise la largeur complète de l'écran */
+    position: static; /* Annule la position fixe */
+    border: none; /* Supprime les bordures */
+    height: auto; /* Hauteur automatique */
+  }
+
+  .index {
+    display: inline-block;
+    margin: 20px;
+  }
 }

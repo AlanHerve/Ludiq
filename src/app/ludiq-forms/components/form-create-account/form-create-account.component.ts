@@ -1,8 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {UserDTO} from "../../models/user-dto";
-import {UserService} from "../../services/user.service";
-import {CustomValidators} from "../../custom-validators";
+import {UserDTO} from "../../../models/user-dto";
+import {UserService} from "../../../services/user.service";
+import {CustomValidators} from "../../../custom-validators";
 
 @Component({
   selector: 'app-form-create-account',

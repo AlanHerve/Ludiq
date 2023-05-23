@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormCreateAccountComponent} from "./form-create-account/form-create-account.component";
-import {FormHobbyPostComponent} from "./form-hobby-post/form-hobby-post.component";
-import {FormLoginComponent} from "./form-login/form-login.component";
+import {FormCreateAccountComponent} from "./components/form-create-account/form-create-account.component";
+import {FormHobbyPostComponent} from "./components/form-hobby-post/form-hobby-post.component";
+import {FormLoginComponent} from "./components/form-login/form-login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterLink, RouterOutlet} from "@angular/router";
+import { FormNewPostComponent } from './components/form-new-post/form-new-post.component';
 
 
 
@@ -12,12 +13,14 @@ import {RouterLink, RouterOutlet} from "@angular/router";
   declarations: [
     FormCreateAccountComponent,
     FormHobbyPostComponent,
-    FormLoginComponent
+    FormLoginComponent,
+    FormNewPostComponent
   ],
-  exports: [
-    FormCreateAccountComponent,
-    FormLoginComponent
-  ],
+    exports: [
+        FormCreateAccountComponent,
+        FormLoginComponent,
+        FormNewPostComponent
+    ],
   imports: [
     CommonModule,
     FormsModule,

@@ -1,0 +1,35 @@
+<div class = "background-form">
+  <form (ngSubmit)="onLogin()" [formGroup]="loginForm">
+    <h1>Connection</h1>
+    <a class ="cross" (click)="onClose()">&times;</a>
+    <input required type="text" [(ngModel)]="userDTO.username" id="authentification" name="authentification" formControlName="authentification"
+    placeholder="E-mail or Username">
+    <div *ngIf="loginForm.controls['authentification'].dirty && !loginForm.controls['authentification'].valid">
+      <p *ngIf="loginForm.controls['authentification'].hasError('minlength')">
+        La taille minimum n'est pas respectée (4)
+      </p>
+      <p *ngIf="loginForm.controls['authentification'].hasError('maxlength')">
+        La taille maximum n'est pas respectée (20)
+      </p>
+      <p *ngIf="loginForm.controls['authentification'].hasError('pattern')">
+        N'est ni un nom d'utilisateur valide, ni une addresse mail valide
+      </p>
+    </div>
+
+    <input required type="password" [(ngModel)]="userDTO.password" id="password" name="password" formControlName="password" placeholder="Password">
+    <div *ngIf="loginForm.controls['password'].dirty && !loginForm.controls['authentification'].valid">
+      <p *ngIf="loginForm.controls['password'].hasError('minlength')">
+        La taille minimum n'est pas respectée (4)
+      </p>
+      <p *ngIf="loginForm.controls['password'].hasError('maxlength')">
+        La taille maximum n'est pas respectée (20)
+      </p>
+    </div>
+
+    <p *ngIf="loginForm.valid">valid</p>
+    <a [routerLink]="['/test']">try</a>
+    <button type="submit" [disabled]="!loginForm.valid">Submit</button>
+
+  </form>
+</div>
+
