@@ -4,6 +4,8 @@ import {LudiqFormsModule} from "../ludiq-forms/ludiq-forms.module";
 import {RouterOutlet} from "@angular/router";
 import {HubComponent} from "./hub/hub.component";
 import { BlankComponent } from './blank/blank.component';
+import {CoreModule} from "../core/core.module";
+import {PostModule} from "../post/post.module";
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { BlankComponent } from './blank/blank.component';
   imports: [
     CommonModule,
     LudiqFormsModule,
-    RouterOutlet
+    RouterOutlet,
+    CoreModule,
+    PostModule
   ]
 })
 export class PagesModule { }

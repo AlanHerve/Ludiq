@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
-import {RouterLink} from "@angular/router";
+import {RouterLink, RouterLinkActive} from "@angular/router";
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 
@@ -17,7 +17,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     ],
   imports: [
     CommonModule,
-    RouterLink
+    RouterLink,
+    RouterLinkActive
   ]
 })
 export class CoreModule { }

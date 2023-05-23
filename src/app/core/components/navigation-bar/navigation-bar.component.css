@@ -1,3 +1,8 @@
+ul {
+  position: fixed;
+  top:15%;
+}
+
 li {
   list-style: none;
 }
@@ -30,4 +35,14 @@ img {
 
 a:visited {
   text-decoration: none;
+}
+
+.left-sidebar {
+  width: 290px;
+  height: 100vh;
+  border-right: rgba(116, 33, 194, 0.25) 1px solid;
+  position:fixed;
+  top: 0;
+  left: 0;
+  text-align: center;
 }
