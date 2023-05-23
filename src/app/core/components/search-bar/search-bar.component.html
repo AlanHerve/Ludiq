@@ -1,5 +1,13 @@
 <div class="search-bar">
   <textarea class="explorer" placeholder="Search"></textarea>
-  <button class="button2">Nouvelle publication</button>
-  <button>Nouvelle activité</button>
+  <div class = "menu">
+    <div class = "first-division">
+      <h2>Filter</h2>
+      <button (click) = "onUserClicked()">User</button>
+      <button (click) = "onHobbyClicked()">Hobby</button>
+      <button (click) = "onActivityClicked()">Activity</button>
+    </div>
+    <p class = "result">Liaison à la base de données nécessaire</p>
+  </div>
+  <button>New activity</button>
 </div>

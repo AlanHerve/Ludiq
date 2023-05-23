@@ -3,20 +3,20 @@ import {UserDTO} from "../models/user-dto";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
+import {apiUrl} from "./api-url";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost/Backend/EntryPoint'
   constructor(private http: HttpClient) {}
 
   registerUser(userDTO: UserDTO): Observable<UserDTO> {
-    return this.http.post<UserDTO>(`${this.apiUrl}/register.php`, userDTO);
+    return this.http.post<UserDTO>(`${apiUrl}/register.php`, userDTO);
   }
 
   loginUser(userDTO: UserDTO): Observable<UserDTO> {
-    return this.http.post<UserDTO>(`${this.apiUrl}/login.php`, userDTO).pipe(
+    return this.http.post<UserDTO>(`${apiUrl}/login.php`, userDTO).pipe(
       map(response => {
         if (response) {
           // Stocker le jeton dans le stockage local

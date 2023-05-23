@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
+  position: relative;
 }
 
 .explorer {
@@ -22,6 +23,7 @@
   padding-left: 20px;
   border: none;
   line-height: 40px;
+  transition: background-color 0.2s ease-out;
 }
 
 textarea::placeholder {
@@ -30,4 +32,50 @@ textarea::placeholder {
 
 button {
   height: 50px;
+}
+
+.menu {
+  position: absolute;
+  left: 0;
+  background-color: #FFF;
+  margin: 0;
+  width: 100%;
+  top: 100%; /* Ajustement de la position du menu */
+  display: none; /* Masquage du menu par défaut */
+  border-bottom: black 1px solid;
+}
+
+.menu .first-division {
+  background-color: #F4F2F5;
+  padding: 20px;
+  margin: 0;
+}
+
+.menu.open {
+  display: block; /* Affiche le menu lorsque la classe "open" est ajoutée */
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+button {
+  margin-right: 10px;
+}
+
+@media (max-width: 700px) {
+  button {
+    font-size: 20px;
+    padding: 1px 20px;
+  }
+}
+
+.explorer:focus {
+  outline: 3px solid #7421C2; /* Supprime la bordure de focus par défaut */
+  background-color: #F4F2F5;
+}
+
+.result {
+  padding: 20px;
 }
