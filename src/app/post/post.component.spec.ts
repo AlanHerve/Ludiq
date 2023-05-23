@@ -1,21 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Post } from '../models/post.model';
 
-import { PostComponent } from './post.component';
+@Component({
+  selector: 'app-post',
+  templateUrl: './post.component.html',
+  styleUrls: ['./post.component.css']
+})
+export class PostComponent {
+  @Input() post: Post = new Post('', ''); // Initialisation par défaut avec une instance vide de Post
+  @Output() postLiked: EventEmitter<Post> = new EventEmitter<Post>();
 
-describe('PostComponent', () => {
-  let component: PostComponent;
-  let fixture: ComponentFixture<PostComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [PostComponent]
-    });
-    fixture = TestBed.createComponent(PostComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  likePost() {
+    this.postLiked.emit(this.post);
+  }
+}
