@@ -31,7 +31,7 @@ export class FormLoginComponent {
         , Validators.pattern(/^[a-zA-Z0-9]*$|^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]
       ],
       password:[null, [Validators.required
-        , Validators.minLength(4)
+        , Validators.minLength(8)
         , Validators.maxLength(20)]
       ],
     })
