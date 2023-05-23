@@ -1,1 +1,107 @@
 /* You can add global styles to this file, and also import other style files */
+h1 {
+  font-size: 40px;
+  margin: 18px;
+}
+
+button {
+  align-items: center;
+  padding: 10px 32px;
+
+  color: white;
+  background-color:#7421C2;
+  font-size: 20px;
+  border: none;
+
+  border-radius :50px;
+  transition: background-color 0.2s ease-out;
+}
+
+button:disabled {
+  color: white;
+  background-color: rgba(44, 36, 51, 0.4);
+}
+
+button:hover:disabled {
+  color: white;
+  background-color: rgba(44, 36, 51, 0.3);
+  outline: none;
+}
+
+button:hover {
+  color:#7421C2;
+  background-color:#FFFFFF;
+  outline: 3px solid #7421C2;
+  outline-offset: -3px;
+}
+
+.button2 {
+  align-items:center;
+  padding :10px 32px;
+
+  font-size :20px;
+
+  color:#7421C2;
+  background-color:#FFFFFF;
+  outline: 3px solid #7421C2;
+  outline-offset: -3px;
+  border-radius :50px;
+  transition: background-color 0.2s ease-out;
+}
+
+.button2:hover {
+  color: white;
+  background-color:#7421C2;
+}
+
+
+.background-form {
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: auto;
+  text-align: center;
+  background-color: rgba(0,0,0,0.4);
+  height: 100%;
+  width: 100%;
+}
+
+
+form {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  border-radius: 30px;
+  background-color: #fefefe;
+  padding: 20px 30px;
+  width: 30.5%;
+}
+
+input {
+  margin: 5px;
+  width: 70%;
+  height: 45px;
+  border: #9B9B9B solid 1px;
+  border-radius: 14px;
+
+  text-align: center;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.submit {
+  width: 70%;
+  margin: 20px 20px;
+}
+
+.cross {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-family: Arial, sans-serif;
+  color: #9B9B9B;
+  font-size: 50px;
+  cursor: pointer;
+}

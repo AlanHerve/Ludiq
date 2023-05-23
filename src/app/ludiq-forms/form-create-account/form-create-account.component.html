@@ -1,0 +1,63 @@
+<form (ngSubmit)="onCreateAccount()" [formGroup]="createForm">
+  <h1>Register</h1>
+  <a class ="cross" (click)="onClose()">&times;</a>
+  <input required type="text" [(ngModel)]="userDTO.name" id="name" name="name" formControlName="name" placeholder="Name">
+  <div *ngIf="createForm.controls['name'].dirty && !createForm.controls['name'].valid">
+    not valid nom
+    <p *ngIf="createForm.controls['name'].hasError('minlength')">
+      La taille minimum n'est pas respectée (4)
+    </p>
+    <p *ngIf="createForm.controls['name'].hasError('maxlength')">
+      La taille maximum n'est pas respectée (20)
+    </p>
+  </div>
+
+  <input type="text" [(ngModel)]="userDTO.username" id="pseudo" name="pseudo" formControlName="pseudo" placeholder="Username">
+  <div *ngIf="createForm.controls['pseudo'].dirty && !createForm.controls['pseudo'].valid">
+    not valid pseudo
+    <p *ngIf="createForm.controls['pseudo'].hasError('minlength')">
+      La taille minimum n'est pas respectée (4)
+    </p>
+    <p *ngIf="createForm.controls['pseudo'].hasError('maxlength')">
+      La taille maximum n'est pas respectée (20)
+    </p>
+  </div>
+
+  <input type="email" [(ngModel)]="userDTO.email" id="email" name="email" formControlName="email" placeholder="E-mail">
+  <div *ngIf="createForm.controls['email'].dirty && !createForm.controls['email'].valid">
+    not valid mail
+    <p *ngIf="createForm.controls['email'].hasError('pattern')">
+      Erreur, ceci n'est pas une addresse mail valide
+    </p>
+  </div>
+
+  <input type="password" [(ngModel)]="userDTO.password" id="password" name="password" formControlName="password" placeholder="Password">
+  <div *ngIf="createForm.controls['password'].dirty && !createForm.controls['password'].valid">
+    not valid password
+    <p *ngIf="!createForm.controls['password'].hasError('pattern')">
+      Erreur, vous devez avoir au moins une lettre majuscule, une lettre minuscule et un charactère special
+    </p>
+    <p *ngIf="createForm.controls['password'].hasError('minlength')">
+      Votre mot de passe doit depasser 8 characteres
+    </p>
+    <p *ngIf="createForm.controls['password'].hasError('maxlength')">
+
+    </p>
+  </div>
+
+  <input type="password" id="confirm" name="confirm" formControlName="confirm" placeholder="Confirm password">
+  <div *ngIf="createForm.controls['password'].dirty && createForm.getError('noMatch')">
+    not valid confirm
+    <p *ngIf="!createForm.controls['confirm'].dirty ">
+      Vous devez confirmer votre mot de passe
+    </p>
+    <p *ngIf="createForm.getError('noMatch')">
+      Votre confirmation doit être la même que votre mot de passe
+    </p>
+  </div>
+
+  <p *ngIf="createForm.valid">valid</p>
+
+  <button type="submit" class = "submit" [disabled]="!createForm.valid">Submit</button>
+</form>
+<!--*ngIf="confirmControl.hasError('passwordNotMatch')"-->

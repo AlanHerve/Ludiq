@@ -1,7 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {HubComponent} from "./pages/hub/hub.component";
+import {BlankComponent} from "./pages/blank/blank.component";
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: 'hub', component: HubComponent
+  },
+  {
+    path: 'blank', component: BlankComponent
+  },
+  {
+    path: '', redirectTo: 'hub', pathMatch: 'full'
+  },
+  {
+    path: '**', redirectTo: 'hub', pathMatch: 'full'
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

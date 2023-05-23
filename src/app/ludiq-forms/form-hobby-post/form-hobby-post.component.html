@@ -1,0 +1,7 @@
+<form (ngSubmit)="submitted()">
+  <select id="hobbyType" name="hobbyType" [(ngModel)]="this.selection">
+    <option *ngFor="let hobby of hobbies" [value]="hobby">{{hobby}}</option>
+  </select>
+
+  <button type="submit">Submit</button>
+</form>
