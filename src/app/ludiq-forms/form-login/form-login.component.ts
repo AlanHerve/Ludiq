@@ -40,7 +40,7 @@ export class FormLoginComponent {
   }
 
   onLogin():void{
-    console.log(this.loginForm.value)
+    console.log(this.loginForm.value);
     this.userService.loginUser(this.userDTO).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès

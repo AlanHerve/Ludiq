@@ -7,20 +7,25 @@ import { ProfileComponent } from './profile/profile.component';
 import { PostComponent } from './post/post.component';
 import {HttpClientModule} from "@angular/common/http";
 import {LudiqFormsModule} from "./ludiq-forms/ludiq-forms.module";
+import {NavigationBarComponent} from "./core/components/navigation-bar/navigation-bar.component";
+import {RouterLink, RouterLinkActive} from "@angular/router";
+import {SearchBarComponent} from "./core/components/search-bar/search-bar.component";
+import {CoreModule} from "./core/core.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfileComponent,
-    PostComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     LudiqFormsModule,
-
-
+    RouterLink,
+    RouterLinkActive,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -38,6 +38,7 @@ h2 {
 
 img {
   margin-top: 20px;
+  width: 40vw;
 }
 
 .buttons {
@@ -47,8 +48,27 @@ img {
   justify-content: center;
 }
 
+@media (max-width: 1000px) {
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:20px;
+  }
+}
+@media (max-width: 1000px) {
+  .container {
+    margin-right: 2%;
+    margin-left: 2%;
+  }
+  img {
+    width:80vw;
+  }
+}
+
+
 .flashcard-group {
-  position :fixed;
+  position: absolute;
   right :140px;
   top :50%;
   transform :translateY(-50%);
@@ -73,24 +93,23 @@ img {
   border-radius :20px;
 }
 
-@media only screen and (max-width :600px) {
-  .register {
-    width :100%;
-    height :30%;
-    font-size :14%;
-  }
-  .connexion{
-    width :100%;
-    height :30%;
-    font-size :14%;
-  }
-  .flashcard-group{
-    right:auto ;
-    left:auto ;
-    transform:none ;
+flashcard:hover {
+  box-shadow: black ;
+}
+
+@media only screen and (max-width :1000px) {
+  .flashcard-group {
+    margin: 300px auto 0;
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
   }
   .flashcard{
-    width:auto ;
-    height:auto ;
+    width:250px;
+    margin:auto;
   }
 }

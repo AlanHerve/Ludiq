@@ -104,4 +104,9 @@ input {
   color: #9B9B9B;
   font-size: 50px;
   cursor: pointer;
+  transition: color 0.2s ease-out;
+}
+
+.cross:hover {
+  color: #333333;
 }

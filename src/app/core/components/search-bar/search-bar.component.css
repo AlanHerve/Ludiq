@@ -1,0 +1,33 @@
+.search-bar {
+  background-color: hsla(264, 27%, 11%, 70%);
+  height: 65px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.explorer {
+  border-radius: 100px;
+  background-color: hsla(263, 10%, 95%, 0.85);
+  background-image: url("../../../../assets/images/icons/search.png");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 28px;
+  background-position-x: calc(100% - 13px);
+  height: 40px;
+  width: 60%;
+  margin-left: 10px;
+  resize: none;
+  font-size: 20px;
+  padding-left: 20px;
+  border: none;
+  line-height: 40px;
+}
+
+textarea::placeholder {
+  color: rgba(127, 126, 128, 0.85);
+}
+
+button {
+  height: 50px;
+}
