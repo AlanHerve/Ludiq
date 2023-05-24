@@ -4,7 +4,8 @@ import {HubComponent} from "./hub.component";
 
 const routes: Routes = [
   {
-    path: '', component: HubComponent
+    path: '',
+    component: HubComponent
   }
 ];
 

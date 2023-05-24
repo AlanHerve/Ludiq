@@ -16,7 +16,7 @@ export class HubComponent implements OnInit {
   }
 
   onRegister(): void {
-    this.router.navigateByUrl('/hub/register');
+    this.router.navigateByUrl('hub/register');
   }
   onLogin(): void {
     this.router.navigateByUrl('hub/login');

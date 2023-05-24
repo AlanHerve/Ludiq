@@ -8,7 +8,9 @@ import {CoreModule} from "./core/core.module";
 import {HomeRoutingModule} from "./pages/components/home/home-routing.module";
 import {PagesModule} from "./pages/pages.module";
 import {HomeModule} from "./pages/components/home/home.module";
-import {HubModule} from "./pages/components/hub/hub-module";
+import {HubModule} from "./pages/components/hub/hub.module";
+import {ProfileModule} from "./pages/components/profile/profile.module";
+import {FormCreateAccountComponent} from "./ludiq-forms/components/form-create-account/form-create-account.component";
 import {FormCreateAccountModule} from "./ludiq-forms/components/form-create-account/form-create-account.module";
 
 @NgModule({
@@ -24,7 +26,9 @@ import {FormCreateAccountModule} from "./ludiq-forms/components/form-create-acco
     CoreModule,
     HomeRoutingModule,
     HomeModule,
-    HubModule
+    HubModule,
+    ProfileModule,
+    FormCreateAccountModule
   ],
   providers: [],
   bootstrap: [AppComponent]
