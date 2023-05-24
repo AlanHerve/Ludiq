@@ -221,7 +221,7 @@ ALTER TABLE `regular_post`
 -- Index pour la table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`ID_USER`);
+  ADD PRIMARY KEY (`ID_USER`,`USER_NAME`,`EMAIL`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
