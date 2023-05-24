@@ -116,9 +116,9 @@ p {
   padding: 20px;
   font-size: 18px;
   font-weight: 300;
-  flex-grow: 1;
   width: 100%;
   overflow-wrap: break-word;
+  resize: none;
 }
 
 .submit {

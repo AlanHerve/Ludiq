@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {PagesModule} from "./pages/pages.module";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 import {LudiqFormsModule} from "./ludiq-forms/ludiq-forms.module";
 import {CoreModule} from "./core/core.module";
+import {HomeRoutingModule} from "./pages/components/home/home-routing.module";
+import {PagesModule} from "./pages/pages.module";
+import {HomeModule} from "./pages/components/home/home.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +19,9 @@ import {CoreModule} from "./core/core.module";
     PagesModule,
     HttpClientModule,
     LudiqFormsModule,
-    CoreModule
+    CoreModule,
+    HomeRoutingModule,
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

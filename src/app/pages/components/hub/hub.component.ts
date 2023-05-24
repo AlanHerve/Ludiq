@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
 
 @Component({
@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
   templateUrl: './hub.component.html',
   styleUrls: ['./hub.component.css', '../../pages.css']
 })
-export class HubComponent {
+export class HubComponent implements OnInit {
   buttonRegister: boolean = false;
   buttonLogin: boolean = false;
 
@@ -30,9 +30,6 @@ export class HubComponent {
   }
 
   loginEvent(): void{
-    //this.onClose();
-    console.log("event called");
-    this.router.navigateByUrl('blank');
-    //this.loginEventHome.emit();
+    this.router.navigateByUrl('home');
   }
 }
