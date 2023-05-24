@@ -29,9 +29,7 @@ import {FormCreateAccountModule} from "./components/form-create-account/form-cre
       FormsModule,
       ReactiveFormsModule,
       RouterOutlet,
-      RouterLink,
-      HomeModule,
-      FormCreateAccountModule
+      RouterLink
     ]
 })
 export class LudiqFormsModule { }
