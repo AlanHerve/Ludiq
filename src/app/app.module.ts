@@ -8,6 +8,7 @@ import {CoreModule} from "./core/core.module";
 import {HomeRoutingModule} from "./pages/components/home/home-routing.module";
 import {PagesModule} from "./pages/pages.module";
 import {HomeModule} from "./pages/components/home/home.module";
+import {HubModule} from "./pages/components/hub/hub-module";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {HomeModule} from "./pages/components/home/home.module";
     LudiqFormsModule,
     CoreModule,
     HomeRoutingModule,
-    HomeModule
+    HomeModule,
+    HubModule
   ],
   providers: [],
   bootstrap: [AppComponent]
