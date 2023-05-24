@@ -2,8 +2,9 @@
   <form (ngSubmit)="onLogin()" [formGroup]="loginForm">
     <h1>Connection</h1>
     <a class ="cross" (click)="onClose()">&times;</a>
-    <input required type="text" [(ngModel)]="userDTO.username" id="authentification" name="authentification" formControlName="authentification"
-    placeholder="E-mail or Username">
+    <input required type="text" [(ngModel)]="userDTO.username" id="authentification" name="authentification"
+           formControlName="authentification" placeholder="E-mail or Username"
+           [ngClass]="{'valid-input': loginForm.controls['authentification'].valid}">
     <div *ngIf="loginForm.controls['authentification'].dirty && !loginForm.controls['authentification'].valid">
       <p *ngIf="loginForm.controls['authentification'].hasError('minlength')">
         La taille minimum n'est pas respectée (4)
@@ -16,7 +17,8 @@
       </p>
     </div>
 
-    <input required type="password" [(ngModel)]="userDTO.password" id="password" name="password" formControlName="password" placeholder="Password">
+    <input [ngClass]="{'valid-input': loginForm.controls['password'].valid}"
+           required type="password" [(ngModel)]="userDTO.password" id="password" name="password" formControlName="password" placeholder="Password">
     <div *ngIf="loginForm.controls['password'].dirty && !loginForm.controls['authentification'].valid">
       <p *ngIf="loginForm.controls['password'].hasError('minlength')">
         La taille minimum n'est pas respectée (4)
@@ -25,10 +27,7 @@
         La taille maximum n'est pas respectée (20)
       </p>
     </div>
-
-    <p *ngIf="loginForm.valid">valid</p>
-    <a [routerLink]="['/test']">try</a>
-    <button type="submit" [disabled]="!loginForm.valid">Submit</button>
+    <button type="submit" class = "submit" [disabled]="!loginForm.valid">Submit</button>
 
   </form>
 </div>

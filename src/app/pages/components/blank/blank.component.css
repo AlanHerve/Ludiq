@@ -15,10 +15,10 @@
 
 @media (max-width: 768px) {
   .right-sidebar {
-    width: 100%; /* Utilise la largeur complète de l'écran */
-    position: static; /* Annule la position fixe */
-    border: none; /* Supprime les bordures */
-    height: auto; /* Hauteur automatique */
+    width: 100%;
+    position: static;
+    border: none;
+    height: auto;
   }
 
   .content {
