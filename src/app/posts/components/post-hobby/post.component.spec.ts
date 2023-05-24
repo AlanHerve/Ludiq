@@ -22,14 +22,14 @@ describe('PostComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display the post title', () => {
+  it('should display the posts title', () => {
     component.post = { title: 'Example Title', content: 'Example Content' };
     fixture.detectChanges();
-    const titleElement = fixture.nativeElement.querySelector('.post-title');
+    const titleElement = fixture.nativeElement.querySelector('.posts-title');
     expect(titleElement.textContent).toContain('Example Title');
   });
 
-  it('should emit an event when the post is liked', () => {
+  it('should emit an event when the posts is liked', () => {
     spyOn(component.postLiked, 'emit');
     const likeButton = fixture.nativeElement.querySelector('.like-button');
     likeButton.click();

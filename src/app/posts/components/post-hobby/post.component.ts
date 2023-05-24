@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Post } from '../models/post.model';
+import { Post } from '../../../models/post.model';
 
 @Component({
-  selector: 'app-post',
+  selector: 'app-posts',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })

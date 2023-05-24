@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {PostComponent} from "./post.component";
+import {PostComponent} from "./components/post-hobby/post.component";
 
 
 @NgModule({
@@ -13,4 +13,4 @@ import {PostComponent} from "./post.component";
   imports: [
   ]
 })
-export class PostModule { }
+export class PostsModule { }

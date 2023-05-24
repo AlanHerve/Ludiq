@@ -6,7 +6,7 @@
            placeholder="Name" [ngClass]="{'valid-input': createForm.controls['name'].valid}">
 
     <div *ngIf="createForm.controls['name'].dirty && !createForm.controls['name'].valid">
-      not valid nom
+      Name not valid
       <p *ngIf="createForm.controls['name'].hasError('minlength')">La taille minimum n'est pas respectée (4)</p>
       <p *ngIf="createForm.controls['name'].hasError('maxlength')">La taille maximum n'est pas respectée (20)</p>
     </div>
@@ -15,7 +15,7 @@
            placeholder="Username" [ngClass]="{'valid-input': createForm.controls['pseudo'].valid}">
 
     <div *ngIf="createForm.controls['pseudo'].dirty && !createForm.controls['pseudo'].valid">
-      <span class = "info">Username not valid</span>
+      Username not valid
       <p *ngIf="createForm.controls['pseudo'].hasError('minlength')">La taille minimum n'est pas respectée (4)</p>
       <p *ngIf="createForm.controls['pseudo'].hasError('maxlength')">La taille maximum n'est pas respectée (20)</p>
     </div>
@@ -24,7 +24,7 @@
            [ngClass]="{'valid-input': createForm.controls['email'].valid}">
 
     <div *ngIf="createForm.controls['email'].dirty && !createForm.controls['email'].valid">
-      not valid mail
+      E-mail not valid
       <p *ngIf="createForm.controls['email'].hasError('pattern')">Erreur, ceci n'est pas une adresse e-mail valide</p>
     </div>
 
@@ -32,7 +32,7 @@
            placeholder="Password" [ngClass]="{'valid-input': createForm.controls['password'].valid && createForm.controls['confirm'].valid && !createForm.getError('noMatch')}">
 
     <div *ngIf="createForm.controls['password'].dirty && !createForm.controls['password'].valid">
-      not valid password
+      Password not
       <p *ngIf="!createForm.controls['password'].hasError('pattern')">You need to have at least 1 capital letter, 1 number and 1 special character</p>
       <p *ngIf="createForm.controls['password'].hasError('minlength')">Your password must have more than 8 characters</p>
     </div>

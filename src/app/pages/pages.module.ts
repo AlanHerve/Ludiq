@@ -5,7 +5,7 @@ import {RouterOutlet} from "@angular/router";
 import {HubComponent} from "./components/hub/hub.component";
 import { BlankComponent } from './components/blank/blank.component';
 import {CoreModule} from "../core/core.module";
-import {PostModule} from "../post/post.module";
+import {PostsModule} from "../posts/posts.module";
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import {PostModule} from "../post/post.module";
     LudiqFormsModule,
     RouterOutlet,
     CoreModule,
-    PostModule
+    PostsModule
   ]
 })
 export class PagesModule { }

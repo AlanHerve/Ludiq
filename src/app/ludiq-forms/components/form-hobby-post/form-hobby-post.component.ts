@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-form-hobby-post',
+  selector: 'app-form-hobby-posts',
   templateUrl: './form-hobby-post.component.html',
   styleUrls: ['./form-hobby-post.component.css']
 })
