@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $data['password'];
     $userDTO = new UserDTO('', $username, '', $password);
 
-    $userRepository = new UserRepository();
+    $userRepository = UserRepository::getInstance();
     $json = $userRepository->loginUser($userDTO);
     echo $json;
 }
