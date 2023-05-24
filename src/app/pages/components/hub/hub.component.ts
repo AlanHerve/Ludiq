@@ -7,10 +7,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./hub.component.css', '../../pages.css']
 })
 export class HubComponent implements OnInit {
-  buttonRegister: boolean = false;
-  buttonLogin: boolean = false;
 
-  @Output("login") loginEventHome: EventEmitter<any> = new EventEmitter();
 
   constructor(private router: Router) {
   }
@@ -18,18 +15,10 @@ export class HubComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onClose(): void {
-    this.buttonRegister = false;
-    this.buttonLogin = false;
-  }
   onRegister(): void {
-    this.buttonRegister = true;
+    this.router.navigateByUrl('/hub/register');
   }
   onLogin(): void {
-    this.buttonLogin = true;
-  }
-
-  loginEvent(): void{
-    this.router.navigateByUrl('home');
+    this.router.navigateByUrl('hub/login');
   }
 }

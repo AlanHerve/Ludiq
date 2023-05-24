@@ -7,6 +7,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterLink, RouterOutlet} from "@angular/router";
 import { FormNewPostComponent } from './components/form-new-post/form-new-post.component';
 import {HomeModule} from "../pages/components/home/home.module";
+import {FormCreateAccountModule} from "./components/form-create-account/form-create-account.module";
 
 
 
@@ -18,17 +19,19 @@ import {HomeModule} from "../pages/components/home/home.module";
     FormNewPostComponent
   ],
     exports: [
-        FormCreateAccountComponent,
-        FormLoginComponent,
-        FormNewPostComponent
+      FormCreateAccountComponent,
+      FormLoginComponent,
+      FormNewPostComponent,
+      FormCreateAccountModule
     ],
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterOutlet,
-        RouterLink,
-        HomeModule
+      CommonModule,
+      FormsModule,
+      ReactiveFormsModule,
+      RouterOutlet,
+      RouterLink,
+      HomeModule,
+      FormCreateAccountModule
     ]
 })
 export class LudiqFormsModule { }

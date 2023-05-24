@@ -37,13 +37,9 @@ export class FormLoginComponent {
     })
   }
 
-  @Output("login") loginEvent: EventEmitter<any> = new EventEmitter();
-
-  onClose(): void {
-    this.close.emit();
-  }
 
   onLogin():void{
+    this.router.navigateByUrl('home');
     console.log(this.loginForm.value);
     this.userService.loginUser(this.userDTO).subscribe({
       next: (response) => {
@@ -55,10 +51,9 @@ export class FormLoginComponent {
         console.error('Erreur lors de la connexion de l\'utilisateur:', error);
       }
     })
-
-    this.loginEvent.emit();
   }
 
-
-
+  onClose(): void {
+    this.router.navigate(['/']);
+  }
 }

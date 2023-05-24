@@ -12,11 +12,5 @@
     <p class = "flashcard">You can also post on a topic related to one of your hobbies, or participate in an organized activity.</p>
   </div>
 </div>
-<div *ngIf="buttonRegister">
-  <app-form-create-account (close)="onClose()"></app-form-create-account>
-</div>
 
-<div *ngIf="buttonLogin">
-  <app-form-login (login)="loginEvent()" (close)="onClose()"></app-form-login>
-</div>
-
+<router-outlet></router-outlet>

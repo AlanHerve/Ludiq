@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/for
 import {UserDTO} from "../../../models/user-dto";
 import {UserService} from "../../../services/user.service";
 import {CustomValidators} from "../../../custom-validators";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-form-create-account',
@@ -10,7 +11,6 @@ import {CustomValidators} from "../../../custom-validators";
   styleUrls: ['./form-create-account.component.css']
 })
 export class FormCreateAccountComponent implements OnInit {
-  @Output() close: EventEmitter<void> = new EventEmitter<void>();
   createForm!: FormGroup;
   userDTO: UserDTO = {
     name: '',
@@ -19,12 +19,12 @@ export class FormCreateAccountComponent implements OnInit {
     password: ''
   };
   constructor(private formBuilder: FormBuilder,
-              private userService: UserService) {}
+              private userService: UserService,
+              private router: Router) {}
 
   onClose(): void {
-    this.close.emit();
+    this.router.navigate(['/']);
   }
-
   ngOnInit(): void {
     this.createForm = this.formBuilder.group( {
       name: [null, [Validators.required
