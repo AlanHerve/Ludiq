@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import {LudiqFormsModule} from "../ludiq-forms/ludiq-forms.module";
 import {RouterOutlet} from "@angular/router";
 import {CoreModule} from "../core/core.module";
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 
 @NgModule({
   declarations: [
 
+  
+    NotificationsComponent
   ],
   exports: [
   ],

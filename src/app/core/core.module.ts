@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import {FormsModule} from "@angular/forms";
 
 
 
 @NgModule({
   declarations: [
     NavigationBarComponent,
-    SearchBarComponent
+    SearchBarComponent,
   ],
     exports: [
         NavigationBarComponent,
@@ -18,7 +19,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
   imports: [
     CommonModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    FormsModule
   ]
 })
 export class CoreModule { }

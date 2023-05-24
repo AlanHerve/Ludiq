@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {SearchBarService} from "../../services/search-bar.service";
 
 @Component({
   selector: 'app-search-bar',
@@ -6,7 +7,10 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./search-bar.component.css']
 })
 export class SearchBarComponent implements OnInit {
-  constructor() {}
+  searchUserChecked = false;
+  searchHobbyChecked = false;
+  searchActivityChecked = false;
+  constructor(private searchBarService: SearchBarService) {}
 
   ngOnInit(): void {
     const textarea = document.querySelector('.explorer') as HTMLTextAreaElement;
@@ -24,16 +28,32 @@ export class SearchBarComponent implements OnInit {
     });
   }
 
-  onUserClicked(): void {
-
+  onSearch(event: Event): void {
+    const searchText = (event.target as HTMLInputElement).value;
+    if(this.searchUserChecked) {
+      this.onUserClicked(searchText);
+    }
+    if(this.searchHobbyChecked) {
+      this.onHobbyClicked(searchText);
+    }
   }
 
-  onHobbyClicked(): void {
+  onUserClicked(searchText: string): void {
+    this.searchBarService.searchUser(searchText).subscribe(response => {
 
+    });
   }
 
-  onActivityClicked(): void {
+  onHobbyClicked(searchText: string): void {
+    this.searchBarService.searchHobby(searchText).subscribe(response => {
 
+    });
+  }
+
+  onActivityClicked(searchText: string): void {
+    this.searchBarService.searchActivity(searchText).subscribe(response => {
+
+    });
   }
 }
 

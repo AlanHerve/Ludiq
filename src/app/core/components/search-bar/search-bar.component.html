@@ -1,13 +1,19 @@
 <div class="search-bar">
-  <textarea class="explorer" placeholder="Search"></textarea>
-  <div class = "menu">
-    <div class = "first-division">
+  <textarea class="explorer" placeholder="Search" (input)="onSearch($event)"></textarea>
+  <div class="menu">
+    <div class="first-division">
       <h2>Filter</h2>
-      <button (click) = "onUserClicked()">User</button>
-      <button (click) = "onHobbyClicked()">Hobby</button>
-      <button (click) = "onActivityClicked()">Activity</button>
+      <label>
+        <input type="checkbox" [(ngModel)]="searchUserChecked"> User
+      </label>
+      <label>
+        <input type="checkbox" [(ngModel)]="searchHobbyChecked"> Hobby
+      </label>
+      <label>
+        <input type="checkbox" [(ngModel)]="searchActivityChecked"> Activity
+      </label>
     </div>
-    <p class = "result">Liaison à la base de données nécessaire</p>
+    <p class="result">Liaison à la base de données nécessaire</p>
   </div>
-  <button class = "button2">New activity</button>
+  <button class="button2">New activity</button>
 </div>
