@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 export class FormLoginComponent {
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
   userDTO: UserDTO = {
+    id: -1,
     name: '',
     username: '',
     email: '',

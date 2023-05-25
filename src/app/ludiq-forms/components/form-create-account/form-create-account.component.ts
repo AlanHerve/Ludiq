@@ -13,6 +13,7 @@ import {Router} from "@angular/router";
 export class FormCreateAccountComponent implements OnInit {
   createForm!: FormGroup;
   userDTO: UserDTO = {
+    id: -1,
     name: '',
     username: '',
     email: '',

@@ -50,12 +50,7 @@ form {
   width: 240px;
 }
 
-.tags-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
+
 
 .message-container {
   display: flex;
@@ -63,7 +58,12 @@ form {
   margin: 20px;
 }
 
-
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
 
 .tag {
   display: flex;

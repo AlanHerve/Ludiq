@@ -101,3 +101,46 @@ button {
     padding: 1px 20px;
   }
 }
+
+li {
+  list-style: none;
+}
+
+.tags-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tag {
+  display: flex;
+  width:14%;
+  padding: 10px 32px;
+  color: white;
+  background-color: #A85751;
+  font-size: 20px;
+  border-radius: 50px;
+  transition: background-color 0.2s ease-out;
+  margin: 8px;
+}
+
+.tag input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 10px;
+  position: relative;
+  top: -1px;
+  background-color: white;
+  border: none;
+  outline: none;
+}
+
+.tag  input[type="checkbox"]:checked {
+  background-color: #000; /* Couleur de fond lorsque le checkbox est coché */
+  color: #fff; /* Couleur du texte lorsque le checkbox est coché */
+}

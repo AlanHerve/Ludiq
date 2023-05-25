@@ -1,8 +1,9 @@
 export class UserDTO {
-  constructor(public name: string,
+  constructor(public id:number,
+              public name: string,
               public username: string,
-              public email: string,
               public password: string,
+              public email: string,
               public token?: string) {
   }
 }

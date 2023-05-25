@@ -6,9 +6,17 @@ require_once '../DTOs/UserDTO.php';
 
 class UserRepository {
     private $db;
+    private static $instance = null;
 
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
+    }
+
+    public static function getInstance() {
+        if(!self::$instance) {
+            self::$instance = new UserRepository();
+        }
+        return self::$instance;
     }
 
     /**
@@ -74,6 +82,22 @@ class UserRepository {
 
         // Envoi de la réponse JSON
         return json_encode($response);
+    }
+
+    public function findUserById(int $id) {
+        $stmt = $this->db->prepare("SELECT * FROM user WHERE ID_USER = ?");
+        $stmt->bind_param("i", $id);
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $user = new UserDTO($row['ID_USER'], $row['USER_NAME'], $row['USER_PSEUDO'], $row['USER_PASSWORD'], $row['EMAIL'], $row['AVATAR']);
+            return $user;
+        }
+
+        return null;
     }
 
 }
