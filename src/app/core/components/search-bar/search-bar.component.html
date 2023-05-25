@@ -5,13 +5,13 @@
       <h2>Filter</h2>
       <div class="tags-container">
         <label class = "tag">
-          <input type="checkbox" [(ngModel)]="searchUserChecked" (change)="onCheckUser()"> User
+          <input type="checkbox" [(ngModel)]="this.buttons[0]" (change)="onCheckUser()"> User
         </label>
         <label class = "tag">
-          <input type="checkbox" [(ngModel)]="searchHobbyChecked" (change)="onCheckHobby()"> Hobby
+          <input type="checkbox" [(ngModel)]="this.buttons[1]" (change)="onCheckHobby()"> Hobby
         </label>
         <label class = "tag">
-          <input type="checkbox" [(ngModel)]="searchActivityChecked"> Activity
+          <input type="checkbox" [(ngModel)]="this.buttons[2]"> Activity
         </label>
       </div>
     </div>

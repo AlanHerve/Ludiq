@@ -9,12 +9,14 @@ import {UserDTO} from "../../../models/user-dto";
   styleUrls: ['./search-bar.component.css']
 })
 export class SearchBarComponent implements OnInit {
-  searchUserChecked = false;
-  searchHobbyChecked = false;
-  searchActivityChecked = false;
+  buttons: boolean[] = [];
   searchResults: any[] = [];
 
   constructor(private searchBarService: SearchBarService) {
+    this.buttons[0] = false;
+    this.buttons[1] = false;
+    this.buttons[2] = false;
+    this.buttons[3] = false;
   }
 
   ngOnInit(): void {
@@ -36,15 +38,36 @@ export class SearchBarComponent implements OnInit {
   onSearch(event: Event): void {
     const searchText = (event.target as HTMLInputElement).value;
     this.searchResults = [];
-    if (this.searchUserChecked) {
+    this.displayContentOnclick(searchText);
+  }
+
+  displayContentOnclick(searchText: string): void {
+    this.searchResults = [];
+    if (!this.buttons[0] && !this.buttons[1]) {
+      // Aucun bouton n'est coché, recherche globale
       this.onUserClicked(searchText);
-    }
-    if (this.searchHobbyChecked) {
       this.onHobbyClicked(searchText);
+    } else {
+      if (this.buttons[0]) {
+        this.onUserClicked(searchText);
+      }
+      if (this.buttons[1]) {
+        this.onHobbyClicked(searchText);
+      }
+    }
+  }
+
+  removeContentOnClick() {
+    if (!this.buttons[0]) {
+      this.searchResults = this.searchResults.filter(result => !(result instanceof UserDTO));
+    }
+    if (!this.buttons[1]) {
+      this.searchResults = this.searchResults.filter(result => !(result instanceof HobbyDTO));
     }
   }
 
   onUserClicked(searchText: string): void {
+    this.removeContentOnClick();
     this.searchBarService.searchUser(searchText).subscribe({
       next: (response) => {
         response.forEach((user) => {
@@ -65,45 +88,8 @@ export class SearchBarComponent implements OnInit {
     });
   }
 
-  /**
-   * Method that updates the search content in relation to the radio button
-   */
-  onCheckUser(): void {
-    /*
-    If the radio button is checked, we search the user in relation to the text written in the search bar
-     */
-    if (this.searchUserChecked) {
-      const searchText = (document.querySelector('.explorer') as HTMLTextAreaElement).value;
-      this.onUserClicked(searchText);
-    }
-    /*
-    In case that the radio button is not checked, we need to remove the instances of User in the results of the search bar
-     */
-    else {
-      this.searchResults = this.searchResults.filter(result => !(result instanceof UserDTO));
-    }
-  }
-
-  /**
-   * Method that updates the search content in relation to the radio button
-   */
-  onCheckHobby(): void {
-    if (this.searchHobbyChecked) {
-      const searchText = (document.querySelector('.explorer') as HTMLTextAreaElement).value;
-      this.onHobbyClicked(searchText);
-    } else {
-      this.searchResults = this.searchResults.filter(result => !(result instanceof HobbyDTO));
-    }
-  }
-
-  /**
-   * Method that updates the search content in relation to the radio button
-   */
-  onCheckActivity(): void {
-
-  }
-
   onHobbyClicked(searchText: string): void {
+    this.removeContentOnClick();
     this.searchBarService.searchHobby(searchText).subscribe({
       next: (response) => {
         response.forEach((hobby) => {
@@ -123,10 +109,49 @@ export class SearchBarComponent implements OnInit {
     });
   }
 
+
+  /**
+   * Method that updates the search content in relation to the radio button
+   */
+  onCheckUser(): void {
+    /*
+    If the radio button is checked, we search the user in relation to the text written in the search bar
+     */
+    const searchText = (document.querySelector('.explorer') as HTMLTextAreaElement).value;
+    if (this.buttons[0]) {
+      this.onUserClicked(searchText);
+    }
+    /*
+    In case that the radio button is not checked, we need to remove the instances of User in the results of the search bar
+     */
+    else {
+      this.displayContentOnclick(searchText);
+    }
+  }
+
+  /**
+   * Method that updates the search content in relation to the radio button
+   */
+  onCheckHobby(): void {
+    const searchText = (document.querySelector('.explorer') as HTMLTextAreaElement).value;
+    if (this.buttons[1]) {
+      this.onHobbyClicked(searchText);
+    }
+    else {
+      this.displayContentOnclick(searchText);
+    }
+  }
+
+  /**
+   * Method that updates the search content in relation to the radio button
+   */
+  onCheckActivity(): void {
+
+  }
+
   onActivityClicked(searchText: string): void {
     this.searchBarService.searchActivity(searchText).subscribe(response => {
 
     });
   }
 }
-
