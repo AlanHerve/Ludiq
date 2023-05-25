@@ -13,7 +13,12 @@
         <input type="checkbox" [(ngModel)]="searchActivityChecked"> Activity
       </label>
     </div>
-    <p class="result">Liaison à la base de données nécessaire</p>
+    <p class="result" *ngIf="searchResults.length > 0">
+    <ul>
+      <li *ngFor="let result of searchResults">
+        {{ result.name }}
+      </li>
+    </ul>
   </div>
   <button class="button2">New activity</button>
 </div>

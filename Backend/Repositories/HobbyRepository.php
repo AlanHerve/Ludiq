@@ -33,7 +33,11 @@ class HobbyRepository
       $hobbyDTO->name = $row['HOBBY_NAME'];
       $hobbyDTO->image = $row['IMAGE'];
 
-      return $hobbyDTO;
+      return $hobby = array(
+        'id' => $hobbyDTO->id,
+        'name' => $hobbyDTO->name,
+        'image' => $hobbyDTO->image
+      );
     }
     else {
       return json_encode([]);

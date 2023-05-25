@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchBarService} from "../../services/search-bar.service";
+import {HobbyDTO} from "../../../models/hobby-dto";
 
 @Component({
   selector: 'app-search-bar',
@@ -10,7 +11,10 @@ export class SearchBarComponent implements OnInit {
   searchUserChecked = false;
   searchHobbyChecked = false;
   searchActivityChecked = false;
-  constructor(private searchBarService: SearchBarService) {}
+  searchResults: any[] = [];
+
+  constructor(private searchBarService: SearchBarService) {
+  }
 
   ngOnInit(): void {
     const textarea = document.querySelector('.explorer') as HTMLTextAreaElement;
@@ -30,10 +34,11 @@ export class SearchBarComponent implements OnInit {
 
   onSearch(event: Event): void {
     const searchText = (event.target as HTMLInputElement).value;
-    if(this.searchUserChecked) {
+    this.searchResults = [];
+    if (this.searchUserChecked) {
       this.onUserClicked(searchText);
     }
-    if(this.searchHobbyChecked) {
+    if (this.searchHobbyChecked) {
       this.onHobbyClicked(searchText);
     }
   }
@@ -45,9 +50,24 @@ export class SearchBarComponent implements OnInit {
   }
 
   onHobbyClicked(searchText: string): void {
-    this.searchBarService.searchHobby(searchText).subscribe(response => {
-
-    });
+    this.searchBarService.searchHobby(searchText).subscribe(
+      {
+        next: (response) => {
+          response.forEach((hobby) => {
+            if (hobby.id) {
+              const hobbyDTO = new HobbyDTO(hobby.id, hobby.name, hobby.image)
+              const existingHobby = this.searchResults.flat().find(hobby => hobby.id == hobbyDTO.id)
+              if (!existingHobby) {
+                this.searchResults.push(hobbyDTO);
+              }
+            }
+          })
+        },
+        error: (error) => {
+          // Gestion des erreurs en cas d'échec
+          console.error('Erreur lors de la récupération du hobby', error);
+        }
+      });
   }
 
   onActivityClicked(searchText: string): void {
