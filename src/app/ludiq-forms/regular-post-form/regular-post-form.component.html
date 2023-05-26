@@ -1,0 +1,7 @@
+<p>regular-post-form works!</p>
+<p>papa</p>
+<form (ngSubmit)="newRegularPost()">
+  <textarea [(ngModel)]="regularPostDTO.description" name="description"></textarea>
+
+  <button type="submit">Post</button>
+</form>

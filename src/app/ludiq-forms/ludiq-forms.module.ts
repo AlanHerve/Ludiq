@@ -5,6 +5,7 @@ import {FormHobbyPostComponent} from "./form-hobby-post/form-hobby-post.componen
 import {FormLoginComponent} from "./form-login/form-login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterLink, RouterOutlet} from "@angular/router";
+import { RegularPostFormComponent } from './regular-post-form/regular-post-form.component';
 
 
 
@@ -12,12 +13,15 @@ import {RouterLink, RouterOutlet} from "@angular/router";
   declarations: [
     FormCreateAccountComponent,
     FormHobbyPostComponent,
-    FormLoginComponent
+    FormLoginComponent,
+    RegularPostFormComponent
   ],
-  exports: [
-    FormCreateAccountComponent,
-    FormLoginComponent
-  ],
+    exports: [
+        FormCreateAccountComponent,
+        FormLoginComponent,
+        FormHobbyPostComponent,
+        RegularPostFormComponent
+    ],
   imports: [
     CommonModule,
     FormsModule,
