@@ -25,6 +25,19 @@ form {
   width: 46%;
 }
 
+
+input {
+  margin: 5px;
+  width: 70%;
+  height: 45px;
+  border: #9B9B9B solid 1px;
+  border-radius: 14px;
+
+  text-align: center;
+  font-size: 18px;
+  font-weight: 300;
+}
+
 .cross {
   position: absolute;
   top: 15px;
@@ -108,7 +121,7 @@ p {
   flex-wrap: wrap;
 }
 
-.text {
+textarea {
   margin: 5px;
   height: 70%;
   border: #9B9B9B solid 1px;

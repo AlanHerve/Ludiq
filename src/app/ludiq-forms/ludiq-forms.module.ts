@@ -7,9 +7,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterLink, RouterOutlet} from "@angular/router";
 import { FormNewPostComponent } from './components/form-new-post/form-new-post.component';
 import {FormCreateAccountModule} from "./components/form-create-account/form-create-account.module";
-import { RegularPostFormComponent } from './components/regular-post-form/regular-post-form.component';
-
-
+import { FormRegularPostComponent } from './components/form-regular-post/form-regular-post.component';
+import {FormRegularPostModule} from "./components/form-regular-post/form-regular-post.module";
 
 
 @NgModule({
@@ -18,14 +17,15 @@ import { RegularPostFormComponent } from './components/regular-post-form/regular
     FormHobbyPostComponent,
     FormLoginComponent,
     FormNewPostComponent,
-    RegularPostFormComponent
+    FormRegularPostComponent
   ],
     exports: [
       FormCreateAccountComponent,
       FormLoginComponent,
       FormNewPostComponent,
       FormCreateAccountModule,
-      RegularPostFormComponent
+      FormRegularPostComponent,
+      FormRegularPostModule
     ],
     imports: [
       CommonModule,

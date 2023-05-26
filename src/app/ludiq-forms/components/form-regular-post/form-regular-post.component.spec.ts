@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RegularPostFormComponent } from './regular-post-form.component';
+import { FormRegularPostComponent } from './form-regular-post.component';
 
 describe('RegularPostFormComponent', () => {
-  let component: RegularPostFormComponent;
-  let fixture: ComponentFixture<RegularPostFormComponent>;
+  let component: FormRegularPostComponent;
+  let fixture: ComponentFixture<FormRegularPostComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RegularPostFormComponent]
+      declarations: [FormRegularPostComponent]
     });
-    fixture = TestBed.createComponent(RegularPostFormComponent);
+    fixture = TestBed.createComponent(FormRegularPostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

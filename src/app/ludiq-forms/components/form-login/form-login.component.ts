@@ -7,7 +7,7 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-form-login',
   templateUrl: './form-login.component.html',
-  styleUrls: ['./form-login.component.css',  '../../ludiq-forms.css']
+  styleUrls: ['./form-login.component.css']
 })
 export class FormLoginComponent {
   @Output() close: EventEmitter<void> = new EventEmitter<void>();

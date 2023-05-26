@@ -1,12 +1,12 @@
-export class RegularPostDto {
+export class RegularPostDTO {
 
-  constructor(public id_regular_post: string,
-              public id_user: string,
-              public id_hobby: string,
+  constructor(public id_regular_post: number|null,
+              public id_user: number|null,
+              public id_hobby: number|null,
               public description: string,
               public images : (string | null)[],
               public modified: string,
-              public likes: string,
+              public likes: number,
               public time: string) {
   }
 }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {LudiqFormsModule} from "../ludiq-forms/ludiq-forms.module";
 import {RouterOutlet} from "@angular/router";
 import {CoreModule} from "../core/core.module";
 import { NotificationsComponent } from './components/notifications/notifications.component';
@@ -8,15 +7,12 @@ import { NotificationsComponent } from './components/notifications/notifications
 
 @NgModule({
   declarations: [
-
-  
     NotificationsComponent
   ],
   exports: [
   ],
   imports: [
     CommonModule,
-    LudiqFormsModule,
     RouterOutlet,
     CoreModule,
   ]

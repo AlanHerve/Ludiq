@@ -20,13 +20,10 @@ import {HubRoutingModule} from "./pages/components/hub/hub-routing.module";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PagesModule,
     HttpClientModule,
-    LudiqFormsModule,
     CoreModule,
     HomeRoutingModule,
     HomeModule,
-    HubModule,
     HubRoutingModule,
     ProfileModule,
     FormCreateAccountModule

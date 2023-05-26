@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {RegularPostService} from "../../../services/regular-post.service";
-import {RegularPostDto} from "../../../models/regular-post-dto";
+import {RegularPostDTO} from "../../../models/regular-post-dto";
 
 @Component({
   selector: 'app-form-hobby-posts',
@@ -13,12 +13,12 @@ export class FormHobbyPostComponent {
 
   selection!: string;
 
-  regularPostDTO: RegularPostDto = {
-    id_user: '',
-    id_hobby: '',
-    id_regular_post: '',
+  regularPostDTO: RegularPostDTO = {
+    id_user: null,
+    id_hobby: null,
+    id_regular_post: null,
     images: [null, null, null, null],
-    likes: '',
+    likes: 0,
     description: 'this is a test',
     time: '',
     modified: ''
