@@ -10,7 +10,7 @@ import {Location} from '@angular/common';
   styleUrls: ['./form-regular-post.component.css', '../../ludiq-forms.css']
 })
 export class FormRegularPostComponent {
-
+  index: number = 0;
 
   previousRoute: string = '';
   regularPostDTO: RegularPostDTO = {
@@ -45,16 +45,41 @@ export class FormRegularPostComponent {
     return this.regularPostDTO.images[index] != null;
   }
 
-  onFileSelected(event: any, index: number): void {
+  onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     const reader: FileReader = new FileReader();
 
-    reader.onloadend = () => {
-      this.regularPostDTO.images[index] = 'image';
+    reader.onload = () => {
+      this.regularPostDTO.images[this.index] = file.name;
+      console.log(this.regularPostDTO.images[this.index]);
+      console.log("table: " + this.regularPostDTO.images);
+
+      if (this.index < this.regularPostDTO.images.length) {
+        const labelElement = document.querySelectorAll('.file-input-label')[this.index];
+        labelElement?.classList.add('selected');
+        this.index++;
+      }
     };
 
     reader.readAsDataURL(file);
   }
+
+  onRemoveImage(image: string) {
+    const index = this.regularPostDTO.images.findIndex(img => img === image);
+    if (index !== -1) {
+      this.regularPostDTO.images[index] = null;
+    }
+
+    for (let i = index; i < this.regularPostDTO.images.length ; i++) {
+      if (i === this.regularPostDTO.images.length - 1) {
+        this.regularPostDTO.images[4] = null;
+      } else {
+        this.regularPostDTO.images[i] = this.regularPostDTO.images[i + 1];
+      }
+    }
+    console.log(this.regularPostDTO.images);
+  }
+
 
   newRegularPost() {
     this.regularPostService.newRegularPost(this.regularPostDTO).subscribe({
