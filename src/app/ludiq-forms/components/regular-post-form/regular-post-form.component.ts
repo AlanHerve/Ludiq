@@ -1,21 +1,17 @@
 import { Component } from '@angular/core';
-import {RegularPostService} from "../../../services/regular-post.service";
 import {RegularPostDto} from "../../../models/regular-post-dto";
+import {RegularPostService} from "../../../services/regular-post.service";
 
 @Component({
-  selector: 'app-form-hobby-posts',
-  templateUrl: './form-hobby-post.component.html',
-  styleUrls: ['./form-hobby-post.component.css',  '../../ludiq-forms.css']
+  selector: 'app-regular-post-form',
+  templateUrl: './regular-post-form.component.html',
+  styleUrls: ['./regular-post-form.component.css', '../../ludiq-forms.css']
 })
-export class FormHobbyPostComponent {
-
-  hobbies : string[] = ["potterie", "dessin", "velo", "marche"];
-
-  selection!: string;
+export class RegularPostFormComponent {
 
   regularPostDTO: RegularPostDto = {
-    id_user: '',
-    id_hobby: '',
+    id_user: '1',
+    id_hobby: '1',
     id_regular_post: '',
     images: [null, null, null, null],
     likes: '',
@@ -29,7 +25,7 @@ export class FormHobbyPostComponent {
 
 
 
-  submitted() {
+  newRegularPost() {
     this.regularPostService.newRegularPost(this.regularPostDTO).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
@@ -40,5 +36,8 @@ export class FormHobbyPostComponent {
         console.error('Erreur post : ', error);
       }
     })
+
+    this.regularPostDTO.description ='';
   }
+
 }

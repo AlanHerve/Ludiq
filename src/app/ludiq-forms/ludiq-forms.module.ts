@@ -6,8 +6,9 @@ import {FormLoginComponent} from "./components/form-login/form-login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterLink, RouterOutlet} from "@angular/router";
 import { FormNewPostComponent } from './components/form-new-post/form-new-post.component';
-import {HomeModule} from "../pages/components/home/home.module";
 import {FormCreateAccountModule} from "./components/form-create-account/form-create-account.module";
+import { RegularPostFormComponent } from './components/regular-post-form/regular-post-form.component';
+
 
 
 
@@ -16,13 +17,15 @@ import {FormCreateAccountModule} from "./components/form-create-account/form-cre
     FormCreateAccountComponent,
     FormHobbyPostComponent,
     FormLoginComponent,
-    FormNewPostComponent
+    FormNewPostComponent,
+    RegularPostFormComponent
   ],
     exports: [
       FormCreateAccountComponent,
       FormLoginComponent,
       FormNewPostComponent,
-      FormCreateAccountModule
+      FormCreateAccountModule,
+      RegularPostFormComponent
     ],
     imports: [
       CommonModule,

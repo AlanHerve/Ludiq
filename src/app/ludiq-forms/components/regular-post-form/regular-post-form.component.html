@@ -1,0 +1,8 @@
+<div class = "background-form">
+  <form (ngSubmit)="newRegularPost()">
+    <textarea [(ngModel)]="regularPostDTO.description" name="description"></textarea>
+
+    <button type="submit">Post</button>
+  </form>
+</div>
+

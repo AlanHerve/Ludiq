@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     $userDTO = new UserDTO(null, $name, $username, $hashedPassword, $email, null);
+
     $userRepository = UserRepository::getInstance();
     $userRepository->registerUser($userDTO);
 }

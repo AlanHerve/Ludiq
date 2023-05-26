@@ -1,0 +1,128 @@
+
+
+.background-form {
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  overflow: auto;
+  text-align: center;
+  background-color: rgba(0,0,0,0.4);
+  height: 100%;
+  width: 100%;
+}
+
+
+form {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  border-radius: 30px;
+  background-color: #fefefe;
+  padding: 20px 30px;
+  width: 46%;
+}
+
+.cross {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-family: Arial, sans-serif;
+  color: #9B9B9B;
+  font-size: 50px;
+  cursor: pointer;
+  transition: color 0.2s ease-out;
+}
+
+.cross:hover {
+  color: #333333;
+}
+
+.hobby-container {
+  margin: 25px;
+  border: #307473 2px solid;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 240px;
+}
+
+
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tag {
+  display: flex;
+  width:60%;
+  align-items: center;
+  padding: 10px 32px;
+  color: white;
+  background-color: #A85751;
+  font-size: 20px;
+  border-radius: 50px;
+  transition: background-color 0.2s ease-out;
+  margin: 8px;
+}
+
+.tag input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 10px;
+  position: relative;
+  top: -1px;
+  background-color: white;
+  border: none;
+  outline: none;
+}
+
+.tag input[type="radio"]:checked {
+  background-color: black;
+}
+
+p {
+  color: #307473;
+}
+
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.text {
+  margin: 5px;
+  height: 70%;
+  border: #9B9B9B solid 1px;
+  border-radius: 14px;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 300;
+  width: 100%;
+  overflow-wrap: break-word;
+  resize: none;
+}
+
+.submit {
+  margin: 20px 20px;
+  width: 100%;
+  flex-grow: 1;
+}

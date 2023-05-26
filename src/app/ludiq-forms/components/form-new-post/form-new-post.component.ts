@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-form-new-post',
   templateUrl: './form-new-post.component.html',
-  styleUrls: ['./form-new-post.component.css']
+  styleUrls: ['./form-new-post.component.css', '../../ludiq-forms.css']
 })
 export class FormNewPostComponent implements OnInit {
   previousRoute: string = '';
