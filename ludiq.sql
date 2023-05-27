@@ -17,13 +17,31 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ludiq`
+-- Base de données :  `ludiq`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `activity_director`
+-- Structure de la table `activity`
+--
+
+CREATE TABLE `activity` (
+  `ID_ACTIVITY` int(11) NOT NULL,
+  `ID_ACTIVITY_DIRECTOR` int(11) NOT NULL,
+  `ID_HOBBY` int(11) NOT NULL,
+  `ADVANCEMENT` varchar(30) DEFAULT 'Beginner',
+  `DESCRIPTION` text,
+  `DATE_POST` date DEFAULT NULL,
+  `DATE_ACTIVITY` date DEFAULT NULL,
+  `CURRENT_REGISTERED` int(4) DEFAULT '1',
+  `MAX_REGISTRATIONS` int(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `activity_director`
 --
 
 CREATE TABLE `activity_director` (
@@ -48,7 +66,18 @@ CREATE TABLE `comment` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hobby`
+-- Structure de la table `friends`
+--
+
+CREATE TABLE `friends` (
+  `ID_USER` int(11) NOT NULL,
+  `ID_USER_2` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hobby`
 --
 
 CREATE TABLE `hobby` (
@@ -151,7 +180,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user`
+-- Index pour les tables exportées
 --
 
 INSERT INTO `user` (`ID_USER`, `USER_NAME`, `USER_PSEUDO`, `USER_PASSWORD`, `EMAIL`, `AVATAR`) VALUES
@@ -161,17 +190,21 @@ INSERT INTO `user` (`ID_USER`, `USER_NAME`, `USER_PSEUDO`, `USER_PASSWORD`, `EMA
 (5, 'Tact', 'Tact', '$2y$10$BzPR88BwQBMYKYnA04.NsOFWAmettI9.7t.SLzN01LQKLO4C8kzBa', 'tact@gmail.com', NULL);
 
 --
--- Indexes for dumped tables
+-- Index pour la table `activity`
 --
+ALTER TABLE `activity`
+  ADD PRIMARY KEY (`ID_ACTIVITY`),
+  ADD KEY `ID_ACTIVITY_DIRECTOR` (`ID_ACTIVITY_DIRECTOR`),
+  ADD KEY `ID_HOBBY` (`ID_HOBBY`);
 
 --
--- Indexes for table `activity_director`
+-- Index pour la table `activity_director`
 --
 ALTER TABLE `activity_director`
   ADD PRIMARY KEY (`ID_USER`,`ID_ORGANISATION`);
 
 --
--- Indexes for table `comment`
+-- Index pour la table `comment`
 --
 ALTER TABLE `comment`
   ADD PRIMARY KEY (`ID_COMMENT`),
@@ -179,13 +212,20 @@ ALTER TABLE `comment`
   ADD KEY `ID_REGULAR_POST` (`ID_REGULAR_POST`);
 
 --
--- Indexes for table `hobby`
+-- Index pour la table `friends`
+--
+ALTER TABLE `friends`
+  ADD KEY `ID_USER` (`ID_USER`),
+  ADD KEY `ID_USER_2` (`ID_USER_2`);
+
+--
+-- Index pour la table `hobby`
 --
 ALTER TABLE `hobby`
   ADD PRIMARY KEY (`ID_HOBBY`);
 
 --
--- Indexes for table `hobby_post`
+-- Index pour la table `hobby_post`
 --
 ALTER TABLE `hobby_post`
   ADD PRIMARY KEY (`ID_HOBBY_POST`),
@@ -193,7 +233,7 @@ ALTER TABLE `hobby_post`
   ADD KEY `ID_HOBBY` (`ID_HOBBY`);
 
 --
--- Indexes for table `message`
+-- Index pour la table `message`
 --
 ALTER TABLE `message`
   ADD PRIMARY KEY (`ID_MESSAGE`),
@@ -201,7 +241,7 @@ ALTER TABLE `message`
   ADD KEY `ID_USER_2` (`ID_USER_2`);
 
 --
--- Indexes for table `regular_post`
+-- Index pour la table `regular_post`
 --
 ALTER TABLE `regular_post`
   ADD PRIMARY KEY (`ID_REGULAR_POST`),
@@ -209,68 +249,87 @@ ALTER TABLE `regular_post`
   ADD KEY `ID_HOBBY` (`ID_HOBBY`);
 
 --
--- Indexes for table `user`
+-- Index pour la table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`ID_USER`,`USER_NAME`,`EMAIL`);
+  ADD PRIMARY KEY (`ID_USER`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables exportées
 --
 
 --
--- AUTO_INCREMENT for table `hobby`
+-- AUTO_INCREMENT pour la table `activity`
+--
+ALTER TABLE `activity`
+  MODIFY `ID_ACTIVITY` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `hobby`
 --
 ALTER TABLE `hobby`
-  MODIFY `ID_HOBBY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID_HOBBY` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `message`
+-- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
   MODIFY `ID_MESSAGE` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `regular_post`
+-- AUTO_INCREMENT pour la table `regular_post`
 --
 ALTER TABLE `regular_post`
-  MODIFY `ID_REGULAR_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID_REGULAR_POST` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `ID_USER` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID_USER` int(11) NOT NULL AUTO_INCREMENT;
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables exportées
 --
 
 --
--- Constraints for table `activity_director`
+-- Contraintes pour la table `activity`
+--
+ALTER TABLE `activity`
+  ADD CONSTRAINT `activity_ibfk_1` FOREIGN KEY (`ID_ACTIVITY_DIRECTOR`) REFERENCES `activity_director` (`ID_USER`) ON DELETE CASCADE,
+  ADD CONSTRAINT `activity_ibfk_2` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `activity_director`
 --
 ALTER TABLE `activity_director`
   ADD CONSTRAINT `activity_director_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE;
 
 --
--- Constraints for table `comment`
+-- Contraintes pour la table `comment`
 --
 ALTER TABLE `comment`
   ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`ID_REGULAR_POST`) REFERENCES `regular_post` (`ID_REGULAR_POST`) ON DELETE CASCADE;
 
 --
--- Constraints for table `hobby_post`
+-- Contraintes pour la table `friends`
+--
+ALTER TABLE `friends`
+  ADD CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
+  ADD CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`ID_USER_2`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `hobby_post`
 --
 ALTER TABLE `hobby_post`
   ADD CONSTRAINT `hobby_post_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `hobby_post_ibfk_2` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE CASCADE;
 
 --
--- Constraints for table `message`
+-- Contraintes pour la table `message`
 --
 ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`ID_USER_2`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE;
 
 --
--- Constraints for table `regular_post`
+-- Contraintes pour la table `regular_post`
 --
 ALTER TABLE `regular_post`
   ADD CONSTRAINT `regular_post_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
