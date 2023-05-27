@@ -4,6 +4,7 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import {FormsModule} from "@angular/forms";
+import { MightLikeHobbiesDisplayComponent } from './components/might-like-hobbies-display/might-like-hobbies-display.component';
 
 
 
@@ -11,11 +12,13 @@ import {FormsModule} from "@angular/forms";
   declarations: [
     NavigationBarComponent,
     SearchBarComponent,
+    MightLikeHobbiesDisplayComponent,
   ],
-    exports: [
-        NavigationBarComponent,
-        SearchBarComponent
-    ],
+  exports: [
+    NavigationBarComponent,
+    SearchBarComponent,
+    MightLikeHobbiesDisplayComponent
+  ],
   imports: [
     CommonModule,
     RouterLink,
