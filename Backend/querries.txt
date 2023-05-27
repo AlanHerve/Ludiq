@@ -17,7 +17,7 @@ ORDER BY
 	COUNT(*) DESC LIMIT 3
 ;
 
-SELECT
+SELECT DISTINCT
   activity.`ID_HOBBY`
       , hobby.`HOBBY_NAME`
 FROM
@@ -25,6 +25,6 @@ FROM
 	INNER JOIN
     	hobby ON hobby.ID_HOBBY = activity.ID_HOBBY
 WHERE
-  activity.`ID_HOBBY` NOT IN [?, ?, ?]
-ORDER BY 1 LIMIT 3
+  activity.`ID_HOBBY` NOT IN (?, ?, ?)
+ORDER BY RAND() LIMIT 3
 ;
