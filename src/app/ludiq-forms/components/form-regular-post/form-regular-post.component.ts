@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {RegularPostDTO} from "../../../models/regular-post-dto";
-import {RegularPostService} from "../../../services/regular-post.service";
+import {PostsService} from "../../../../app/posts/posts.service";
 import {Router} from "@angular/router";
 import {Location} from '@angular/common';
 
@@ -24,7 +24,7 @@ export class FormRegularPostComponent {
     modified: ''
   }
 
-  constructor(private regularPostService: RegularPostService,
+  constructor(private postsService: PostsService,
               private router: Router,
               private location: Location) {
     this.previousRoute = this.getPreviousRoute();
@@ -83,7 +83,7 @@ export class FormRegularPostComponent {
 
 
   newRegularPost() {
-    this.regularPostService.newRegularPost(this.regularPostDTO).subscribe({
+    this.postsService.newRegularPost(this.regularPostDTO).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
         console.log('Post avec succès', response);
