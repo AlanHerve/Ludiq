@@ -22,7 +22,6 @@ export class FormLoginComponent {
   loginForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-
               private userService: UserService,
               private router: Router){
     this.loginForm = this.formBuilder.group({

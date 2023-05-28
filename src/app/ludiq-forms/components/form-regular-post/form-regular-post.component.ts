@@ -68,11 +68,12 @@ export class FormRegularPostComponent {
     const index = this.regularPostDTO.images.findIndex(img => img === image);
     if (index !== -1) {
       this.regularPostDTO.images[index] = null;
+      this.index--;
     }
 
     for (let i = index; i < this.regularPostDTO.images.length ; i++) {
       if (i === this.regularPostDTO.images.length - 1) {
-        this.regularPostDTO.images[4] = null;
+        this.regularPostDTO.images[3] = null;
       } else {
         this.regularPostDTO.images[i] = this.regularPostDTO.images[i + 1];
       }
