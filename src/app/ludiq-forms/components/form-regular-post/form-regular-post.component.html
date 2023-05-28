@@ -4,25 +4,43 @@
     <span (click)="onClose()" class="cross">&times;</span>
     <textarea [(ngModel)]="regularPostDTO.description" name="description"></textarea>
     <div class="images">
-      <label class="file-input-label">
+      <label *ngIf="!regularPostDTO.images[0]" class="file-input-label">
         <span class="file-input-text">Select an image</span>
-        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event, 0)">
+        <input class="file-input" type="file" (change)="onFileSelected($event, 0)">
       </label>
-      <label *ngIf="isFileSelected(0)" class="file-input-label">
-        <span class="file-input-text">Select an image</span>
-        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event, 1)">
+      <label *ngIf="regularPostDTO.images[0]" class="file-input-label">
+        <img [src]="regularPostDTO.images[0]" alt="Selected Image">
+        <button class="remove-image-button" (click)="removeImage(0)">Remove</button>
       </label>
-      <label *ngIf="isFileSelected(1)" class="file-input-label">
+
+      <label *ngIf="!regularPostDTO.images[1]" class="file-input-label">
         <span class="file-input-text">Select an image</span>
-        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event, 2)">
+        <input class="file-input" type="file" (change)="onFileSelected($event, 1)">
       </label>
-      <label *ngIf="isFileSelected(2)" class="file-input-label">
+      <label *ngIf="regularPostDTO.images[1]" class="file-input-label">
+        <img [src]="regularPostDTO.images[1]" alt="Selected Image">
+        <button class="remove-image-button" (click)="removeImage(1)">Remove</button>
+      </label>
+
+      <label *ngIf="!regularPostDTO.images[2]" class="file-input-label">
         <span class="file-input-text">Select an image</span>
-        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event, 3)">
+        <input class="file-input" type="file" (change)="onFileSelected($event, 2)">
+      </label>
+      <label *ngIf="regularPostDTO.images[2]" class="file-input-label">
+        <img [src]="regularPostDTO.images[2]" alt="Selected Image">
+        <button class="remove-image-button" (click)="removeImage(2)">Remove</button>
+      </label>
+
+      <label *ngIf="!regularPostDTO.images[3]" class="file-input-label">
+        <span class="file-input-text">Select an image</span>
+        <input class="file-input" type="file" (change)="onFileSelected($event, 3)">
+      </label>
+      <label *ngIf="regularPostDTO.images[3]" class="file-input-label">
+        <img [src]="regularPostDTO.images[3]" alt="Selected Image">
+        <button class="remove-image-button" (click)="removeImage(3)">Remove</button>
       </label>
     </div>
 
     <button type="submit">Post</button>
   </form>
 </div>
-

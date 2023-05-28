@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {RegularPostDTO} from "../../../models/regular-post-dto";
-import {RegularPostService} from "../../../services/regular-post.service";
-import {Router} from "@angular/router";
-import {Location} from '@angular/common';
+import { Component } from '@angular/core';
+import { RegularPostDTO } from "../../../models/regular-post-dto";
+import { RegularPostService } from "../../../services/regular-post.service";
+import { Router } from "@angular/router";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-form-regular-post',
@@ -10,7 +10,6 @@ import {Location} from '@angular/common';
   styleUrls: ['./form-regular-post.component.css', '../../ludiq-forms.css']
 })
 export class FormRegularPostComponent {
-
 
   previousRoute: string = '';
   regularPostDTO: RegularPostDTO = {
@@ -25,8 +24,8 @@ export class FormRegularPostComponent {
   }
 
   constructor(private regularPostService: RegularPostService,
-              private router: Router,
-              private location: Location) {
+    private router: Router,
+    private location: Location) {
     this.previousRoute = this.getPreviousRoute();
   }
 
@@ -41,19 +40,27 @@ export class FormRegularPostComponent {
   }
 
   isFileSelected(index: number): boolean {
-    console.log("hehe");
     return this.regularPostDTO.images[index] != null;
   }
 
   onFileSelected(event: any, index: number): void {
-    const file: File = event.target.files[0];
-    const reader: FileReader = new FileReader();
+    const files: FileList = event.target.files;
+  
+    if (files.length > 0) {
+      const file: File = files[0];
+      const reader: FileReader = new FileReader();
+  
+      reader.onloadend = () => {
+        const imageUrl: string | null = reader.result ? reader.result.toString() : null;
+        this.regularPostDTO.images[index] = imageUrl;
+      };
+  
+      reader.readAsDataURL(file);
+    }
+  }  
 
-    reader.onloadend = () => {
-      this.regularPostDTO.images[index] = 'image';
-    };
-
-    reader.readAsDataURL(file);
+  removeImage(index: number): void {
+    this.regularPostDTO.images[index] = null;
   }
 
   newRegularPost() {
