@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {RegularPostDTO} from "../../../models/regular-post-dto";
-import {PostsService} from "../../../../app/posts/posts.service";
+import {PostsService} from "../../../posts/posts.service";
 import {Router} from "@angular/router";
 import {Location} from '@angular/common';
 
@@ -40,20 +40,12 @@ export class FormRegularPostComponent {
     }
   }
 
-  isFileSelected(index: number): boolean {
-    console.log("hehe");
-    return this.regularPostDTO.images[index] != null;
-  }
-
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     const reader: FileReader = new FileReader();
 
     reader.onload = () => {
-      this.regularPostDTO.images[this.index] = file.name;
-      console.log(this.regularPostDTO.images[this.index]);
-      console.log("table: " + this.regularPostDTO.images);
-
+      this.regularPostDTO.images[this.index] = file;
       if (this.index < this.regularPostDTO.images.length) {
         const labelElement = document.querySelectorAll('.file-input-label')[this.index];
         labelElement?.classList.add('selected');
@@ -65,13 +57,13 @@ export class FormRegularPostComponent {
   }
 
   onRemoveImage(image: string) {
-    const index = this.regularPostDTO.images.findIndex(img => img === image);
+    const index = this.regularPostDTO.images.findIndex(img => img?.name === image);
     if (index !== -1) {
       this.regularPostDTO.images[index] = null;
       this.index--;
     }
 
-    for (let i = index; i < this.regularPostDTO.images.length ; i++) {
+    for (let i = index; i < this.regularPostDTO.images.length; i++) {
       if (i === this.regularPostDTO.images.length - 1) {
         this.regularPostDTO.images[3] = null;
       } else {
@@ -83,7 +75,16 @@ export class FormRegularPostComponent {
 
 
   newRegularPost() {
-    this.postsService.newRegularPost(this.regularPostDTO).subscribe({
+    const formData = new FormData();
+
+    formData.append('regularPostDTO', JSON.stringify(this.regularPostDTO));
+    for (let i = 0; i < this.regularPostDTO.images.length; i++) {
+      const file = this.regularPostDTO.images[i];
+      // @ts-ignore
+      if(file != null)  formData.append('images[]', file, file.name);
+    }
+
+    this.postsService.newRegularPost(formData).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
         console.log('Post avec succès', response);
@@ -92,10 +93,9 @@ export class FormRegularPostComponent {
         // Gestion des erreurs en cas d'échec
         console.error('Erreur post : ', error);
       }
-    })
-
-    this.regularPostDTO.description = '';
+    });
   }
+
 
   /**
    * Method that returns the previous route of the current url

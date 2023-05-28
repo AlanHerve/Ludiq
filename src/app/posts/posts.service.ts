@@ -11,7 +11,7 @@ export class PostsService {
 
   constructor(private http: HttpClient) {}
 
-  newRegularPost(regularPostDTO: RegularPostDTO): Observable<RegularPostDTO> {
-    return this.http.post<RegularPostDTO>(`${apiUrl}/regularPost.php`, regularPostDTO);
+  newRegularPost(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${apiUrl}/regularPost.php`, formData);
   }
 }

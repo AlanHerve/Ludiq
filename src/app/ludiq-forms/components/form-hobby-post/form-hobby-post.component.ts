@@ -28,7 +28,7 @@ export class FormHobbyPostComponent {
   }
 
   submitted() {
-    this.postsService.newRegularPost(this.regularPostDTO).subscribe({
+    /*this.postsService.newRegularPost(this.regularPostDTO).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
         console.log('Post avec succès', response);
@@ -37,6 +37,6 @@ export class FormHobbyPostComponent {
         // Gestion des erreurs en cas d'échec
         console.error('Erreur post : ', error);
       }
-    })
+    })*/
   }
 }

@@ -4,7 +4,7 @@ export class RegularPostDTO {
               public id_user: number|null,
               public id_hobby: number|null,
               public description: string,
-              public images : (string | null)[],
+              public images : (File | null)[],
               public modified: string,
               public likes: number,
               public time: string) {
