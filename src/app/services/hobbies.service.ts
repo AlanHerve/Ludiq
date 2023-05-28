@@ -34,4 +34,12 @@ export class HobbiesService {
     );
   }
 
+  fetchHobbiesOfUser(requestDTO: RequestDTO): Observable<HobbyRequestDto>{
+    return this.http.post<HobbyRequestDto>(`${apiUrl}/hobbies.php`, requestDTO).pipe(
+      map(response => {
+        return response;
+      })
+    );
+  }
+
 }

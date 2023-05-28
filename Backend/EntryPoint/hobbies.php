@@ -9,10 +9,14 @@ include ("../Repositories/HobbyRepository.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+  $id = null;
   $body = file_get_contents('php://input');
   $data = json_decode($body,true);
 
   $function_to_call = $data['function_to_call'];
+
+
+  if(isset($data['id_user'])) $id = $data['id_user'];
 
   $hobbyRepository = HobbyRepository::getInstance();
 
@@ -21,10 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $hobbyRepository->fetchAllHobbies();
       break;
     case "fetchDisplayHobbies":
-      $json = $hobbyRepository->fetchDisplayHobbies();
-      echo $json;
+      $hobbyRepository->fetchDisplayHobbies();
       break;
-
+    case "fetchHobbiesOfUser":
+      $hobbyRepository->fetchHobbiesOfUser($id);
+      break;
   }
 
 }elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
