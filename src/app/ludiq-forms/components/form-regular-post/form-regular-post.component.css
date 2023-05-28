@@ -29,3 +29,24 @@
   background-color: #ccc;
   color: #7421C2;
 }
+
+.files {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-container {
+  display: flex;
+}
+
+.cross-file {
+  margin-left: 20px;
+  font-size: 22px;
+}
+
+.file-input-label.disabled span {
+  /* styles pour l'état disabled */
+  background-color: rgba(74, 0, 0, 0.3);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: not-allowed;
+}

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {apiUrl} from "./api-url";
+import {apiUrl} from "../services/api-url";
 import {RegularPostDTO} from "../models/regular-post-dto";
 
 @Injectable({
   providedIn: 'root'
 })
-export class RegularPostService {
+export class PostsService {
 
   constructor(private http: HttpClient) {}
 

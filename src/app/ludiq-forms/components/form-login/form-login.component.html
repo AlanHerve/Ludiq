@@ -1,7 +1,7 @@
 <div class = "background-form">
-  <form [@openSleep]="isOpen ? 'open' : 'sleep'" (ngSubmit)="onLogin()"  [formGroup]="loginForm">
+  <form [@fadeIn]="true" (ngSubmit)="onLogin()"  [formGroup]="loginForm">
     <h1>Connection</h1>
-    <a class ="cross" (click)="toggleForm()" (click)="onClose()" >&times;</a>
+    <a class ="cross" [@fadeOut]="true" (click)="onClose()" >&times;</a>
     <input required type="text" [(ngModel)]="userDTO.username" id="authentification" name="authentification"
            formControlName="authentification" placeholder="E-mail or Username"
            [ngClass]="{'valid-input': loginForm.controls['authentification'].valid}">

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {RegularPostService} from "../../../services/regular-post.service";
+import {PostsService} from "../../../../app/posts/posts.service";
 import {RegularPostDTO} from "../../../models/regular-post-dto";
 
 @Component({
@@ -24,13 +24,11 @@ export class FormHobbyPostComponent {
     modified: ''
   }
 
-  constructor(private regularPostService: RegularPostService) {
+  constructor(private postsService: PostsService) {
   }
 
-
-
   submitted() {
-    this.regularPostService.newRegularPost(this.regularPostDTO).subscribe({
+    this.postsService.newRegularPost(this.regularPostDTO).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
         console.log('Post avec succès', response);

@@ -4,25 +4,19 @@
     <span (click)="onClose()" class="cross">&times;</span>
     <textarea [(ngModel)]="regularPostDTO.description" name="description"></textarea>
     <div class="images">
-      <label class="file-input-label">
+      <label class="file-input-label" [class.disabled]="this.regularPostDTO.images[3] != null">
         <span class="file-input-text">Select an image</span>
-        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event, 0)">
+        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event)" [disabled]="regularPostDTO.images[3] != null">
       </label>
-      <label *ngIf="isFileSelected(0)" class="file-input-label">
-        <span class="file-input-text">Select an image</span>
-        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event, 1)">
-      </label>
-      <label *ngIf="isFileSelected(1)" class="file-input-label">
-        <span class="file-input-text">Select an image</span>
-        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event, 2)">
-      </label>
-      <label *ngIf="isFileSelected(2)" class="file-input-label">
-        <span class="file-input-text">Select an image</span>
-        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event, 3)">
-      </label>
+    </div>
+    <div class="hobby-container" *ngIf="this.regularPostDTO.images[0] != null">
+      <div class="file-container" *ngFor="let image of this.regularPostDTO.images">
+        <span>{{ image }}</span>
+        <span class="cross-file" *ngIf="image != null" (click)="onRemoveImage(image)">&times;</span>
+      </div>
     </div>
 
     <button type="submit">Post</button>
+
   </form>
 </div>
-

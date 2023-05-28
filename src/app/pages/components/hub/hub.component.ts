@@ -13,6 +13,7 @@ export class HubComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.formService.isOpen = false;
   }
 
   onRegister(): void {
@@ -21,8 +22,4 @@ export class HubComponent implements OnInit {
   onLogin(): void {
     this.router.navigateByUrl('hub/login');
   }
-  toggleForm() {
-    this.formService.toggleForm();
-    console.log("toggleform de hubcompo",this.formService.isOpen);
-}
 }

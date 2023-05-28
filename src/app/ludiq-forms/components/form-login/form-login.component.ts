@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserDTO} from "../../../models/user-dto";
 import {UserService} from "../../../services/user.service";
 import {Router} from "@angular/router";
@@ -11,24 +11,19 @@ import { FormService } from 'src/app/form.service';
   templateUrl: './form-login.component.html',
   styleUrls: ['./form-login.component.css'],
   animations:[
-    trigger('openSleep',[
-    state('sleep', style({
-      opacity:0,
-    })),
-    state('open', style({
-      opacity:1,
-    })),
-    transition('sleep => open', [
-      animate('300ms ease-in')
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })),
+      state('*', style({ opacity: 1 })),
+      transition('void => *', animate('200ms')),
     ]),
-    transition('open => sleep', [
-      animate('300ms ease-in')
+    trigger('fadeOut', [
+      state('*', style({ opacity: 1 })),
+      state('void', style({ opacity: 0 })),
+      transition('* => void', animate('200ms')),
     ])
-
-  ])
-]
+  ]
 })
-export class FormLoginComponent {
+export class FormLoginComponent implements OnInit  {
 
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
   userDTO: UserDTO = {
@@ -58,18 +53,20 @@ export class FormLoginComponent {
     })
     }
 
+  ngOnInit(): void {
+  }
 
-  onLogin():void{
+
+  onLogin(): void {
     this.router.navigateByUrl('home');
-    console.log(this.loginForm.value);
     this.userService.loginUser(this.userDTO).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
-        console.log('Utilisateur connecté avec succès:', response);
+        console.log('Status de connexion de l\'utilisateur :', response);
       },
       error: (error) => {
         // Gestion des erreurs en cas d'échec
-        console.error('Erreur lors de la connexion de l\'utilisateur:', error);
+        console.error('Erreur lors de la connexion de l\'utilisateur :', error);
       }
     })
   }
@@ -77,13 +74,5 @@ export class FormLoginComponent {
   onClose(): void {
     this.router.navigate(['/']);
   }
-  //formService est utilisé pour faire une transistion douce pour le form d'inscription et de register
-  get isOpen() {
-    return this.formService.isOpen;
-  }
 
-  toggleForm(){
-    this.formService.isOpen=false;
-    console.log("toggle de la croix",this.formService.isOpen)
-  }
 }
