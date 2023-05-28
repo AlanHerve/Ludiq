@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
+import { FormService } from 'src/app/form.service';
 
 @Component({
   selector: 'app-hub',
@@ -7,9 +8,8 @@ import {Router} from "@angular/router";
   styleUrls: ['./hub.component.css', '../../pages.css']
 })
 export class HubComponent implements OnInit {
-
-
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private formService: FormService) {
   }
 
   ngOnInit(): void {
@@ -21,4 +21,8 @@ export class HubComponent implements OnInit {
   onLogin(): void {
     this.router.navigateByUrl('hub/login');
   }
+  toggleForm() {
+    this.formService.toggleForm();
+    console.log("toggleform de hubcompo",this.formService.isOpen);
+}
 }

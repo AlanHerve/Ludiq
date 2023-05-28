@@ -12,12 +12,14 @@ import {HubModule} from "./pages/components/hub/hub.module";
 import {ProfileModule} from "./pages/components/profile/profile.module";
 import {FormCreateAccountModule} from "./ludiq-forms/components/form-create-account/form-create-account.module";
 import {HubRoutingModule} from "./pages/components/hub/hub-routing.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

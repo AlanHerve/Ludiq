@@ -3,13 +3,33 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserDTO} from "../../../models/user-dto";
 import {UserService} from "../../../services/user.service";
 import {Router} from "@angular/router";
+import {trigger,style,state,transition,animate,} from '@angular/animations';
+import { FormService } from 'src/app/form.service';
 
 @Component({
   selector: 'app-form-login',
   templateUrl: './form-login.component.html',
-  styleUrls: ['./form-login.component.css']
+  styleUrls: ['./form-login.component.css'],
+  animations:[
+    trigger('openSleep',[
+    state('sleep', style({
+      opacity:0,
+    })),
+    state('open', style({
+      opacity:1,
+    })),
+    transition('sleep => open', [
+      animate('300ms ease-in')
+    ]),
+    transition('open => sleep', [
+      animate('300ms ease-in')
+    ])
+
+  ])
+]
 })
 export class FormLoginComponent {
+
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
   userDTO: UserDTO = {
     id: -1,
@@ -23,7 +43,8 @@ export class FormLoginComponent {
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
-              private router: Router){
+              private router: Router,
+              private formService: FormService){
     this.loginForm = this.formBuilder.group({
       authentification: [null, [Validators.required
         , Validators.minLength(4)
@@ -35,7 +56,7 @@ export class FormLoginComponent {
         , Validators.maxLength(20)]
       ],
     })
-  }
+    }
 
 
   onLogin():void{
@@ -55,5 +76,14 @@ export class FormLoginComponent {
 
   onClose(): void {
     this.router.navigate(['/']);
+  }
+  //formService est utilisé pour faire une transistion douce pour le form d'inscription et de register
+  get isOpen() {
+    return this.formService.isOpen;
+  }
+
+  toggleForm(){
+    this.formService.isOpen=false;
+    console.log("toggle de la croix",this.formService.isOpen)
   }
 }
