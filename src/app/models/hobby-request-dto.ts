@@ -1,4 +1,4 @@
-import {RequestDTO} from "./requestDTO";
+import {RequestDto} from "./request-dto";
 import {HobbyDTO} from "./hobby-dto";
 
 /**

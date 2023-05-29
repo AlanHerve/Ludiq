@@ -195,5 +195,88 @@ class HobbyRepository
         echo json_encode($response);
     }
 
+    function fetchAvailableHobbiesOfUser($id){
+        $id_user = $id;
+        $response = null;
+
+        $hobbies = [];
+
+        $stmt = $this->db->prepare("
+                    SELECT
+	                    hobby.ID_HOBBY
+                        , hobby.HOBBY_NAME
+                    FROM
+	                    hobby
+                    WHERE
+	                    hobby.ID_HOBBY NOT IN 
+	                                (
+        	                        SELECT 
+	        	                        hobby_post.`ID_HOBBY`
+                                    FROM 
+	                                    hobby_post 
+                                    WHERE 
+	                                    hobby_post.`ID_USER` = ?
+    		                        )");
+        $stmt->bind_param("i", $id_user);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        if($result){
+            if($result->num_rows > 0){
+                while ($row = $result->fetch_assoc()) array_push($hobbies , new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], null));
+                $response = array(
+                    'success' => true,
+                    'hobbies' => $hobbies
+                );
+            }else{
+                $response = array(
+                    'success' => true,
+                    'id' => $id_user,
+                    'message' => 'this user already has all hobbies in their bio'
+                );
+            }
+        }else{
+            $response = array(
+                'success' => false,
+                'message' => 'could not access table'
+            );
+        }
+
+        echo json_encode($response);
+    }
+
+    function newHobbyPost($id, $hobbyPost){
+
+        $id_user = $id;
+        $hobbyPostDto = $hobbyPost;
+
+        $response = null;
+
+        $stmt = $this->db->prepare("INSERT INTO
+	hobby_post
+    (ID_HOBBY, ID_USER, EXPERIENCE, FREQUENCY, AVAILABLE)
+VALUES
+(?, ?, ?, ?, ?)");
+        $stmt->bind_param("iissi", $hobbyPostDto->id_hobby, $hobbyPostDto->id_user, $hobbyPostDto->advancement, $hobbyPostDto->frequency, $hobbyPostDto->availability);
+        $stmt->execute();
+
+
+        if($stmt->affected_rows > 0){
+            $response = array(
+                'success' => true,
+                'hobbies' => "heya"
+            );
+        }else{
+            $response = array(
+                'success' => false,
+                'message' => $hobbyPost
+            );
+        }
+
+
+        echo json_encode($response);
+    }
+
 
 }

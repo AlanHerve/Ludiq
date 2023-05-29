@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {HobbiesService} from "../../../services/hobbies.service";
-import {RequestDTO} from "../../../models/requestDTO";
+import {RequestDto} from "../../../models/request-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
 
 @Component({
@@ -15,12 +15,10 @@ import {HobbyDTO} from "../../../models/hobby-dto";
 export class MightLikeHobbiesDisplayComponent {
 
   // request to fetch all hobbies
-  requestDTO: RequestDTO = {
-    function_to_call: "fetchAllHobbies"
-  };
+
 
   // request to fetch display hobbies
-  requestDTO2: RequestDTO = {
+  requestDTO2: RequestDto = {
     function_to_call: "fetchDisplayHobbies"
   };
 
@@ -34,20 +32,7 @@ export class MightLikeHobbiesDisplayComponent {
     this.fetchDisplayHobbies();
   }
 
-  fetchAllHobbies(){
-    this.hobbiesService.fetchAllHobbies(this.requestDTO).subscribe({
-      next: (response) => {
-        // in case of success
-        response.hobbies.forEach(function (index: HobbyDTO){
-          console.log(index);
-        });
-      },
-      error: (error) => {
-        // in case of failure
-        console.error('Could not get all hobbies', error);
-      }
-    })
-  }
+
 //TODO : display errors
   //fetch 3 top hobbies and 3 random hobbies
   fetchDisplayHobbies(){

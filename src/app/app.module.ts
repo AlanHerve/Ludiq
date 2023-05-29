@@ -30,7 +30,8 @@ import {PostsModule} from "./posts/posts.module";
         HubRoutingModule,
         ProfileModule,
         FormCreateAccountModule,
-        PostsModule
+        PostsModule,
+        LudiqFormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

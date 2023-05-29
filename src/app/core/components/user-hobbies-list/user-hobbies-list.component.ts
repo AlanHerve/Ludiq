@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {HobbiesService} from "../../../services/hobbies.service";
-import {RequestDTO} from "../../../models/requestDTO";
+import {RequestDto} from "../../../models/request-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
 
 @Component({
@@ -14,7 +14,7 @@ export class UserHobbiesListComponent {
 
   hobbies: HobbyDTO[] = [];
 
-  requestDTO : RequestDTO = {
+  requestDTO : RequestDto = {
     function_to_call: "fetchHobbiesOfUser",
     id_user: 0
   };
