@@ -138,4 +138,6 @@ textarea {
   margin: 20px 20px;
   width: 100%;
   flex-grow: 1;
+  position:relative;
+  margin-top: 10px;
 }

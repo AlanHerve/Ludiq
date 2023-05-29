@@ -3,11 +3,24 @@ import {RegularPostDTO} from "../../../models/regular-post-dto";
 import {PostsService} from "../../../posts/posts.service";
 import {Router} from "@angular/router";
 import {Location} from '@angular/common';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-form-regular-post',
   templateUrl: './form-regular-post.component.html',
-  styleUrls: ['./form-regular-post.component.css', '../../ludiq-forms.css']
+  styleUrls: ['./form-regular-post.component.css', '../../ludiq-forms.css'],
+  animations:[
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })),
+      state('*', style({ opacity: 1 })),
+      transition('void => *', animate('200ms')),
+    ]),
+    trigger('fadeOut', [
+      state('*', style({ opacity: 1 })),
+      state('void', style({ opacity: 0 })),
+      transition('* => void', animate('200ms')),
+    ])
+  ]
 })
 export class FormRegularPostComponent {
   index: number = 0;

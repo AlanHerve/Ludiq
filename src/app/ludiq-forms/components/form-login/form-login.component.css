@@ -58,11 +58,9 @@ input {
 .cross:hover {
   color: #333333;
 }
-
 input:focus {
   outline: 2px solid #7421C2;
 }
 .valid-input {
   outline: 2px solid #307473;
 }
-

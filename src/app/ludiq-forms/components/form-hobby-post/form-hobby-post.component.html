@@ -1,4 +1,4 @@
-<form (ngSubmit)="submitted()">
+<form [@fadeIn]="true" (ngSubmit)="submitted()">
   <select id="hobbyType" name="hobbyType" [(ngModel)]="this.selection">
     <option *ngFor="let hobby of hobbies" [value]="hobby">{{hobby}}</option>
   </select>

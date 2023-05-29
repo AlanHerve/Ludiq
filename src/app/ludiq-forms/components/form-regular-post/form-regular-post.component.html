@@ -1,5 +1,5 @@
 <div class="background-form">
-  <form (ngSubmit)="newRegularPost()">
+  <form [@fadeIn]="true" (ngSubmit)="newRegularPost()">
     <h1>New regular post</h1>
     <span (click)="onClose()" class="cross">&times;</span>
     <textarea [(ngModel)]="regularPostDTO.description" name="description"></textarea>
