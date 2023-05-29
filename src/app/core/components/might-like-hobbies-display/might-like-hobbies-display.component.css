@@ -1,0 +1,26 @@
+.list.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.number {
+  background-color: #307473;
+  border-radius: 100px;
+  padding:13px;
+  color: white;
+  margin-left: 10px;
+}
+
+.tag {
+  width:190px;
+  margin-top: 7px;
+}
+
+h2 {
+  font-size: 25px;
+  font-weight: 400;
+  margin-bottom: 5px;
+  margin-top: 40px;
+}

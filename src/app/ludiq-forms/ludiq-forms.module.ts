@@ -20,12 +20,13 @@ import {FormRegularPostModule} from "./components/form-regular-post/form-regular
     FormRegularPostComponent
   ],
     exports: [
-      FormCreateAccountComponent,
-      FormLoginComponent,
-      FormNewPostComponent,
-      FormCreateAccountModule,
-      FormRegularPostComponent,
-      FormRegularPostModule
+        FormCreateAccountComponent,
+        FormLoginComponent,
+        FormNewPostComponent,
+        FormCreateAccountModule,
+        FormRegularPostComponent,
+        FormRegularPostModule,
+        FormHobbyPostComponent
     ],
     imports: [
       CommonModule,

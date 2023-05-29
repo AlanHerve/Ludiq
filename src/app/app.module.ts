@@ -13,6 +13,7 @@ import {ProfileModule} from "./pages/components/profile/profile.module";
 import {FormCreateAccountModule} from "./ludiq-forms/components/form-create-account/form-create-account.module";
 import {HubRoutingModule} from "./pages/components/hub/hub-routing.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {PostsModule} from "./posts/posts.module";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeModule,
     HubRoutingModule,
     ProfileModule,
-    FormCreateAccountModule
+    FormCreateAccountModule,
+    PostsModule,
+    LudiqFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
