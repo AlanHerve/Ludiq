@@ -1,0 +1,17 @@
+select {
+  margin: 5px;
+  width: 60%;
+  height: 45px;
+  border: #9B9B9B solid 1px;
+  border-radius: 14px;
+
+  text-align: center;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.submit {
+  width: 60%;
+}
+
+

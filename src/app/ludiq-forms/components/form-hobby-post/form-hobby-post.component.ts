@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
-import {PostsService} from "../../../../app/posts/posts.service";
-import {RegularPostDTO} from "../../../models/regular-post-dto";
+import {Component, OnInit} from '@angular/core';
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {RequestDTO} from "../../../models/request-dto";
 import {HobbiesService} from "../../../services/hobbies.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HobbyPostDTO} from "../../../models/hobby-post-dto";
+import {Location} from "@angular/common";
+import {Form} from "../../models/form";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-form-hobby-posts',
   templateUrl: './form-hobby-post.component.html',
   styleUrls: ['./form-hobby-post.component.css',  '../../ludiq-forms.css']
 })
-export class FormHobbyPostComponent {
+export class FormHobbyPostComponent extends Form implements OnInit {
 
   hobbies : HobbyDTO[] = [];
 
@@ -31,9 +32,15 @@ export class FormHobbyPostComponent {
     availability: 1
   }
 
-
   hobbyForm: FormGroup;
-  constructor(private builder: FormBuilder, private hobbiesService: HobbiesService) {
+  constructor(
+    private builder: FormBuilder,
+    private hobbiesService: HobbiesService,
+    router: Router,
+    location: Location
+  ) {
+    super(router, location);
+
     this.hobbyForm = this.builder.group({
       hobby: [this.hobbies[0], [Validators.required]],
       advancement: [this.advancement_options[0], [Validators.required]],
@@ -46,8 +53,11 @@ export class FormHobbyPostComponent {
 
   }
 
+
+
   submitted() {
-    console.log(this.hobbyPostDTO.id_hobby+" "+this.hobbyPostDTO.advancement+" "+this.hobbyPostDTO.frequency+" "+this.hobbyPostDTO.availability);
+    // Converting string into int
+    this.hobbyPostDTO.id_hobby = +this.hobbyPostDTO.id_hobby;
     this.newHobbyPost();
   }
 
@@ -55,7 +65,6 @@ export class FormHobbyPostComponent {
     this.hobbiesService.newHobbyPost(this.hobbyPostDTO).subscribe({
       next: (response) => {
         // in case of success
-        console.log(response);
         this.hobbies.length = 0;
         this.fetchAvailableHobbiesOfUser();
       },
@@ -70,8 +79,8 @@ export class FormHobbyPostComponent {
     this.hobbiesService.fetchAvailableHobbiesOfUser().subscribe({
       next: (response) => {
         // in case of success
-        for (let i = 0; i < response.hobbies.length; i++) {
-          this.hobbies.push(response.hobbies[i]);
+        for (let i = 0; i < response.length; i++) {
+          this.hobbies.push(response[i]);
         }
       },
       error: (error) => {
@@ -80,5 +89,6 @@ export class FormHobbyPostComponent {
       }
     });
   }
+
 
 }

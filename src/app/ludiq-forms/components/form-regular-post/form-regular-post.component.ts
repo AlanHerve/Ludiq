@@ -1,18 +1,18 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RegularPostDTO} from "../../../models/regular-post-dto";
 import {PostsService} from "../../../posts/posts.service";
 import {Router} from "@angular/router";
 import {Location} from '@angular/common';
+import {Form} from "../../models/form";
 
 @Component({
   selector: 'app-form-regular-post',
   templateUrl: './form-regular-post.component.html',
   styleUrls: ['./form-regular-post.component.css', '../../ludiq-forms.css']
 })
-export class FormRegularPostComponent {
+export class FormRegularPostComponent extends Form implements OnInit {
   index: number = 0;
 
-  previousRoute: string = '';
   regularPostDTO: RegularPostDTO = {
     id_regular_post: null,
     id_user: 1,
@@ -24,21 +24,15 @@ export class FormRegularPostComponent {
     modified: ''
   }
 
-  constructor(private postsService: PostsService,
-              private router: Router,
-              private location: Location) {
-    this.previousRoute = this.getPreviousRoute();
+  ngOnInit() {
   }
 
-  /**
-   * Method that closes the pop-up by clicking on the cross
-   */
-  onClose(): void {
-    // Coming back to the previous section
-    if (this.previousRoute) {
-      this.router.navigateByUrl(this.previousRoute);
-    }
+  constructor(private postsService: PostsService,
+              router: Router,
+              location: Location) {
+    super(router, location);
   }
+
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
@@ -96,14 +90,4 @@ export class FormRegularPostComponent {
     });
   }
 
-
-  /**
-   * Method that returns the previous route of the current url
-   * @private
-   */
-  private getPreviousRoute(): string {
-    const currentUrl = this.location.path();
-
-    return currentUrl.slice(0, currentUrl.lastIndexOf('/'));
-  }
 }

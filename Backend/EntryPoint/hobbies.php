@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     if (isset($data['id_user'])) $id = $data['id_user'];
-
     $HobbyPostDTO = null;
     if(isset($data['HobbyPostDTO']['id_user']) && isset($data['HobbyPostDTO']['id_hobby']) && isset($data['HobbyPostDTO']['frequency']) && isset($data['HobbyPostDTO']['advancement']) && isset($data['HobbyPostDTO']['availability'])){
         $HobbyPostDTO = new HobbyPostDTO($data['HobbyPostDTO']['id_user'], $data['HobbyPostDTO']['id_hobby'], $data['HobbyPostDTO']['frequency'], $data['HobbyPostDTO']['advancement'], $data['HobbyPostDTO']['availability']);
@@ -29,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     $hobbyRepository = HobbyRepository::getInstance();
-
     switch ($function_to_call) {
         case "fetchAllHobbies":
             $hobbyRepository->fetchAllHobbies();
@@ -44,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hobbyRepository->fetchAvailableHobbiesOfUser($id);
             break;
         case "newHobbyPost" :
-            $hobbyRepository->newHobbyPost($id, $HobbyPostDTO);
+            echo $hobbyRepository->newHobbyPost($HobbyPostDTO);
             break;
 
     }

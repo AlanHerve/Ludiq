@@ -7,6 +7,7 @@ import {Injectable} from "@angular/core";
 import {RequestDTO} from "../models/request-dto";
 import {HobbyRequestDTO} from "../models/hobby-request-dto";
 import {HobbyPostDTO} from "../models/hobby-post-dto";
+import {HobbyDTO} from "../models/hobby-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -32,23 +33,23 @@ export class HobbiesService {
     );
   }
 
-  fetchHobbiesOfUser(RequestDTO: RequestDTO): Observable<HobbyRequestDTO>{
-    return this.http.post<HobbyRequestDTO>(`${apiUrl}/hobbies.php`, RequestDTO).pipe(
+  fetchHobbiesOfUser(RequestDTO: RequestDTO): Observable<HobbyDTO[]>{
+    return this.http.post<HobbyDTO[]>(`${apiUrl}/hobbies.php`, RequestDTO).pipe(
       map(response => {
         return response;
       })
     );
   }
 
-  fetchAvailableHobbiesOfUser() : Observable<HobbyRequestDTO>{
+  fetchAvailableHobbiesOfUser() : Observable<HobbyDTO[]>{
     let RequestDTO: RequestDTO = {
       function_to_call: "fetchAvailableHobbiesOfUser",
       id_user: 2
     }
 
-    return this.http.post<HobbyRequestDTO>(`${apiUrl}/hobbies.php`, RequestDTO).pipe(
+    return this.http.post<{ hobbies: HobbyDTO[] }>(`${apiUrl}/hobbies.php`, RequestDTO).pipe(
       map(response => {
-        return response;
+        return response.hobbies;
       })
     );
   }
@@ -59,8 +60,7 @@ export class HobbiesService {
       id_user: 2,
       HobbyPostDTO: HobbyPostDTO
     };
-    console.log("hey");
-    return this.http.post<HobbyRequestDTO>(`${apiUrl}/hobbies.php`, RequestDTO).pipe(
+    return this.http.post<HobbyDTO[]>(`${apiUrl}/hobbies.php`, RequestDTO).pipe(
       map(response => {
         return response;
       })

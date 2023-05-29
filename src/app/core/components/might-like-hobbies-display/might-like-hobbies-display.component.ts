@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {HobbiesService} from "../../../services/hobbies.service";
 import {RequestDTO} from "../../../models/request-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
+import {HobbyCountDTO} from "../../../models/hobby-count-dto";
 
 @Component({
   selector: 'app-might-like-hobbies-display',
@@ -23,10 +24,10 @@ export class MightLikeHobbiesDisplayComponent {
   };
 
   //Store top 3 hobbies
-  top_hobbies: HobbyDTO[] = [];
+  top_hobbies: HobbyCountDTO[] = [];
 
   //store 3 random hobbies
-  rand_hobbies: HobbyDTO[] = [];
+  rand_hobbies: HobbyCountDTO[] = [];
 
   constructor(private hobbiesService: HobbiesService) {
     this.fetchDisplayHobbies();

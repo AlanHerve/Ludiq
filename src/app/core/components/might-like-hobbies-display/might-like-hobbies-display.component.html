@@ -3,14 +3,14 @@
 <h2>TOP 3</h2>
 <ul class = "list center">
   <div class = "center" *ngFor="let top_hobby of top_hobbies">
-    <button class = "tag" >{{top_hobby.name}}</button>
-    <span class = "number">10</span>
+    <button class = "tag" >{{top_hobby.hobbyDTO.name}}</button>
+    <span class = "number">{{top_hobby.count}}</span>
   </div>
 </ul>
 <h2>Suggestions</h2>
 <ul class = "list center">
   <div class = "center" *ngFor="let rand_hobby of rand_hobbies">
-    <button class = "tag">{{rand_hobby.name}}</button>
-    <span class = "number">10</span>
+    <button class = "tag">{{rand_hobby.hobbyDTO.name}}</button>
+    <span class = "number">{{rand_hobby.count}}</span>
   </div>
 </ul>

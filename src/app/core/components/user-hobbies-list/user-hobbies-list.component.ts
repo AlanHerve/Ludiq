@@ -32,7 +32,7 @@ export class UserHobbiesListComponent {
       next: (response) => {
         // in case of success
 
-        for(let i = 0; i < response.hobbies.length; i++) this.hobbies.push(response.hobbies[i]);
+        for(let i = 0; i < response.length; i++) this.hobbies.push(response[i]);
         /*response.hobbies.forEach(function(value){
           console.log(value);
         })*/
