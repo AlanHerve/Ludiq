@@ -20,33 +20,33 @@ class HobbyRepository
 
     public function fetchAllHobbies() {
 
-      $hobbies = [];
-      $response = null;
+        $hobbies = [];
+        $response = null;
 
-      $stmt = $this->db->prepare("SELECT * FROM hobby");
-      $stmt->execute();
-      $result = $stmt->get_result();
+        $stmt = $this->db->prepare("SELECT * FROM hobby");
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-      if($result){
-        if($result->num_rows>0){
-          while ($row = $result->fetch_assoc()) array_push($hobbies, new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], $row["IMAGE"]));
-          $response = array(
-            'success' => true,
-            'hobbies' => $hobbies
-          );
+        if($result){
+            if($result->num_rows>0){
+                while ($row = $result->fetch_assoc()) array_push($hobbies, new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], $row["IMAGE"]));
+                $response = array(
+                    'success' => true,
+                    'hobbies' => $hobbies
+                );
+            }else{
+                $result = array(
+                    'success' => false,
+                    'message' => 'Hobby table empty'
+                );
+            }
         }else{
-          $result = array(
-            'success' => false,
-            'message' => 'Hobby table empty'
-          );
+            $response = array(
+                'success' => false,
+                'message' => 'Could not fetch hobbies'
+            );
         }
-      }else{
-        $response = array(
-          'success' => false,
-          'message' => 'Could not fetch hobbies'
-        );
-      }
-      echo json_encode($response);
+        echo json_encode($response);
 
     }
 
@@ -90,7 +90,7 @@ class HobbyRepository
 
                     // select 3 random hobbies, those hobbies won't be part of the top 3 most popular hobbies
                     $stmt = $this->db->prepare(
-              "SELECT DISTINCT
+                        "SELECT DISTINCT
                         activity.`ID_HOBBY`
                         , hobby.`HOBBY_NAME`
                     FROM
@@ -112,18 +112,18 @@ class HobbyRepository
                                 'hobbies'  => array_merge($top_hobbies, $rand_hobbies)
                                 //'rand_hobbies' => $rand_hobbies
                             );
-                         }else{
+                        }else{
                             $response = array(
                                 'success'     => true,
                                 'hobbies' => $top_hobbies
                             );
                         }
                     }else{
-                            $response = array(
-                                'success'      => true,
-                                'hobbies'  => $top_hobbies,
-                                'message' => 'could not fetch random hobbies'
-                            );
+                        $response = array(
+                            'success'      => true,
+                            'hobbies'  => $top_hobbies,
+                            'message' => 'could not fetch random hobbies'
+                        );
                     }
                 }else{
                     $response = array(
@@ -131,17 +131,17 @@ class HobbyRepository
                         'hobbies'  => $top_hobbies,
                         'message' => 'not enough'
                     );
-                 }
+                }
             }else{
                 $response = array(
                     'success' => false,
                     'message' => 'Hobby table empty'
                 );
-             }
+            }
         }else{
             $response = array(
-            'success' => false,
-            'message' => 'Error fetching data from table'
+                'success' => false,
+                'message' => 'Error fetching data from table'
             );
         }
         echo json_encode($response);

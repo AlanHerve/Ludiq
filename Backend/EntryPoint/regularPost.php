@@ -24,9 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $modified = $data['modified'];
   }
   $images = $_FILES['images'];
-  $targetDir = '../assets/images/';
 
-  $uploadedFiles = saveFiles($images, $targetDir);
+  $uploadedFiles = saveFiles($images);
 
   $regularPostDTO = new RegularPostDTO(null, $id_user, $id_hobby, $description, $uploadedFiles, $modified, $likes, $time);
 
@@ -64,7 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-function saveFiles($images, $targetDir) {
+function saveFiles($images) {
+  $targetDir = '../assets/images/';
+
   if(!isset($images)) return null;
 
   $uploadedFiles = [];
