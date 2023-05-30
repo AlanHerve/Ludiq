@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth.guard'; // Assurez-vous que le chemin est correct
+import { AuthGuard } from './auth.guard';
+import { inject } from '@angular/core';
 
 const routes: Routes = [
   {
-    path: 'hub',
-    loadChildren: () => import('./pages/components/hub/hub.module').then(m=>m.HubModule)
+    path: 'hub', loadChildren: () => import('./pages/components/hub/hub.module').then(m=>m.HubModule)
   },
   {
     path: 'home',
     loadChildren: () => import('./pages/components/home/home.module').then(m=>m.HomeModule),
-    canActivate: [AuthGuard]
+    canActivate: [() => inject(AuthGuard).canActivate()]
   },
   {
     path: 'profile',
     loadChildren: () => import('./pages/components/profile/profile.module').then(m=>m.ProfileModule),
-    canActivate: [AuthGuard]
+    canActivate: [() => inject(AuthGuard).canActivate()]
   },
   {
     path: '**', redirectTo: 'hub', pathMatch: 'full'
