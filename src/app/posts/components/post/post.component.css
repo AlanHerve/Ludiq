@@ -28,15 +28,22 @@
 }
 
 .username {
+  margin-top: 5px;
   font-size: 24px;
   font-weight: 500;
   margin-right: 10px;
 }
 
+.date {
+  margin-left: 50px;
+  font-size: 15px;
+  margin-top: 12px;
+  color: #333333;
+}
+
 .nickname {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 100;
-  color: #707070;
 }
 
 .user-info {
@@ -52,4 +59,8 @@
 
 .count {
   margin-left: 5px;
+}
+
+button {
+  margin: 20px 0;
 }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 27, 2023 at 02:29 PM
+-- Generation Time: May 28, 2023 at 09:31 PM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -48,7 +48,7 @@ INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVA
 (3, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10),
 (4, 2, 3, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10),
 (5, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10),
-(6, 3, 5, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
+(6, 3, 1, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
 (7, 3, 7, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
 (8, 3, 9, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
 (9, 3, 8, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
@@ -155,12 +155,20 @@ CREATE TABLE `hobby_post` (
   `ID_USER` int(11) NOT NULL,
   `EXPERIENCE` varchar(30) DEFAULT 'Beginner',
   `FREQUENCY` varchar(30) DEFAULT NULL,
-  `AVAILABLE` tinyint(1) DEFAULT '0',
-  `IMAGE` varchar(60) DEFAULT NULL,
-  `DESCRIPTION` text,
-  `MODIFIED` int(1) DEFAULT '0',
-  `TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `AVAILABLE` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hobby_post`
+--
+
+INSERT INTO `hobby_post` (`ID_HOBBY_POST`, `ID_HOBBY`, `ID_USER`, `EXPERIENCE`, `FREQUENCY`, `AVAILABLE`) VALUES
+(1, 1, 2, 'Expert', 'Daily', 1),
+(2, 1, 3, 'Beginner', '2-3/week', 0),
+(3, 1, 4, 'Advanced', 'Weekly', 1),
+(4, 9, 4, 'Expert', 'Monthly', 1),
+(5, 10, 2, 'Intermediate', 'Daily', 1),
+(6, 16, 2, 'Expert', 'Daily', 1);
 
 -- --------------------------------------------------------
 
@@ -208,7 +216,6 @@ INSERT INTO `organization` (`ID_ORGANIZATION`, `NAME_ORGANIZATION`, `AVATAR`) VA
 CREATE TABLE `regular_post` (
   `ID_REGULAR_POST` int(11) NOT NULL,
   `ID_USER` int(11) NOT NULL,
-  `ID_HOBBY` int(11) NOT NULL,
   `DESCRIPTION` text,
   `IMAGE1` varchar(60) DEFAULT NULL,
   `IMAGE2` varchar(60) DEFAULT NULL,
@@ -311,8 +318,7 @@ ALTER TABLE `organization`
 --
 ALTER TABLE `regular_post`
   ADD PRIMARY KEY (`ID_REGULAR_POST`),
-  ADD KEY `ID_USER` (`ID_USER`),
-  ADD KEY `ID_HOBBY` (`ID_HOBBY`);
+  ADD KEY `ID_USER` (`ID_USER`);
 
 --
 -- Indexes for table `user`
@@ -334,6 +340,11 @@ ALTER TABLE `activity`
 --
 ALTER TABLE `hobby`
   MODIFY `ID_HOBBY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+--
+-- AUTO_INCREMENT for table `hobby_post`
+--
+ALTER TABLE `hobby_post`
+  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `message`
 --
@@ -404,8 +415,7 @@ ALTER TABLE `message`
 -- Constraints for table `regular_post`
 --
 ALTER TABLE `regular_post`
-  ADD CONSTRAINT `regular_post_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
-  ADD CONSTRAINT `regular_post_ibfk_2` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE CASCADE;
+  ADD CONSTRAINT `regular_post_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

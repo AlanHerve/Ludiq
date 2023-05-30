@@ -1,7 +1,10 @@
-import {RequestDTO} from "./requestDTO";
-import {HobbyDTO} from "./hobby-dto";
+import {HobbyCountDTO} from "./hobby-count-dto";
 
-export class HobbyRequestDto{
-  constructor(public hobbies: HobbyDTO[], public top_hobbies: HobbyDTO[], public rand_hobbies: HobbyDTO[]) {
+/**
+ * Result of backend queries for hobbies
+ * @hobbies : return of queries
+ */
+export class HobbyRequestDTO{
+  constructor(public hobbies: HobbyCountDTO[]) {
   }
 }

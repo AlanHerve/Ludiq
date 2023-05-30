@@ -2,7 +2,8 @@
   position: relative;
   display: inline-block;
   overflow: hidden;
-  margin: 5px;
+  float: left;
+  margin: 5px 5px 5px 20px;
 }
 
 .file-input-label span {
@@ -23,9 +24,57 @@
   height: 100%;
   opacity: 0;
   cursor: pointer;
+  z-index: 200;
 }
 
 .file-input-label:hover span {
   background-color: #ccc;
   color: #7421C2;
+}
+
+.files {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-container {
+  display: flex;
+}
+
+.cross-file {
+  margin-left: 20px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.file-input-label.disabled span {
+  /* styles pour l'état disabled */
+  background-color: rgba(173, 0, 0, 0.3);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: not-allowed;
+}
+
+
+textarea {
+  border: #9B9B9B solid 1px;
+  border-radius: 14px;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 300;
+  overflow-wrap: break-word;
+  resize: none;
+  height: 70px !important;
+  width:-webkit-fill-available;
+  margin: 10px 20px;
+}
+
+
+button {
+  float: right;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.file-name {
+  margin-top: 3px;
 }

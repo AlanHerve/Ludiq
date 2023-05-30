@@ -9,6 +9,7 @@ import { FormNewPostComponent } from './components/form-new-post/form-new-post.c
 import {FormCreateAccountModule} from "./components/form-create-account/form-create-account.module";
 import { FormRegularPostComponent } from './components/form-regular-post/form-regular-post.component';
 import {FormRegularPostModule} from "./components/form-regular-post/form-regular-post.module";
+import { FormModifyProfileComponent } from './components/form-modify-profile/form-modify-profile.component';
 
 
 @NgModule({
@@ -17,15 +18,17 @@ import {FormRegularPostModule} from "./components/form-regular-post/form-regular
     FormHobbyPostComponent,
     FormLoginComponent,
     FormNewPostComponent,
-    FormRegularPostComponent
+    FormRegularPostComponent,
+    FormModifyProfileComponent
   ],
     exports: [
-      FormCreateAccountComponent,
-      FormLoginComponent,
-      FormNewPostComponent,
-      FormCreateAccountModule,
-      FormRegularPostComponent,
-      FormRegularPostModule
+        FormCreateAccountComponent,
+        FormLoginComponent,
+        FormNewPostComponent,
+        FormCreateAccountModule,
+        FormRegularPostComponent,
+        FormRegularPostModule,
+        FormHobbyPostComponent
     ],
     imports: [
       CommonModule,

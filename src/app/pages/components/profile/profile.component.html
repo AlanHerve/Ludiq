@@ -1,11 +1,23 @@
 <div class="wrapper">
   <div class="content">
     <div class = "top-bar">
-      <p>2 posts</p>
-      <p>3 hobbies</p>
+      <p class = "text">2 posts</p>
+      <p class = "text right">3 hobbies</p>
+    </div>
+    <div class = "user">
+      <img src = "assets/images/icons/user.png" alt = "userImg">
+      <p class = "username">Name</p>
+      <p class = "nickname">username</p>
+      <p class = "friends">3 friends</p>
+    </div>
+    <div class = "buttons">
+      <button class = "tag" routerLink="add_hobby">Add an hobby</button>
+      <button routerLink = "modify_profile">Modify profile</button>
+      <button class = "button2" routerLink = "">Disconnect</button>
     </div>
   </div>
   <app-navigation-bar></app-navigation-bar>
+  <app-user-hobbies-list></app-user-hobbies-list>
 </div>
 
 <router-outlet></router-outlet>

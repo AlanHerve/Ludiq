@@ -121,19 +121,6 @@ p {
   flex-wrap: wrap;
 }
 
-textarea {
-  margin: 5px;
-  height: 70%;
-  border: #9B9B9B solid 1px;
-  border-radius: 14px;
-  padding: 20px;
-  font-size: 18px;
-  font-weight: 300;
-  width: 100%;
-  overflow-wrap: break-word;
-  resize: none;
-}
-
 .submit {
   margin: 20px 20px;
   width: 100%;

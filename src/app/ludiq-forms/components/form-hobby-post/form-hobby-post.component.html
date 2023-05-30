@@ -1,7 +1,28 @@
-<form (ngSubmit)="submitted()">
-  <select id="hobbyType" name="hobbyType" [(ngModel)]="this.selection">
-    <option *ngFor="let hobby of hobbies" [value]="hobby">{{hobby}}</option>
-  </select>
+<div class = "background-form">
+  <form (ngSubmit)="submitted()">
+    <span (click)="onClose()" class="cross">&times;</span>
+    <h1>Add an hobby</h1>
+    <p>Hobby</p>
+    <select id="hobbyType" name="hobbyType" [(ngModel)]="this.hobbyPostDTO.id_hobby">
+      <option *ngFor="let hobby of hobbies; let i = index" [value]="hobby.id">{{hobby.name}}</option>
+    </select>
 
-  <button type="submit">Submit</button>
-</form>
+    <p>Level</p>
+    <select id="advancement" name="advancement" [(ngModel)]="this.hobbyPostDTO.advancement">
+      <option *ngFor="let advancement of advancement_options; let i = index" [value]="advancement">{{advancement}}</option>
+    </select>
+
+    <p>Frequency</p>
+    <select id="frequency" name="frequency" [(ngModel)]="this.hobbyPostDTO.frequency">
+      <option *ngFor="let frequency of frequency_options; let i = index" [selected]="i == 0" [value]="frequency">{{frequency}}</option>
+    </select>
+
+    <p>Availability</p>
+    <select id="availability" name="availability" [(ngModel)]="this.hobbyPostDTO.availability">
+      <option selected [value]="1">Available</option>
+      <option [value]="0">Not available</option>
+    </select>
+    <button class = "submit" type="submit">Submit</button>
+  </form>
+
+</div>

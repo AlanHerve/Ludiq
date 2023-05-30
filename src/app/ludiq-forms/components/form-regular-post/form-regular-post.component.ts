@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
-import { RegularPostDTO } from "../../../models/regular-post-dto";
-import { RegularPostService } from "../../../services/regular-post.service";
-import { Router } from "@angular/router";
-import { Location } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {PostDTO} from "../../../posts/models/post-dto";
+import {PostsService} from "../../../posts/services/posts.service";
+import {Router} from "@angular/router";
+import {Location} from '@angular/common';
+import {Form} from "../../models/form";
 
 @Component({
   selector: 'app-form-regular-post',
   templateUrl: './form-regular-post.component.html',
   styleUrls: ['./form-regular-post.component.css', '../../ludiq-forms.css']
 })
-export class FormRegularPostComponent {
+export class FormRegularPostComponent extends Form implements OnInit {
+  index: number = 0;
 
-  previousRoute: string = '';
-  regularPostDTO: RegularPostDTO = {
+  regularPostDTO: PostDTO = {
     id_regular_post: null,
     id_user: 1,
     id_hobby: 1,
@@ -20,51 +21,67 @@ export class FormRegularPostComponent {
     likes: 0,
     description: 'this is a test',
     time: '',
-    modified: ''
+    modified: 0
   }
 
-  constructor(private regularPostService: RegularPostService,
-    private router: Router,
-    private location: Location) {
-    this.previousRoute = this.getPreviousRoute();
+  ngOnInit() {
   }
 
-  /**
-   * Method that closes the pop-up by clicking on the cross
-   */
-  onClose(): void {
-    // Coming back to the previous section
-    if (this.previousRoute) {
-      this.router.navigateByUrl(this.previousRoute);
+  constructor(private postsService: PostsService,
+              router: Router,
+              location: Location) {
+    super(router, location);
+  }
+
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    const reader: FileReader = new FileReader();
+
+    reader.onload = () => {
+      this.regularPostDTO.images[this.index] = file;
+      if (this.index < this.regularPostDTO.images.length) {
+        const labelElement = document.querySelectorAll('.file-input-label')[this.index];
+        labelElement?.classList.add('selected');
+        this.index++;
+      }
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  onRemoveImage(image: string) {
+    const index = this.regularPostDTO.images.findIndex(img => img?.name === image);
+    if (index !== -1) {
+      this.regularPostDTO.images[index] = null;
+      this.index--;
     }
-  }
 
-  isFileSelected(index: number): boolean {
-    return this.regularPostDTO.images[index] != null;
-  }
-
-  onFileSelected(event: any, index: number): void {
-    const files: FileList = event.target.files;
-  
-    if (files.length > 0) {
-      const file: File = files[0];
-      const reader: FileReader = new FileReader();
-  
-      reader.onloadend = () => {
-        const imageUrl: string | null = reader.result ? reader.result.toString() : null;
-        this.regularPostDTO.images[index] = imageUrl;
-      };
-  
-      reader.readAsDataURL(file);
+    for (let i = index; i < this.regularPostDTO.images.length; i++) {
+      if (i === this.regularPostDTO.images.length - 1) {
+        this.regularPostDTO.images[3] = null;
+      } else {
+        this.regularPostDTO.images[i] = this.regularPostDTO.images[i + 1];
+      }
     }
-  }  
-
-  removeImage(index: number): void {
-    this.regularPostDTO.images[index] = null;
+    console.log(this.regularPostDTO.images);
   }
 
-  newRegularPost() {
-    this.regularPostService.newRegularPost(this.regularPostDTO).subscribe({
+
+  newPost() {
+    const formData = new FormData();
+    // @ts-ignore
+    formData.append('id_user', this.regularPostDTO.id_user.toString());
+    // @ts-ignore
+    formData.append('id_hobby', this.regularPostDTO.id_hobby.toString());
+    formData.append('description', this.regularPostDTO.description);
+    for (let i = 0; i < this.regularPostDTO.images.length; i++) {
+      const file = this.regularPostDTO.images[i];
+      // @ts-ignore
+      if(file != null)  formData.append('images[]', file, file.name);
+    }
+
+    this.postsService.newPost(formData).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
         console.log('Post avec succès', response);
@@ -73,18 +90,7 @@ export class FormRegularPostComponent {
         // Gestion des erreurs en cas d'échec
         console.error('Erreur post : ', error);
       }
-    })
-
-    this.regularPostDTO.description = '';
+    });
   }
 
-  /**
-   * Method that returns the previous route of the current url
-   * @private
-   */
-  private getPreviousRoute(): string {
-    const currentUrl = this.location.path();
-
-    return currentUrl.slice(0, currentUrl.lastIndexOf('/'));
-  }
 }

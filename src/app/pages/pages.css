@@ -1,0 +1,19 @@
+.content {
+  position:absolute;
+  left: 350px;
+  width: 836px;
+}
+
+
+@media (max-width: 768px) {
+  .right-sidebar {
+    width: 100%;
+    position: static;
+    border: none;
+    height: auto;
+  }
+
+  .content {
+    left: 0;
+  }
+}
