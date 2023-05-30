@@ -11,8 +11,8 @@
     </div>
     <div class="hobby-container" *ngIf="this.regularPostDTO.images[0] != null">
       <div class="file-container" *ngFor="let image of this.regularPostDTO.images">
-        <span class = "file-name" *ngIf="image != null">{{ image.name }}</span>
-        <span class="cross-file" *ngIf="image != null" (click)="onRemoveImage(image.name)">&times;</span>
+        <span class = "file-name" *ngIf="image != null">{{ image }}</span>
+        <span class="cross-file" *ngIf="image != null" (click)="onRemoveImage(image)">&times;</span>
       </div>
     </div>
 

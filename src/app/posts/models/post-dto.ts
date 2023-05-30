@@ -4,9 +4,10 @@ export class PostDTO {
               public id_user: number|null,
               public id_hobby: number|null,
               public description: string,
-              public images : (File | null)[],
+              public images : (string | null)[],
               public modified: number,
               public likes: number,
-              public time: string) {
+              public time: string,
+              public files: File[]) {
   }
 }
