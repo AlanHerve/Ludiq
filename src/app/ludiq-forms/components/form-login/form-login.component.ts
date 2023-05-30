@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {trigger,style,state,transition,animate,} from '@angular/animations';
 import { FormService } from 'src/app/form.service';
 
+
 @Component({
   selector: 'app-form-login',
   templateUrl: './form-login.component.html',
@@ -63,6 +64,14 @@ export class FormLoginComponent implements OnInit  {
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
         console.log('Status de connexion de l\'utilisateur :', response);
+
+        /*const jwt = require('jsonwebtoken');
+
+        jwt.sign(jwt.sign(
+          { userId: user._id },
+          'RANDOM_TOKEN_SECRET',
+          { expiresIn: '24h' }
+        ))*/
       },
       error: (error) => {
         // Gestion des erreurs en cas d'échec

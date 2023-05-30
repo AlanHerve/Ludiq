@@ -19,13 +19,15 @@ export class UserService {
     return this.http.post<UserDTO>(`${apiUrl}/login.php`, userDTO).pipe(
       map(response => {
         if (response) {
+
           // Stocker le jeton dans le stockage local
           localStorage.setItem('currentUser', JSON.stringify(response));
 
           // Affecter la valeur du jeton à la propriété token de userDTO
-          userDTO.token = response.token;
-          console.log(userDTO.email);
+
+          console.log(response);
         }
+        console.log(response)
         return response;
       })
     );

@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit(0);
     }
 
-
     $hobbyRepository = HobbyRepository::getInstance();
 
     switch ($function_to_call) {
