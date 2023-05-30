@@ -1,5 +1,5 @@
 .right-sidebar {
-  width: 290px; /* Ajustez la largeur selon vos besoins */
+  width: 350px; /* Ajustez la largeur selon vos besoins */
   height: 100vh; /* Prend toute la hauteur de la fenêtre */
   border-left: rgba(116, 33, 194, 0.25) 1px solid;
   position: fixed;

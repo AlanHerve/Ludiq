@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {RegularPostDTO} from "../../../models/regular-post-dto";
-import {PostsService} from "../../../posts/posts.service";
+import {PostDTO} from "../../../posts/models/post-dto";
+import {PostsService} from "../../../posts/services/posts.service";
 import {Router} from "@angular/router";
 import {Location} from '@angular/common';
 import {Form} from "../../models/form";
@@ -13,7 +13,7 @@ import {Form} from "../../models/form";
 export class FormRegularPostComponent extends Form implements OnInit {
   index: number = 0;
 
-  regularPostDTO: RegularPostDTO = {
+  regularPostDTO: PostDTO = {
     id_regular_post: null,
     id_user: 1,
     id_hobby: 1,
@@ -21,7 +21,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     likes: 0,
     description: 'this is a test',
     time: '',
-    modified: ''
+    modified: 0
   }
 
   ngOnInit() {
@@ -68,17 +68,20 @@ export class FormRegularPostComponent extends Form implements OnInit {
   }
 
 
-  newRegularPost() {
+  newPost() {
     const formData = new FormData();
-
-    formData.append('regularPostDTO', JSON.stringify(this.regularPostDTO));
+    // @ts-ignore
+    formData.append('id_user', this.regularPostDTO.id_user.toString());
+    // @ts-ignore
+    formData.append('id_hobby', this.regularPostDTO.id_hobby.toString());
+    formData.append('description', this.regularPostDTO.description);
     for (let i = 0; i < this.regularPostDTO.images.length; i++) {
       const file = this.regularPostDTO.images[i];
       // @ts-ignore
       if(file != null)  formData.append('images[]', file, file.name);
     }
 
-    this.postsService.newRegularPost(formData).subscribe({
+    this.postsService.newPost(formData).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
         console.log('Post avec succès', response);

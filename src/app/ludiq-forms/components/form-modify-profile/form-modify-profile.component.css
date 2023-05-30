@@ -1,0 +1,39 @@
+.avatar-modification {
+  width: 10vw;
+  height: 10vw;
+  border-radius: 100%;
+  display: block;
+  margin: auto;
+  object-fit: cover;
+}
+
+.invisible {
+  display: none;
+}
+
+form {
+  width:35% !important;
+}
+
+button {
+  margin: 20px;
+  width:70%;
+}
+
+
+.overlay {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+  width: 10vw;
+  height: 10vw;
+  border-radius: 100%;
+  margin: -5vw;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: opacity 0.3s ease;
+}
+
+.image-container:hover .overlay {
+  opacity: 0;
+}

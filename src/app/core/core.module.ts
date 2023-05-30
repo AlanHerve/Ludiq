@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {LOCALE_ID, NgModule} from '@angular/core';
+import {CommonModule, registerLocaleData} from '@angular/common';
+import * as fr from '@angular/common/locales/fr';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
@@ -27,6 +28,13 @@ import { UserHobbiesListComponent } from './components/user-hobbies-list/user-ho
     RouterLink,
     RouterLinkActive,
     FormsModule
+  ],
+  providers :[
+    { provide: LOCALE_ID, useValue: 'fr-FR' },
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+  constructor() {
+    registerLocaleData(fr.default);
+  }
+}

@@ -27,9 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $uploadedFiles = saveFiles($images);
 
-  $regularPostDTO = new RegularPostDTO(null, $id_user, $id_hobby, $description, $uploadedFiles, $modified, $likes, $time);
+  $regularPostDTO = new PostDTO(null, $id_user, $id_hobby, $description, $uploadedFiles, $modified, $likes, $time);
 
-  $regularPostRepository = RegularPostRepository::getInstance();
+  $regularPostRepository = PostRepository::getInstance();
   $json = $regularPostRepository->newRegularPost($regularPostDTO);
   echo $json;
 
@@ -56,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
     if($valid){
-      $regularPostDTO = new RegularPostDTO($id, $id_user, $id_hobby, $description, $images, $modified, $likes, $time);
-      $regularPostRepository = RegularPostRepository::getInstance();
+      $regularPostDTO = new PostDTO($id, $id_user, $id_hobby, $description, $images, $modified, $likes, $time);
+      $regularPostRepository = PostRepository::getInstance();
       $regularPostRepository->getPosts($mode, $regularPostDTO);
     }
   }

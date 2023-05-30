@@ -8,7 +8,8 @@ const routes: Routes = [
     component: ProfileComponent,
     children: [
       { path: 'regular_post', loadChildren: () => import('../../../ludiq-forms/components/form-regular-post/form-regular-post.module').then(m => m.FormRegularPostModule) },
-      { path: 'add_hobby', loadChildren: () => import('../../../ludiq-forms/components/form-hobby-post/form-hobby-post.module').then(m => m.FormHobbyPostModule) }
+      { path: 'add_hobby', loadChildren: () => import('../../../ludiq-forms/components/form-hobby-post/form-hobby-post.module').then(m => m.FormHobbyPostModule) },
+      { path: 'modify_profile', loadChildren: () => import('../../../ludiq-forms/components/form-modify-profile/form-modify-profile.module').then(m => m.FormModifyProfileModule)}
     ]
   }
 ];

@@ -35,15 +35,12 @@ button {
 
   border-radius :50px;
   transition: background-color 0.2s ease-out;
-  margin-top: 20px;
-  margin-bottom: 20px;
 }
 
 .tag:hover {
-  color:#874641;
-  background-color:#FFFFFF;
-  outline: 3px solid #874641;
-  outline-offset: -3px;
+  color:white;
+  background-color: #753D38;
+  outline:none;
 }
 
 button:disabled {
@@ -58,10 +55,8 @@ button:hover:disabled {
 }
 
 button:hover {
-  color:#7421C2;
-  background-color:#FFFFFF;
-  outline: 3px solid #7421C2;
-  outline-offset: -3px;
+  color:white;
+  background-color:#53188B;
 }
 
 .button2 {
