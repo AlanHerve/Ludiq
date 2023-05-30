@@ -30,4 +30,8 @@ export class UserService {
       })
     );
   }
+  isLoggedIn(): boolean {
+    const user = localStorage.getItem('currentUser');
+    return user ? true : false;
+  }
 }
