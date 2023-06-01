@@ -18,18 +18,24 @@ export class UserService {
   loginUser(userDTO: UserDTO): Observable<UserDTO> {
     return this.http.post<UserDTO>(`${apiUrl}/login.php`, userDTO).pipe(
       map(response => {
-        if (response) {
-          // Stocker le jeton dans le stockage local
+        // Verify if the response is valid before storing it in local storage
+        if (response && response.token) {
+          // Store the token in local storage
           localStorage.setItem('currentUser', JSON.stringify(response));
 
-          // Affecter la valeur du jeton à la propriété token de userDTO
+          // Assign the token value to the token property of userDTO
           userDTO.token = response.token;
           console.log(userDTO.email);
+
+          return response;
+        } else {
+          // If the response is not valid, throw an error
+          throw new Error('Invalid response from server');
         }
-        return response;
       })
     );
   }
+
   isLoggedIn(): boolean {
     const user = localStorage.getItem('currentUser');
     return user ? true : false;
