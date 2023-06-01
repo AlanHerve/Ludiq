@@ -16,9 +16,13 @@
       </div>
     </div>
     <p class="result" *ngIf="searchResults.length > 0">
-    <li *ngFor="let result of searchResults">
+      <li *ngFor="let result of searchResults">
         {{ result.name }}
-    </li>
+      </li>
+    </p>
+    <p class="result" *ngIf="searchResults.length === 0">
+      No result found
+    </p>
   </div>
   <button class="button2">New activity</button>
 </div>
