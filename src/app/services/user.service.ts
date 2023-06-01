@@ -25,9 +25,9 @@ export class UserService {
 
           // Affecter la valeur du jeton à la propriété token de userDTO
 
-          console.log(response);
+
         }
-        console.log(response)
+        console.log(localStorage.getItem('currentUser'));
         return response;
       })
     );
