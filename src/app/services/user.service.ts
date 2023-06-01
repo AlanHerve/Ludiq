@@ -20,11 +20,11 @@ export class UserService {
       map(response => {
         if (response) {
           // Stocker le jeton dans le stockage local
+
           localStorage.setItem('currentUser', JSON.stringify(response));
 
           // Affecter la valeur du jeton à la propriété token de userDTO
           userDTO.token = response.token;
-          console.log(userDTO.email);
         }
         return response;
       })
@@ -32,7 +32,6 @@ export class UserService {
   }
   isLoggedIn(): boolean {
     const user = localStorage.getItem('currentUser');
-    localStorage.clear();
     return !!user;
   }
 }
