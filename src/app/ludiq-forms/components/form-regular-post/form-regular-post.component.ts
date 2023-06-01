@@ -19,9 +19,10 @@ export class FormRegularPostComponent extends Form implements OnInit {
     id_hobby: 1,
     images: [null, null, null, null],
     likes: 0,
-    description: 'this is a test',
+    description: '',
     time: '',
-    modified: 0
+    modified: 0,
+    files: []
   }
 
   ngOnInit() {
@@ -39,7 +40,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     const reader: FileReader = new FileReader();
 
     reader.onload = () => {
-      this.regularPostDTO.images[this.index] = file;
+      this.regularPostDTO.images[this.index] = file.name;
       if (this.index < this.regularPostDTO.images.length) {
         const labelElement = document.querySelectorAll('.file-input-label')[this.index];
         labelElement?.classList.add('selected');
@@ -51,7 +52,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
   }
 
   onRemoveImage(image: string) {
-    const index = this.regularPostDTO.images.findIndex(img => img?.name === image);
+    const index = this.regularPostDTO.images.findIndex(img => img === image);
     if (index !== -1) {
       this.regularPostDTO.images[index] = null;
       this.index--;
@@ -85,6 +86,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
         console.log('Post avec succès', response);
+        this.onClose();
       },
       error: (error) => {
         // Gestion des erreurs en cas d'échec

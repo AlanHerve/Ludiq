@@ -36,10 +36,7 @@ class SearchRepository
         if ($result->num_rows > 0) {
             $hobbies = [];
             while ($row = $result->fetch_assoc()) {
-                $hobbyDTO = new HobbyDTO();
-                $hobbyDTO->id = $row['ID_HOBBY'];
-                $hobbyDTO->name = $row['HOBBY_NAME'];
-                $hobbyDTO->image = $row['IMAGE'];
+                $hobbyDTO = new HobbyDTO($row['ID_HOBBY'], $row['HOBBY_NAME'], $row['IMAGE']);
 
                 $hobbies[] = $hobbyDTO;
             }
