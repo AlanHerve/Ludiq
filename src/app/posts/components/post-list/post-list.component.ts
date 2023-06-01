@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {PostDTO} from "../../models/post-dto";
 import {PostsService} from "../../services/posts.service";
 
@@ -9,8 +9,10 @@ import {PostsService} from "../../services/posts.service";
 })
 export class PostListComponent implements OnInit {
   postsDTO: PostDTO[] = [];
+
   constructor(private postsService: PostsService) {
   }
+
   ngOnInit(): void {
     this.postsService.getAllPosts().subscribe({
       next: (response: PostDTO[]) => {
@@ -26,7 +28,7 @@ export class PostListComponent implements OnInit {
     });
   }
 
-  loadImages(post: PostDTO): void  {
+  loadImages(post: PostDTO): void {
     const images: File[] = [];
     for (const imageName of post.images) {
       // @ts-ignore
@@ -44,5 +46,7 @@ export class PostListComponent implements OnInit {
       });
     }
     post.files = images;
+    console.log(post.files);
   }
+
 }

@@ -19,7 +19,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     id_hobby: 1,
     images: [null, null, null, null],
     likes: 0,
-    description: 'this is a test',
+    description: '',
     time: '',
     modified: 0,
     files: []
@@ -86,6 +86,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
         console.log('Post avec succès', response);
+        this.onClose();
       },
       error: (error) => {
         // Gestion des erreurs en cas d'échec

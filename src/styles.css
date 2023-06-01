@@ -24,6 +24,22 @@ button {
   transition: background-color 0.2s ease-out;
 }
 
+button:disabled {
+  color: white;
+  background-color: rgba(44, 36, 51, 0.4);
+}
+
+button:hover:disabled {
+  color: white;
+  background-color: rgba(44, 36, 51, 0.3);
+  outline: none;
+}
+
+button:hover {
+  color:white;
+  background-color:#53188B;
+}
+
 .tag {
   align-items: center;
   padding: 10px 32px;
@@ -43,21 +59,6 @@ button {
   outline:none;
 }
 
-button:disabled {
-  color: white;
-  background-color: rgba(44, 36, 51, 0.4);
-}
-
-button:hover:disabled {
-  color: white;
-  background-color: rgba(44, 36, 51, 0.3);
-  outline: none;
-}
-
-button:hover {
-  color:white;
-  background-color:#53188B;
-}
 
 .button2 {
   align-items:center;

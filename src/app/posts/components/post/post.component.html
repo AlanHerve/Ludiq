@@ -19,7 +19,7 @@
   </div>
   <p class="post-content">{{ postDTO.description }}</p>
   <div *ngFor="let image of postDTO.files">
-    <img *ngIf="image" alt="image" class="post-image" [src]="postDTO.">
+    <!--<img *ngIf="image" alt="image" class="post-image" [src]="getFileUrl(image)">-->
   </div>
   <br>
   <img alt="Like image" class="interaction" src="../../../../assets/images/icons/heart.png">
