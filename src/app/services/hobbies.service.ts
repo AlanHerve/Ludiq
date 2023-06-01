@@ -1,6 +1,6 @@
 import {UserDTO} from "../models/user-dto";
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./api-url";
 import {Injectable} from "@angular/core";
@@ -27,8 +27,11 @@ export class HobbiesService {
     );
   }
 
-  fetchDisplayHobbies(requestDTO: RequestDto): Observable<HobbyRequestDto>{
-    return this.http.post<HobbyRequestDto>(`${apiUrl}/hobbies.php`, requestDTO).pipe(
+  fetchDisplayHobbies(): Observable<HobbyRequestDto>{
+    const params = new HttpParams()
+      .set('function_to_call', "fetchDisplayHobbies");
+
+    return this.http.get<HobbyRequestDto>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
         return response;
       })
@@ -36,7 +39,10 @@ export class HobbiesService {
   }
 
   fetchHobbiesOfUser(requestDTO: RequestDto): Observable<HobbyRequestDto>{
-    return this.http.post<HobbyRequestDto>(`${apiUrl}/hobbies.php`, requestDTO).pipe(
+    const params = new HttpParams()
+      .set('function_to_call', "fetchHobbiesOfUser")
+      .set('id_user', 2);
+    return this.http.get<HobbyRequestDto>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
         return response;
       })
@@ -49,7 +55,12 @@ export class HobbiesService {
       id_user: 2
     }
 
-    return this.http.post<HobbyRequestDto>(`${apiUrl}/hobbies.php`, requestDTO).pipe(
+    const params = new HttpParams()
+      .set('function_to_call', "fetchAvailableHobbiesOfUser")
+      .set('id_user', 2);
+
+
+    return this.http.get<HobbyRequestDto>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
         return response;
       })
@@ -63,7 +74,7 @@ export class HobbiesService {
       hobbyPostDTO: hobbypostDTO
     };
     console.log("hey");
-    return this.http.post<HobbyRequestDto>(`${apiUrl}/hobbies.php`, requestDTO).pipe(
+    return this.http.post<HobbyRequestDto>(`${apiUrl}/hobbies.php`, hobbypostDTO).pipe(
       map(response => {
         return response;
       })

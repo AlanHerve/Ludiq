@@ -39,7 +39,7 @@ export class UserHobbiesListComponent {
       },
       error: (error) => {
         // in case of failure
-        console.error('Could not get display hobbies', error);
+        console.error('Could not get user hobbies', error);
       }
     });
   }

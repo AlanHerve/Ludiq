@@ -14,20 +14,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = file_get_contents('php://input');
     $data = json_decode($body, true);
 
-    $function_to_call = $data['function_to_call'];
-
-
-    if (isset($data['id_user'])) $id = $data['id_user'];
 
     $hobbyPostDto = null;
-    if(isset($data['hobbyPostDTO']['id_user']) && isset($data['hobbyPostDTO']['id_hobby']) && isset($data['hobbyPostDTO']['frequency']) && isset($data['hobbyPostDTO']['advancement']) && isset($data['hobbyPostDTO']['availability'])){
-        $hobbyPostDto = new HobbyPostDTO($data['hobbyPostDTO']['id_user'], $data['hobbyPostDTO']['id_hobby'], $data['hobbyPostDTO']['frequency'], $data['hobbyPostDTO']['advancement'], $data['hobbyPostDTO']['availability']);
-    }elseif($data['function_to_call']=="newHobbyPost"){
-        echo json_encode(array('success'=>false, 'message'=>'parameters not fdound', "dto"=>$data['hobbyPostDTO']));
+    if(isset($data['id_user']) && isset($data['id_hobby']) && isset($data['frequency']) && isset($data['advancement']) && isset($data['availability'])){
+        $hobbyPostDto = new HobbyPostDTO($data['id_user'], $data['id_hobby'], $data['frequency'], $data['advancement'], $data['availability']);
+    }else{
+        echo json_encode(array('success'=>false, 'message'=>'parameters not fdound'));
         exit(0);
     }
 
     $hobbyRepository = HobbyRepository::getInstance();
+
+    $hobbyRepository->newHobbyPost($id, $hobbyPostDto);
+
+
+} elseif ($_SERVER["REQUEST_METHOD"] === 'GET') {
+
+    $function_to_call = $_GET['function_to_call'];
+
+    if(isset($_GET['id_user'])) $id_user = $_GET['id_user'];
+
+    $hobbyRepository = HobbyRepository::getInstance();
+
+
 
     switch ($function_to_call) {
         case "fetchAllHobbies":
@@ -37,18 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hobbyRepository->fetchDisplayHobbies();
             break;
         case "fetchHobbiesOfUser":
-            $hobbyRepository->fetchHobbiesOfUser($id);
+            $hobbyRepository->fetchHobbiesOfUser($id_user);
             break;
         case "fetchAvailableHobbiesOfUser":
-            $hobbyRepository->fetchAvailableHobbiesOfUser($id);
+            $hobbyRepository->fetchAvailableHobbiesOfUser($id_user);
             break;
-        case "newHobbyPost" :
-            $hobbyRepository->newHobbyPost($id, $hobbyPostDto);
-            break;
-
     }
-
-} elseif ($_SERVER["REQUEST_METHOD"] === 'GET') {
 
 }
 

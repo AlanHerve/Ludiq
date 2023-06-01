@@ -38,7 +38,7 @@ export class MightLikeHobbiesDisplayComponent {
   fetchDisplayHobbies(){
     this.rand_hobbies.length = 0;
     this.top_hobbies.length = 0;
-    this.hobbiesService.fetchDisplayHobbies(this.requestDTO2).subscribe({
+    this.hobbiesService.fetchDisplayHobbies().subscribe({
       next: (response) => {
         // in case of success
         let i = 0
