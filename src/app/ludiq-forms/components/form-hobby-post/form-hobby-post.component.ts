@@ -76,11 +76,14 @@ export class FormHobbyPostComponent extends Form implements OnInit {
   }
 
   fetchAvailableHobbiesOfUser(){
+    console.log("start");
     this.hobbiesService.fetchAvailableHobbiesOfUser().subscribe({
       next: (response) => {
         // in case of success
-        for (let i = 0; i < response.length; i++) {
-          this.hobbies.push(response[i]);
+        console.log(response);
+        for (let i = 0; i < response.hobbies.length; i++) {
+          this.hobbies.push(response.hobbies[i]);
+          console.log(response.hobbies[i]);
         }
       },
       error: (error) => {

@@ -1,9 +1,12 @@
 <div class = "container">
   <h1>Ludiq</h1>
   <h2>THE BEST WAY TO SHARE YOUR HOBBIES</h2>
-  <div class = "buttons">
+  <div *ngIf="!isLoggedIn()" class = "buttons">
     <button (click)="onRegister()">Register</button>
     <button (click)="onLogin()" class = "button2">Connection</button>
+  </div>
+  <div *ngIf="isLoggedIn()" class = "buttons">
+    <button (click)="onLogout()" class = "button2">Log Out</button>
   </div>
   <img src = "../assets/images/Cooking.jpg">
   <div class = "flashcard-group">

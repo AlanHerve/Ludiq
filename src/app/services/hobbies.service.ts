@@ -51,7 +51,7 @@ export class HobbiesService {
     );
   }
 
-  fetchAvailableHobbiesOfUser() : Observable<HobbyDTO[]>{
+  fetchAvailableHobbiesOfUser() : Observable<{hobbies: HobbyDTO[]}>{
     let RequestDTO: RequestDTO = {
       function_to_call: "fetchAvailableHobbiesOfUser",
       id_user: 2
@@ -60,9 +60,10 @@ export class HobbiesService {
       .set('function_to_call', "fetchAvailableHobbiesOfUser")
       .set('id_user', 2);
 
-    return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
+    return this.http.get<{hobbies: HobbyDTO[]}>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
-        return response
+        console.log(response);
+        return response;
       })
     );
 
