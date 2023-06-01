@@ -5,7 +5,7 @@
  * @image : default image for the hobby
  */
 export class HobbyDTO {
-  constructor(public id: string,
+  constructor(public id: number,
               public name: string,
               public image: string) {
   }

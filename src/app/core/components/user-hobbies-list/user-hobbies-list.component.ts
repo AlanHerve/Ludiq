@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {HobbiesService} from "../../../services/hobbies.service";
-import {RequestDto} from "../../../models/request-dto";
+import {RequestDTO} from "../../../models/request-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
+import {HobbyCountDTO} from "../../../models/hobby-count-dto";
 
 @Component({
   selector: 'app-user-hobbies-list',
@@ -14,7 +15,7 @@ export class UserHobbiesListComponent {
 
   hobbies: HobbyDTO[] = [];
 
-  requestDTO : RequestDto = {
+  RequestDTO : RequestDTO = {
     function_to_call: "fetchHobbiesOfUser",
     id_user: 0
   };
@@ -25,14 +26,14 @@ export class UserHobbiesListComponent {
 
   ngOnInit(){
     console.log(this.id);
-    //this.requestDTO.id_user = this.id
-    this.requestDTO.id_user = this.id;
-    console.log(this.requestDTO.id_user);
-    this.hobbyService.fetchHobbiesOfUser(this.requestDTO).subscribe({
+    //this.RequestDTO.id_user = this.id
+    this.RequestDTO.id_user = this.id;
+    console.log(this.RequestDTO.id_user);
+    this.hobbyService.fetchHobbiesOfUser().subscribe({
       next: (response) => {
         // in case of success
 
-        for(let i = 0; i < response.hobbies.length; i++) this.hobbies.push(response.hobbies[i]);
+        for(let i = 0; i < response.length; i++) this.hobbies.push(response[i]);
         /*response.hobbies.forEach(function(value){
           console.log(value);
         })*/

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -7,6 +7,7 @@ import {LudiqFormsModule} from "./ludiq-forms/ludiq-forms.module";
 import {CoreModule} from "./core/core.module";
 import {HomeRoutingModule} from "./pages/components/home/home-routing.module";
 import {PagesModule} from "./pages/pages.module";
+import * as fr from '@angular/common/locales/fr';
 import {HomeModule} from "./pages/components/home/home.module";
 import {HubModule} from "./pages/components/hub/hub.module";
 import {ProfileModule} from "./pages/components/profile/profile.module";
@@ -19,21 +20,22 @@ import {PostsModule} from "./posts/posts.module";
   declarations: [
     AppComponent
   ],
-    imports: [
-        BrowserAnimationsModule,
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        CoreModule,
-        HomeRoutingModule,
-        HomeModule,
-        HubRoutingModule,
-        ProfileModule,
-        FormCreateAccountModule,
-        PostsModule,
-        LudiqFormsModule
-    ],
-  providers: [],
+  imports: [
+    BrowserAnimationsModule,
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    CoreModule,
+    HomeRoutingModule,
+    HomeModule,
+    HubRoutingModule,
+    ProfileModule,
+    FormCreateAccountModule,
+    PostsModule,
+    LudiqFormsModule
+  ],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'fr-FR' },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

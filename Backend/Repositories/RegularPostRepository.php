@@ -12,7 +12,7 @@ class RegularPostRepository{
     $this->db = Database::getInstance()->getConnection();
   }
 
-  public function newRegularPost(RegularPostDTO $regularPostDTO){
+  public function newRegularPost(PostDTO $regularPostDTO){
     $id_user = 3;
     $id_hobby = 1;
     $description = $regularPostDTO->description;
@@ -35,7 +35,7 @@ class RegularPostRepository{
     return json_encode($response);
   }
 
-  public function getPosts($mode, RegularPostDTO $regularPostDTO){
+  public function getPosts($mode, PostDTO $regularPostDTO){
     $result = null;
     $arrayPost = [];
     $success = false;
@@ -96,7 +96,7 @@ class RegularPostRepository{
 
   public static function getInstance() {
     if(!self::$instance) {
-      self::$instance = new RegularPostRepository();
+      self::$instance = new PostRepository();
     }
     return self::$instance;
   }

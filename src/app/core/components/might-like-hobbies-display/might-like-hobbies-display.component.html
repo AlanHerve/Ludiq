@@ -1,10 +1,16 @@
-<button (click)="fetchDisplayHobbies()">fetch display</button>
+<!-- <button (click)="fetchDisplayHobbies()">fetch display</button> -->
 
-<p>top 3 hobbies</p>
-<ul>
-  <li *ngFor="let top_hobby of top_hobbies">{{top_hobby.name}}</li>
+<h2>TOP 3</h2>
+<ul class = "list center">
+  <div class = "center" *ngFor="let top_hobby of top_hobbies">
+    <button class = "tag" >{{top_hobby.hobbyDTO.name}}</button>
+    <span class = "number">{{top_hobby.count}}</span>
+  </div>
 </ul>
-<p>3 random hobbies</p>
-<ul>
-  <li *ngFor="let rand_hobby of rand_hobbies">{{rand_hobby.name}}</li>
+<h2>Suggestions</h2>
+<ul class = "list center">
+  <div class = "center" *ngFor="let rand_hobby of rand_hobbies">
+    <button class = "tag">{{rand_hobby.hobbyDTO.name}}</button>
+    <span class = "number">{{rand_hobby.count}}</span>
+  </div>
 </ul>

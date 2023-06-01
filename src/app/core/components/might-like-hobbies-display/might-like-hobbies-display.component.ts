@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {HobbiesService} from "../../../services/hobbies.service";
-import {RequestDto} from "../../../models/request-dto";
+import {RequestDTO} from "../../../models/request-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
+import {HobbyCountDTO} from "../../../models/hobby-count-dto";
 
 @Component({
   selector: 'app-might-like-hobbies-display',
@@ -18,15 +19,15 @@ export class MightLikeHobbiesDisplayComponent {
 
 
   // request to fetch display hobbies
-  requestDTO2: RequestDto = {
+  RequestDTO2: RequestDTO = {
     function_to_call: "fetchDisplayHobbies"
   };
 
   //Store top 3 hobbies
-  top_hobbies: HobbyDTO[] = [];
+  top_hobbies: HobbyCountDTO[] = [];
 
   //store 3 random hobbies
-  rand_hobbies: HobbyDTO[] = [];
+  rand_hobbies: HobbyCountDTO[] = [];
 
   constructor(private hobbiesService: HobbiesService) {
     this.fetchDisplayHobbies();
@@ -38,7 +39,9 @@ export class MightLikeHobbiesDisplayComponent {
   fetchDisplayHobbies(){
     this.rand_hobbies.length = 0;
     this.top_hobbies.length = 0;
+
     this.hobbiesService.fetchDisplayHobbies().subscribe({
+
       next: (response) => {
         // in case of success
         let i = 0

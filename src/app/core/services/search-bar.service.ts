@@ -20,9 +20,6 @@ export class SearchBarService {
 
     return this.http.get<any[]>(`${apiUrl}/search.php`, { params });
   }
-  searchAll(input: string): Observable<any[]> {
-    return this.search('all', input);
-  }
   searchUser(user: string): Observable<UserDTO[]> {
     return this.search('user', user);
   }

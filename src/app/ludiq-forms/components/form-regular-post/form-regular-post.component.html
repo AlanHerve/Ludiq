@@ -1,6 +1,6 @@
 <div class="background-form">
-  <form (ngSubmit)="newRegularPost()">
-    <h1>New regular post</h1>
+  <form (ngSubmit)="newPost()">
+    <h1>New post</h1>
     <span (click)="onClose()" class="cross">&times;</span>
     <textarea [(ngModel)]="regularPostDTO.description" name="description"></textarea>
     <div class="images">
@@ -11,8 +11,8 @@
     </div>
     <div class="hobby-container" *ngIf="this.regularPostDTO.images[0] != null">
       <div class="file-container" *ngFor="let image of this.regularPostDTO.images">
-        <span>{{ image }}</span>
-        <span class="cross-file" *ngIf="image != null" (click)="onRemoveImage(image)">&times;</span>
+        <span class = "file-name" *ngIf="image != null">{{ image.name }}</span>
+        <span class="cross-file" *ngIf="image != null" (click)="onRemoveImage(image.name)">&times;</span>
       </div>
     </div>
 

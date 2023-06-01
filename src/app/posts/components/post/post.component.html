@@ -1,0 +1,31 @@
+<div class="post">
+  <div class="user-profile">
+    <div class="profile-info">
+      <img alt="Photo de profil" class="profile-image" src="../../../../assets/images/icons/user.png">
+      <div style = "display: flex">
+        <div class = "user-info">
+          <span class="username">Name</span>
+          <span class="nickname">username</span>
+        </div>
+        <p class = "date" *ngIf="postDTO.modified === 1; else elseBlock">Modified - {{ postDTO.time | date:'dd/MM HH:mm' }}</p>
+        <ng-template #elseBlock>
+          <p class = "date">{{ postDTO.time | date:'dd/MM HH:mm' }}</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="post-info">
+    <button class="tag">Cooking</button>
+  </div>
+  <p class="post-content">{{ postDTO.description }}</p>
+  <div *ngFor="let image of postDTO.images">
+    <img *ngIf="image" alt="image" class="post-image" src="../../../../assets/images/Cooking.jpg">
+  </div>
+  <br>
+  <img alt="Like image" class="interaction" src="../../../../assets/images/icons/heart.png">
+  <span class="count">{{postDTO.likes}}</span>
+  <img alt="Comment image" class="interaction" src="../../../../assets/images/icons/comment.png">
+  <span class="count">0</span>
+
+</div>
+

@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = file_get_contents('php://input');
     $data = json_decode($body, true);
 
-
     $hobbyPostDto = null;
     if(isset($data['id_user']) && isset($data['id_hobby']) && isset($data['frequency']) && isset($data['advancement']) && isset($data['availability'])){
         $hobbyPostDto = new HobbyPostDTO($data['id_user'], $data['id_hobby'], $data['frequency'], $data['advancement'], $data['availability']);
@@ -35,8 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(isset($_GET['id_user'])) $id_user = $_GET['id_user'];
 
     $hobbyRepository = HobbyRepository::getInstance();
-
-
 
     switch ($function_to_call) {
         case "fetchAllHobbies":

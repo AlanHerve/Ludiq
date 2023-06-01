@@ -1,0 +1,20 @@
+<div class = "background-form">
+  <form>
+    <a class ="cross" [@fadeOut]="true" (click)="onClose()" >&times;</a>
+    <h1>Profile modification</h1>
+    <div class="image-container">
+      <label for="avatar">
+        <img class="avatar-modification" src="assets/images/icons/user.png" alt="Search button">
+        <div class="overlay"></div>
+      </label>
+    </div>
+    <input id="avatar" class="invisible" type="file" name="avatar">
+
+    <input name = "name" value = "Name">
+    <input name = "username" value = "Username">
+    <input name = "password" placeholder = "New password">
+    <input name = "confirm" placeholder = "Confirm new password">
+
+    <button>Modify</button>
+  </form>
+</div>

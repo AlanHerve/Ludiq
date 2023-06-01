@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $id_user = $data['id_user'];
   $id_hobby = $data['id_hobby'];
   $description = $data['description'];
-  $images = $data['images'];
   $modified = null;
   $likes = null;
   $time = null;
@@ -24,14 +23,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if(isset($data['modified'])){
     $modified = $data['modified'];
   }
-  
-  $regularPostDTO = new RegularPostDTO($id ,$id_user, $id_hobby, $description, $images, $modified, $likes, $time);
+  $images = $_FILES['images'];
 
-  $regularPostRepository = RegularPostRepository::getInstance();
+  $uploadedFiles = saveFiles($images);
+
+  $regularPostDTO = new PostDTO(null, $id_user, $id_hobby, $description, $uploadedFiles, $modified, $likes, $time);
+
+  $regularPostRepository = PostRepository::getInstance();
   $json = $regularPostRepository->newRegularPost($regularPostDTO);
   echo $json;
 
-}elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
 
   $body = file_get_contents('php://input');
   $data = json_decode($body,true);
@@ -54,17 +56,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
     if($valid){
-
-      $regularPostDTO = new RegularPostDTO($id, $id_user, $id_hobby, $description, $images, $modified, $likes, $time);
-      $regularPostRepository = RegularPostRepository::getInstance();
+      $regularPostDTO = new PostDTO($id, $id_user, $id_hobby, $description, $images, $modified, $likes, $time);
+      $regularPostRepository = PostRepository::getInstance();
       $regularPostRepository->getPosts($mode, $regularPostDTO);
-
     }
-
-
   }
+}
 
+function saveFiles($images) {
+  $targetDir = '../assets/images/';
 
+  if(!isset($images)) return null;
+
+  $uploadedFiles = [];
+  for ($i = 0; $i < count($images['name']); $i++) {
+    $uniqueFilename = uniqid() . '_' . basename($images['name'][$i]);
+    $targetFilePath = $targetDir . $uniqueFilename;
+
+    if (move_uploaded_file($images['tmp_name'][$i], $targetFilePath)) {
+      $uploadedFiles[] .= $uniqueFilename;
+      echo 'File downloaded successfully!\n';
+    } else {
+      echo 'Error while downloading file : '.$images['tmp_name'][$i].'\n';
+    }
+  }
+  return $uploadedFiles;
 }
 
 ?>

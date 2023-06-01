@@ -12,20 +12,6 @@ export class NavigationBarComponent implements  OnInit{
   ngOnInit(): void {
   }
 
-
-  /**
-   * Method that displays a form in order to create a new post
-   */
-  onClickNewHobbyPost(): void {
-    /*
-    We determine the route that we are currently on
-     */
-    const currentRoute = this.router.url;
-    /*
-    We navigate to the pop-up's route in order to display it
-     */
-    this.router.navigateByUrl(`${currentRoute}/hobby_post`);
-  }
   onClickNewRegularPost(): void {
     /*
     We determine the route that we are currently on
