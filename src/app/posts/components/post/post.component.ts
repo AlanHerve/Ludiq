@@ -17,4 +17,8 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getFileUrl(file: File): string {
+    return URL.createObjectURL(file);
+  }
+
 }

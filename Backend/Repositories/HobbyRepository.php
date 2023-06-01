@@ -266,8 +266,6 @@ class HobbyRepository
     }
 
     function newHobbyPost($hobbyPost){
-
-
         $stmt = $this->db->prepare("INSERT INTO
 	hobby_post
     (ID_HOBBY, ID_USER, EXPERIENCE, FREQUENCY, AVAILABLE)
@@ -275,7 +273,6 @@ VALUES
 (?, ?, ?, ?, ?)");
         $stmt->bind_param("iissi", $hobbyPost->id_hobby, $hobbyPost->id_user, $hobbyPost->advancement, $hobbyPost->frequency, $hobbyPost->availability);
         $stmt->execute();
-
 
         if($stmt->affected_rows > 0){
             $response = array(

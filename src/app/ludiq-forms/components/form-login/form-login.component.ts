@@ -59,19 +59,14 @@ export class FormLoginComponent implements OnInit  {
 
 
   onLogin(): void {
-    this.router.navigateByUrl('home');
     this.userService.loginUser(this.userDTO).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
         console.log('Status de connexion de l\'utilisateur :', response);
 
-        /*const jwt = require('jsonwebtoken');
+        // Redirige vers 'home' uniquement si la connexion est réussie
+        this.router.navigateByUrl('home');
 
-        jwt.sign(jwt.sign(
-          { userId: user._id },
-          'RANDOM_TOKEN_SECRET',
-          { expiresIn: '24h' }
-        ))*/
       },
       error: (error) => {
         // Gestion des erreurs en cas d'échec

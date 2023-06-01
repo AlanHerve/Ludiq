@@ -2,7 +2,7 @@
   <form (ngSubmit)="newPost()">
     <h1>New post</h1>
     <span (click)="onClose()" class="cross">&times;</span>
-    <textarea [(ngModel)]="regularPostDTO.description" name="description"></textarea>
+    <textarea [(ngModel)]="regularPostDTO.description" name="description" placeholder="Message"></textarea>
     <div class="images">
       <label class="file-input-label" [class.disabled]="this.regularPostDTO.images[3] != null">
         <span class="file-input-text">Select an image</span>
@@ -11,8 +11,8 @@
     </div>
     <div class="hobby-container" *ngIf="this.regularPostDTO.images[0] != null">
       <div class="file-container" *ngFor="let image of this.regularPostDTO.images">
-        <span class = "file-name" *ngIf="image != null">{{ image.name }}</span>
-        <span class="cross-file" *ngIf="image != null" (click)="onRemoveImage(image.name)">&times;</span>
+        <span class = "file-name" *ngIf="image != null">{{ image }}</span>
+        <span class="cross-file" *ngIf="image != null" (click)="onRemoveImage(image)">&times;</span>
       </div>
     </div>
 
