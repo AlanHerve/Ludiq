@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SearchBarService} from "../../services/search-bar.service";
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {UserDTO} from "../../../models/user-dto";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
@@ -12,7 +13,7 @@ export class SearchBarComponent implements OnInit {
   buttons: boolean[] = [];
   searchResults: any[] = [];
 
-  constructor(private searchBarService: SearchBarService) {
+  constructor(private searchBarService: SearchBarService, private router:Router) {
     this.buttons[0] = false;
     this.buttons[1] = false;
     this.buttons[2] = false;
@@ -154,4 +155,15 @@ export class SearchBarComponent implements OnInit {
 
     });
   }
+  onClickNewActivity(): void {
+    /*
+    We determine the route that we are currently on
+     */
+    const currentRoute = this.router.url;
+    /*
+    We navigate to the pop-up's route in order to display it
+     */
+    this.router.navigateByUrl(`${currentRoute}/activity`);
+  }
+
 }

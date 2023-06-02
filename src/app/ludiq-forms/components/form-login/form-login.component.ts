@@ -74,7 +74,6 @@ export class FormLoginComponent implements OnInit  {
       }
     })
   }
-
   onClose(): void {
     this.router.navigate(['/']);
   }

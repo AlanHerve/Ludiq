@@ -1,3 +1,4 @@
+
 import {Component, OnInit} from '@angular/core';
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {RequestDTO} from "../../../models/request-dto";
@@ -7,13 +8,29 @@ import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 import {Location} from "@angular/common";
 import {Form} from "../../models/form";
 import {Router} from "@angular/router";
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
 
 @Component({
   selector: 'app-form-hobby-posts',
   templateUrl: './form-hobby-post.component.html',
-  styleUrls: ['./form-hobby-post.component.css',  '../../ludiq-forms.css']
+  styleUrls: ['./form-hobby-post.component.css',  '../../ludiq-forms.css'],
+  animations:[
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })),
+      state('*', style({ opacity: 1 })),
+      transition('void => *', animate('200ms')),
+    ]),
+    trigger('fadeOut', [
+      state('*', style({ opacity: 1 })),
+      state('void', style({ opacity: 0 })),
+      transition('* => void', animate('200ms')),
+    ])
+  ]
 })
+
 export class FormHobbyPostComponent extends Form implements OnInit {
+
 
   hobbies : HobbyDTO[] = [];
 
