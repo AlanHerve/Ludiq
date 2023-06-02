@@ -20,7 +20,7 @@ export class ProfileComponent {
   constructor(private userService: UserService, private activatedRoute: ActivatedRoute) {
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.userDTO.id = parseInt(params['id']);
 
