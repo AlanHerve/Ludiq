@@ -43,6 +43,17 @@ export class UserService {
       })
     );
   }
+
+  findUserById(userDto: UserDTO): Observable<UserDTO> {
+    return this.http.get<UserDTO>(`${apiUrl}/user.php`).pipe(
+      map(response => {
+        console.log(response);
+        return response;
+      })
+    );
+  }
+
+
   isLoggedIn(): boolean {
     const user = localStorage.getItem('currentUser');
     return !!user;
@@ -53,12 +64,12 @@ export class UserService {
     const match = underscore.concat(id_organization.toString()).concat(underscore.toString());
     //const match =bracket.concat(underscore.toString()).concat(id_organization.toString()).concat(underscore.toString()).concat(bracket2.toString());
     const regex = new RegExp(match, 'gm');
-    const obj: String = JSON.parse(localStorage.getItem('currentUser')!).token;
+    const token: String = JSON.parse(localStorage.getItem('currentUser')!).token;
 
-    console.log("mathc " + obj.match(regex));
+    console.log("mathc " + token.match(regex));
     console.log(match);
 
-    return obj.match(regex)!=null;
+    return token.match(regex)!=null;
   }
 
 }

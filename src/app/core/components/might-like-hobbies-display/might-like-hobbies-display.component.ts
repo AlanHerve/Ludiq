@@ -58,7 +58,7 @@ export class MightLikeHobbiesDisplayComponent {
         // in case of failure
         console.error('Could not get display hobbies', error);
       }
-    })
+    });
   }
 
 }

@@ -13,10 +13,15 @@ const routes: Routes = [
     canActivate: [() => inject(AuthGuard).canActivate()]
   },
   {
-    path: 'profile',
+    path: 'profile/:id',
     loadChildren: () => import('./pages/components/profile/profile.module').then(m=>m.ProfileModule),
     canActivate: [() => inject(AuthGuard).canActivate()]
   },
+  /*{
+    path: 'organization'
+    loadChildren: ('./pages/components') => import().then(m=>m.),
+    canActivate: [() => inject(AuthGuard).canActivateOrganization()]
+  },*/
   {
     path: '**', redirectTo: 'hub', pathMatch: 'full'
   }
