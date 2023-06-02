@@ -6,7 +6,6 @@ import {Injectable} from "@angular/core";
 
 import {RequestDTO} from "../models/request-dto";
 import {HobbyRequestDTO} from "../models/hobby-request-dto";
-import {HobbyPostDTO} from "../models/hobby-post-dto";
 import {HobbyDTO} from "../models/hobby-dto";
 
 @Injectable({
@@ -50,19 +49,6 @@ export class HobbiesService {
     return this.http.post<{ hobbies: HobbyDTO[] }>(`${apiUrl}/hobbies.php`, RequestDTO).pipe(
       map(response => {
         return response.hobbies;
-      })
-    );
-  }
-
-  newHobbyPost(HobbyPostDTO: HobbyPostDTO) {
-    let RequestDTO: RequestDTO = {
-      function_to_call: "newHobbyPost",
-      id_user: 2,
-      HobbyPostDTO: HobbyPostDTO
-    };
-    return this.http.post<HobbyDTO[]>(`${apiUrl}/hobbies.php`, RequestDTO).pipe(
-      map(response => {
-        return response;
       })
     );
   }

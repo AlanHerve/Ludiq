@@ -11,13 +11,21 @@
           <input type="checkbox" [(ngModel)]="this.buttons[1]" (change)="onCheckHobby()"> Hobby
         </label>
         <label class = "tag">
-          <input type="checkbox" [(ngModel)]="this.buttons[2]"> Activity
+          <input type="checkbox" [(ngModel)]="this.buttons[2]" (change)="onCheckPost()"> Post
         </label>
       </div>
     </div>
     <p class="result" *ngIf="searchResults.length > 0">
       <li *ngFor="let result of searchResults">
-        {{ result.name }}
+        <span>
+          {{ result.image}}
+        </span>
+        <span>
+          {{ result.name}}
+        </span>
+        <span>
+          {{ result.username}}
+        </span>
       </li>
     </p>
     <p class="result" *ngIf="searchResults.length === 0">

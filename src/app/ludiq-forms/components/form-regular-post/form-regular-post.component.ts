@@ -15,6 +15,8 @@ export class FormRegularPostComponent extends Form implements OnInit {
 
   regularPostDTO: PostDTO = {
     id_regular_post: null,
+    user_name: '',
+    user_username: '',
     id_user: 1,
     id_hobby: 1,
     images: [null, null, null, null],

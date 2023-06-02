@@ -20,6 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $searchRepository = SearchRepository::getInstance();
         $output = $searchRepository->searchUsers($searchTerm);
     }
+    else if($searchType === 'post') {
+        $searchRepository = SearchRepository::getInstance();
+        $output = $searchRepository->searchPost($searchTerm);
+    }
 
     echo $output;
 }

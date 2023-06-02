@@ -17,6 +17,9 @@ const routes: Routes = [
     loadChildren: () => import('./pages/components/profile/profile.module').then(m=>m.ProfileModule),
     canActivate: [() => inject(AuthGuard).canActivate()]
   },
+  {path: 'messages', loadChildren: () => import('./pages/components/messages/messages.module')
+      .then(m => m.MessagesModule)
+  },
   {
     path: '**', redirectTo: 'hub', pathMatch: 'full'
   }

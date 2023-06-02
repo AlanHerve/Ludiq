@@ -7,6 +7,7 @@ import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 import {Location} from "@angular/common";
 import {Form} from "../../models/form";
 import {Router} from "@angular/router";
+import {PostsService} from "../../../posts/services/posts.service";
 
 @Component({
   selector: 'app-form-hobby-posts',
@@ -36,6 +37,7 @@ export class FormHobbyPostComponent extends Form implements OnInit {
   constructor(
     private builder: FormBuilder,
     private hobbiesService: HobbiesService,
+    private postsService: PostsService,
     router: Router,
     location: Location
   ) {
@@ -62,7 +64,7 @@ export class FormHobbyPostComponent extends Form implements OnInit {
   }
 
   newHobbyPost(){
-    this.hobbiesService.newHobbyPost(this.hobbyPostDTO).subscribe({
+    this.postsService.newHobbyPost(this.hobbyPostDTO).subscribe({
       next: (response) => {
         // in case of success
         this.hobbies.length = 0;

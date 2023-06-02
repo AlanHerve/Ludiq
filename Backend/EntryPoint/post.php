@@ -24,12 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $uploadedFiles = saveFiles($images);
 
-  $postDTO = new PostDTO(null, $id_user, $id_hobby, $description, $uploadedFiles, $modified, $likes, $time);
+  $postDTO = new PostDTO(null, null, null, $id_user, $id_hobby, $description, $uploadedFiles, $modified, $likes, $time);
 
   $postRepository = PostRepository::getInstance();
-  $json = $postRepository->newPost($postDTO);
-  echo $json;
-
+  echo $postRepository->newPost($postDTO);
 }
 
 elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
@@ -53,7 +51,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
       $valid = true;
   }
   if($valid) {
-      $postDTO = new PostDTO($id, $id_user, $id_hobby, $description, $images, $modified, $likes, $time);
+      $postDTO = new PostDTO($id, null, null, $id_user, $id_hobby, $description, $images, $modified, $likes, $time);
       $postRepository = PostRepository::getInstance();
       echo $postRepository->getPosts($mode, $postDTO);
   }

@@ -2,18 +2,20 @@
 
 class PostDTO {
 
-  public $id, $id_user, $id_hobby
+  public $id, $user_name, $user_username, $id_user, $id_hobby
   , $description
   , $images
   , $modified
   , $likes
   , $time;
 
-  public function __construct($id, $id_user, $id_hobby, $description
+  public function __construct($id, $user_name, $user_username, $id_user, $id_hobby, $description
                               , $images, $modified, $likes, $time) {
 
     $this->id = $id;
     $this->id_user = $id_user;
+    $this->user_name = $user_name;
+    $this->user_username = $user_username;
     $this->id_hobby = $id_hobby;
     $this->description = $description;
     $this->images = $images;
