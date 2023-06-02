@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormNewPostComponent } from './form-new-post.component';
+import { FormActivityComponent } from './form-activity.component';
 
 @NgModule({
-  declarations: [ ],
+  declarations: [],
   imports: [
     CommonModule,
     RouterModule.forChild([
-      { path: '', component: FormNewPostComponent }
+      { path: '', component: FormActivityComponent }
     ])
   ]
 })
-export class FormNewPostModule { }
+export class FormActivityModule { }

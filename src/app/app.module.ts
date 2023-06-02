@@ -6,10 +6,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {LudiqFormsModule} from "./ludiq-forms/ludiq-forms.module";
 import {CoreModule} from "./core/core.module";
 import {HomeRoutingModule} from "./pages/components/home/home-routing.module";
-import {PagesModule} from "./pages/pages.module";
-import * as fr from '@angular/common/locales/fr';
 import {HomeModule} from "./pages/components/home/home.module";
-import {HubModule} from "./pages/components/hub/hub.module";
 import {ProfileModule} from "./pages/components/profile/profile.module";
 import {FormCreateAccountModule} from "./ludiq-forms/components/form-create-account/form-create-account.module";
 import {HubRoutingModule} from "./pages/components/hub/hub-routing.module";
@@ -35,7 +32,8 @@ import {PostsModule} from "./posts/posts.module";
     LudiqFormsModule
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'fr-FR' },],
+    { provide: LOCALE_ID, useValue: 'fr-FR' },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

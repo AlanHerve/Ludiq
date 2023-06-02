@@ -1,6 +1,8 @@
 <div class="background-form">
-  <form (ngSubmit)="newPost()">
-    <h1>New post</h1>
+
+  <form [@fadeIn]="true" (ngSubmit)="newRegularPost()">
+    <h1>New regular post</h1>
+
     <span (click)="onClose()" class="cross">&times;</span>
     <textarea [(ngModel)]="regularPostDTO.description" name="description" placeholder="Message"></textarea>
     <div class="images">

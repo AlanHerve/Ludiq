@@ -17,4 +17,16 @@ export class AuthGuard {
     }
     return true;
   }
+
+  canActivateOrganization(): Observable<boolean> | Promise<boolean> | boolean {
+    if (!this.authService.isLoggedIn() && !this.authService.isPartOfOrganization(2)){
+      this.router.navigate(['/hub']);
+      return false;
+    }else if(this.authService.isLoggedIn()) {
+      this.router.navigate(['/home']);
+      return false;
+    }
+    return true;
+
+  }
 }

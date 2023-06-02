@@ -164,10 +164,14 @@ class HobbyRepository
         echo json_encode($response);
     }
 
-    function fetchHobbiesOfUser($id) {
-        $hobbies = [];
-        $user_ID = $id;
+    /**
+     * @param $id
+     * @return void
+     * fetches the hobby in a user's bio, with their avancement, the frequency at which they partake in the hobby, their availability
+     */
+    function fetchHobbiesOfUser($id_user) {
 
+        $hobbies = [];
         $response= null;
 
         $stmt = $this->db->prepare(
@@ -184,7 +188,7 @@ class HobbyRepository
                     WHERE
 	                    hobby_post.`ID_USER` = ?");
 
-        $stmt->bind_param("i", $user_ID);
+        $stmt->bind_param("i", $id_user);
         $stmt->execute();
 
         $result = $stmt->get_result();
@@ -199,7 +203,6 @@ class HobbyRepository
             }else{
                 $response = array(
                     'success' => true,
-                    'id' => $user_ID,
                     'message' => 'this user does not have any hobby'
                 );
             }

@@ -3,13 +3,18 @@ import { CommonModule } from '@angular/common';
 import {RouterOutlet} from "@angular/router";
 import {CoreModule} from "../core/core.module";
 import { NotificationsComponent } from './components/notifications/notifications.component';
+
 import { MessagesComponent } from './components/messages/messages.component';
+
+import { OrganizationComponent } from './components/organization/organization.component';
+
 
 
 @NgModule({
   declarations: [
     NotificationsComponent,
-    MessagesComponent
+    MessagesComponent,
+    OrganizationComponent
   ],
   exports: [
   ],

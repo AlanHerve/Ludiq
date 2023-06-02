@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {trigger,style,state,transition,animate,} from '@angular/animations';
 import { FormService } from 'src/app/form.service';
 
+
 @Component({
   selector: 'app-form-login',
   templateUrl: './form-login.component.html',
@@ -62,8 +63,10 @@ export class FormLoginComponent implements OnInit  {
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
         console.log('Status de connexion de l\'utilisateur :', response);
+
         // Redirige vers 'home' uniquement si la connexion est réussie
         this.router.navigateByUrl('home');
+
       },
       error: (error) => {
         // Gestion des erreurs en cas d'échec
@@ -71,7 +74,6 @@ export class FormLoginComponent implements OnInit  {
       }
     })
   }
-
   onClose(): void {
     this.router.navigate(['/']);
   }
