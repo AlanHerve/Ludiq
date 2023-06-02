@@ -44,6 +44,10 @@ export class UserService {
     );
   }
 
+  getCurrentId(): number{
+    return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
+  }
+
   findUserById(userDto: UserDTO): Observable<UserDTO> {
     return this.http.get<UserDTO>(`${apiUrl}/user.php`).pipe(
       map(response => {

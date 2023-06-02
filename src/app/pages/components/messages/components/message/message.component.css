@@ -1,0 +1,16 @@
+p {
+  padding:20px;
+  background-color: #F5F2F5;
+  color: black;
+  border-radius: 100px 100px 100px 0;
+  margin-left: 20px;
+  width: max-content;
+}
+
+.sender {
+  background-color: #307473;
+  color: white;
+  border-radius: 100px 100px 0 100px;
+  float: right;
+}
+

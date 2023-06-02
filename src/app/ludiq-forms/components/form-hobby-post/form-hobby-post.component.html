@@ -5,7 +5,7 @@
   <h1>Add an hobby</h1>
   <p>Hobby</p>
   <select id="hobbyType" name="hobbyType" [(ngModel)]="this.hobbyPostDTO.id_hobby">
-    <option *ngFor="let hobby of hobbies" [value]="hobby">{{hobby}}</option>
+    <option *ngFor="let hobby of hobbies" [value]="hobby">{{hobby.name}}</option>
   </select>
 
 
