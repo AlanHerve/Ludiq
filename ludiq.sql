@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1
--- http://www.phpmyadmin.net
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 28, 2023 at 09:31 PM
--- Server version: 5.7.11
--- PHP Version: 7.0.3
+-- Host: 127.0.0.1
+-- Generation Time: Jun 02, 2023 at 04:56 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -31,12 +32,12 @@ CREATE TABLE `activity` (
   `ID_ACTIVITY_DIRECTOR` int(11) NOT NULL,
   `ID_HOBBY` int(11) NOT NULL,
   `ADVANCEMENT` varchar(30) DEFAULT 'Beginner',
-  `DESCRIPTION` text,
-  `DATE_POST` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `DESCRIPTION` text DEFAULT NULL,
+  `DATE_POST` timestamp NULL DEFAULT current_timestamp(),
   `DATE_ACTIVITY` date DEFAULT NULL,
-  `CURRENT_REGISTERED` int(4) DEFAULT '1',
-  `MAX_REGISTRATIONS` int(4) NOT NULL DEFAULT '10'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `CURRENT_REGISTERED` int(4) DEFAULT 1,
+  `MAX_REGISTRATIONS` int(4) NOT NULL DEFAULT 10
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `activity`
@@ -63,15 +64,15 @@ INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVA
 CREATE TABLE `activity_director` (
   `ID_USER` int(11) NOT NULL,
   `ID_ORGANIZATION` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `activity_director`
 --
 
 INSERT INTO `activity_director` (`ID_USER`, `ID_ORGANIZATION`) VALUES
-(3, 1),
-(2, 3);
+(2, 3),
+(3, 1);
 
 -- --------------------------------------------------------
 
@@ -82,10 +83,10 @@ INSERT INTO `activity_director` (`ID_USER`, `ID_ORGANIZATION`) VALUES
 CREATE TABLE `comment` (
   `ID_COMMENT` int(11) NOT NULL,
   `ID_USER` int(11) NOT NULL,
-  `CONTENT` text,
+  `CONTENT` text DEFAULT NULL,
   `ID_REGULAR_POST` int(11) NOT NULL,
-  `TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `TIME` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -96,7 +97,7 @@ CREATE TABLE `comment` (
 CREATE TABLE `friends` (
   `ID_USER` int(11) NOT NULL,
   `ID_USER_2` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `friends`
@@ -116,7 +117,7 @@ CREATE TABLE `hobby` (
   `ID_HOBBY` int(11) NOT NULL,
   `HOBBY_NAME` varchar(30) NOT NULL,
   `IMAGE` varchar(60) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `hobby`
@@ -155,8 +156,8 @@ CREATE TABLE `hobby_post` (
   `ID_USER` int(11) NOT NULL,
   `EXPERIENCE` varchar(30) DEFAULT 'Beginner',
   `FREQUENCY` varchar(30) DEFAULT NULL,
-  `AVAILABLE` tinyint(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `AVAILABLE` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `hobby_post`
@@ -180,9 +181,9 @@ CREATE TABLE `message` (
   `ID_MESSAGE` int(11) NOT NULL,
   `ID_USER` int(11) NOT NULL,
   `ID_USER_2` int(11) NOT NULL,
-  `CONTENT` text,
-  `TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `CONTENT` text DEFAULT NULL,
+  `TIME` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -194,7 +195,7 @@ CREATE TABLE `organization` (
   `ID_ORGANIZATION` int(11) NOT NULL,
   `NAME_ORGANIZATION` varchar(64) NOT NULL,
   `AVATAR` varchar(120) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `organization`
@@ -216,15 +217,16 @@ INSERT INTO `organization` (`ID_ORGANIZATION`, `NAME_ORGANIZATION`, `AVATAR`) VA
 CREATE TABLE `regular_post` (
   `ID_REGULAR_POST` int(11) NOT NULL,
   `ID_USER` int(11) NOT NULL,
-  `DESCRIPTION` text,
+  `ID_HOBBY` int(11) NOT NULL,
+  `DESCRIPTION` text DEFAULT NULL,
   `IMAGE1` varchar(60) DEFAULT NULL,
   `IMAGE2` varchar(60) DEFAULT NULL,
   `IMAGE3` varchar(60) DEFAULT NULL,
   `IMAGE4` varchar(60) DEFAULT NULL,
-  `MODIFIED` int(1) DEFAULT '0',
-  `LIKES` int(11) DEFAULT '0',
-  `TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `MODIFIED` int(1) DEFAULT 0,
+  `LIKES` int(11) DEFAULT 0,
+  `TIME` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -239,7 +241,7 @@ CREATE TABLE `user` (
   `USER_PASSWORD` varchar(500) NOT NULL,
   `EMAIL` varchar(60) NOT NULL,
   `AVATAR` varchar(60) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `user`
@@ -318,7 +320,8 @@ ALTER TABLE `organization`
 --
 ALTER TABLE `regular_post`
   ADD PRIMARY KEY (`ID_REGULAR_POST`),
-  ADD KEY `ID_USER` (`ID_USER`);
+  ADD KEY `ID_USER` (`ID_USER`),
+  ADD KEY `regular_post_ibfk_2` (`ID_HOBBY`);
 
 --
 -- Indexes for table `user`
@@ -335,36 +338,43 @@ ALTER TABLE `user`
 --
 ALTER TABLE `activity`
   MODIFY `ID_ACTIVITY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `hobby`
 --
 ALTER TABLE `hobby`
   MODIFY `ID_HOBBY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
 --
 -- AUTO_INCREMENT for table `hobby_post`
 --
 ALTER TABLE `hobby_post`
   MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
   MODIFY `ID_MESSAGE` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `organization`
 --
 ALTER TABLE `organization`
   MODIFY `ID_ORGANIZATION` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `regular_post`
 --
 ALTER TABLE `regular_post`
   MODIFY `ID_REGULAR_POST` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `ID_USER` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- Constraints for dumped tables
 --
@@ -415,7 +425,9 @@ ALTER TABLE `message`
 -- Constraints for table `regular_post`
 --
 ALTER TABLE `regular_post`
-  ADD CONSTRAINT `regular_post_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE;
+  ADD CONSTRAINT `regular_post_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
+  ADD CONSTRAINT `regular_post_ibfk_2` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
