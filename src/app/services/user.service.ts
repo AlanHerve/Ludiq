@@ -24,7 +24,7 @@ export class UserService {
           localStorage.setItem('currentUser', JSON.stringify(response.data));
 
           // Assign the token value to the token property of userDTO
-          userDTO.token = response.data.token;
+          userDTO.token = response.token;
           console.log(userDTO.email);
 
           return response.data;
