@@ -152,7 +152,7 @@ WHERE
 
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
-            $user = new UserDTO($row['ID_USER'], $row['USER_NAME'], $row['USER_PSEUDO'], $row['USER_PASSWORD'], $row['EMAIL'], $row['AVATAR']);
+            $user = new UserDTO($row['ID_USER'], $row['USER_NAME'], $row['USER_PSEUDO'], null, $row['EMAIL'], $row['AVATAR']);
             $response = array(
                 'success' => true,
                 'user'    => $user
