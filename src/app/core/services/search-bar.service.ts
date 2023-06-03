@@ -5,6 +5,7 @@ import {apiUrl} from "../../services/api-url";
 import {UserDTO} from "../../models/user-dto";
 import {HobbyDTO} from "../../models/hobby-dto";
 import {ActivityDTO} from "../../models/activity-dto";
+import {PostDTO} from "../../posts/models/post-dto";
 
 
 @Injectable({
@@ -26,6 +27,10 @@ export class SearchBarService {
 
   searchHobby(hobby: string): Observable<HobbyDTO[]> {
     return this.search('hobby', hobby);
+  }
+
+  searchPost(post: string): Observable<PostDTO[]> {
+    return this.search('post', post);
   }
 
   searchActivity(activity: string): Observable<ActivityDTO[]> {

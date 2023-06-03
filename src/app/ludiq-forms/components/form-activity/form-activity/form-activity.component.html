@@ -1,0 +1,39 @@
+<div class="background-form">
+    <div class="hobbies">
+      <form [@fadeIn]="true">
+        <h1>New Activity</h1>
+        <div class = "form-container">
+          <div class="hobby-container">
+            <span class = "cross" (click)="onClose()">&times;</span>
+            <p>Hobby</p>
+            <div class="tags-container">
+              <label class="tag">
+                <input type="radio" name="hobby">
+                Hobby 1
+              </label>
+              <label class="tag">
+                <input type="radio" name="hobby">
+                Hobby 2
+              </label>
+              <label class="tag">
+                <input type="radio" name="hobby">
+                Hobby 3
+              </label>
+            </div>
+          </div>
+          <div class="message-container">
+            <textarea class = "text" placeholder="Description of the activity"></textarea>
+
+            <label class="file-input-label" [class.disabled]="this.activityDTO.images[1] != null">
+                <span class="file-input-text">Select an image</span>
+                <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event)" [disabled]="activityDTO.images[3] != null">
+            </label>
+
+            <button class = "submit">Send</button>
+          </div>
+        </div>
+  
+      </form>
+    </div>
+  </div>
+  

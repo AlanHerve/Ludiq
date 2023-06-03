@@ -4,11 +4,24 @@ import {UserDTO} from "../../../models/user-dto";
 import {UserService} from "../../../services/user.service";
 import {CustomValidators} from "../../../custom-validators";
 import {Router} from "@angular/router";
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-form-create-account',
   templateUrl: './form-create-account.component.html',
-  styleUrls: ['./form-create-account.component.css']
+  styleUrls: ['./form-create-account.component.css'],
+  animations:[
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })),
+      state('*', style({ opacity: 1 })),
+      transition('void => *', animate('200ms')),
+    ]),
+    trigger('fadeOut', [
+      state('*', style({ opacity: 1 })),
+      state('void', style({ opacity: 0 })),
+      transition('* => void', animate('200ms')),
+    ])
+  ]
 })
 export class FormCreateAccountComponent implements OnInit {
   createForm!: FormGroup;

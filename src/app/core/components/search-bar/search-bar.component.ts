@@ -3,6 +3,8 @@ import {SearchBarService} from "../../services/search-bar.service";
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {UserDTO} from "../../../models/user-dto";
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
@@ -12,7 +14,7 @@ export class SearchBarComponent implements OnInit {
   buttons: boolean[] = [];
   searchResults: any[] = [];
 
-  constructor(private searchBarService: SearchBarService) {
+  constructor(private searchBarService: SearchBarService, private router:Router) {
     this.buttons[0] = false;
     this.buttons[1] = false;
     this.buttons[2] = false;
@@ -47,12 +49,16 @@ export class SearchBarComponent implements OnInit {
       // Aucun bouton n'est coché, recherche globale
       this.onUserClicked(searchText);
       this.onHobbyClicked(searchText);
+      this.onPostClicked(searchText);
     } else {
       if (this.buttons[0]) {
         this.onUserClicked(searchText);
       }
       if (this.buttons[1]) {
         this.onHobbyClicked(searchText);
+      }
+      if (this.buttons[2]) {
+        this.onPostClicked(searchText);
       }
     }
   }
@@ -77,6 +83,27 @@ export class SearchBarComponent implements OnInit {
             const existingUser = this.searchResults.find(user => user.id == userDTO.id);
             if (!existingUser) {
               this.searchResults.push(userDTO);
+            }
+          }
+        })
+      },
+      error: (error) => {
+        // Gestion des erreurs en cas d'échec
+        console.error('Erreur lors de la récupération de l\'utilisateur', error);
+      }
+    });
+  }
+
+  onPostClicked(searchText: string): void {
+    this.removeContentOnClick();
+    this.searchBarService.searchPost(searchText).subscribe({
+      next: (response) => {
+        response.forEach((post) => {
+          if (post.id_regular_post) {
+            const postDTO = post;
+            const existingPost = this.searchResults.find(post => post.id_regular_post == postDTO.id_regular_post);
+            if (!existingPost) {
+              this.searchResults.push(postDTO);
             }
           }
         })
@@ -142,6 +169,16 @@ export class SearchBarComponent implements OnInit {
     }
   }
 
+  onCheckPost(): void {
+    const searchText = (document.querySelector('.explorer') as HTMLTextAreaElement).value;
+    if (this.buttons[1]) {
+      this.onPostClicked(searchText);
+    }
+    else {
+      this.displayContentOnclick(searchText);
+    }
+  }
+
   /**
    * Method that updates the search content in relation to the radio button
    */
@@ -154,4 +191,15 @@ export class SearchBarComponent implements OnInit {
 
     });
   }
+  onClickNewActivity(): void {
+    /*
+    We determine the route that we are currently on
+     */
+    const currentRoute = this.router.url;
+    /*
+    We navigate to the pop-up's route in order to display it
+     */
+    this.router.navigateByUrl(`${currentRoute}/activity`);
+  }
+
 }

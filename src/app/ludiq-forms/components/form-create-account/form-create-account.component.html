@@ -1,5 +1,5 @@
 <div class="background-form">
-  <form (ngSubmit)="onCreateAccount()" [formGroup]="createForm">
+  <form  [@fadeIn]="true" (ngSubmit)="onCreateAccount()" [formGroup]="createForm">
     <h1>Register</h1>
     <a class="cross" (click)="onClose()">&times;</a>
     <input required type="text" [(ngModel)]="userDTO.name" id="name" name="name" formControlName="name"

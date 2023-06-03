@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {HobbiesService} from "../../../services/hobbies.service";
 import {RequestDTO} from "../../../models/request-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
+import {HobbyCountDTO} from "../../../models/hobby-count-dto";
 
 @Component({
   selector: 'app-user-hobbies-list',
@@ -28,7 +29,7 @@ export class UserHobbiesListComponent {
     //this.RequestDTO.id_user = this.id
     this.RequestDTO.id_user = this.id;
     console.log(this.RequestDTO.id_user);
-    this.hobbyService.fetchHobbiesOfUser(this.RequestDTO).subscribe({
+    this.hobbyService.fetchHobbiesOfUser().subscribe({
       next: (response) => {
         // in case of success
 
@@ -39,7 +40,7 @@ export class UserHobbiesListComponent {
       },
       error: (error) => {
         // in case of failure
-        console.error('Could not get display hobbies', error);
+        console.error('Could not get user hobbies', error);
       }
     });
   }

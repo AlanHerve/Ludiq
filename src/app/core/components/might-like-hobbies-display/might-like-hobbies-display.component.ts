@@ -39,7 +39,9 @@ export class MightLikeHobbiesDisplayComponent {
   fetchDisplayHobbies(){
     this.rand_hobbies.length = 0;
     this.top_hobbies.length = 0;
-    this.hobbiesService.fetchDisplayHobbies(this.RequestDTO2).subscribe({
+
+    this.hobbiesService.fetchDisplayHobbies().subscribe({
+
       next: (response) => {
         // in case of success
         let i = 0
@@ -56,7 +58,7 @@ export class MightLikeHobbiesDisplayComponent {
         // in case of failure
         console.error('Could not get display hobbies', error);
       }
-    })
+    });
   }
 
 }

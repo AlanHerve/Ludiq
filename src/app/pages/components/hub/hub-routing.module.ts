@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {HubComponent} from "./hub.component";
-import {
-  FormCreateAccountComponent
-} from "../../../ludiq-forms/components/form-create-account/form-create-account.component";
 
 const routes: Routes = [
   {
@@ -11,9 +8,11 @@ const routes: Routes = [
     component: HubComponent,
     children : [
       {path: 'register', loadChildren: () => import('./../../../ludiq-forms/components/form-create-account/form-create-account.module')
-          .then(m => m.FormCreateAccountModule)},
+          .then(m => m.FormCreateAccountModule)
+      },
       {path: 'login', loadChildren: () => import('./../../../ludiq-forms/components/form-login/form-login.module')
-          .then(m => m.FormLoginModule)},
+          .then(m => m.FormLoginModule)
+      },
     ]
   }
 ];
