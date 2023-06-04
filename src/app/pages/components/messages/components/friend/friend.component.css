@@ -9,3 +9,7 @@ div, .user-info {
 img {
   width:40px;
 }
+
+.friend {
+  cursor: pointer;
+}

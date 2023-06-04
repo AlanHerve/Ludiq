@@ -8,9 +8,12 @@ p {
   padding:20px;
   background-color: #F5F2F5;
   color: black;
-  border-radius: 100px 100px 100px 0;
+  border-radius: 33px 33px 33px 0;
   margin-left: 20px;
   width: max-content;
+
+  overflow-wrap: break-word;
+  max-width: 600px;
 }
 
 .content {
@@ -22,7 +25,8 @@ p {
 }
 
 .sender {
-  align-self: flex-end; border-radius: 100px 100px 0 100px;
+  align-self: flex-end;
+  border-radius: 33px 33px 0 33px;
   margin-left: 0;
   margin-right: 20px;
   background-color: #307473;
@@ -37,4 +41,3 @@ p {
   align-self: flex-start;
   background-color: #F4F2F5;
 }
-

@@ -28,7 +28,9 @@ export class MessageBarComponent implements OnInit {
     this.messageService.createMessage(this.messageDTO).subscribe({
       next: (response) => {
         console.log('success:', response);
-
+        this.messageContent = '';
+        // Update of the messages displayed on the screen
+        this.messageService.updateMessageList();
       },
       error: (error) => {
         console.log('error:', error);

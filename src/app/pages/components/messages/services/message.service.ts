@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {UserDTO} from "../../../../models/user-dto";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {apiUrl} from "../../../../services/api-url";
@@ -9,6 +9,8 @@ import {MessageDTO} from "../models/message-dto";
   providedIn: 'root'
 })
 export class MessageService {
+  private messageListSubject: Subject<void> = new Subject<void>();
+
   constructor(private http: HttpClient) {
   }
 
@@ -22,6 +24,14 @@ export class MessageService {
 
   createMessage(messageDTO: MessageDTO): Observable<string[]> {
     return this.http.put<string[]>(`${apiUrl}/message.php`, messageDTO);
+  }
+
+  updateMessageList(): void {
+    this.messageListSubject.next();
+  }
+
+  getMessageListUpdates(): Observable<void> {
+    return this.messageListSubject.asObservable();
   }
 
 }

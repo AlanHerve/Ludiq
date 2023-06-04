@@ -1,11 +1,10 @@
 .message-bar {
   position: fixed;
   bottom: 0;
-  width: 816px;
+  width: calc(100% - 700px);
   display: flex;
   align-items: center;
   background-color: #F5F2F5;
-  padding: 10px;
 }
 
 .message-input {
