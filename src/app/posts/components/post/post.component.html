@@ -26,9 +26,9 @@
   <span class="count">{{ postDTO.likes }}</span>
   <img alt="Comment image" class="interaction" src="../../../../assets/images/icons/comment.png" (click)="showCommentBox = true">
   <span class="count">{{ postDTO.comments.length }}</span>
-  <div *ngIf="showCommentBox">
-      <input type="text" [(ngModel)]="newComment" placeholder="Add a comment">
-    <button (click)="addComment()">Add</button>
-  </div>
 
+  <div *ngIf="showCommentBox">
+    <input type="text" [(ngModel)]="newComment" placeholder="Ajouter un commentaire">
+    <button (click)="addComment()">Ajouter</button>
+  </div>
 </div>

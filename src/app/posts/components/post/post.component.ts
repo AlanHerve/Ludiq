@@ -10,6 +10,8 @@ export class PostComponent implements OnInit {
   @Input() postDTO!: PostDTO;
   @Output() postLiked: EventEmitter<PostDTO> = new EventEmitter<PostDTO>();
   isLiked: boolean = false;
+  showCommentBox: boolean = false;
+  newComment: string = '';
 
   likePost() {
     this.isLiked = !this.isLiked;
@@ -21,11 +23,6 @@ export class PostComponent implements OnInit {
     }
   }
 
-  @Output() commentAdded: EventEmitter<PostDTO> = new EventEmitter<PostDTO>();
-
-  showCommentBox: boolean = false;
-  newComment: string = '';
-
   addComment() {
     if (this.newComment.trim() !== '') {
       this.postDTO.comments.push(this.newComment);
@@ -33,8 +30,6 @@ export class PostComponent implements OnInit {
     }
     this.showCommentBox = false;
   }
-
-
 
   ngOnInit(): void {
   }
