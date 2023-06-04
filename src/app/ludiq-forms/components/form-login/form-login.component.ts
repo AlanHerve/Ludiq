@@ -65,8 +65,7 @@ export class FormLoginComponent implements OnInit  {
         console.log('Status de connexion de l\'utilisateur :', response);
 
         // Redirige vers 'home' uniquement si la connexion est réussie
-        this.router.navigateByUrl('home');
-
+        this.router.navigateByUrl('/home');
       },
       error: (error) => {
         // Gestion des erreurs en cas d'échec
@@ -74,6 +73,7 @@ export class FormLoginComponent implements OnInit  {
       }
     })
   }
+
   onClose(): void {
     this.router.navigate(['/']);
   }

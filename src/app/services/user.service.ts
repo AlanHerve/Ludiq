@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {UserDTO} from "../models/user-dto";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./api-url";
@@ -19,30 +19,36 @@ export class UserService {
     localStorage.removeItem('currentUser');
   }
 
+  getCurrentId(): number | null {
+    try {
+      return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
+    } catch(e) {
+      console.error(e);
+      return null;
+    }
+  }
+
+  private currentIdSubject = new BehaviorSubject<number | null>(null);
+  public currentId$ = this.currentIdSubject.asObservable();
+
+// Update the currentIdSubject in your login method
   loginUser(userDTO: UserDTO): Observable<UserDTO> {
     return this.http.post<any>(`${apiUrl}/login.php`, userDTO).pipe(
       map(response => {
-        // Check if the response is successful
         if (response && response.success === true) {
-          // Store the user in local storage
           localStorage.setItem('currentUser', JSON.stringify(response.data));
-
-          // Assign the token value to the token property of userDTO
           userDTO.token = response.token;
-          console.log(userDTO.email);
-
+          this.currentIdSubject.next(parseInt(response.data.id));
           return response.data;
         } else {
-          // If the response is not successful, throw an error
           throw new Error(response.message || 'Login failed');
         }
       })
     );
   }
 
-  getCurrentId(): number{
-    return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
-  }
+
+
 
   findUserById(userDto: UserDTO): Observable<UserDTO> {
     return this.http.get<UserDTO>(`${apiUrl}/user.php`).pipe(
