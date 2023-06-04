@@ -21,6 +21,21 @@ export class PostComponent implements OnInit {
     }
   }
 
+  @Output() commentAdded: EventEmitter<PostDTO> = new EventEmitter<PostDTO>();
+
+  showCommentBox: boolean = false;
+  newComment: string = '';
+
+  addComment() {
+    if (this.newComment.trim() !== '') {
+      this.postDTO.comments.push(this.newComment);
+      this.newComment = '';
+    }
+    this.showCommentBox = false;
+  }
+
+
+
   ngOnInit(): void {
   }
 

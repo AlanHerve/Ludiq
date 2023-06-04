@@ -38,7 +38,8 @@ export class FormRegularPostComponent extends Form implements OnInit {
     description: '',
     time: '',
     modified: 0,
-    files: []
+    files: [],
+    comments: []
   }
 
   ngOnInit() {
