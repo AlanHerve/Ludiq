@@ -1,5 +1,5 @@
-import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import {PostDTO} from "../../models/post-dto";
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { PostDTO } from "../../models/post-dto";
 
 @Component({
   selector: 'app-post',
@@ -9,9 +9,16 @@ import {PostDTO} from "../../models/post-dto";
 export class PostComponent implements OnInit {
   @Input() postDTO!: PostDTO;
   @Output() postLiked: EventEmitter<PostDTO> = new EventEmitter<PostDTO>();
+  isLiked: boolean = false;
 
   likePost() {
-    //this.postLiked.emit(this.postDTO);
+    this.isLiked = !this.isLiked;
+    this.postLiked.emit(this.postDTO);
+    if (this.isLiked) {
+      this.postDTO.likes++;
+    } else {
+      this.postDTO.likes--;
+    }
   }
 
   ngOnInit(): void {
@@ -20,5 +27,4 @@ export class PostComponent implements OnInit {
   getFileUrl(file: File): string {
     return URL.createObjectURL(file);
   }
-
 }
