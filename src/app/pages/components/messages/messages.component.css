@@ -1,7 +1,9 @@
 .content {
-  position:absolute;
+  position: absolute;
   left: 350px;
   width: 836px;
+  display: flex;
+  flex-direction: column;
 }
 
 .top-bar {
@@ -17,4 +19,16 @@ img {
   padding: 15px;
   width: 50px;
   height: 50px;
+}
+.name {
+  font-weight: 500;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.username {
+  font-size: 17px;
+  padding: 0;
+  margin: 0;
+  font-weight: 100;
 }

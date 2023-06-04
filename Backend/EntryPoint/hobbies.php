@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(isset($data['id_user']) && isset($data['id_hobby']) && isset($data['frequency']) && isset($data['advancement']) && isset($data['availability'])){
         $hobbyPostDto = new HobbyPostDTO($data['id_user'], $data['id_hobby'], $data['frequency'], $data['advancement'], $data['availability']);
     }else{
-        echo json_encode(array('success'=>false, 'message'=>'parameters not fdound'));
+        echo json_encode(array('success'=>false, 'message'=>'parameters not found'));
         exit(0);
     }
 

@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {MessageDTO} from "../../models/messageDTO";
+import {MessageDTO} from "../../models/message-dto";
+import {MessageService} from "../../services/message.service";
+import {UserDTO} from "../../../../../models/user-dto";
 
 @Component({
   selector: 'app-message-list',
@@ -9,12 +11,22 @@ import {MessageDTO} from "../../models/messageDTO";
 export class MessageListComponent implements OnInit {
   messagesDTO: MessageDTO[] = [];
 
+  constructor(private messageService: MessageService) {
+  }
+
   ngOnInit(): void {
-    this.messagesDTO.push(new MessageDTO(1, 1, 5, "Raphael","tact", "Coucou Monsieur 2!"));
-    this.messagesDTO.push(new MessageDTO(2, 5, 1, "Eileen","teg","Coucou Monsieur 1!"));
-    this.messagesDTO.push(new MessageDTO(3, 5, 1, "Eileen","teg","Ca va ?"));
-    this.messagesDTO.push(new MessageDTO(4, 1, 5, "Raphael","tact","Oui et toi ?"));
-    this.messagesDTO.push(new MessageDTO(4, 5, 1, "Eileen","teg","Tranquille !"));
+    let user = JSON.parse(localStorage.getItem('currentUser')!).id;
+    this.messageService.getMessagesBetweenUsers(user, 2).subscribe({
+      next: (response: MessageDTO[]) => {
+        console.log('success:', response);
+        this.messagesDTO = response;
+
+      },
+      error: (error) => {
+        console.log('error:', error);
+      }
+    });
+
   }
 
 }

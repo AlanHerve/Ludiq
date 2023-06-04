@@ -22,7 +22,6 @@ class HobbyRepository
     public function fetchAllHobbies() {
 
         $hobbies = [];
-        $response = null;
 
         $result = $this->getHobbies();
 

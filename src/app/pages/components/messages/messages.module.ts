@@ -6,14 +6,19 @@ import {MessagesComponent} from "./messages.component";
 import { MessageComponent } from './components/message/message.component';
 import { MessageListComponent } from './components/message-list/message-list.component';
 import {NgClass, NgFor} from "@angular/common";
+import { FriendListComponent } from './components/friend-list/friend-list.component';
+import { MessageBarComponent } from './components/message-bar/message-bar.component';
+import { FriendComponent } from './components/friend/friend.component';
+import {FormsModule} from "@angular/forms";
 @NgModule({
-  declarations: [MessagesComponent, MessageComponent, MessageListComponent],
+  declarations: [MessagesComponent, MessageComponent, MessageListComponent, FriendListComponent, MessageBarComponent, FriendComponent],
   imports: [
     MessagesRoutingModule,
     RouterOutlet,
     CoreModule,
     NgFor,
-    NgClass
+    NgClass,
+    FormsModule
   ],
   exports: [
     MessagesRoutingModule

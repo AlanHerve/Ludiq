@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {PostDTO} from "../../../../../posts/models/post-dto";
-import {MessageDTO} from "../../models/messageDTO";
+import {MessageDTO} from "../../models/message-dto";
 
 @Component({
   selector: 'app-message',
@@ -13,6 +13,6 @@ export class MessageComponent implements OnInit {
   }
 
   onVerifySender(): boolean {
-    return JSON.parse(localStorage.getItem('currentUser')!).id == this.messageDTO.id_sender;
+    return JSON.parse(localStorage.getItem('currentUser')!).id == this.messageDTO.id_user;
   }
 }
