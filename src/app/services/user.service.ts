@@ -19,24 +19,18 @@ export class UserService {
     localStorage.removeItem('currentUser');
   }
 
-  loginUser(userDTO: UserDTO): Observable<UserDTO> {
-    return this.http.post<UserDTO>(`${apiUrl}/login.php`, userDTO).pipe(
+  loginUser(userDTO: UserDTO): Observable<{ user: UserDTO }> {
+    return this.http.post<{ user: UserDTO }>(`${apiUrl}/login.php`, userDTO).pipe(
       map(response => {
-        if (response) {
-
+        if (response.user) {
           // Stocker le jeton dans le stockage local
-          if(response.token){
-            localStorage.setItem('currentUser', JSON.stringify(response));
+          if(response.user.token){
+            localStorage.setItem('currentUser', JSON.stringify(response.user));
             this.isPartOfOrganization(3);
-          }else {
+          }
+          else {
             alert("wrong username or password");
           }
-
-
-          // Affecter la valeur du jeton à la propriété token de userDTO
-
-          userDTO.token = response.token;
-
         }
         console.log(localStorage.getItem('currentUser'));
         return response;

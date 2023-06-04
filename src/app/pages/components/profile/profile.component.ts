@@ -10,7 +10,7 @@ import {UserDTO} from "../../../models/user-dto";
 })
 export class ProfileComponent {
 
-  private userDTO: UserDTO = {
+  protected userDTO: UserDTO = {
     id: 0,
     name: '',
     username: '',
@@ -20,7 +20,7 @@ export class ProfileComponent {
   constructor(private userService: UserService, private activatedRoute: ActivatedRoute) {
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.userDTO.id = parseInt(params['id']);
 

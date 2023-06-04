@@ -29,9 +29,9 @@ export class FormRegularPostComponent extends Form implements OnInit {
 
   regularPostDTO: PostDTO = {
     id_regular_post: null,
-    user_name: '',
-    user_username: '',
-    id_user: 1,
+    user_name: JSON.parse(localStorage.getItem('currentUser')!).name,
+    user_username: JSON.parse(localStorage.getItem('currentUser')!).username,
+    id_user: JSON.parse(localStorage.getItem('currentUser')!).id,
     id_hobby: 1,
     images: [null, null, null, null],
     likes: 0,
@@ -88,7 +88,13 @@ export class FormRegularPostComponent extends Form implements OnInit {
   newRegularPost() {
     const formData = new FormData();
     // @ts-ignore
-    formData.append('id_user', this.regularPostDTO.id_user.toString());
+    formData.append('id_hobby', this.regularPostDTO.id_hobby.toString());
+    // @ts-ignore
+    formData.append('id_user', this.regularPostDTO.id_user);
+    // @ts-ignore
+    formData.append('user_name', this.regularPostDTO.user_name);
+    // @ts-ignore
+    formData.append('user_username', this.regularPostDTO.user_username);
     // @ts-ignore
     formData.append('id_hobby', this.regularPostDTO.id_hobby.toString());
     formData.append('description', this.regularPostDTO.description);

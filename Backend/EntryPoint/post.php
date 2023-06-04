@@ -11,8 +11,11 @@ include("../Repositories/PostRepository.php");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $id = null;
   $id_user = $_POST['id_user'];
+  $name = $_POST['user_name'];
+  $user_name = $_POST['user_username'];
   $id_hobby = $_POST['id_hobby'];
   $description = $_POST['description'];
+  echo json_encode($id_user);
   $modified = null;
   $likes = null;
   $time = null;
@@ -24,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $uploadedFiles = saveFiles($images);
 
-  $postDTO = new PostDTO(null, null, null, $id_user, $id_hobby, $description, $uploadedFiles, $modified, $likes, $time);
+  $postDTO = new PostDTO(null, $name, $user_name, $id_user, $id_hobby, $description, $uploadedFiles, $modified, $likes, $time);
 
   $postRepository = PostRepository::getInstance();
   echo $postRepository->newPost($postDTO);
