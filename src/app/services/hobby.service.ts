@@ -39,10 +39,10 @@ export class HobbyService {
   }
 
 
-  getHobbiesOfUser(): Observable<HobbyDTO[]>{
+  getHobbiesOfUser(id_user: number): Observable<HobbyDTO[]>{
     const params = new HttpParams()
       .set('function_to_call', "fetchHobbiesOfUser")
-      .set('id_user', 2);
+      .set('id_user', id_user);
     return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
@@ -51,10 +51,10 @@ export class HobbyService {
     );
   }
 
-  getAvailableHobbiesOfUser() : Observable<HobbyDTO[]>{
+  getAvailableHobbiesOfUser(id_user: number) : Observable<HobbyDTO[]>{
     const params = new HttpParams()
       .set('function_to_call', "fetchAvailableHobbiesOfUser")
-      .set('id_user', 2);
+      .set('id_user', id_user);
 
     return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
@@ -65,7 +65,7 @@ export class HobbyService {
   }
 
 
-  newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
+  newHobbyPost(hobbyPostDTO: HobbyPostDTO): Observable<any> {
     let RequestDTO: RequestDTO = {
       function_to_call: "newHobbyPost",
       id_user: 2,

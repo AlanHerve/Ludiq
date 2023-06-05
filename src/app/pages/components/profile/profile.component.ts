@@ -12,17 +12,11 @@ import {ProfileService} from "./services/profile.service";
 })
 export class ProfileComponent {
 
-  protected userDTO: UserDTO = {
-    id: 0,
-    name: '',
-    username: '',
-    email: ''
-  };
-
   protected profileDTO: ProfileDTO = {
-    userDTO: this.userDTO,
+    userDTO: new UserDTO(-1, '', ''),
     numPosts: 0,
-    numHobbies: 0
+    numHobbies: 0,
+    postsDTO: []
   }
 
   constructor(private userService: UserService,
@@ -33,17 +27,17 @@ export class ProfileComponent {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.userDTO.id = parseInt(params['id']);
+      this.profileDTO.userDTO.id = parseInt(params['id']);
 
       if (this.isConnectedUser()) {
-        this.userDTO.name = JSON.parse(localStorage.getItem('currentUser')!).name;
-        this.userDTO.username = JSON.parse(localStorage.getItem('currentUser')!).username;
+        this.profileDTO.userDTO.name = JSON.parse(localStorage.getItem('currentUser')!).name;
+        this.profileDTO.userDTO.username = JSON.parse(localStorage.getItem('currentUser')!).username;
       } else {
-        this.userService.findUserById(this.userDTO.id).subscribe({
+        this.userService.findUserById(this.profileDTO.userDTO.id).subscribe({
 
           next: (response) => {
             // in case of success
-            this.userDTO = response;
+            this.profileDTO.userDTO = response;
           },
           error: (error) => {
             // in case of failure
@@ -54,10 +48,11 @@ export class ProfileComponent {
     })
 
     this.getNumPosts();
+    this.getNumHobbies();
   }
 
   getNumPosts(): void {
-    this.profileService.getNumPosts(this.userDTO.id).subscribe({
+    this.profileService.getNumPosts(this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
         this.profileDTO.numPosts = response;
       },
@@ -66,13 +61,23 @@ export class ProfileComponent {
       }
     })
   }
+  getNumHobbies(): void {
+    this.profileService.getNumHobbies(this.profileDTO.userDTO.id).subscribe({
+      next: (response) => {
+        this.profileDTO.numHobbies = response;
+      },
+      error: (error) => {
+        console.log('error while finding the number of posts of the user : ', error);
+      }
+    })
+  }
 
   isConnectedUser(): boolean {
-    return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.userDTO.id
+    return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.profileDTO.userDTO.id
   }
 
   onSendMessageClicked(): void {
-    this.router.navigateByUrl(`messages/${this.userDTO.id}`)
+    this.router.navigateByUrl(`messages/${this.profileDTO.userDTO.id}`)
   }
 
 }

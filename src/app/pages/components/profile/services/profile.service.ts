@@ -18,4 +18,11 @@ export class ProfileService {
     return this.http.get<number>(`${apiUrl}/profile.php`, {params});
   }
 
+  getNumHobbies(id_user: number): Observable<number> {
+    const params = new HttpParams()
+      .set('type', 'getNumHobbies')
+      .set('id_user', id_user)
+    return this.http.get<number>(`${apiUrl}/profile.php`, {params});
+  }
+
 }

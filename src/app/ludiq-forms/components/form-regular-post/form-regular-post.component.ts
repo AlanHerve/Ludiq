@@ -32,7 +32,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
   hobbies : HobbyDTO[] = [];
 
   postDTO: PostDTO = {
-    id_regular_post: null,
+    id_regular_post: -1,
     user_name: JSON.parse(localStorage.getItem('currentUser')!).name,
     user_username: JSON.parse(localStorage.getItem('currentUser')!).username,
     id_user: JSON.parse(localStorage.getItem('currentUser')!).id,
@@ -92,7 +92,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
   }
 
   getUserHobbies(){
-    this.hobbyService.getHobbiesOfUser().subscribe({
+    this.hobbyService.getHobbiesOfUser(this.postDTO.id_user).subscribe({
       next: (response) => {
         // in case of success
         for (let i = 0; i < response.length; i++) {
