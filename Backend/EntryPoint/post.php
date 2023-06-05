@@ -15,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $user_name = $_POST['user_username'];
   $id_hobby = $_POST['id_hobby'];
   $description = $_POST['description'];
-  echo json_encode($id_user);
   $modified = null;
   $likes = null;
   $time = null;
@@ -56,7 +55,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
   if($valid) {
       $postDTO = new PostDTO($id, null, null, $id_user, $id_hobby, $description, $images, $modified, $likes, $time);
       $postRepository = PostRepository::getInstance();
-      echo $postRepository->getPosts($mode, $postDTO);
+      //echo $postRepository->getPosts($mode, $postDTO);
   }
 }
 
