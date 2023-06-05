@@ -14,8 +14,8 @@
       </div>
     </div>
   </div>
-  <div class="post-info">
-    <button class="tag">Cooking</button>
+  <div class="post-info" *ngIf="postDTO.id_hobby != null">
+    <button class="tag">{{postDTO.hobby_name}}</button>
   </div>
   <p class="post-content">{{ postDTO.description }}</p>
   <div *ngFor="let image of postDTO.files">

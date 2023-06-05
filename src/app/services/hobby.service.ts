@@ -12,11 +12,11 @@ import {HobbyPostDTO} from "../models/hobby-post-dto";
 @Injectable({
   providedIn: 'root'
 })
-export class HobbiesService {
+export class HobbyService {
 
   constructor(private http: HttpClient) {}
 
-  fetchAllHobbies(RequestDTO: RequestDTO): Observable<HobbyDTO[]> {
+  getAllHobbies(RequestDTO: RequestDTO): Observable<HobbyDTO[]> {
     //const function_to_call: string = "fetchALLHobbies";
     return this.http.post<HobbyDTO[]>(`${apiUrl}/hobbies.php`, RequestDTO).pipe(
       map(response => {
@@ -39,7 +39,7 @@ export class HobbiesService {
   }
 
 
-  fetchHobbiesOfUser(): Observable<HobbyDTO[]>{
+  getHobbiesOfUser(): Observable<HobbyDTO[]>{
     const params = new HttpParams()
       .set('function_to_call', "fetchHobbiesOfUser")
       .set('id_user', 2);
@@ -51,27 +51,17 @@ export class HobbiesService {
     );
   }
 
-  fetchAvailableHobbiesOfUser() : Observable<{hobbies: HobbyDTO[]}>{
-    let RequestDTO: RequestDTO = {
-      function_to_call: "fetchAvailableHobbiesOfUser",
-      id_user: 2
-    }
+  getAvailableHobbiesOfUser() : Observable<HobbyDTO[]>{
     const params = new HttpParams()
       .set('function_to_call', "fetchAvailableHobbiesOfUser")
       .set('id_user', 2);
 
-    return this.http.get<{hobbies: HobbyDTO[]}>(`${apiUrl}/hobbies.php`, {params}).pipe(
+    return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
         console.log(response);
         return response;
       })
     );
-
-    /*return this.http.get<HobbyRequestDTO>(`${apiUrl}/hobbies.php`, {params}).pipe(
-      map(response => {
-        return response.hobbies;
-      })
-    );*/
   }
 
 

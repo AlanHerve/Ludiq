@@ -1,18 +1,21 @@
 <div class="background-form">
 
   <form [@fadeIn]="true" (ngSubmit)="newRegularPost()">
-    <h1>New regular post</h1>
+    <h1>New post</h1>
 
     <span (click)="onClose()" class="cross">&times;</span>
-    <textarea [(ngModel)]="regularPostDTO.description" name="description" placeholder="Message"></textarea>
+    <textarea [(ngModel)]="postDTO.description" name="description" placeholder="Message"></textarea>
     <div class="images">
-      <label class="file-input-label" [class.disabled]="this.regularPostDTO.images[3] != null">
+      <label class="file-input-label" [class.disabled]="this.postDTO.images[3] != null">
         <span class="file-input-text">Select an image</span>
-        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event)" [disabled]="regularPostDTO.images[3] != null">
+        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event)" [disabled]="postDTO.images[3] != null">
       </label>
     </div>
-    <div class="hobby-container" *ngIf="this.regularPostDTO.images[0] != null">
-      <div class="file-container" *ngFor="let image of this.regularPostDTO.images">
+    <select id="hobbyType" name="hobbyType" [(ngModel)]="this.postDTO.id_hobby">
+      <option *ngFor="let hobby of hobbies" [value]="hobby.id">{{hobby.name}}</option>
+    </select>
+    <div class="hobby-container" *ngIf="this.postDTO.images[0] != null">
+      <div class="file-container" *ngFor="let image of this.postDTO.images">
         <span class = "file-name" *ngIf="image != null">{{ image }}</span>
         <span class="cross-file" *ngIf="image != null" (click)="onRemoveImage(image)">&times;</span>
       </div>

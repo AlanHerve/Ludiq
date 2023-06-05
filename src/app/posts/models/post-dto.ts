@@ -5,6 +5,7 @@ export class PostDTO {
               public user_username: string,
               public id_user: number|null,
               public id_hobby: number|null,
+              public hobby_name: string,
               public description: string,
               public images : (string | null)[],
               public modified: number,
