@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MessageService} from "../../services/message.service";
 import {MessageDTO} from "../../models/message-dto";
 
@@ -8,6 +8,7 @@ import {MessageDTO} from "../../models/message-dto";
   styleUrls: ['./message-bar.component.css']
 })
 export class MessageBarComponent implements OnInit {
+  @Input() id_friend!: number;
   messageContent : string = '';
   messageDTO: MessageDTO = {
     id: -1,
@@ -23,7 +24,7 @@ export class MessageBarComponent implements OnInit {
 
   onCreateMessage(): void {
     let user = JSON.parse(localStorage.getItem('currentUser')!).id;
-    let user2 = 2;
+    let user2 = this.id_friend;
     this.messageDTO = new MessageDTO(-1, user, user2, this.messageContent,'')
     this.messageService.createMessage(this.messageDTO).subscribe({
       next: (response) => {

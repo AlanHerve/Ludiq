@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {UserService} from "../../../services/user.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserDTO} from "../../../models/user-dto";
 
 @Component({
@@ -17,18 +17,20 @@ export class ProfileComponent {
     email: ''
   };
 
-  constructor(private userService: UserService, private activatedRoute: ActivatedRoute) {
+  constructor(private userService: UserService,
+              private activatedRoute: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.userDTO.id = parseInt(params['id']);
 
-      if(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.userDTO.id){
+      if(this.isConnectedUser()){
         this.userDTO.name = JSON.parse(localStorage.getItem('currentUser')!).name;
         this.userDTO.username = JSON.parse(localStorage.getItem('currentUser')!).username;
       }else{
-        this.userService.findUserById(this.userDTO).subscribe({
+        this.userService.findUserById(this.userDTO.id).subscribe({
 
           next: (response) => {
             // in case of success
@@ -40,9 +42,15 @@ export class ProfileComponent {
           }
         });
       }
-
-
     })
+  }
+
+  isConnectedUser(): boolean {
+    return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.userDTO.id
+  }
+
+  onSendMessageClicked(): void {
+    this.router.navigateByUrl(`messages/${this.userDTO.id}`)
   }
 
 }

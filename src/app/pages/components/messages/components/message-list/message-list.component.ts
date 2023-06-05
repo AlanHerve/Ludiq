@@ -1,9 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {MessageDTO} from "../../models/message-dto";
 import {MessageService} from "../../services/message.service";
-import {UserDTO} from "../../../../../models/user-dto";
-import {Observable, Subject, takeUntil} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-message-list',
@@ -12,7 +12,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class MessageListComponent implements OnInit, OnDestroy {
   messagesDTO: MessageDTO[] = [];
-  id_friend!: number;
+  @Input() id_friend!: number;
   private unsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(private messageService: MessageService,
@@ -20,12 +20,14 @@ export class MessageListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (typeof id === "string") {
-        this.id_friend = parseInt(id, 10);
-      }
-    });
+    this.activatedRoute.paramMap
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe(() => {
+        this.refreshMessageList();
+      });
+
     // We call this function one time in order to display the messages the first time we navigate to this page
     this.refreshMessageList();
 

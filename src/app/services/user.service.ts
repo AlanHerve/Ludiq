@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {UserDTO} from "../models/user-dto";
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./api-url";
 
@@ -42,8 +42,10 @@ export class UserService {
     return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
   }
 
-  findUserById(userDto: UserDTO): Observable<UserDTO> {
-    return this.http.get<UserDTO>(`${apiUrl}/user.php`).pipe(
+  findUserById(userId: number): Observable<UserDTO> {
+    const params = new HttpParams()
+      .set('user_id', userId);
+    return this.http.get<UserDTO>(`${apiUrl}/user.php`, {params}).pipe(
       map(response => {
         console.log(response);
         return response;

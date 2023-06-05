@@ -49,6 +49,7 @@
 .user-info {
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .interaction {
