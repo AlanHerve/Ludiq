@@ -4,6 +4,7 @@ import {RouterOutlet} from "@angular/router";
 import {CoreModule} from "../../../core/core.module";
 import {ProfileRoutingModule} from "./profile-routing.module";
 import {NgIf} from "@angular/common";
+import {PostsModule} from "../../../posts/posts.module";
 
 @NgModule({
   declarations: [ProfileComponent],
@@ -11,7 +12,8 @@ import {NgIf} from "@angular/common";
         ProfileRoutingModule,
         RouterOutlet,
         CoreModule,
-        NgIf
+        NgIf,
+        PostsModule
     ],
   exports: [
     ProfileRoutingModule
