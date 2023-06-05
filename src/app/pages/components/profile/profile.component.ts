@@ -49,6 +49,12 @@ export class ProfileComponent {
 
     this.getNumPosts();
     this.getNumHobbies();
+
+    this.getProfileInformation();
+  }
+
+  getProfileInformation(): void {
+    this.profileService.getProfileInformation(this.profileDTO.userDTO.id)
   }
 
   getNumPosts(): void {
