@@ -9,7 +9,6 @@ include("../DTOs/HobbyPostDTO.php");
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $id = null;
     $body = file_get_contents('php://input');
     $data = json_decode($body, true);

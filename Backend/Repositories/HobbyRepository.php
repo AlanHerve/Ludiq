@@ -171,7 +171,6 @@ class HobbyRepository
     function fetchHobbiesOfUser($id_user) {
 
         $hobbies = [];
-        $response= null;
 
         $stmt = $this->db->prepare(
             "SELECT
@@ -195,10 +194,7 @@ class HobbyRepository
         if($result){
             if($result->num_rows > 0){
                 while ($row = $result->fetch_assoc()) array_push($hobbies , new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], null));
-                $response = array(
-                    'success' => true,
-                    'hobbies' => $hobbies
-                );
+                $response = $hobbies;
             }else{
                 $response = array(
                     'success' => true,
@@ -216,7 +212,6 @@ class HobbyRepository
 
     function fetchAvailableHobbiesOfUser($id){
         $id_user = $id;
-        $response = null;
 
         $hobbies = [];
 
@@ -244,9 +239,7 @@ class HobbyRepository
         if($result){
             if($result->num_rows > 0){
                 while ($row = $result->fetch_assoc()) array_push($hobbies , new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], null));
-                $response = array(
-                    'hobbies' => $hobbies
-                );
+                $response = $hobbies;
             }else{
                 $response = array(
                     'success' => true,

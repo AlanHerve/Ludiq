@@ -14,7 +14,8 @@ class PostRepository{
 
   public function newPost(PostDTO $regularPostDTO){
     $id_user = $regularPostDTO->id_user;
-    $id_hobby = 1;
+    $id_hobby = $regularPostDTO->id_hobby;
+    if($id_hobby == -1) $id_hobby = null;
     $description = $regularPostDTO->description;
     $images = $regularPostDTO->images;
     $stmt = $this->db->prepare("INSERT INTO regular_post (ID_USER, ID_HOBBY, DESCRIPTION, IMAGE1, IMAGE2, IMAGE3, IMAGE4) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -42,10 +43,13 @@ class PostRepository{
             ,u.USER_NAME
             ,u.USER_PSEUDO
             ,u.AVATAR
+            ,hob.HOBBY_NAME
         FROM
             regular_post reg
         INNER JOIN user u
             ON u.ID_USER = reg.ID_USER
+        LEFT JOIN hobby hob
+            ON hob.ID_HOBBY = reg.ID_HOBBY
         WHERE
             reg.ID_REGULAR_POST = ?
     ");
@@ -57,13 +61,13 @@ class PostRepository{
     if($result->num_rows == 1) {
       $row = $result->fetch_assoc();
       $images = [$row['IMAGE1'], $row['IMAGE2'], $row['IMAGE3'], $row['IMAGE4']];
-      return new PostDTO($row['ID_REGULAR_POST'], $row['USER_NAME'], $row['USER_PSEUDO'], $row['ID_USER'], null, $row['DESCRIPTION'],
+      return new PostDTO($row['ID_REGULAR_POST'], $row['USER_NAME'], $row['USER_PSEUDO'], $row['ID_USER'], $row['HOBBY_NAME'], $row['ID_HOBBY'], $row['DESCRIPTION'],
       $images, $row['MODIFIED'], $row['LIKES'], $row['TIME']);
     }
   }
 
   public function getAllPosts() {
-    $stmt = $this->db->prepare("SELECT * FROM regular_post reg");
+    $stmt = $this->db->prepare("SELECT * FROM regular_post reg ORDER BY reg.TIME DESC");
     $stmt->execute();
     $result = $stmt->get_result();
     $postsDTO = [];
