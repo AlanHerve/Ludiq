@@ -216,21 +216,23 @@ class HobbyRepository
         $hobbies = [];
 
         $stmt = $this->db->prepare("
-                    SELECT
-	                    hobby.ID_HOBBY
-                        , hobby.HOBBY_NAME
+            SELECT
+	            hob.ID_HOBBY
+                ,hob.HOBBY_NAME
+            FROM
+	            hobby hob
+            WHERE
+	            hob.ID_HOBBY NOT IN
+	                (
+        	        SELECT
+	        	        hob_p.ID_HOBBY
                     FROM
-	                    hobby
+	                    hobby_post hob_p
                     WHERE
-	                    hobby.ID_HOBBY NOT IN
-	                                (
-        	                        SELECT
-	        	                        hobby_post.`ID_HOBBY`
-                                    FROM
-	                                    hobby_post
-                                    WHERE
-	                                    hobby_post.`ID_USER` = ?
-    		                        )");
+	                    hob_p.ID_USER = ?
+                    )
+                    ;       
+        ");
         $stmt->bind_param("i", $id_user);
         $stmt->execute();
 
@@ -238,9 +240,10 @@ class HobbyRepository
 
         if($result){
             if($result->num_rows > 0){
-                while ($row = $result->fetch_assoc()) array_push($hobbies , new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], null));
-                $response = $hobbies;
-            }else{
+                while ($row = $result->fetch_assoc()) $hobbies[] = new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], null);
+                return json_encode($hobbies);
+            }
+            else{
                 $response = array(
                     'success' => true,
                     'id' => $id_user,
@@ -254,22 +257,23 @@ class HobbyRepository
             );
         }
 
-        echo json_encode($response);
+        return json_encode($response);
     }
 
     function newHobbyPost($hobbyPost){
-        $stmt = $this->db->prepare("INSERT INTO
-	hobby_post
-    (ID_HOBBY, ID_USER, EXPERIENCE, FREQUENCY, AVAILABLE)
-VALUES
-(?, ?, ?, ?, ?)");
+        $stmt = $this->db->prepare("
+            INSERT INTO
+	            hobby_post (ID_HOBBY, ID_USER, EXPERIENCE, FREQUENCY, AVAILABLE)
+            VALUES
+                (?, ?, ?, ?, ?)
+            ;
+        ");
         $stmt->bind_param("iissi", $hobbyPost->id_hobby, $hobbyPost->id_user, $hobbyPost->advancement, $hobbyPost->frequency, $hobbyPost->availability);
         $stmt->execute();
 
         if($stmt->affected_rows > 0){
             $response = array(
-                'success' => true,
-                'hobbies' => "heya"
+                'success' => true
             );
         }else{
             $response = array(
@@ -278,8 +282,7 @@ VALUES
             );
         }
 
-
-        echo json_encode($response);
+        return json_encode($response);
     }
 
 

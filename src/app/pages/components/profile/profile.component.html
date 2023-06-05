@@ -1,13 +1,13 @@
 <div class="wrapper">
   <div class="content">
     <div class="top-bar">
-      <p class="text">{{ profileDTO.numPosts }}</p>
-      <p class="text right">3 hobbies</p>
+      <p class="text">{{ profileDTO.numPosts }} posts</p>
+      <p class="text right">{{ profileDTO.numHobbies }} hobbies</p>
     </div>
     <div class="user">
       <img alt="userImg" src="assets/images/icons/user.png">
-      <p class="username">{{userDTO.name}}</p>
-      <p class="nickname">{{userDTO.username}}</p>
+      <p class="username">{{this.profileDTO.userDTO.name}}</p>
+      <p class="nickname">{{this.profileDTO.userDTO.username}}</p>
       <p class="friends">3 friends</p>
     </div>
 

@@ -40,7 +40,7 @@ export class FormHobbyPostComponent extends Form implements OnInit {
   frequency_options: string[] = ["Daily", "3-4/week", "2-3/week", "Weekly", "Monthly", "Rarely"];
 
   hobbyPostDTO: HobbyPostDTO = {
-    id_user: 2,
+    id_user: 0,
     id_hobby: 0,
     advancement: '',
     frequency: '',
@@ -62,6 +62,7 @@ export class FormHobbyPostComponent extends Form implements OnInit {
       advancement: [this.advancement_options[0], [Validators.required]],
       frequency: [this.frequency_options[0], [Validators.required]]
     })
+    this.hobbyPostDTO.id_user = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
     this.getAvailableHobbiesOfUser();
   }
 
@@ -92,7 +93,7 @@ export class FormHobbyPostComponent extends Form implements OnInit {
   }
 
   getAvailableHobbiesOfUser(){
-    this.hobbyService.getAvailableHobbiesOfUser().subscribe({
+    this.hobbyService.getAvailableHobbiesOfUser(this.hobbyPostDTO.id_user).subscribe({
       next: (response) => {
         // in case of success
         console.log(response);
