@@ -57,6 +57,7 @@ class PostRepository
 
     public function getUserPosts($id_user)
     {
+        $postsDTO = [];
         $stmt = $this->db->prepare("
             SELECT
                 reg.ID_REGULAR_POST
@@ -73,13 +74,15 @@ class PostRepository
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            $postsDTO = [];
+            
             while ($row = $result->fetch_assoc()) {
                 $postsDTO[] = $this->findPostById($row['ID_REGULAR_POST']);
             }
-            return $postsDTO;
+
         }
-        return [];
+
+        return $postsDTO;
+
     }
 
     private function findPostById($id)

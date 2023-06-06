@@ -38,6 +38,7 @@ class ProfileRepository
         $userDTO = $this->userRepository->findUserById($id_user);
         $userPosts = $this->postRepository->getUserPosts($id_user);
         $numFriends = $this->friendRepository->getNumFriends($id_user);
+        
 
         return new ProfileDTO($userDTO, $numPosts, $numHobbies, $numFriends, $userPosts);
     }
