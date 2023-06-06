@@ -14,7 +14,7 @@ export class ProfileService {
 
   getProfileInformation(id_user: number): Observable<ProfileDTO> {
     const params = new HttpParams()
-      .set('id_user', id_user)
+      .set('id_user', id_user).set('type', "getNumPosts");
     return this.http.get<ProfileDTO>(`${apiUrl}/profile.php`, {params});
   }
 

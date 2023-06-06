@@ -4,6 +4,7 @@ import { ActivityComponent } from './components/activity/activity.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import {DatePipe, NgFor, NgIf} from "@angular/common";
 import { HobbyFlashcardComponent } from './components/hobby-flashcard/hobby-flashcard.component';
+import { HobbyFlashcardListComponent } from './components/hobby-flashcard-list/hobby-flashcard-list.component';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { HobbyFlashcardComponent } from './components/hobby-flashcard/hobby-flas
     PostComponent,
     ActivityComponent,
     PostListComponent,
-    HobbyFlashcardComponent
+    HobbyFlashcardComponent,
+    HobbyFlashcardListComponent
   ],
     exports: [
         PostComponent,

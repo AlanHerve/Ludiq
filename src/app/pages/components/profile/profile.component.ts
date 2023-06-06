@@ -30,7 +30,7 @@ export class ProfileComponent {
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.profileDTO.userDTO.id = parseInt(params['id']);
-    })
+    });
 
     this.getProfileInformation();
   }

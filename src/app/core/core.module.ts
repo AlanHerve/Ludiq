@@ -7,7 +7,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import {FormsModule} from "@angular/forms";
 import { MightLikeHobbiesDisplayComponent } from './components/might-like-hobbies-display/might-like-hobbies-display.component';
 import { UserHobbiesListComponent } from './components/user-hobbies-list/user-hobbies-list.component';
-import { HobbyFlashcardComponent } from './components/hobby-flashcard/hobby-flashcard.component';
+
 
 
 
@@ -17,7 +17,6 @@ import { HobbyFlashcardComponent } from './components/hobby-flashcard/hobby-flas
     SearchBarComponent,
     MightLikeHobbiesDisplayComponent,
     UserHobbiesListComponent,
-    HobbyFlashcardComponent,
   ],
   exports: [
     NavigationBarComponent,
