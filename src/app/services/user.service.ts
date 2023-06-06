@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {UserDTO} from "../models/user-dto";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./api-url";
@@ -19,36 +19,28 @@ export class UserService {
     localStorage.removeItem('currentUser');
   }
 
-  getCurrentId(): number | null {
-    try {
-      return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
-    } catch(e) {
-      console.error(e);
-      return null;
-    }
-  }
-
-  private currentIdSubject = new BehaviorSubject<number | null>(null);
-  public currentId$ = this.currentIdSubject.asObservable();
-
-// Update the currentIdSubject in your login method
-  loginUser(userDTO: UserDTO): Observable<UserDTO> {
-    return this.http.post<any>(`${apiUrl}/login.php`, userDTO).pipe(
+  loginUser(userDTO: UserDTO): Observable<{ user: UserDTO }> {
+    return this.http.post<{ user: UserDTO }>(`${apiUrl}/login.php`, userDTO).pipe(
       map(response => {
-        if (response && response.success === true) {
-          localStorage.setItem('currentUser', JSON.stringify(response.data));
-          userDTO.token = response.token;
-          this.currentIdSubject.next(parseInt(response.data.id));
-          return response.data;
-        } else {
-          throw new Error(response.message || 'Login failed');
+        if (response.user) {
+          // Stocker le jeton dans le stockage local
+          if(response.user.token){
+            localStorage.setItem('currentUser', JSON.stringify(response.user));
+            this.isPartOfOrganization(3);
+          }
+          else {
+            alert("wrong username or password");
+          }
         }
+        console.log(localStorage.getItem('currentUser'));
+        return response;
       })
     );
   }
 
-
-
+  getCurrentId(): number{
+    return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
+  }
 
   findUserById(userId: number): Observable<UserDTO> {
     const params = new HttpParams()

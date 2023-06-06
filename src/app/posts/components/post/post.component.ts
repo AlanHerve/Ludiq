@@ -18,17 +18,6 @@ export class PostComponent implements OnInit {
   constructor(private router: Router, private postService: PostsService) {
   }
 
-  addComment() {
-    if (this.newComment.trim() !== '') {
-      this.postService.addComment(this.postDTO.id_regular_post, this.newComment).subscribe(() => {
-        this.postDTO.comments.push(this.newComment);
-        this.newComment = '';
-      });
-    }
-  }
-
-
-
   likePost() {
     this.isLiked = !this.isLiked;
     this.postService.likePost(this.postDTO.id_regular_post).subscribe(() => {
@@ -48,6 +37,6 @@ export class PostComponent implements OnInit {
   }
 
   onUserClicked(): void {
-    this.router.navigateByUrl('profile/' + this.postDTO.userDTO.id);
+    this.router.navigateByUrl('profile/'+this.postDTO.userDTO.id);
   }
 }

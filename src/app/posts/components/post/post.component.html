@@ -7,9 +7,9 @@
           <span class="username">{{postDTO.userDTO.name}}</span>
           <span class="nickname">{{postDTO.userDTO.username}}</span>
         </div>
-        <p class="date" *ngIf="postDTO.modified === 1; else elseBlock">Modified - {{ postDTO.time | date:'dd/MM HH:mm' }}</p>
+        <p class = "date" *ngIf="postDTO.modified === 1; else elseBlock">Modified - {{ postDTO.time | date:'dd/MM HH:mm' }}</p>
         <ng-template #elseBlock>
-          <p class="date">{{ postDTO.time | date:'dd/MM HH:mm' }}</p>
+          <p class = "date">{{ postDTO.time | date:'dd/MM HH:mm' }}</p>
         </ng-template>
       </div>
     </div>
@@ -25,9 +25,11 @@
   <img alt="Like image" class="interaction" [src]="isLiked ? '../../../../assets/images/icons/heart-liked.png' : '../../../../assets/images/icons/heart.png'" (click)="likePost()">
   <span class="count">{{ postDTO.likes }}</span>
   <img alt="Comment image" class="interaction" src="../../../../assets/images/icons/comment.png" (click)="showCommentBox = true">
-  <span class="count">{{ postDTO.comments.length }}</span>
+  <!--<span class="count">{{ postDTO.comments.length }}</span>
   <div *ngIf="showCommentBox">
     <input type="text" [(ngModel)]="newComment" placeholder="Ajouter un commentaire">
     <button (click)="addComment()">Ajouter</button>
-  </div>
+  </div>-->
+
 </div>
+

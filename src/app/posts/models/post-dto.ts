@@ -2,6 +2,7 @@ import {UserDTO} from "../../models/user-dto";
 import {HobbyDTO} from "../../models/hobby-dto";
 
 export class PostDTO {
+
   constructor(public id_regular_post: number,
               public userDTO: UserDTO,
               public hobbyDTO: HobbyDTO,
@@ -10,7 +11,6 @@ export class PostDTO {
               public modified: number,
               public likes: number,
               public time: string,
-              public files: File[],
-              public comments: string[]) {
+              public files: File[]) {
   }
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { apiUrl } from "../../services/api-url";
-import { PostDTO } from "../models/post-dto";
-import { map } from "rxjs/operators";
-import { HobbyDTO } from "../../models/hobby-dto";
-import { HobbyPostDTO } from "../../models/hobby-post-dto";
-import { RequestDTO } from "../../models/request-dto";
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {apiUrl} from "../../services/api-url";
+import {PostDTO} from "../models/post-dto";
+import {map} from "rxjs/operators";
+import {HobbyDTO} from "../../models/hobby-dto";
+import {HobbyPostDTO} from "../../models/hobby-post-dto";
+import {RequestDTO} from "../../models/request-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -50,10 +50,4 @@ export class PostsService {
     const params = new HttpParams().set('postId', postId.toString());
     return this.http.delete<any>(`${apiUrl}/posts/unlike`, { params });
   }
-
-  addComment(postId: number, comment: string): Observable<any> {
-    const body = { postId: postId, comment: comment };
-    return this.http.post<any>(`${apiUrl}/comments`, body);
-  }
-
 }

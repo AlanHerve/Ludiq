@@ -15,11 +15,8 @@
     </div>
     <div class = "index">
       <img src = "../../../../assets/images/icons/profile.png" alt = "profile">
-      <a [routerLink]="['/profile', id$ | async]" routerLinkActive="active">Profile</a>
+      <a routerLink="/profile/{{this.id}}" routerLinkActive="active">Profile</a>
     </div>
-
-
-
 
     <button (click)="onClickNewRegularPost()">New post</button>
   </ul>
