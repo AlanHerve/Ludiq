@@ -10,48 +10,28 @@ require_once "../DTOs/HobbyDTO.php";
 require_once "../Repositories/PostRepository.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $id = null;
+  $body = file_get_contents('php://input');
+  $data = json_decode($body,true);
 
   $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
 
+  $postId = $data['id_post'];
+  $id = null;
 
-  $postId = $_POST['post_id'];
 
-  if(isset($_POST['function_to_call'])) $function_to_call = $_POST['function_to_call'];
   $postRepository = PostRepository::getInstance();
-  switch ($function_to_call) {
+
+  switch ($data['type']) {
     case 'like':
       echo $postRepository->likePost($postId);
       break;
     case 'unlike':
       echo $postRepository->unlikePost($postId);
       break;
+    case 'post':
+      newPost();
+      break;
   }
-
-
-
-  if(isset($_POST['id_hobby']) && $_POST['id_hobby'] != -1) {
-    $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
-  } else {
-    $hobbyDTO = new HobbyDTO(null);
-  }
-
-  $description = $_POST['description'];
-  $modified = null;
-  $likes = null;
-  $time = null;
-
-  if(isset($_POST['modified'])){
-    $modified = $_POST['modified'];
-  }
-  $images = $_FILES['images'];
-
-  $uploadedFiles = saveFiles($images);
-
-  $postDTO = new PostDTO(null, $userDTO, $hobbyDTO, $description, $uploadedFiles);
-
-  $postRepository = PostRepository::getInstance();
-  echo json_encode($postRepository->newPost($postDTO));
 }
 
 elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
@@ -74,6 +54,31 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
     $mode = $_GET['search'];
     $valid = true;
   }
+}
+
+function newPost() {
+  if(isset($_POST['id_hobby']) && $_POST['id_hobby'] != -1) {
+    $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
+  } else {
+    $hobbyDTO = new HobbyDTO(null);
+  }
+
+  $description = $_POST['description'];
+  $modified = null;
+  $likes = null;
+  $time = null;
+
+  if(isset($_POST['modified'])){
+    $modified = $_POST['modified'];
+  }
+  $images = $_FILES['images'];
+
+  $uploadedFiles = saveFiles($images);
+
+  $postDTO = new PostDTO(null, $userDTO, $hobbyDTO, $description, $uploadedFiles);
+
+  $postRepository = PostRepository::getInstance();
+  echo json_encode($postRepository->newPost($postDTO));
 }
 
 function saveFiles($images) {

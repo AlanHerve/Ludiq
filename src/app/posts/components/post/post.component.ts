@@ -32,11 +32,11 @@ export class PostComponent implements OnInit {
     this.isLiked = !this.isLiked;
 
     if (this.isLiked) {
-      this.postService.likePost(this.postDTO.id_regular_post).subscribe(() => {
+      this.postService.likePost(this.postDTO.id).subscribe(() => {
         this.postDTO.likes++;
       });
     } else {
-      this.postService.unlikePost(this.postDTO.id_regular_post).subscribe(() => {
+      this.postService.unlikePost(this.postDTO.id).subscribe(() => {
         this.postDTO.likes--;
       });
     }

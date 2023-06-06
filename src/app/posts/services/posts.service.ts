@@ -43,10 +43,9 @@ export class PostsService {
 
   likePost(postId: number): Observable<any> {
     const params = new HttpParams()
-      .set('function_to_call', "like")
+      .set('type', "like")
       .set('id_post', postId);
     return this.http.post<any>(`${apiUrl}/post.php`, {params}).pipe(
-
       map(response => {
         return response;
       })
