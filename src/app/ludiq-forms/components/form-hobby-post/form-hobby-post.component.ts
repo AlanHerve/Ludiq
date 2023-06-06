@@ -1,5 +1,5 @@
 
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {RequestDTO} from "../../../models/request-dto";
 import {HobbyService} from "../../../services/hobby.service";
@@ -33,6 +33,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 export class FormHobbyPostComponent extends Form implements OnInit {
 
+  @Output() hobbyPosted = new EventEmitter<string>();
 
   hobbies : HobbyDTO[] = [];
 
@@ -77,10 +78,11 @@ export class FormHobbyPostComponent extends Form implements OnInit {
     // Converting string into int
     this.hobbyPostDTO.id_hobby = +this.hobbyPostDTO.id_hobby;
     this.newHobbyPost();
+    this.onClose();
   }
 
   newHobbyPost(){
-    this.postsService.newHobbyPost(this.hobbyPostDTO).subscribe({
+    this.hobbyService.newHobbyPost(this.hobbyPostDTO).subscribe({
       next: (response) => {
         // in case of success
         this.hobbies.length = 0;

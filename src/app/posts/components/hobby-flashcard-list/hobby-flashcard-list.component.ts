@@ -11,10 +11,11 @@ import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 export class HobbyFlashcardListComponent {
 
   private id_user: number = 0;
-  @Input() hobbyFlashcardsDTO: HobbyPostDTO[] = [];
+  @Input() hobbyFlashcardsDTO!: HobbyPostDTO[];
     constructor(private hobbyService:HobbyService, private activatedRoute: ActivatedRoute) {
       this.activatedRoute.params.subscribe(params => {
         this.id_user = parseInt(params['id']);
       });
+
     }
 }

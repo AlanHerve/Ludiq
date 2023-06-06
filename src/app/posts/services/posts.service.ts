@@ -26,7 +26,7 @@ export class PostsService {
   }
 
   newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
-    return this.http.post<HobbyDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+    return this.http.post<HobbyPostDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
       map(response => {
         return response;
       })

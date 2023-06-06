@@ -12,9 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = file_get_contents('php://input');
     $data = json_decode($body, true);
 
-    $hobbyPostDTO = null;
+    
     if(isset($data['id_user']) && isset($data['id_hobby']) && isset($data['frequency']) && isset($data['advancement']) && isset($data['availability'])){
-        $hobbyPostDTO = new HobbyPostDTO($data['id_user'], $data['id_hobby'], $data['frequency'], $data['advancement'], $data['availability']);
+        $hobbyPostDTO = new HobbyPostDTO(null,$data['id_user'], $data['id_hobby'], $data['frequency'], null,$data['advancement'], $data['availability']);
     }else{
         echo json_encode(array('success' => false, 'message'=>'parameters not found') );
         exit(0);
