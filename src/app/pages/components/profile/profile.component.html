@@ -8,7 +8,7 @@
       <img alt="userImg" src="assets/images/icons/user.png">
       <p class="username">{{this.profileDTO.userDTO.name}}</p>
       <p class="nickname">{{this.profileDTO.userDTO.username}}</p>
-      <p class="friends">3 friends</p>
+      <p class="friends">{{ this.profileDTO.numFriends }} friends</p>
     </div>
 
     <div *ngIf="isConnectedUser() else elseBlock">
@@ -24,7 +24,12 @@
         <button>Add friend</button>
       </div>
     </ng-template>
-    <app-post-list [postsDTO]="profileDTO.postsDTO"></app-post-list>
+    <div class = "binder">
+      <div (click)="onSwitchTo('posts')" class="tab {{ type === 'posts' ? 'selected' : '' }}">Posts</div>
+      <div (click)="onSwitchTo('hobbies')" class="tab {{ type === 'hobbies' ? 'selected' : '' }}">Hobbies</div>
+      <div (click)="onSwitchTo('activities')" class="tab {{ type === 'activities' ? 'selected' : '' }}">Activities</div>
+    </div>
+    <app-post-list [postsDTO]="profileDTO.postsDTO" *ngIf="type === 'posts'"></app-post-list>
   </div>
   <app-navigation-bar></app-navigation-bar>
   <app-user-hobbies-list></app-user-hobbies-list>

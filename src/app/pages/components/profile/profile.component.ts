@@ -12,10 +12,12 @@ import {ProfileService} from "./services/profile.service";
 })
 export class ProfileComponent {
 
+  protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
     userDTO: new UserDTO(-1, '', ''),
     numPosts: 0,
     numHobbies: 0,
+    numFriends: 0,
     postsDTO: []
   }
 
@@ -50,5 +52,9 @@ export class ProfileComponent {
 
   onSendMessageClicked(): void {
     this.router.navigateByUrl(`messages/${this.profileDTO.userDTO.id}`)
+  }
+
+  onSwitchTo(type: string): void {
+    this.type = type;
   }
 }
