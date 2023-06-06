@@ -1,0 +1,7 @@
+div {
+  margin:30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  text-align: center;
+}

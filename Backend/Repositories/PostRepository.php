@@ -32,9 +32,8 @@ class PostRepository
 
     public function newPost(PostDTO $regularPostDTO)
     {
-        $id_user = $regularPostDTO->id_user;
-        $id_hobby = $regularPostDTO->id_hobby;
-        if ($id_hobby == -1) $id_hobby = null;
+        $id_user = $regularPostDTO->userDTO->id;
+        $id_hobby = $regularPostDTO->hobbyDTO->id;
         $description = $regularPostDTO->description;
         $images = $regularPostDTO->images;
         $stmt = $this->db->prepare("INSERT INTO regular_post (ID_USER, ID_HOBBY, DESCRIPTION, IMAGE1, IMAGE2, IMAGE3, IMAGE4) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -57,7 +56,6 @@ class PostRepository
 
     public function getUserPosts($id_user)
     {
-        $postsDTO = [];
         $stmt = $this->db->prepare("
             SELECT
                 reg.ID_REGULAR_POST
@@ -78,11 +76,9 @@ class PostRepository
             while ($row = $result->fetch_assoc()) {
                 $postsDTO[] = $this->findPostById($row['ID_REGULAR_POST']);
             }
-
+            return $postsDTO;
         }
-
-        return $postsDTO;
-
+        return [];
     }
 
     private function findPostById($id)
@@ -161,7 +157,7 @@ class PostRepository
         } elseif ($mode == "userPage") {
 
 
-            $id_user = $regularPostDTO->id_user;
+            $id_user = $regularPostDTO->id;
 
             $stmt = $this->db->prepare("SELECT * FROM regular_post reg WHERE reg.ID_USER=?");
             $stmt->bind_param("s", $id_user);

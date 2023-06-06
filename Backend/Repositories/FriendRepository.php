@@ -72,4 +72,27 @@ class FriendRepository
         return $row['num_friends'];
     }
 
+    public function isFriendWidth($user1, $user2) {
+        $stmt = $this->db->prepare("
+            SELECT
+                fri.*
+            FROM
+                friends fri
+            WHERE
+                (
+                    fri.ID_USER = ? AND fri.ID_USER_2 = ?
+                    OR
+                    fri.ID_USER = ? AND fri.ID_USER_2 = ?
+                )
+            ;
+        ");
+        $stmt->bind_param("iiii", $user1, $user2, $user2, $user1);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if($result->num_rows == 1) {
+            return true;
+        }
+        return false;
+    }
+
 }

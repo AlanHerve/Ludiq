@@ -41,7 +41,9 @@ class ProfileRepository
         $hobbyPostsDTO = $this->postRepository->getHobbiesFlashcardsOfUser($id_user);
 
 
+
         return new ProfileDTO($userDTO, $numPosts, $numHobbies, $numFriends, $userPosts, $hobbyPostsDTO);
+
     }
 
 }

@@ -29,6 +29,7 @@ export class FormActivityComponent implements OnInit {
 
   activityDTO: ActivityDTO = {
     id_activity: -1,
+    title: '',
     id_user: 1,
     id_hobby: 1,
     description:'',

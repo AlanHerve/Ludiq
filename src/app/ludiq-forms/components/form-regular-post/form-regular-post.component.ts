@@ -49,9 +49,9 @@ export class FormRegularPostComponent extends Form implements OnInit {
     this.userService.findUserById(JSON.parse(localStorage.getItem('currentUser')!).id).subscribe({
       next: (response) => {
         this.postDTO.userDTO = response;
+        this.getUserHobbies();
       }
     })
-    this.getUserHobbies();
   }
 
   constructor(private postsService: PostsService,
