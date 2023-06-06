@@ -6,57 +6,27 @@ require_once '../DTOs/UserDTO.php';
 
 class UserRepository
 {
-  private static $instance = null;
-  private $db;
+    private static $instance = null;
+    private $db;
 
-  public function __construct()
-  {
-    $this->db = Database::getInstance()->getConnection();
-  }
-
-  public static function getInstance()
-  {
-    if (!self::$instance) {
-      self::$instance = new UserRepository();
+    public function __construct()
+    {
+        $this->db = Database::getInstance()->getConnection();
     }
-    return self::$instance;
-  }
 
-  /**
-   * Method to register a user in the User database
-   *
-   * @param UserDTO $userDTO
-   * @return void
-   */
-  public function registerUser(UserDTO $userDTO)
-  {
-    $name = $userDTO->name;
-    $email = $userDTO->email;
-    $pseudo = $userDTO->username;
-    $password = $userDTO->password;
-
-    $stmt = $this->db->prepare("INSERT INTO user (USER_NAME, USER_PSEUDO, USER_PASSWORD, EMAIL, AVATAR) VALUES (?, ?, ?, ?, null)");
-    $stmt->bind_param("ssss", $name, $pseudo, $password, $email);
-
-    $stmt->execute();
-  }
-
-  /**
-   * Method to check if the data sent during the connection form correspond to a user in the database
-   *
-   * @param UserDTO $userDTO
-   * @return false|string
-   */
-  public function loginUser(UserDTO $userDTO)
-  {
-    $username = $userDTO->username;
-    $password = $userDTO->password;
-
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new UserRepository();
+        }
+        return self::$instance;
+    }
 
     /**
-     * If user exists, will return their info
-     * Will also return the id and name of their organization if they belong to one
-     * If they are part of an organization then they are an activity director for that organization
+     * Method to register a user in the User database
+     *
+     * @param UserDTO $userDTO
+     * @return void
      */
     public function registerUser(UserDTO $userDTO)
     {
@@ -118,24 +88,24 @@ class UserRepository
         $stmt->bind_param("ssss", $username, $username, $username, $username);
         $stmt->execute();
 
-    $result = $stmt->get_result();
-    if($result){
+        $result = $stmt->get_result();
+        if($result){
 
 
-      // If user exists, verify user infos
-      if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        //get the password from the database
-        $hashedPasswordFromDatabase = $row['USER_PASSWORD'];
+            // If user exists, verify user infos
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                //get the password from the database
+                $hashedPasswordFromDatabase = $row['USER_PASSWORD'];
 
-        /*
-         * password_verify will compare the password from the database with the password the user entered
-         * password_verify does not require any action regarding the hashing of both passwords
-         */
-        if (password_verify($password, $hashedPasswordFromDatabase)) {
-          // Authentification réussie
+                /*
+                 * password_verify will compare the password from the database with the password the user entered
+                 * password_verify does not require any action regarding the hashing of both passwords
+                 */
+                if (password_verify($password, $hashedPasswordFromDatabase)) {
+                    // Authentification réussie
 
-          $token = 'fake_token';
+                    $token = 'fake_token';
 
                     //password_verify($password, $hashedPasswordFromDatabase)
                     if(isset($row["ID_ORGANIZATION"]) && isset($row["NAME_ORGANIZATION"])){
@@ -170,18 +140,8 @@ class UserRepository
         }
 
 
-      } else {
-        // User not found
-        $response = array(
-          'success' => false,
-          'message' => 'Invalid username or password'
-        );
-      }
-    }else{
-      $response = array(
-        'success' => false,
-        'message' => 'could not access bdd info'
-      );
+        // Echo response as a json
+        return json_encode($response);
     }
 
     public function findUserById($id)
@@ -189,9 +149,8 @@ class UserRepository
         $stmt = $this->db->prepare("SELECT * FROM user WHERE ID_USER = ?");
         $stmt->bind_param("i", $id);
 
-    // Echo response as a json
-    return json_encode($response);
-  }
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
@@ -203,8 +162,5 @@ class UserRepository
 
         return $response;
     }
-
-    echo json_encode($response);
-  }
 
 }

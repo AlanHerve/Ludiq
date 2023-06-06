@@ -31,7 +31,7 @@ import {UserDTO} from "../../../models/user-dto";
 export class FormRegularPostComponent extends Form implements OnInit {
   index: number = 0;
 
-  hobbies : HobbyDTO[] = [];
+  hobbies: HobbyDTO[] = [];
 
   postDTO: PostDTO = {
     id_regular_post: -1,
@@ -97,7 +97,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     console.log(this.postDTO.images);
   }
 
-  getUserHobbies(){
+  getUserHobbies() {
     this.hobbyService.getHobbiesOfUser(this.postDTO.userDTO.id).subscribe({
       next: (response) => {
         // in case of success
@@ -110,7 +110,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
         console.error('Could not get all hobbies', error);
       }
     });
-  }*/
+  }
 
   newRegularPost() {
     const formData = new FormData();
@@ -124,7 +124,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     for (let i = 0; i < this.postDTO.images.length; i++) {
       const file = this.postDTO.images[i];
       // @ts-ignore
-      if(file != null)  formData.append('images[]', file, file.name);
+      if (file != null) formData.append('images[]', file, file.name);
     }
 
     this.postsService.newPost(formData).subscribe({
@@ -139,5 +139,4 @@ export class FormRegularPostComponent extends Form implements OnInit {
       }
     });
   }
-
 }
