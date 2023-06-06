@@ -1,39 +1,64 @@
 <div class="background-form">
-    <div class="hobbies">
-      <form [@fadeIn]="true">
-        <h1>New Activity</h1>
-        <div class = "form-container">
-          <div class="hobby-container">
-            <span class = "cross" (click)="onClose()">&times;</span>
-            <p>Hobby</p>
-            <div class="tags-container">
-              <label class="tag">
-                <input type="radio" name="hobby">
-                Hobby 1
-              </label>
-              <label class="tag">
-                <input type="radio" name="hobby">
-                Hobby 2
-              </label>
-              <label class="tag">
-                <input type="radio" name="hobby">
-                Hobby 3
-              </label>
-            </div>
-          </div>
-          <div class="message-container">
-            <textarea class = "text" placeholder="Description of the activity"></textarea>
 
-            <label class="file-input-label" [class.disabled]="this.activityDTO.images[1] != null">
-                <span class="file-input-text">Select an image</span>
-                <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event)" [disabled]="activityDTO.images[3] != null">
-            </label>
+  <form [@fadeIn]="true" >
+    <h1>New activity</h1>
 
-            <button class = "submit">Send</button>
-          </div>
-        </div>
-  
-      </form>
+    <span (click)="onClose()" class="cross">&times;</span>
+    <textarea [(ngModel)]="activityDTO.description" name="description" placeholder="Description of the activity"></textarea>
+    <div class="images">
+      <label class="file-input-label" [class.disabled]="this.activityDTO.images[3] != null">
+        <span class="file-input-text">Select an image</span>
+        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event)" [disabled]="activityDTO.images[3] != null">
+      </label>
     </div>
-  </div>
-  
+    <div class="hobby-container" *ngIf="this.activityDTO.images[0] != null">
+      <div class="file-container" *ngFor="let image of this.activityDTO.images">
+        <span class = "file-name" *ngIf="image != null">{{ image }}</span>
+        <span class="cross-file" *ngIf="image != null" (click)="onRemoveImage(image)">&times;</span>
+      </div>
+    </div>
+<br><br>
+    <div class="date">
+      <p>Date of the activity</p>
+      <input type="date" name="date" [(ngModel)]="activityDTO.time">
+    </div>
+
+
+    <p>Choice of the related hobby</p>
+    <div class="tags-container">
+      <label class="tag">
+        <input type="radio" name="hobby">
+        Hobby 1
+      </label>
+      <label class="tag">
+        <input type="radio" name="hobby">
+        Hobby 2
+      </label>
+      <label class="tag">
+        <input type="radio" name="hobby">
+        Hobby 3
+      </label>
+    </div>
+
+    <div class="number" [formGroup]="activityForm">
+      <input type="number" name="number" min="2" max="200" formControlName="number" placeholder="Number of participants"
+             [ngClass]="{'valid-input': activityForm.controls['number'].valid}">
+      <div *ngIf="activityForm.controls['number'].dirty && !activityForm.controls['number'].valid">
+        <p *ngIf="activityForm.controls['number'].hasError('required')">
+          Number is required
+        </p>
+        <p *ngIf="activityForm.controls['number'].hasError('pattern')">
+          That's certainly not enough participants
+        </p>
+        <p *ngIf="activityForm.controls['number'].hasError('max')">
+          That is a little bit too much participants don't you think?
+        </p>
+      </div>
+    </div>
+
+
+    <button type="submit">Post</button>
+
+  </form>
+</div>
+

@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { PostDTO } from "../../models/post-dto";
+import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import {PostDTO} from "../../models/post-dto";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-post',
@@ -12,6 +13,9 @@ export class PostComponent implements OnInit {
   isLiked: boolean = false;
   showCommentBox: boolean = false;
   newComment: string = '';
+
+  constructor(private router: Router) {
+  }
 
   likePost() {
     this.isLiked = !this.isLiked;
@@ -36,5 +40,9 @@ export class PostComponent implements OnInit {
 
   getFileUrl(file: File): string {
     return URL.createObjectURL(file);
+  }
+
+  onUserClicked(): void {
+    this.router.navigateByUrl('profile/'+this.postDTO.id_user);
   }
 }

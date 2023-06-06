@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ActivityDTO } from 'src/app/models/activity-dto';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivityDTO} from "../../../../models/activity-dto";
 
 @Component({
   selector: 'app-form-activity',
@@ -25,16 +26,27 @@ export class FormActivityComponent implements OnInit {
   index: number = 0;
 
   previousRoute: string = '';
+
   activityDTO: ActivityDTO = {
     id_activity: null,
     id_user: 1,
     id_hobby: 1,
-    images: [null],
+    description:'',
+    images: [null,null,null,null],
     time: '',
-    modified: ''
+    modified: '',
+    files: []
   }
-  constructor(private router: Router, private location: Location) {}
+  activityForm: FormGroup;
 
+  constructor(private formBuilder: FormBuilder, private router: Router, private location: Location) {
+    this.activityForm = this.formBuilder.group({
+      activityControl:new FormControl(),
+      number: [null, [Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(1)]],
+    });
+
+
+  }
   ngOnInit(): void {
     this.previousRoute = this.getPreviousRoute(); //to get the previous route
   }
@@ -49,7 +61,7 @@ export class FormActivityComponent implements OnInit {
     const reader: FileReader = new FileReader();
 
     reader.onload = () => {
-      this.activityDTO.images[this.index] = file;
+      this.activityDTO.images[this.index] = file.name;
       if (this.index < this.activityDTO.images.length) {
         const labelElement = document.querySelectorAll('.file-input-label')[this.index];
         labelElement?.classList.add('selected');
@@ -59,7 +71,26 @@ export class FormActivityComponent implements OnInit {
 
     reader.readAsDataURL(file);
   }
-  /**
+
+
+  onRemoveImage(image: string) {
+    const index = this.activityDTO.images.findIndex(img => img === image);
+    if (index !== -1) {
+      this.activityDTO.images[index] = null;
+      this.index--;
+    }
+
+    for (let i = index; i < this.activityDTO.images.length; i++) {
+      if (i === this.activityDTO.images.length - 1) {
+        this.activityDTO.images[3] = null;
+      } else {
+        this.activityDTO.images[i] = this.activityDTO.images[i + 1];
+      }
+    }
+    console.log(this.activityDTO.images);
+  }
+
+    /**
    * Method that returns the previous route of the current url
    * @private
    */
@@ -68,4 +99,33 @@ export class FormActivityComponent implements OnInit {
 
     return currentUrl.slice(0, currentUrl.lastIndexOf('/'));
   }
+
+  newActivityPost() {
+    const formData = new FormData();
+    // @ts-ignore
+    formData.append('id_user', this.activityDTO.id_user.toString());
+    // @ts-ignore
+    formData.append('id_hobby', this.activityDTO.id_hobby.toString());
+    // @ts-ignore
+    formData.append('id_activity',this.activityDTO.id_activity.toString());
+    formData.append('time',this.activityDTO.time.toString());
+    formData.append('description', this.activityDTO.description);
+    for (let i = 0; i < this.activityDTO.images.length; i++) {
+      const file = this.activityDTO.images[i];
+      // @ts-ignore
+      if (file != null) formData.append('images[]', file, file.name);
+    }
+  }
+   /* this.postsService.newPost(formData).subscribe({
+      next: (response) => {
+        // Traitement de la réponse du serveur en cas de succès
+        console.log('Post avec succès', response);
+        this.onClose();
+      },
+      error: (error) => {
+        // Gestion des erreurs en cas d'échec
+        console.error('Erreur post : ', error);
+      }
+    });
+  }*/
 }

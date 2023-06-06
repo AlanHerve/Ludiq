@@ -2,8 +2,8 @@
   <div class="user-profile">
     <div class="profile-info">
       <img alt="Photo de profil" class="profile-image" src="../../../../assets/images/icons/user.png">
-      <div style="display: flex">
-        <div class="user-info">
+      <div style = "display: flex">
+        <div class = "user-info" (click) = "onUserClicked()">
           <span class="username">{{postDTO.user_name}}</span>
           <span class="nickname">{{postDTO.user_username}}</span>
         </div>
@@ -14,8 +14,8 @@
       </div>
     </div>
   </div>
-  <div class="post-info">
-    <button class="tag">Cooking</button>
+  <div class="post-info" *ngIf="postDTO.id_hobby != null">
+    <button class="tag">{{postDTO.hobby_name}}</button>
   </div>
   <p class="post-content">{{ postDTO.description }}</p>
   <div *ngFor="let image of postDTO.files">

@@ -21,7 +21,10 @@ const routes: Routes = [
   {path: 'messages', loadChildren: () => import('./pages/components/messages/messages.module')
       .then(m => m.MessagesModule)
   },
-
+  {
+    path: 'organization/:id',
+    component: OrganizationComponent
+  },
   /*{
     path: 'organization'
     loadChildren: ('./pages/components') => import().then(m=>m.),

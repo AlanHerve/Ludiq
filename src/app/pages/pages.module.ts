@@ -7,13 +7,13 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { MessagesComponent } from './components/messages/messages.component';
 
 import { OrganizationComponent } from './components/organization/organization.component';
+import {MessagesModule} from "./components/messages/messages.module";
 
 
 
 @NgModule({
   declarations: [
     NotificationsComponent,
-    MessagesComponent,
     OrganizationComponent
   ],
   exports: [
@@ -22,6 +22,7 @@ import { OrganizationComponent } from './components/organization/organization.co
     CommonModule,
     RouterOutlet,
     CoreModule,
+    MessagesModule
   ]
 })
 export class PagesModule { }

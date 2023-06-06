@@ -28,11 +28,3 @@ WHERE
   activity.`ID_HOBBY` NOT IN (?, ?, ?)
 ORDER BY RAND() LIMIT 3
 ;
-
-
-SELECT
-    *
-FROM
-    regular_post
-WHERE
-    regular_post.

@@ -58,29 +58,65 @@ class UserRepository
      * Will also return the id and name of their organization if they belong to one
      * If they are part of an organization then they are an activity director for that organization
      */
-    $stmt = $this->db->prepare("SELECT
-	user.*
-    , organization.ID_ORGANIZATION
-    , organization.NAME_ORGANIZATION
-FROM
-	user
-    LEFT OUTER JOIN organization ON organization.ID_ORGANIZATION =
-    	(
-        	SELECT
-        		activity_director.ID_ORGANIZATION
-            FROM
-            	activity_director
-        		INNER JOIN
-        			user ON user.ID_USER = activity_director.ID_USER
-            WHERE
-            	user.USER_NAME = ?
-    	)
-WHERE
-	user.USER_NAME = ?;
-");
+    public function registerUser(UserDTO $userDTO)
+    {
+        $name = $userDTO->name;
+        $email = $userDTO->email;
+        $pseudo = $userDTO->username;
+        $password = $userDTO->password;
 
-    $stmt->bind_param("ss", $username, $username);
-    $stmt->execute();
+        $stmt = $this->db->prepare("INSERT INTO user (USER_NAME, USER_PSEUDO, USER_PASSWORD, EMAIL, AVATAR) VALUES (?, ?, ?, ?, null)");
+        $stmt->bind_param("ssss", $name, $pseudo, $password, $email);
+
+        $stmt->execute();
+    }
+
+    /**
+     * Method to check if the data sent during the connection form correspond to a user in the database
+     *
+     * @param UserDTO $userDTO
+     * @return false|string
+     */
+    public function loginUser(UserDTO $userDTO)
+    {
+        $username = $userDTO->username;
+        $password = $userDTO->password;
+
+
+        /**
+         * If user exists, will return their info
+         * Will also return the id and name of their organization if they belong to one
+         * If they are part of an organization then they are an activity director for that organization
+         */
+        $stmt = $this->db->prepare("
+            SELECT
+                user.*
+                , organization.ID_ORGANIZATION
+                , organization.NAME_ORGANIZATION
+            FROM	
+                user
+                LEFT OUTER JOIN organization ON organization.ID_ORGANIZATION = 
+                    (
+                        SELECT 
+                            activity_director.ID_ORGANIZATION 
+                        FROM 
+                            activity_director
+                            INNER JOIN 
+                                user ON user.ID_USER = activity_director.ID_USER
+                        WHERE 
+                            user.USER_PSEUDO = ?
+                            OR
+                            user.EMAIL = ?
+                    )
+            WHERE
+                user.USER_PSEUDO = ?
+                OR 
+                user.EMAIL = ?
+            ;
+        ");
+
+        $stmt->bind_param("ssss", $username, $username, $username, $username);
+        $stmt->execute();
 
     $result = $stmt->get_result();
     if($result){
@@ -101,24 +137,36 @@ WHERE
 
           $token = 'fake_token';
 
-          //password_verify($password, $hashedPasswordFromDatabase)
-          if(isset($row["ID_ORGANIZATION"]) && isset($row["NAME_ORGANIZATION"])){
-            $token = $token."_".$row["ID_ORGANIZATION"]."_".$row["NAME_ORGANIZATION"];
-          }
-
-
-          $response = array(
-            'success' => true,
-            'message' => 'Authentication successful',
-            'token' => $token,
-            'id' => $row["ID_USER"],
-          );
-        }else {
-          // Incorrect password
-          $response = array(
-            'success' => false,
-            'message' => 'Invalid username or password'
-          );
+                    //password_verify($password, $hashedPasswordFromDatabase)
+                    if(isset($row["ID_ORGANIZATION"]) && isset($row["NAME_ORGANIZATION"])){
+                        $token = $token."_".$row["ID_ORGANIZATION"]."_".$row["NAME_ORGANIZATION"];
+                    }
+                    $userDTO = $this->findUserById($row['ID_USER']);
+                    $userDTO->token = $token;
+                    $response = array(
+                        'success' => true,
+                        'message' => 'Authentication successful',
+                        'user' => $userDTO
+                    );
+                }else {
+                    // Incorrect password
+                    $response = array(
+                        'success' => false,
+                        'message' => 'Invalid username or password'
+                    );
+                }
+            } else {
+                // User not found
+                $response = array(
+                    'success' => false,
+                    'message' => 'Invalid username or password'
+                );
+            }
+        }else{
+            $response = array(
+                'success' => false,
+                'message' => 'could not access bdd info'
+            );
         }
 
 
@@ -136,32 +184,24 @@ WHERE
       );
     }
 
+    public function findUserById($id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM user WHERE ID_USER = ?");
+        $stmt->bind_param("i", $id);
 
     // Echo response as a json
     return json_encode($response);
   }
 
-  public function findUserById($id)
-  {
-    $response = null;
-    $stmt = $this->db->prepare("SELECT * FROM user WHERE ID_USER = ?");
-    $stmt->bind_param("i", $id);
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $user = new UserDTO($row['ID_USER'], $row['USER_NAME'], $row['USER_PSEUDO'], $row['USER_PASSWORD'], $row['EMAIL'], $row['AVATAR']);
+            $response = $user;
+        }else{
+            $response = null;
+        }
 
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows == 1) {
-      $row = $result->fetch_assoc();
-      $user = new UserDTO($row['ID_USER'], $row['USER_NAME'], $row['USER_PSEUDO'], null, $row['EMAIL'], $row['AVATAR']);
-      $response = array(
-        'success' => true,
-        'user'    => $user
-      );
-    }else{
-      $response = array(
-        'success' => false,
-        'message' => 'could not find user'
-      );
+        return $response;
     }
 
     echo json_encode($response);

@@ -4,7 +4,7 @@ import {MessagesComponent} from "./messages.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: MessagesComponent,
   }
 ];

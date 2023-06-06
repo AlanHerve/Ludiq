@@ -32,4 +32,8 @@ export class HubComponent implements OnInit {
   isLoggedIn(): boolean {
     return this.userService.isLoggedIn();
   }
+
+  onHome(): void {
+    this.router.navigateByUrl('/home');
+  }
 }

@@ -1,0 +1,15 @@
+div, .user-info {
+  display: flex;
+}
+
+.user-info {
+  flex-direction: column;
+}
+
+img {
+  width:40px;
+}
+
+.friend {
+  cursor: pointer;
+}

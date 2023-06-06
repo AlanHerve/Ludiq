@@ -5,10 +5,8 @@
   <h1>Add an hobby</h1>
   <p>Hobby</p>
   <select id="hobbyType" name="hobbyType" [(ngModel)]="this.hobbyPostDTO.id_hobby">
-    <option *ngFor="let hobby of hobbies" [value]="hobby">{{hobby.name}}</option>
+    <option *ngFor="let hobby of hobbies" [value]="hobby.id">{{hobby.name}}</option>
   </select>
-
-
     <p>Level</p>
     <select id="advancement" name="advancement" [(ngModel)]="this.hobbyPostDTO.advancement">
       <option *ngFor="let advancement of advancement_options; let i = index" [value]="advancement">{{advancement}}</option>

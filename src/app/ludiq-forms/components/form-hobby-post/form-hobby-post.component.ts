@@ -2,7 +2,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {RequestDTO} from "../../../models/request-dto";
-import {HobbiesService} from "../../../services/hobbies.service";
+import {HobbyService} from "../../../services/hobby.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 import {Location} from "@angular/common";
@@ -36,15 +36,11 @@ export class FormHobbyPostComponent extends Form implements OnInit {
 
   hobbies : HobbyDTO[] = [];
 
-  requestDTO: RequestDTO = {
-    function_to_call: "fetchAllHobbies"
-  };
-
   advancement_options: String[] = ["Beginner", "Intermediate", "Advanced", "Expert"];
   frequency_options: String[] = ["Daily", "3-4/week", "2-3/week", "Weekly", "Monthly", "Rarely"];
 
   hobbyPostDTO: HobbyPostDTO = {
-    id_user: 2,
+    id_user: 0,
     id_hobby: 0,
     advancement: '',
     frequency: '',
@@ -54,7 +50,7 @@ export class FormHobbyPostComponent extends Form implements OnInit {
   hobbyForm: FormGroup;
   constructor(
     private builder: FormBuilder,
-    private hobbiesService: HobbiesService,
+    private hobbyService: HobbyService,
     private postsService: PostsService,
     router: Router,
     location: Location
@@ -66,7 +62,8 @@ export class FormHobbyPostComponent extends Form implements OnInit {
       advancement: [this.advancement_options[0], [Validators.required]],
       frequency: [this.frequency_options[0], [Validators.required]]
     })
-    this.fetchAvailableHobbiesOfUser();
+    this.hobbyPostDTO.id_user = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
+    this.getAvailableHobbiesOfUser();
   }
 
   ngOnInit(){
@@ -86,7 +83,7 @@ export class FormHobbyPostComponent extends Form implements OnInit {
       next: (response) => {
         // in case of success
         this.hobbies.length = 0;
-        this.fetchAvailableHobbiesOfUser();
+        this.getAvailableHobbiesOfUser();
       },
       error: (error) => {
         // in case of failure
@@ -95,15 +92,14 @@ export class FormHobbyPostComponent extends Form implements OnInit {
     });
   }
 
-  fetchAvailableHobbiesOfUser(){
-    console.log("start");
-    this.hobbiesService.fetchAvailableHobbiesOfUser().subscribe({
+  getAvailableHobbiesOfUser(){
+    this.hobbyService.getAvailableHobbiesOfUser(this.hobbyPostDTO.id_user).subscribe({
       next: (response) => {
         // in case of success
         console.log(response);
-        for (let i = 0; i < response.hobbies.length; i++) {
-          this.hobbies.push(response.hobbies[i]);
-          console.log(response.hobbies[i]);
+        for (let i = 0; i < response.length; i++) {
+          this.hobbies.push(response[i]);
+          console.log(response[i]);
         }
       },
       error: (error) => {

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {UserService} from "../../../services/user.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserDTO} from "../../../models/user-dto";
+import {ProfileDTO} from "./models/profile-dto";
+import {ProfileService} from "./services/profile.service";
 
 @Component({
   selector: 'app-profile',
@@ -10,29 +12,32 @@ import {UserDTO} from "../../../models/user-dto";
 })
 export class ProfileComponent {
 
-  private userDTO: UserDTO = {
-    id: 0,
-    name: '',
-    username: '',
-    email: ''
-  };
+  protected profileDTO: ProfileDTO = {
+    userDTO: new UserDTO(-1, '', ''),
+    numPosts: 0,
+    numHobbies: 0,
+    postsDTO: []
+  }
 
-  constructor(private userService: UserService, private activatedRoute: ActivatedRoute) {
+  constructor(private userService: UserService,
+              private activatedRoute: ActivatedRoute,
+              private profileService: ProfileService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.userDTO.id = parseInt(params['id']);
+      this.profileDTO.userDTO.id = parseInt(params['id']);
 
-      if(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.userDTO.id){
-        this.userDTO.name = JSON.parse(localStorage.getItem('currentUser')!).name;
-        this.userDTO.username = JSON.parse(localStorage.getItem('currentUser')!).username;
-      }else{
-        this.userService.findUserById(this.userDTO).subscribe({
+      if (this.isConnectedUser()) {
+        this.profileDTO.userDTO.name = JSON.parse(localStorage.getItem('currentUser')!).name;
+        this.profileDTO.userDTO.username = JSON.parse(localStorage.getItem('currentUser')!).username;
+      } else {
+        this.userService.findUserById(this.profileDTO.userDTO.id).subscribe({
 
           next: (response) => {
             // in case of success
-            this.userDTO = response;
+            this.profileDTO.userDTO = response;
           },
           error: (error) => {
             // in case of failure
@@ -40,9 +45,45 @@ export class ProfileComponent {
           }
         });
       }
-
-
     })
+
+    this.getNumPosts();
+    this.getNumHobbies();
+
+    this.getProfileInformation();
+  }
+
+  getProfileInformation(): void {
+    this.profileService.getProfileInformation(this.profileDTO.userDTO.id)
+  }
+
+  getNumPosts(): void {
+    this.profileService.getNumPosts(this.profileDTO.userDTO.id).subscribe({
+      next: (response) => {
+        this.profileDTO.numPosts = response;
+      },
+      error: (error) => {
+        console.log('error while finding the number of posts of the user : ', error);
+      }
+    })
+  }
+  getNumHobbies(): void {
+    this.profileService.getNumHobbies(this.profileDTO.userDTO.id).subscribe({
+      next: (response) => {
+        this.profileDTO.numHobbies = response;
+      },
+      error: (error) => {
+        console.log('error while finding the number of posts of the user : ', error);
+      }
+    })
+  }
+
+  isConnectedUser(): boolean {
+    return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.profileDTO.userDTO.id
+  }
+
+  onSendMessageClicked(): void {
+    this.router.navigateByUrl(`messages/${this.profileDTO.userDTO.id}`)
   }
 
 }

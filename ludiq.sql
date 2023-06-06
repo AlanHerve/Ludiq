@@ -91,7 +91,7 @@ CREATE TABLE `comment` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `friends`
+-- Table structure for table `friend-list`
 --
 
 CREATE TABLE `friends` (
@@ -100,7 +100,7 @@ CREATE TABLE `friends` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `friends`
+-- Dumping data for table `friend-list`
 --
 
 INSERT INTO `friends` (`ID_USER`, `ID_USER_2`) VALUES

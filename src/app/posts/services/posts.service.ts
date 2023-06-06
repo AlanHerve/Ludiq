@@ -25,13 +25,9 @@ export class PostsService {
     return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
   }
 
-  newHobbyPost(HobbyPostDTO: HobbyPostDTO) {
-    let RequestDTO: RequestDTO = {
-      function_to_call: "newHobbyPost",
-      id_user: 2,
-      HobbyPostDTO: HobbyPostDTO
-    };
-    return this.http.post<HobbyDTO[]>(`${apiUrl}/hobbies.php`, RequestDTO).pipe(
+  newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
+
+    return this.http.post<HobbyDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
       map(response => {
         return response;
       })
