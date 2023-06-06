@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UserDTO} from "../../../models/user-dto";
 import {ProfileDTO} from "./models/profile-dto";
 import {ProfileService} from "./services/profile.service";
+import {ActivityDTO} from "../../../posts/models/activity-dto";
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +21,8 @@ export class ProfileComponent {
     numFriends: 0,
     postsDTO: []
   }
+
+  activitiesDTO: ActivityDTO[] = [new ActivityDTO(1, 2, 2, 'coucou', [], 0, '', [])]
 
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,

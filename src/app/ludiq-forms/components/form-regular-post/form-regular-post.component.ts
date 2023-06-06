@@ -7,13 +7,15 @@ import {Form} from "../../models/form";
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {HobbyService} from "../../../services/hobby.service";
 import {HobbyDTO} from "../../../models/hobby-dto";
+import {UserService} from "../../../services/user.service";
+import {UserDTO} from "../../../models/user-dto";
 
 
 @Component({
   selector: 'app-form-regular-post',
   templateUrl: './form-regular-post.component.html',
   styleUrls: ['./form-regular-post.component.css', '../../ludiq-forms.css'],
-  animations:[
+  animations: [
     trigger('fadeIn', [
       state('void', style({ opacity: 0 })),
       state('*', style({ opacity: 1 })),
@@ -33,11 +35,8 @@ export class FormRegularPostComponent extends Form implements OnInit {
 
   postDTO: PostDTO = {
     id_regular_post: -1,
-    user_name: JSON.parse(localStorage.getItem('currentUser')!).name,
-    user_username: JSON.parse(localStorage.getItem('currentUser')!).username,
-    id_user: JSON.parse(localStorage.getItem('currentUser')!).id,
-    id_hobby: -1,
-    hobby_name:'',
+    userDTO: new UserDTO(-1, '', ''),
+    hobbyDTO: new HobbyDTO(-1, '', ''),
     images: [null, null, null, null],
     likes: 0,
     description: '',
@@ -47,11 +46,17 @@ export class FormRegularPostComponent extends Form implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.findUserById(JSON.parse(localStorage.getItem('currentUser')!).id).subscribe({
+      next: (response) => {
+        this.postDTO.userDTO = response;
+      }
+    })
     this.getUserHobbies();
   }
 
   constructor(private postsService: PostsService,
               private hobbyService: HobbyService,
+              private userService: UserService,
               router: Router,
               location: Location) {
     super(router, location);
@@ -92,7 +97,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
   }
 
   getUserHobbies(){
-    this.hobbyService.getHobbiesOfUser(this.postDTO.id_user).subscribe({
+    this.hobbyService.getHobbiesOfUser(this.postDTO.userDTO.id).subscribe({
       next: (response) => {
         // in case of success
         for (let i = 0; i < response.length; i++) {
@@ -109,11 +114,11 @@ export class FormRegularPostComponent extends Form implements OnInit {
   newRegularPost() {
     const formData = new FormData();
     // @ts-ignore
-    formData.append('id_hobby', this.postDTO.id_hobby);
+    formData.append('id_hobby', this.postDTO.hobbyDTO.id);
     // @ts-ignore
-    formData.append('id_user', this.postDTO.id_user);
-    formData.append('user_name', this.postDTO.user_name);
-    formData.append('user_username', this.postDTO.user_username);
+    formData.append('id_user', this.postDTO.userDTO.id);
+    formData.append('user_name', this.postDTO.userDTO.name);
+    formData.append('user_username', this.postDTO.userDTO.username);
     formData.append('description', this.postDTO.description);
     for (let i = 0; i < this.postDTO.images.length; i++) {
       const file = this.postDTO.images[i];
