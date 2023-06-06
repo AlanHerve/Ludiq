@@ -1,6 +1,7 @@
-import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import {PostDTO} from "../../models/post-dto";
-import {Router} from "@angular/router";
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { PostDTO } from "../../models/post-dto";
+import { Router } from "@angular/router";
+import { PostsService } from "../../services/posts.service";
 
 @Component({
   selector: 'app-post',
@@ -14,25 +15,29 @@ export class PostComponent implements OnInit {
   showCommentBox: boolean = false;
   newComment: string = '';
 
-  constructor(private router: Router) {
-  }
-
-  likePost() {
-    this.isLiked = !this.isLiked;
-    this.postLiked.emit(this.postDTO);
-    if (this.isLiked) {
-      this.postDTO.likes++;
-    } else {
-      this.postDTO.likes--;
-    }
+  constructor(private router: Router, private postService: PostsService) {
   }
 
   addComment() {
     if (this.newComment.trim() !== '') {
-      this.postDTO.comments.push(this.newComment);
-      this.newComment = '';
+      this.postService.addComment(this.postDTO.id_regular_post, this.newComment).subscribe(() => {
+        this.postDTO.comments.push(this.newComment);
+        this.newComment = '';
+      });
     }
-    this.showCommentBox = false;
+  }
+
+
+
+  likePost() {
+    this.isLiked = !this.isLiked;
+    this.postService.likePost(this.postDTO.id_regular_post).subscribe(() => {
+      if (this.isLiked) {
+        this.postDTO.likes++;
+      } else {
+        this.postDTO.likes--;
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -43,6 +48,6 @@ export class PostComponent implements OnInit {
   }
 
   onUserClicked(): void {
-    this.router.navigateByUrl('profile/'+this.postDTO.userDTO.id);
+    this.router.navigateByUrl('profile/' + this.postDTO.userDTO.id);
   }
 }
