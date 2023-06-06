@@ -6,17 +6,17 @@ import {Injectable} from "@angular/core";
 
 import {RequestDTO} from "../models/request-dto";
 import {HobbyRequestDTO} from "../models/hobby-request-dto";
-import {HobbyPostDTO} from "../models/hobby-post-dto";
 import {HobbyDTO} from "../models/hobby-dto";
+import {HobbyPostDTO} from "../models/hobby-post-dto";
 
 @Injectable({
   providedIn: 'root'
 })
-export class HobbiesService {
+export class HobbyService {
 
   constructor(private http: HttpClient) {}
 
-  fetchAllHobbies(RequestDTO: RequestDTO): Observable<HobbyDTO[]> {
+  getAllHobbies(RequestDTO: RequestDTO): Observable<HobbyDTO[]> {
     //const function_to_call: string = "fetchALLHobbies";
     return this.http.post<HobbyDTO[]>(`${apiUrl}/hobbies.php`, RequestDTO).pipe(
       map(response => {
@@ -39,42 +39,49 @@ export class HobbiesService {
   }
 
 
-  fetchHobbiesOfUser(): Observable<HobbyDTO[]>{
+  getHobbiesOfUser(id_user: number): Observable<HobbyDTO[]>{
     const params = new HttpParams()
-      .set('function_to_call', "fetchHobbiesOfUser")
-      .set('id_user', 2);
+      .set('function_to_call', "getHobbiesOfUser")
+      .set('id_user', id_user);
+    console.log("getting hobbies of user "+id_user);
     return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
+        console.log(response)
         return response;
       })
     );
   }
 
-  fetchAvailableHobbiesOfUser() : Observable<{hobbies: HobbyDTO[]}>{
-    let RequestDTO: RequestDTO = {
-      function_to_call: "fetchAvailableHobbiesOfUser",
-      id_user: 2
-    }
+  getHobbiesFlashcardsOfUser(id_user: number): Observable<HobbyPostDTO[]>{
     const params = new HttpParams()
-      .set('function_to_call', "fetchAvailableHobbiesOfUser")
-      .set('id_user', 2);
+      .set('function_to_call', "getHobbiesFlashcardsOfUser")
+      .set('id_user', id_user);
+    console.log("getting hobbies of : "+id_user);
+    return this.http.get<HobbyPostDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
-    return this.http.get<{hobbies: HobbyDTO[]}>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
         console.log(response);
         return response;
       })
     );
-
-    /*return this.http.get<HobbyRequestDTO>(`${apiUrl}/hobbies.php`, {params}).pipe(
-      map(response => {
-        return response.hobbies;
-      })
-    );*/
   }
 
-  newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
+  getAvailableHobbiesOfUser(id_user: number) : Observable<HobbyDTO[]>{
+    const params = new HttpParams()
+      .set('function_to_call', "fetchAvailableHobbiesOfUser")
+      .set('id_user', id_user);
+
+    return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
+      map(response => {
+        console.log(response);
+        return response;
+      })
+    );
+  }
+
+
+  newHobbyPost(hobbyPostDTO: HobbyPostDTO): Observable<any> {
     let RequestDTO: RequestDTO = {
       function_to_call: "newHobbyPost",
       id_user: 2,

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {UserDTO} from "../models/user-dto";
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./api-url";
 
@@ -19,24 +19,18 @@ export class UserService {
     localStorage.removeItem('currentUser');
   }
 
-  loginUser(userDTO: UserDTO): Observable<UserDTO> {
-    return this.http.post<UserDTO>(`${apiUrl}/login.php`, userDTO).pipe(
+  loginUser(userDTO: UserDTO): Observable<{ user: UserDTO }> {
+    return this.http.post<{ user: UserDTO }>(`${apiUrl}/login.php`, userDTO).pipe(
       map(response => {
-        if (response) {
-
+        if (response.user) {
           // Stocker le jeton dans le stockage local
-          if(response.token){
-            localStorage.setItem('currentUser', JSON.stringify(response));
+          if(response.user.token){
+            localStorage.setItem('currentUser', JSON.stringify(response.user));
             this.isPartOfOrganization(3);
-          }else {
+          }
+          else {
             alert("wrong username or password");
           }
-
-
-          // Affecter la valeur du jeton à la propriété token de userDTO
-
-          userDTO.token = response.token;
-
         }
         console.log(localStorage.getItem('currentUser'));
         return response;
@@ -44,8 +38,14 @@ export class UserService {
     );
   }
 
-  findUserById(userDto: UserDTO): Observable<UserDTO> {
-    return this.http.get<UserDTO>(`${apiUrl}/user.php`).pipe(
+  getCurrentId(): number{
+    return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
+  }
+
+  findUserById(userId: number): Observable<UserDTO> {
+    const params = new HttpParams()
+      .set('user_id', userId);
+    return this.http.get<UserDTO>(`${apiUrl}/user.php`, {params}).pipe(
       map(response => {
         console.log(response);
         return response;

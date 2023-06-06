@@ -10,6 +10,8 @@
   left: 350px;
   right: 350px;
   z-index: 200;
+  backdrop-filter: blur(5px);
+
 }
 
 .explorer {
@@ -21,7 +23,7 @@
   background-size: 28px;
   background-position-x: calc(100% - 13px);
   height: 40px;
-  width: 70%;
+  width: 69%;
   margin-left: 10px;
   resize: none;
   font-size: 20px;
@@ -78,6 +80,7 @@ button {
 
 .explorer:focus {
   outline: 3px solid #7421C2;
+  outline-offset: -3px;
   background-color: #F4F2F5;
 }
 

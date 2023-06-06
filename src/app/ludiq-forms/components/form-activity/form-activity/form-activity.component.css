@@ -5,6 +5,15 @@
   float: left;
   margin: 5px 5px 5px 20px;
 }
+/*
+.background-form{
+  height: 400px;
+  overflow-y: auto;
+}*/
+
+form {
+  position: absolute!important;
+}
 
 .file-input-label span {
   display: inline-block;
@@ -64,7 +73,7 @@ textarea {
   overflow-wrap: break-word;
   resize: none;
   height: 70px !important;
-  width:-webkit-fill-available;
+  /*width:-webkit-fill-available;*/
   margin: 10px 20px;
 }
 

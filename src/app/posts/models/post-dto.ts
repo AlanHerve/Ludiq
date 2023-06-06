@@ -1,8 +1,11 @@
+import {UserDTO} from "../../models/user-dto";
+import {HobbyDTO} from "../../models/hobby-dto";
+
 export class PostDTO {
 
-  constructor(public id_regular_post: number|null,
-              public id_user: number|null,
-              public id_hobby: number|null,
+  constructor(public id_regular_post: number,
+              public userDTO: UserDTO,
+              public hobbyDTO: HobbyDTO,
               public description: string,
               public images : (string | null)[],
               public modified: number,

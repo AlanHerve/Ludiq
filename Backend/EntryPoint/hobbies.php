@@ -9,22 +9,20 @@ include("../DTOs/HobbyPostDTO.php");
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    $id = null;
     $body = file_get_contents('php://input');
     $data = json_decode($body, true);
 
-    $hobbyPostDto = null;
+    $hobbyPostDTO = null;
     if(isset($data['id_user']) && isset($data['id_hobby']) && isset($data['frequency']) && isset($data['advancement']) && isset($data['availability'])){
-        $hobbyPostDto = new HobbyPostDTO($data['id_user'], $data['id_hobby'], $data['frequency'], $data['advancement'], $data['availability']);
+        $hobbyPostDTO = new HobbyPostDTO($data['id_user'], $data['id_hobby'], $data['frequency'], $data['advancement'], $data['availability']);
     }else{
-        echo json_encode(array('success'=>false, 'message'=>'parameters not fdound'));
+        echo json_encode(array('success' => false, 'message'=>'parameters not found') );
         exit(0);
     }
 
     $hobbyRepository = HobbyRepository::getInstance();
 
-    $hobbyRepository->newHobbyPost($id, $hobbyPostDto);
+    echo $hobbyRepository->newHobbyPost($hobbyPostDTO);
 
 
 } elseif ($_SERVER["REQUEST_METHOD"] === 'GET') {
@@ -42,11 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case "fetchDisplayHobbies":
             $hobbyRepository->fetchDisplayHobbies();
             break;
-        case "fetchHobbiesOfUser":
+        case "getHobbiesOfUser":
             $hobbyRepository->fetchHobbiesOfUser($id_user);
             break;
         case "fetchAvailableHobbiesOfUser":
-            $hobbyRepository->fetchAvailableHobbiesOfUser($id_user);
+            echo $hobbyRepository->fetchAvailableHobbiesOfUser($id_user);
+            break;
+        case "getHobbiesFlashcardsOfUser":
+            echo json_encode($hobbyRepository->getHobbiesFlashcardsOfUser($id_user));
             break;
     }
 

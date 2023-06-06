@@ -1,8 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {HobbiesService} from "../../../services/hobbies.service";
+import {HobbyService} from "../../../services/hobby.service";
 import {RequestDTO} from "../../../models/request-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
-import {HobbyCountDTO} from "../../../models/hobby-count-dto";
 
 @Component({
   selector: 'app-user-hobbies-list',
@@ -20,7 +19,7 @@ export class UserHobbiesListComponent {
     id_user: 0
   };
 
-  constructor(private hobbyService: HobbiesService) {
+  constructor(private hobbyService: HobbyService) {
 
   }
 
@@ -28,15 +27,12 @@ export class UserHobbiesListComponent {
     console.log(this.id);
     //this.RequestDTO.id_user = this.id
     this.RequestDTO.id_user = this.id;
-    console.log(this.RequestDTO.id_user);
-    this.hobbyService.fetchHobbiesOfUser().subscribe({
+    console.log("id"+this.RequestDTO.id_user);
+    this.hobbyService.getHobbiesOfUser(this.id).subscribe({
       next: (response) => {
         // in case of success
 
         for(let i = 0; i < response.length; i++) this.hobbies.push(response[i]);
-        /*response.hobbies.forEach(function(value){
-          console.log(value);
-        })*/
       },
       error: (error) => {
         // in case of failure

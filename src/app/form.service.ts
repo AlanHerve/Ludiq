@@ -9,5 +9,5 @@ export class FormService {
     console.log(this.isOpen, "toggle service 1");
     this.isOpen = !this.isOpen;
     console.log(this.isOpen,"toggle 2 form du service");
-    }
+  }
 }

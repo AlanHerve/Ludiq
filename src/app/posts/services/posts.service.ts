@@ -4,6 +4,9 @@ import {Observable} from "rxjs";
 import {apiUrl} from "../../services/api-url";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
+import {HobbyDTO} from "../../models/hobby-dto";
+import {HobbyPostDTO} from "../../models/hobby-post-dto";
+import {RequestDTO} from "../../models/request-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +25,14 @@ export class PostsService {
     return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
   }
 
+  newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
+    return this.http.post<HobbyDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+      map(response => {
+        return response;
+      })
+    );
+  }
+
   getImage(imageName: string): Observable<Blob> {
     const options = { responseType: 'arraybuffer' as 'json' };
     const params = new HttpParams().set('imageName', imageName);
@@ -29,7 +40,4 @@ export class PostsService {
       map(response => new Blob([response], { type: 'image/jpeg' }))
     );
   }
-
-
-
 }

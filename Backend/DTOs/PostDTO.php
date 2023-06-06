@@ -1,30 +1,32 @@
 <?php
 
-class PostDTO {
+require_once '../DTOs/UserDTO.php';
+require_once '../DTOs/HobbyDTO.php';
 
-  public $id, $id_user, $id_hobby
-  , $description
-  , $images
-  , $modified
-  , $likes
-  , $time;
+class PostDTO
+{
+    public $id;
+    public $userDTO;
+    public $hobbyDTO;
+    public $images;
 
-  public function __construct($id, $id_user, $id_hobby, $description
-                              , $images, $modified, $likes, $time) {
+    public
+      $description
+    , $modified
+    , $likes
+    , $time;
 
-    $this->id = $id;
-    $this->id_user = $id_user;
-    $this->id_hobby = $id_hobby;
-    $this->description = $description;
-    $this->images = $images;
-    $this->modified = $modified;
-    $this->likes = $likes;
-    $this->time = $time;
-
-  }
-
-
-
+    public function __construct($id, $userDTO, $hobbyDTO, $description, $images, $modified = null, $likes = null, $time = null)
+    {
+        $this->id = $id;
+        $this->userDTO = $userDTO;
+        $this->hobbyDTO = $hobbyDTO;
+        $this->description = $description;
+        $this->images = $images;
+        $this->modified = $modified;
+        $this->likes = $likes;
+        $this->time = $time;
+    }
 }
 
 ?>

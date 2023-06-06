@@ -2,13 +2,14 @@
   padding: 30px;
 }
 
+
 .post-title {
   font-size: 20px;
   font-weight: bold;
 }
 
 .post-content {
-  margin-top: 0;
+  margin-top: 20px;
 }
 
 .user-profile {
@@ -49,20 +50,21 @@
 .user-info {
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .interaction {
   width: 30px;
   height: 30px;
-  margin-left: 35px;
 }
 
 .count {
   margin-left: 5px;
+  margin-right: 20px;
 }
 
 button {
-  margin: 20px 0;
+  margin: 20px 0 0 0;
 }
 
 img {

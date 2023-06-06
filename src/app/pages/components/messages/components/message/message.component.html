@@ -1,0 +1,5 @@
+<div class="message-container">
+  <p *ngIf="onVerifySender()" class="date-sender">{{messageDTO.time | date}}</p>
+  <p [ngClass]="{'sender': onVerifySender()}">{{messageDTO.content}}</p>
+  <p *ngIf="!onVerifySender()" class="date">{{messageDTO.time | date}}</p>
+</div>

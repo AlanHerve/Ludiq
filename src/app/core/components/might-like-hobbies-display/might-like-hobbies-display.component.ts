@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {HobbiesService} from "../../../services/hobbies.service";
+import {HobbyService} from "../../../services/hobby.service";
 import {RequestDTO} from "../../../models/request-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {HobbyCountDTO} from "../../../models/hobby-count-dto";
@@ -29,7 +29,7 @@ export class MightLikeHobbiesDisplayComponent {
   //store 3 random hobbies
   rand_hobbies: HobbyCountDTO[] = [];
 
-  constructor(private hobbiesService: HobbiesService) {
+  constructor(private hobbiesService: HobbyService) {
     this.fetchDisplayHobbies();
   }
 

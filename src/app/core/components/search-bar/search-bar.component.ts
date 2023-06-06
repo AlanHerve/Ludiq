@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SearchBarService} from "../../services/search-bar.service";
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {UserDTO} from "../../../models/user-dto";
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -48,12 +49,16 @@ export class SearchBarComponent implements OnInit {
       // Aucun bouton n'est coché, recherche globale
       this.onUserClicked(searchText);
       this.onHobbyClicked(searchText);
+      this.onPostClicked(searchText);
     } else {
       if (this.buttons[0]) {
         this.onUserClicked(searchText);
       }
       if (this.buttons[1]) {
         this.onHobbyClicked(searchText);
+      }
+      if (this.buttons[2]) {
+        this.onPostClicked(searchText);
       }
     }
   }
@@ -78,6 +83,27 @@ export class SearchBarComponent implements OnInit {
             const existingUser = this.searchResults.find(user => user.id == userDTO.id);
             if (!existingUser) {
               this.searchResults.push(userDTO);
+            }
+          }
+        })
+      },
+      error: (error) => {
+        // Gestion des erreurs en cas d'échec
+        console.error('Erreur lors de la récupération de l\'utilisateur', error);
+      }
+    });
+  }
+
+  onPostClicked(searchText: string): void {
+    this.removeContentOnClick();
+    this.searchBarService.searchPost(searchText).subscribe({
+      next: (response) => {
+        response.forEach((post) => {
+          if (post.id_regular_post) {
+            const postDTO = post;
+            const existingPost = this.searchResults.find(post => post.id_regular_post == postDTO.id_regular_post);
+            if (!existingPost) {
+              this.searchResults.push(postDTO);
             }
           }
         })
@@ -137,6 +163,16 @@ export class SearchBarComponent implements OnInit {
     const searchText = (document.querySelector('.explorer') as HTMLTextAreaElement).value;
     if (this.buttons[1]) {
       this.onHobbyClicked(searchText);
+    }
+    else {
+      this.displayContentOnclick(searchText);
+    }
+  }
+
+  onCheckPost(): void {
+    const searchText = (document.querySelector('.explorer') as HTMLTextAreaElement).value;
+    if (this.buttons[1]) {
+      this.onPostClicked(searchText);
     }
     else {
       this.displayContentOnclick(searchText);
