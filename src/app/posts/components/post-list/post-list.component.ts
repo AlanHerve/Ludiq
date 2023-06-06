@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {PostDTO} from "../../models/post-dto";
 import {PostsService} from "../../services/posts.service";
 
@@ -8,24 +8,15 @@ import {PostsService} from "../../services/posts.service";
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit {
-  postsDTO: PostDTO[] = [];
+  @Input() postsDTO: PostDTO[] = [];
 
   constructor(private postsService: PostsService) {
   }
 
   ngOnInit(): void {
-    this.postsService.getAllPosts().subscribe({
-      next: (response: PostDTO[]) => {
-        console.log('success:', response);
-        this.postsDTO = response;
-        for (const post of this.postsDTO) {
-          this.loadImages(post);
-        }
-      },
-      error: (error) => {
-        console.log('error:', error);
-      }
-    });
+    for (const post of this.postsDTO) {
+      this.loadImages(post);
+    }
   }
 
   loadImages(post: PostDTO): void {
