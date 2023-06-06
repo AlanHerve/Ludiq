@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
   $postRepository = PostRepository::getInstance();
-
   switch ($data['type']) {
     case 'like':
       echo $postRepository->likePost($postId);
