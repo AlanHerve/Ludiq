@@ -22,7 +22,10 @@ export class ProfileComponent {
     postsDTO: []
   }
 
-  activitiesDTO: ActivityDTO[] = [new ActivityDTO(1, 2, 2, 'coucou', [], 0, '', [])]
+  activitiesDTO: ActivityDTO[] = [
+    new ActivityDTO(1,'Cooking session', 2, 2, 'coucou', [], 0, '', []),
+    new ActivityDTO(1,'Bike with friends', 2, 2, 'coucou', [], 0, '', [])
+  ]
 
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,

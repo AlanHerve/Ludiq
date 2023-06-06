@@ -1,0 +1,7 @@
+.activities {
+  display: flex;
+  gap: 40px;
+  justify-content: space-around;
+  margin: 30px;
+  text-align: center;
+}
