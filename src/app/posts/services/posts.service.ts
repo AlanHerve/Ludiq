@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {catchError, Observable, tap, throwError} from "rxjs";
 import {apiUrl} from "../../services/api-url";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
@@ -38,6 +38,29 @@ export class PostsService {
     const params = new HttpParams().set('imageName', imageName);
     return this.http.get<Blob>(`${apiUrl}/images.php`, { params, ...options }).pipe(
       map(response => new Blob([response], { type: 'image/jpeg' }))
+    );
+  }
+
+  likePost(postId: number): Observable<any> {
+    const params = new HttpParams()
+      .set('function_to_call', "like")
+      .set('id_post', postId);
+    return this.http.post<any>(`${apiUrl}/post.php`, {params}).pipe(
+
+      map(response => {
+        return response;
+      })
+    );
+  }
+
+  unlikePost(postId: number): Observable<any> {
+    const params = new HttpParams()
+      .set('function_to_call', "unlike")
+      .set('id_post', postId);
+    return this.http.post<any>(`${apiUrl}/post.php`, {params}).pipe(
+      map(response => {
+        return response;
+      })
     );
   }
 }

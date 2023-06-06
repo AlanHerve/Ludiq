@@ -14,16 +14,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
 
-  if($_POST['id_hobby'] != -1) $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
-  else $hobbyDTO = new HobbyDTO(null);
+
+  $postId = $_POST['post_id'];
+
+  if(isset($_POST['function_to_call'])) $function_to_call = $_POST['function_to_call'];
+  $postRepository = PostRepository::getInstance();
+  switch ($function_to_call) {
+    case 'like':
+      echo $postRepository->likePost($postId);
+      break;
+    case 'unlike':
+      echo $postRepository->unlikePost($postId);
+      break;
+  }
+
+
+
+  if(isset($_POST['id_hobby']) && $_POST['id_hobby'] != -1) {
+    $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
+  } else {
+    $hobbyDTO = new HobbyDTO(null);
+  }
 
   $description = $_POST['description'];
   $modified = null;
   $likes = null;
   $time = null;
 
-  if(isset($data['modified'])){
-    $modified = $data['modified'];
+  if(isset($_POST['modified'])){
+    $modified = $_POST['modified'];
   }
   $images = $_FILES['images'];
 
@@ -46,20 +65,15 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
       echo $postRepository->getAllPosts();
   }
   elseif (isset($_GET['user_page']) && isset($_GET['id_user'])){
-      $id_user = $_GET['id_user'];
-      $mode = $_GET['user_page'];
-      $valid = true;
+    $id_user = $_GET['id_user'];
+    $mode = $_GET['user_page'];
+    $valid = true;
   }
   elseif (isset($_GET['search']) && isset($_GET['id_hobby'])){
-      $id_hobby = $_GET['id_hobby'];
-      $mode = $_GET['search'];
-      $valid = true;
+    $id_hobby = $_GET['id_hobby'];
+    $mode = $_GET['search'];
+    $valid = true;
   }
-  /*if($valid) {
-      $postDTO = new PostDTO($id, null, null, $id_user, $id_hobby, null, $description, $images, $modified, $likes, $time);
-      $postRepository = PostRepository::getInstance();
-      //echo $postRepository->getPosts($mode, $postDTO);
-  }*/
 }
 
 function saveFiles($images) {
@@ -73,7 +87,7 @@ function saveFiles($images) {
     $targetFilePath = $targetDir . $uniqueFilename;
 
     if (move_uploaded_file($images['tmp_name'][$i], $targetFilePath)) {
-      $uploadedFiles[] .= $uniqueFilename;
+      $uploadedFiles[] = $uniqueFilename;
       echo 'File downloaded successfully!\n';
     } else {
       echo 'Error while downloading file : '.$images['tmp_name'][$i].'\n';
