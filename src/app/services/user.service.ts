@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {UserDTO} from "../models/user-dto";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./api-url";

@@ -37,7 +37,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     user_username: JSON.parse(localStorage.getItem('currentUser')!).username,
     id_user: JSON.parse(localStorage.getItem('currentUser')!).id,
     id_hobby: -1,
-    hobby_name:'',
+    //hobby_name:'',
     images: [null, null, null, null],
     likes: 0,
     description: '',
@@ -48,7 +48,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserHobbies();
+    //this.getUserHobbies();
   }
 
   constructor(private postsService: PostsService,
@@ -92,7 +92,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     console.log(this.postDTO.images);
   }
 
-  getUserHobbies(){
+  /*getUserHobbies(){
     this.hobbyService.getHobbiesOfUser(this.postDTO.id_user).subscribe({
       next: (response) => {
         // in case of success
@@ -105,7 +105,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
         console.error('Could not get all hobbies', error);
       }
     });
-  }
+  }*/
 
   newRegularPost() {
     const formData = new FormData();
