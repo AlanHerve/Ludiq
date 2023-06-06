@@ -6,6 +6,7 @@ import {ProfileDTO} from "./models/profile-dto";
 import {ProfileService} from "./services/profile.service";
 import {ActivityDTO} from "../../../posts/models/activity-dto";
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -60,4 +61,9 @@ export class ProfileComponent {
   onSwitchTo(type: string): void {
     this.type = type;
   }
+
+  getID(): number{
+    return this.profileDTO.userDTO.id;
+  }
+
 }

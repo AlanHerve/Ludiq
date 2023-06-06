@@ -8,13 +8,13 @@ import {PostsModule} from "../../../posts/posts.module";
 
 @NgModule({
   declarations: [ProfileComponent],
-    imports: [
-        ProfileRoutingModule,
-        RouterOutlet,
-        CoreModule,
-        NgIf,
-        PostsModule
-    ],
+  imports: [
+    ProfileRoutingModule,
+    RouterOutlet,
+    CoreModule,
+    NgIf,
+    PostsModule
+  ],
   exports: [
     ProfileRoutingModule
   ]

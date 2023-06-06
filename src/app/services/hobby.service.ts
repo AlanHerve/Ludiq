@@ -43,9 +43,11 @@ export class HobbyService {
     const params = new HttpParams()
       .set('function_to_call', "getHobbiesOfUser")
       .set('id_user', id_user);
+    console.log("getting hobbies of user "+id_user);
     return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
+        console.log(response)
         return response;
       })
     );
@@ -55,9 +57,11 @@ export class HobbyService {
     const params = new HttpParams()
       .set('function_to_call', "getHobbiesFlashcardsOfUser")
       .set('id_user', id_user);
+    console.log("getting hobbies of : "+id_user);
     return this.http.get<HobbyPostDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
+        console.log(response);
         return response;
       })
     );

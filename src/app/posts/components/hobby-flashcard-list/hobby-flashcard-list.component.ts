@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {HobbyService} from "../../../services/hobby.service";
-import {HobbyFlashcardComponent} from "../hobby-flashcard/hobby-flashcard.component";
 import {ActivatedRoute} from "@angular/router";
 import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 

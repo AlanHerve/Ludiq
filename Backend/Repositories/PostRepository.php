@@ -206,6 +206,40 @@ class PostRepository
 
     }
 
+    public function getHobbiesFlashcardsOfUser($id)
+    {
+        $hobbies = [];
+
+        $stmt = $this->db->prepare(
+            "SELECT
+                        hobby_post.ID_HOBBY_POST
+	                    , hobby_post.`ID_HOBBY`
+                        , hobby_post.`EXPERIENCE`
+                        , hobby_post.`AVAILABLE`
+                        , hobby_post.`FREQUENCY`
+                        , hobby.`HOBBY_NAME`
+                    FROM
+	                    hobby_post
+                        INNER JOIN
+	                        hobby ON hobby.`ID_HOBBY` = hobby_post.`ID_HOBBY`
+                    WHERE
+	                    hobby_post.`ID_USER` = ?");
+
+        $stmt->bind_param("i", $id_user);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        if ($result) {
+            if ($result->num_rows > 0) {
+
+                while ($row = $result->fetch_assoc()) array_push($hobbies, new HobbyPostDTO($row["ID_HOBBY_POST"], $id_user, $row["ID_HOBBY"], $row["HOBBY_NAME"], $row["FREQUENCY"], $row["EXPERIENCE"], $row["AVAILABLE"]));
+                $response = $hobbies;
+            }
+        }
+        return $hobbies;
+    }
+
 }
 
 ?>

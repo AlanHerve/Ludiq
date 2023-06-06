@@ -40,11 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case "fetchDisplayHobbies":
             $hobbyRepository->fetchDisplayHobbies();
             break;
-        case "fetchHobbiesOfUser":
+        case "getHobbiesOfUser":
             $hobbyRepository->fetchHobbiesOfUser($id_user);
             break;
         case "fetchAvailableHobbiesOfUser":
             echo $hobbyRepository->fetchAvailableHobbiesOfUser($id_user);
+            break;
+        case "getHobbiesFlashcardsOfUser":
+            echo json_encode($hobbyRepository->getHobbiesFlashcardsOfUser($id_user));
             break;
     }
 

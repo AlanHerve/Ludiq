@@ -40,6 +40,7 @@ export class FormHobbyPostComponent extends Form implements OnInit {
   frequency_options: string[] = ["Daily", "3-4/week", "2-3/week", "Weekly", "Monthly", "Rarely"];
 
   hobbyPostDTO: HobbyPostDTO = {
+    id_hobby_post: 0,
     id_user: 0,
     id_hobby: 0,
     advancement: '',

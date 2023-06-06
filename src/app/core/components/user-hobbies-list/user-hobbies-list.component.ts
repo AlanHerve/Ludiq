@@ -27,7 +27,7 @@ export class UserHobbiesListComponent {
     console.log(this.id);
     //this.RequestDTO.id_user = this.id
     this.RequestDTO.id_user = this.id;
-    console.log(this.RequestDTO.id_user);
+    console.log("id"+this.RequestDTO.id_user);
     this.hobbyService.getHobbiesOfUser(this.id).subscribe({
       next: (response) => {
         // in case of success

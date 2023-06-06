@@ -9,6 +9,7 @@ import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 export class HobbyFlashcardComponent {
 
   @Input() hobbyPost: HobbyPostDTO = {
+    id_hobby_post: 0,
     id_user: 0,
     id_hobby: 0,
     advancement: '',
