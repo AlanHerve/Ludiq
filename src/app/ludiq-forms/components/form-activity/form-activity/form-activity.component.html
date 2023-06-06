@@ -1,5 +1,4 @@
 <div class="background-form">
-
   <form [@fadeIn]="true" >
     <h1>New activity</h1>
 
@@ -25,20 +24,9 @@
 
 
     <p>Choice of the related hobby</p>
-    <div class="tags-container">
-      <label class="tag">
-        <input type="radio" name="hobby">
-        Hobby 1
-      </label>
-      <label class="tag">
-        <input type="radio" name="hobby">
-        Hobby 2
-      </label>
-      <label class="tag">
-        <input type="radio" name="hobby">
-        Hobby 3
-      </label>
-    </div>
+    <select name="hobby" id="hobby">
+      <!--faire requete pour aller chercher tous les hobbys-->
+    </select>
 
     <div class="number" [formGroup]="activityForm">
       <input type="number" name="number" min="2" max="200" formControlName="number" placeholder="Number of participants"
@@ -60,5 +48,5 @@
     <button type="submit">Post</button>
 
   </form>
-</div>
+  </div>
 

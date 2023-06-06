@@ -5,10 +5,7 @@
   float: left;
   margin: 5px 5px 5px 20px;
 }
-.background-form{
-  height: 400px; /* Définissez la hauteur souhaitée pour votre formulaire */
-  overflow-y: auto; /* Ajoute une barre de défilement verticale lorsque né*/
-}
+
 .file-input-label span {
   display: inline-block;
   padding: 6px 12px;
