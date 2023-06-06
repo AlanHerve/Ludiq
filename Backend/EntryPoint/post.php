@@ -52,11 +52,11 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
       $mode = $_GET['search'];
       $valid = true;
   }
-  if($valid) {
+  /*if($valid) {
       $postDTO = new PostDTO($id, null, null, $id_user, $id_hobby, null, $description, $images, $modified, $likes, $time);
       $postRepository = PostRepository::getInstance();
       //echo $postRepository->getPosts($mode, $postDTO);
-  }
+  }*/
 }
 
 function saveFiles($images) {

@@ -4,8 +4,8 @@
       <img alt="Photo de profil" class="profile-image" src="../../../../assets/images/icons/user.png">
       <div style = "display: flex">
         <div class = "user-info" (click) = "onUserClicked()">
-          <span class="username">{{postDTO.user_name}}</span>
-          <span class="nickname">{{postDTO.user_username}}</span>
+          <span class="username">{{postDTO.userDTO.name}}</span>
+          <span class="nickname">{{postDTO.userDTO.username}}</span>
         </div>
         <p class = "date" *ngIf="postDTO.modified === 1; else elseBlock">Modified - {{ postDTO.time | date:'dd/MM HH:mm' }}</p>
         <ng-template #elseBlock>
@@ -14,8 +14,8 @@
       </div>
     </div>
   </div>
-  <div class="post-info" *ngIf="postDTO.id_hobby != null">
-    <button class="tag">{{postDTO.hobby_name}}</button>
+  <div class="post-info" *ngIf="postDTO.hobbyDTO != null">
+    <button class="tag">{{postDTO.hobbyDTO.name}}</button>
   </div>
   <p class="post-content">{{ postDTO.description }}</p>
   <div *ngFor="let image of postDTO.files">

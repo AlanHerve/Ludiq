@@ -26,7 +26,6 @@ export class PostsService {
   }
 
   newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
-
     return this.http.post<HobbyDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
       map(response => {
         return response;
@@ -41,7 +40,4 @@ export class PostsService {
       map(response => new Blob([response], { type: 'image/jpeg' }))
     );
   }
-
-
-
 }

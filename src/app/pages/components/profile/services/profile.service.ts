@@ -17,6 +17,4 @@ export class ProfileService {
       .set('id_user', id_user)
     return this.http.get<ProfileDTO>(`${apiUrl}/profile.php`, {params});
   }
-
-
 }
