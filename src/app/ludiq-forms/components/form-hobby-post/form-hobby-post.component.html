@@ -14,7 +14,7 @@
 
     <p>Frequency</p>
     <select id="frequency" name="frequency" [(ngModel)]="this.hobbyPostDTO.frequency">
-      <option *ngFor="let frequency of frequency_options; let i = index" [selected]="i == 0" [value]="frequency">{{frequency}}</option>
+      <option *ngFor="let frequency of frequency_options" [value]="frequency">{{frequency}}</option>
     </select>
 
     <p>Availability</p>

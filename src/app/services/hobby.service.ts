@@ -41,9 +41,21 @@ export class HobbyService {
 
   getHobbiesOfUser(id_user: number): Observable<HobbyDTO[]>{
     const params = new HttpParams()
-      .set('function_to_call', "fetchHobbiesOfUser")
+      .set('function_to_call', "getHobbiesOfUser")
       .set('id_user', id_user);
     return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
+
+      map(response => {
+        return response;
+      })
+    );
+  }
+
+  getHobbiesFlashcardsOfUser(id_user: number): Observable<HobbyPostDTO[]>{
+    const params = new HttpParams()
+      .set('function_to_call', "getHobbiesFlashcardsOfUser")
+      .set('id_user', id_user);
+    return this.http.get<HobbyPostDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
         return response;

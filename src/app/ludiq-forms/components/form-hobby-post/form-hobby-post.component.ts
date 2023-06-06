@@ -36,8 +36,8 @@ export class FormHobbyPostComponent extends Form implements OnInit {
 
   hobbies : HobbyDTO[] = [];
 
-  advancement_options: String[] = ["Beginner", "Intermediate", "Advanced", "Expert"];
-  frequency_options: String[] = ["Daily", "3-4/week", "2-3/week", "Weekly", "Monthly", "Rarely"];
+  advancement_options: string[] = ["Beginner", "Intermediate", "Advanced", "Expert"];
+  frequency_options: string[] = ["Daily", "3-4/week", "2-3/week", "Weekly", "Monthly", "Rarely"];
 
   hobbyPostDTO: HobbyPostDTO = {
     id_user: 0,
@@ -101,6 +101,9 @@ export class FormHobbyPostComponent extends Form implements OnInit {
           this.hobbies.push(response[i]);
           console.log(response[i]);
         }
+        this.hobbyPostDTO.id_hobby = this.hobbies[0].id;
+        this.hobbyPostDTO.advancement = this.advancement_options[0];
+        this.hobbyPostDTO.frequency = this.frequency_options[0];
       },
       error: (error) => {
         // in case of failure
