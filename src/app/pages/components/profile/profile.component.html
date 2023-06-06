@@ -2,13 +2,13 @@
   <div class="content">
     <div class="top-bar">
       <p class="text">{{ profileDTO.numPosts }} posts</p>
-      <p class="text right">{{ profileDTO.numHobbies }} hobbies</p>
+      <p class="text">{{ profileDTO.numHobbies }} hobbies</p>
     </div>
     <div class="user">
       <img alt="userImg" src="assets/images/icons/user.png">
       <p class="username">{{this.profileDTO.userDTO.name}}</p>
       <p class="nickname">{{this.profileDTO.userDTO.username}}</p>
-      <p class="friends">3 friends</p>
+      <p class="friends">{{ this.profileDTO.numFriends }} friends</p>
     </div>
 
     <div *ngIf="isConnectedUser() else elseBlock">
@@ -20,13 +20,25 @@
     </div>
     <ng-template #elseBlock>
       <div class="buttons">
-        <button (click)="onSendMessageClicked()">Send a message</button>
-        <button>Add friend</button>
+        <button *ngIf="isFriend()" (click)="onSendMessageClicked()">Send a message</button>
+        <button *ngIf="!isFriend() else friendBlock" (click) = "addFriend()">Add friend</button>
+        <ng-template #friendBlock>
+          <button class = "button2" (click) = "removeFriend()">Remove friend</button>
+        </ng-template>
       </div>
     </ng-template>
+    <div class = "binder">
+      <div (click)="onSwitchTo('posts')" class="tab {{ type === 'posts' ? 'selected' : '' }}">Posts</div>
+      <div (click)="onSwitchTo('hobbies')" class="tab {{ type === 'hobbies' ? 'selected' : '' }}">Hobbies</div>
+      <div (click)="onSwitchTo('activities')" class="tab {{ type === 'activities' ? 'selected' : '' }}">Activities</div>
+    </div>
+    <app-post-list [postsDTO]="profileDTO.postsDTO" *ngIf="type === 'posts'"></app-post-list>
+    <app-activity-list [activitiesDTO]="this.activitiesDTO" *ngIf="type === 'activities'"></app-activity-list>
   </div>
   <app-navigation-bar></app-navigation-bar>
   <app-user-hobbies-list></app-user-hobbies-list>
 </div>
+
+
 
 <router-outlet></router-outlet>

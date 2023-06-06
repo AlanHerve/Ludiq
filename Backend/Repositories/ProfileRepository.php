@@ -1,14 +1,28 @@
 <?php
 
 require_once('../Database.php');
+require_once('../DTOs/ProfileDTO.php');
+require_once('../Repositories/UserRepository.php');
+require_once('../Repositories/PostRepository.php');
+require_once('../Repositories/HobbyRepository.php');
+require_once('../Repositories/FriendRepository.php');
 
 class ProfileRepository
 {
     private $db;
     private static $instance = null;
 
+    private $userRepository;
+    private $postRepository;
+    private $hobbyRepository;
+    private $friendRepository;
+
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
+        $this->userRepository = UserRepository::getInstance();
+        $this->postRepository = PostRepository::getInstance();
+        $this->hobbyRepository = HobbyRepository::getInstance();
+        $this->friendRepository = FriendRepository::getInstance();
     }
     public static function getInstance() {
         if(!self::$instance) {
@@ -17,39 +31,15 @@ class ProfileRepository
         return self::$instance;
     }
 
-    public function getNumPosts($id_user) {
-        $stmt = $this->db->prepare("
-            SELECT
-                COUNT(*)    AS num_posts
-            FROM
-                regular_post reg
-            WHERE
-                reg.ID_USER = ?
-            ;
-        ");
-        $stmt->bind_param("i", $id_user);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        return $row['num_posts'];
-    }
-    public function getNumHobbies($id_user) {
-        $stmt = $this->db->prepare("
-            SELECT
-                COUNT(*)    AS num_hobbies
-            FROM
-                hobby_post hob
-            INNER JOIN user u
-                ON u.ID_USER = hob.ID_USER
-            WHERE
-                u.ID_USER = ?
-            ;
-        ");
-        $stmt->bind_param("i", $id_user);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        return $row['num_hobbies'];
+    public function getProfileInformation($id_user)
+    {
+        $numPosts = $this->postRepository->getNumPosts($id_user);
+        $numHobbies = $this->hobbyRepository->getNumHobbies($id_user);
+        $userDTO = $this->userRepository->findUserById($id_user);
+        $userPosts = $this->postRepository->getUserPosts($id_user);
+        $numFriends = $this->friendRepository->getNumFriends($id_user);
+
+        return new ProfileDTO($userDTO, $numPosts, $numHobbies, $numFriends, $userPosts);
     }
 
 }

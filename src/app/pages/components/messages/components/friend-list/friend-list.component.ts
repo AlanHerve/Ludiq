@@ -18,15 +18,12 @@ export class FriendListComponent implements OnInit {
     let user = JSON.parse(localStorage.getItem('currentUser')!).id;
     this.friendsService.getAllFriends(user).subscribe({
       next: (response: UserDTO[]) => {
-        console.log('success:', response);
+        console.log('success searching all friends :', response);
         this.friendsDTO = response;
-
       },
       error: (error) => {
-        console.log('error:', error);
+        console.log('error while searching all friends :', error);
       }
     });
-    this.friendsDTO.push(new UserDTO(3, "Eileen", "teg", '', ''));
-    this.friendsDTO.push(new UserDTO(2, "Alan", "alan", '', ''));
   }
 }

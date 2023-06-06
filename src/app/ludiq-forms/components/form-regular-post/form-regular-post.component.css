@@ -1,3 +1,10 @@
+
+
+.selection {
+  float: left;
+  width:40%;
+}
+
 .file-input-label {
   position: relative;
   display: inline-block;

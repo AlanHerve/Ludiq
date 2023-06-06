@@ -43,6 +43,6 @@ export class PostComponent implements OnInit {
   }
 
   onUserClicked(): void {
-    this.router.navigateByUrl('profile/'+this.postDTO.id_user);
+    this.router.navigateByUrl('profile/'+this.postDTO.userDTO.id);
   }
 }

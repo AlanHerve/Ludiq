@@ -4,16 +4,19 @@ header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Origin,Content-Type');
 
-include("../DTOs/PostDTO.php");
-include("../Repositories/PostRepository.php");
-
+require_once "../DTOs/PostDTO.php";
+require_once "../DTOs/UserDTO.php";
+require_once "../DTOs/HobbyDTO.php";
+require_once "../Repositories/PostRepository.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $id = null;
-  $id_user = $_POST['id_user'];
-  $name = $_POST['user_name'];
-  $user_name = $_POST['user_username'];
-  $id_hobby = $_POST['id_hobby'];
+
+  $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
+
+  if($_POST['id_hobby'] != -1) $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
+  else $hobbyDTO = new HobbyDTO(null);
+
   $description = $_POST['description'];
   $modified = null;
   $likes = null;
@@ -26,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $uploadedFiles = saveFiles($images);
 
-  $postDTO = new PostDTO(null, $name, $user_name, $id_user, null, $id_hobby, $description, $uploadedFiles, $modified, $likes, $time);
+  $postDTO = new PostDTO(null, $userDTO, $hobbyDTO, $description, $uploadedFiles);
 
   $postRepository = PostRepository::getInstance();
   echo json_encode($postRepository->newPost($postDTO));
@@ -52,11 +55,11 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
       $mode = $_GET['search'];
       $valid = true;
   }
-  if($valid) {
+  /*if($valid) {
       $postDTO = new PostDTO($id, null, null, $id_user, $id_hobby, null, $description, $images, $modified, $likes, $time);
       $postRepository = PostRepository::getInstance();
       //echo $postRepository->getPosts($mode, $postDTO);
-  }
+  }*/
 }
 
 function saveFiles($images) {

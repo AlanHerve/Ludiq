@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {apiUrl} from "../../services/api-url";
 import {UserDTO} from "../../models/user-dto";
 import {HobbyDTO} from "../../models/hobby-dto";
-import {ActivityDTO} from "../../models/activity-dto";
+import {ActivityDTO} from "../../posts/models/activity-dto";
 import {PostDTO} from "../../posts/models/post-dto";
 
 

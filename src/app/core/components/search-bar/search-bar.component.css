@@ -10,6 +10,8 @@
   left: 350px;
   right: 350px;
   z-index: 200;
+  backdrop-filter: blur(5px);
+
 }
 
 .explorer {

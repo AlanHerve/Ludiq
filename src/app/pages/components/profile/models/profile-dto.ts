@@ -6,6 +6,7 @@ export class ProfileDTO {
   constructor(public userDTO: UserDTO,
               public numPosts: number,
               public numHobbies: number,
+              public numFriends: number,
               public postsDTO: PostDTO[]) {
   }
 }

@@ -1,5 +1,6 @@
 <?php
-
+require_once '../DTOs/UserDTO.php';
+require_once '../DTOs/HobbyDTO.php';
 class PostDTO {
 
   public $id, $user_name, $user_username, $id_user, $id_hobby, $hobby_name
@@ -27,9 +28,6 @@ class PostDTO {
     $this->comments = $comments;
 
   }
-
-
-
 }
 
 ?>

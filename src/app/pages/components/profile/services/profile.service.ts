@@ -12,24 +12,9 @@ export class ProfileService {
   constructor(private http: HttpClient) {
   }
 
-  getNumPosts(id_user: number): Observable<number> {
-    const params = new HttpParams()
-      .set('type', 'getNumPosts')
-      .set('id_user', id_user)
-    return this.http.get<number>(`${apiUrl}/profile.php`, {params});
-  }
-
   getProfileInformation(id_user: number): Observable<ProfileDTO> {
     const params = new HttpParams()
-      .set('id_user', id_user)
+      .set('id_user', id_user).set('type', "getNumPosts");
     return this.http.get<ProfileDTO>(`${apiUrl}/profile.php`, {params});
   }
-
-  getNumHobbies(id_user: number): Observable<number> {
-    const params = new HttpParams()
-      .set('type', 'getNumHobbies')
-      .set('id_user', id_user)
-    return this.http.get<number>(`${apiUrl}/profile.php`, {params});
-  }
-
 }
