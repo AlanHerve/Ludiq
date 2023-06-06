@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivityDTO} from "../../../../models/activity-dto";
+import {ActivityDTO} from "../../../../posts/models/activity-dto";
 
 @Component({
   selector: 'app-form-activity',
@@ -28,13 +28,13 @@ export class FormActivityComponent implements OnInit {
   previousRoute: string = '';
 
   activityDTO: ActivityDTO = {
-    id_activity: null,
+    id_activity: -1,
     id_user: 1,
     id_hobby: 1,
     description:'',
     images: [null,null,null,null],
     time: '',
-    modified: '',
+    modified: 0,
     files: []
   }
   activityForm: FormGroup;

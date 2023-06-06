@@ -15,7 +15,8 @@ import { ActivityListComponent } from './components/activity-list/activity-list.
   ],
     exports: [
         PostComponent,
-        PostListComponent
+        PostListComponent,
+        ActivityListComponent
 
     ],
   imports: [

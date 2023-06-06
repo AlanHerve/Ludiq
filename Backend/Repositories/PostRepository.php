@@ -79,7 +79,7 @@ class PostRepository
             }
             return $postsDTO;
         }
-
+        return [];
     }
 
     private function findPostById($id)
