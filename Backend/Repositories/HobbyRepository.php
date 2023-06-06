@@ -168,16 +168,13 @@ class HobbyRepository
      * @return void
      * fetches the hobby in a user's bio, with their avancement, the frequency at which they partake in the hobby, their availability
      */
-    function fetchHobbiesOfUser($id_user) {
+    function getHobbiesOfUser($id_user) {
 
         $hobbies = [];
 
         $stmt = $this->db->prepare(
             "SELECT
 	                    hobby_post.`ID_HOBBY`
-                        , hobby_post.`EXPERIENCE`
-                        , hobby_post.`AVAILABLE`
-                        , hobby_post.`FREQUENCY`
                         , hobby.`HOBBY_NAME`
                     FROM
 	                    hobby_post
@@ -216,23 +213,21 @@ class HobbyRepository
         $hobbies = [];
 
         $stmt = $this->db->prepare("
-            SELECT
-	            hob.ID_HOBBY
-                ,hob.HOBBY_NAME
-            FROM
-	            hobby hob
-            WHERE
-	            hob.ID_HOBBY NOT IN
-	                (
-        	        SELECT
-	        	        hob_p.ID_HOBBY
+                    SELECT
+	                    hobby.ID_HOBBY
+                        , hobby.HOBBY_NAME
                     FROM
-	                    hobby_post hob_p
+	                    hobby
                     WHERE
-	                    hob_p.ID_USER = ?
-                    )
-                    ;       
-        ");
+	                    hobby.ID_HOBBY NOT IN
+	                                (
+        	                        SELECT
+	        	                        hobby_post.`ID_HOBBY`
+                                    FROM
+	                                    hobby_post
+                                    WHERE
+	                                    hobby_post.`ID_USER` = ?
+    		                        )");
         $stmt->bind_param("i", $id_user);
         $stmt->execute();
 
@@ -240,10 +235,9 @@ class HobbyRepository
 
         if($result){
             if($result->num_rows > 0){
-                while ($row = $result->fetch_assoc()) $hobbies[] = new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], null);
-                return json_encode($hobbies);
-            }
-            else{
+                while ($row = $result->fetch_assoc()) array_push($hobbies , new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], null));
+                $response = $hobbies;
+            }else{
                 $response = array(
                     'success' => true,
                     'id' => $id_user,
@@ -257,23 +251,22 @@ class HobbyRepository
             );
         }
 
-        return json_encode($response);
+        echo json_encode($response);
     }
 
     function newHobbyPost($hobbyPost){
-        $stmt = $this->db->prepare("
-            INSERT INTO
-	            hobby_post (ID_HOBBY, ID_USER, EXPERIENCE, FREQUENCY, AVAILABLE)
-            VALUES
-                (?, ?, ?, ?, ?)
-            ;
-        ");
+        $stmt = $this->db->prepare("INSERT INTO
+	hobby_post
+    (ID_HOBBY, ID_USER, EXPERIENCE, FREQUENCY, AVAILABLE)
+VALUES
+(?, ?, ?, ?, ?)");
         $stmt->bind_param("iissi", $hobbyPost->id_hobby, $hobbyPost->id_user, $hobbyPost->advancement, $hobbyPost->frequency, $hobbyPost->availability);
         $stmt->execute();
 
         if($stmt->affected_rows > 0){
             $response = array(
-                'success' => true
+                'success' => true,
+                'hobbies' => "heya"
             );
         }else{
             $response = array(
@@ -282,7 +275,54 @@ class HobbyRepository
             );
         }
 
-        return json_encode($response);
+
+        echo json_encode($response);
+    }
+
+
+    function getHobbiesFlashcardsOfUser($id_user){
+
+
+            $hobbies = [];
+
+            $stmt = $this->db->prepare(
+                "SELECT
+                        hobby_post.ID_HOBBY_POST
+	                    , hobby_post.`ID_HOBBY`
+                        , hobby_post.EXPERIENCE
+                        , hobby_post.FREQUENCY
+                        , hobby_post.AVAILABLE
+                        , hobby.`HOBBY_NAME`
+                    FROM
+	                    hobby_post
+                        INNER JOIN
+	                        hobby ON hobby.`ID_HOBBY` = hobby_post.`ID_HOBBY`
+                    WHERE
+	                    hobby_post.`ID_USER` = ?");
+
+            $stmt->bind_param("i", $id_user);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+
+            if($result){
+                if($result->num_rows > 0){
+                    while ($row = $result->fetch_assoc()) array_push($hobby_posts , new HobbyPostDTO($id_user,  $row["ID_HOBBY"], $row["ID_HOBBY_POST"],$row["FREQUENCY"], $row["EXPERIENCE"], $row["AVAILABLE"]));
+                    $response = $hobby_posts;
+                }else{
+                    $response = array(
+                        'success' => true,
+                        'message' => 'this user does not have any hobby'
+                    );
+                }
+            }else{
+                $response = array(
+                    'success' => false,
+                    'message' => 'could not access table'
+                );
+            }
+            echo json_encode($response);
+
     }
 
 
