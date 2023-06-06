@@ -17,18 +17,6 @@ export class PostComponent implements OnInit {
 
   constructor(private router: Router, private postService: PostsService) {
   }
-
-  likePost() {
-    this.isLiked = !this.isLiked;
-    this.postService.likePost(this.postDTO.id_regular_post).subscribe(() => {
-      if (this.isLiked) {
-        this.postDTO.likes++;
-      } else {
-        this.postDTO.likes--;
-      }
-    });
-  }
-
   ngOnInit(): void {
   }
 
@@ -39,4 +27,21 @@ export class PostComponent implements OnInit {
   onUserClicked(): void {
     this.router.navigateByUrl('profile/'+this.postDTO.userDTO.id);
   }
+
+  likePost() {
+    this.isLiked = !this.isLiked;
+
+    if (this.isLiked) {
+      this.postService.likePost(this.postDTO.id_regular_post).subscribe(() => {
+        this.postDTO.likes++;
+      });
+    } else {
+      this.postService.unlikePost(this.postDTO.id_regular_post).subscribe(() => {
+        this.postDTO.likes--;
+      });
+    }
+  }
+
+
+
 }
