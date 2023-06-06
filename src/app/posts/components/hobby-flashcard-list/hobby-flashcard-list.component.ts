@@ -12,27 +12,10 @@ import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 export class HobbyFlashcardListComponent {
 
   private id_user: number = 0;
-  public hobby_flashcardsDTOs: HobbyPostDTO[] = [];
+  @Input() hobbyFlashcardsDTO: HobbyPostDTO[] = [];
     constructor(private hobbyService:HobbyService, private activatedRoute: ActivatedRoute) {
       this.activatedRoute.params.subscribe(params => {
         this.id_user = parseInt(params['id']);
       });
-
-      this.hobbyService.getHobbiesFlashcardsOfUser(this.id_user).subscribe({
-
-        next: (response) => {
-          // in case of success
-          for (let i = 0; i < response.length; i++) {
-            this.hobby_flashcardsDTOs.push(response[i]);
-          }
-        },
-        error: (error) => {
-          // in case of failure
-          console.error('Could not get flashcards', error);
-        }
-      });
-
-
-
     }
 }

@@ -1,0 +1,55 @@
+.flashcard {
+  background-color: #7421C2;
+  border-radius: 30px;
+  color: white;
+  padding:40px 10px;
+  text-align: center;
+  transition: 0.2s background ease-in-out;
+}
+
+
+.h2 {
+  margin: 0;
+  font-weight: 200;
+  background: none;
+}
+
+/* Overriding the parent hover of this button in order to disable it */
+.h2:hover {}
+
+.flashcard:hover{
+  background-color: #4c1680;
+}
+
+.flashcard-clicked {
+  background-color: #F2EDF8;
+  border-radius: 30px;
+  color: #000000;
+  padding: 40px 10px 20px;
+  text-align: center;
+}
+
+.flashcard-clicked:hover {
+  background-color: #F2EDF8;
+}
+
+.h2-clicked {
+}
+
+.level {
+  margin:0;
+  background-color: #7CA851;
+}
+.frequency {
+  margin:0;
+  background-color: #307473;
+}
+
+img {
+  width: 40px;
+}
+
+p {
+  margin: 14px;
+}
+

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 
 @Component({
@@ -6,15 +6,17 @@ import {HobbyPostDTO} from "../../../models/hobby-post-dto";
   templateUrl: './hobby-flashcard.component.html',
   styleUrls: ['./hobby-flashcard.component.css']
 })
-export class HobbyFlashcardComponent {
+export class HobbyFlashcardComponent implements OnInit {
 
-  @Input() hobbyPost: HobbyPostDTO = {
-    id_user: 0,
-    id_hobby: 0,
-    advancement: '',
-    frequency: '',
-    availability: 0
-  };
+  @Input() hobbyPost!: HobbyPostDTO;
 
+  protected clicked: boolean = false;
+
+  ngOnInit(): void {
+  }
+
+  onClick(): void {
+    this.clicked = !this.clicked;
+  }
 
 }

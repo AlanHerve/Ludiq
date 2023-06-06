@@ -6,6 +6,8 @@ import {ProfileDTO} from "./models/profile-dto";
 import {ProfileService} from "./services/profile.service";
 import {ActivityDTO} from "../../../posts/models/activity-dto";
 import {FriendService} from "../messages/services/friend.service";
+import {HobbyPostDTO} from "../../../models/hobby-post-dto";
+import {HobbyDTO} from "../../../models/hobby-dto";
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +22,11 @@ export class ProfileComponent {
     new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', []),
     new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', []),
     new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', [])
+  ]
+  hobbiesDTO: HobbyPostDTO[] = [
+    new HobbyPostDTO(1, 2, "test", "test2", 0, "Cooking"),
+    new HobbyPostDTO(1, 2, "test", "test2", 0, "Cooking"),
+    new HobbyPostDTO(1, 2, "test", "test2", 0, "Cooking"),
   ]
   protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
@@ -50,6 +57,20 @@ export class ProfileComponent {
         console.log("Error while finding if the user is friend with another", error)
       }
     });
+
+    /*this.hobbyService.getHobbiesFlashcardsOfUser(this.id_user).subscribe({
+
+      next: (response) => {
+        // in case of success
+        for (let i = 0; i < response.length; i++) {
+          this.hobby_flashcardsDTOs.push(response[i]);
+        }
+      },
+      error: (error) => {
+        // in case of failure
+        console.error('Could not get flashcards', error);
+      }
+    });*/
 
     this.getProfileInformation();
   }

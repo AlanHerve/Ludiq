@@ -1,6 +1,6 @@
 .activities {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Trois colonnes de largeur égale */
+  grid-template-columns: repeat(2, 1fr);
   gap: 40px;
   margin: 30px;
   text-align: center;

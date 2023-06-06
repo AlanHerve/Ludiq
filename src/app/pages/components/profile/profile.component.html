@@ -34,6 +34,7 @@
     </div>
     <app-post-list [postsDTO]="profileDTO.postsDTO" *ngIf="type === 'posts'"></app-post-list>
     <app-activity-list [activitiesDTO]="this.activitiesDTO" *ngIf="type === 'activities'"></app-activity-list>
+    <app-hobby-flashcard-list [hobbyFlashcardsDTO]="this.hobbiesDTO" *ngIf="type === 'hobbies'"></app-hobby-flashcard-list>
   </div>
   <app-navigation-bar></app-navigation-bar>
   <app-user-hobbies-list></app-user-hobbies-list>
