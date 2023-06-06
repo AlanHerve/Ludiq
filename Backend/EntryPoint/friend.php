@@ -9,8 +9,15 @@ include("../DTOs/HobbyPostDTO.php");
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $id_user = $_GET['user'];
-
     $friendRepository = FriendRepository::getInstance();
-    echo $friendRepository->getAllFriends($id_user);
+    if(isset($_GET['user1']) && isset($_GET['user2'])) {
+        $id_user1 = $_GET['user1'];
+        $id_user2 = $_GET['user2'];
+        echo $friendRepository->isFriendWidth($id_user1, $id_user2);
+    }
+
+    if(isset($_GET['user'])) {
+        $id_user = $_GET['user'];
+        echo $friendRepository->getAllFriends($id_user);
+    }
 }

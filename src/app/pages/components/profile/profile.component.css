@@ -3,6 +3,7 @@
   background-color: rgba(255, 255, 255, 0.4);
   position: fixed;
   display: flex;
+  justify-content: space-between;
   top:0;
   width: calc(100% - 700px);
   backdrop-filter: blur(5px);
@@ -10,9 +11,7 @@
 .text {
   font-size: 22px;
   margin-left: 40px;
-}
-.text.right {
-  margin-left: 560px;
+  margin-right: 40px;
 }
 
 .binder {

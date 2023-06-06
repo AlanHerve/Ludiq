@@ -1,7 +1,7 @@
 .activities {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Trois colonnes de largeur égale */
   gap: 40px;
-  justify-content: space-around;
   margin: 30px;
   text-align: center;
 }

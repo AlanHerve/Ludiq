@@ -9,7 +9,7 @@ class UserDTO {
     public $avatar;
     public $token;
 
-    public function __construct($id, $name, $username, $password, $email, $avatar, $token = null) {
+    public function __construct($id, $name, $username, $password = null, $email = null, $avatar = null, $token = null) {
         $this->id = $id;
         $this->name = $name;
         $this->username = $username;

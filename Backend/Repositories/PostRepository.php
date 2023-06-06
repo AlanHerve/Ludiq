@@ -32,9 +32,8 @@ class PostRepository
 
     public function newPost(PostDTO $regularPostDTO)
     {
-        $id_user = $regularPostDTO->id_user;
-        $id_hobby = $regularPostDTO->id_hobby;
-        if ($id_hobby == -1) $id_hobby = null;
+        $id_user = $regularPostDTO->userDTO->id;
+        $id_hobby = $regularPostDTO->hobbyDTO->id;
         $description = $regularPostDTO->description;
         $images = $regularPostDTO->images;
         $stmt = $this->db->prepare("INSERT INTO regular_post (ID_USER, ID_HOBBY, DESCRIPTION, IMAGE1, IMAGE2, IMAGE3, IMAGE4) VALUES (?, ?, ?, ?, ?, ?, ?)");

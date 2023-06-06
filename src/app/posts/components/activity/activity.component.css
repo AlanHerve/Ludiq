@@ -12,6 +12,10 @@ img {
   text-align: left!important;
 }
 
+.date {
+  color: #307473;
+}
+
 .info {
   display: flex;
   justify-content: space-between;
