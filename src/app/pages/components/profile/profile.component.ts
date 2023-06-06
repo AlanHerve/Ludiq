@@ -28,6 +28,8 @@ export class ProfileComponent {
     new HobbyPostDTO(1, 2, "test", "test2", 0, "Cooking"),
     new HobbyPostDTO(1, 2, "test", "test2", 0, "Cooking"),
   ]
+
+  protected favoriteHobby!: HobbyDTO;
   protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
     userDTO: new UserDTO(-1, '', ''),
@@ -46,6 +48,9 @@ export class ProfileComponent {
   }
 
   ngOnInit() {
+
+    this.favoriteHobby = new HobbyDTO(2, 'Cooking', 'assets/images/hobbies/Cooking.jpg');
+
     this.activatedRoute.params.subscribe(params => {
       this.profileDTO.userDTO.id = parseInt(params['id']);
     })

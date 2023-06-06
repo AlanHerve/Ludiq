@@ -21,6 +21,21 @@
   text-align: center;
 }
 
+.top-user-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.favorite-hobby {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin-right: 40px;
+  border: 1px black solid;
+  border-radius: 20px;
+  padding:20px;
+}
+
 .tab {
   cursor: pointer;
   width:33.3%;
@@ -74,4 +89,5 @@
 
 img {
   width:170px;
+  object-fit: contain;
 }
