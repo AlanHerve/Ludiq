@@ -331,7 +331,7 @@ class HobbyRepository
         return $row['num_hobbies'];
     }
 
-    function newHobbyPost($hobbyPost)
+    function newHobbyPost(HobbyPostDTO $hobbyPost)
     {
         $stmt = $this->db->prepare("
             INSERT INTO
@@ -344,8 +344,31 @@ class HobbyRepository
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
+            $hobbyPost->insertIdHobbyPost($stmt->insert_id);
+
+            $stmt = $this->db->prepare("
+            SELECT
+                hob.HOBBY_NAME
+            FROM
+                hobby hob
+            WHERE
+                hob.ID_HOBBY = ?
+            ");
+
+            $stmt->bind_param("i", $hobbyPost->id_hobby);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if($result){
+                if ($result->num_rows == 1){
+                    $row = $result->fetch_assoc();
+                    $hobbyPost->insertHobbyName($row["HOBBY_NAME"]);
+                }
+            }
+
             $response = array(
-                'success' => true
+                'success' => true,
+                'hobby'   => $hobbyPost
             );
         } else {
             $response = array(

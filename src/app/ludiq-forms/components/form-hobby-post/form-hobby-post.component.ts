@@ -99,10 +99,8 @@ export class FormHobbyPostComponent extends Form implements OnInit {
     this.hobbyService.getAvailableHobbiesOfUser(this.hobbyPostDTO.id_user).subscribe({
       next: (response) => {
         // in case of success
-        console.log(response);
         for (let i = 0; i < response.length; i++) {
           this.hobbies.push(response[i]);
-          console.log(response[i]);
         }
         this.hobbyPostDTO.id_hobby = this.hobbies[0].id;
         this.hobbyPostDTO.advancement = this.advancement_options[0];

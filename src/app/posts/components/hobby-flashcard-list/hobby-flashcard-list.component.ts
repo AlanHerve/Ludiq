@@ -17,5 +17,14 @@ export class HobbyFlashcardListComponent {
         this.id_user = parseInt(params['id']);
       });
 
+
+
+
+
+    }
+
+    addElementToArray(hobbyFlashcard: HobbyPostDTO){
+      console.log("adding");
+      this.hobbyFlashcardsDTO.push(hobbyFlashcard);
     }
 }

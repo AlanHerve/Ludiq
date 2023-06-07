@@ -1,4 +1,4 @@
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./api-url";
@@ -16,7 +16,7 @@ export class HobbyService {
 
   newPost!: HobbyPostDTO;
 
-  private messageSource = new BehaviorSubject('a');
+  private messageSource = new Subject<string>();
   currentMessage = this.messageSource.asObservable();
 
   constructor(private http: HttpClient) {}
@@ -52,7 +52,7 @@ export class HobbyService {
     return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
-        console.log(response)
+
         return response;
       })
     );
@@ -78,7 +78,6 @@ export class HobbyService {
 
     return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
-        console.log(response);
         return response;
       })
     );
@@ -88,10 +87,12 @@ export class HobbyService {
     return this.newPost;
   }
 
-  newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
-    return this.http.post<HobbyPostDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+  newHobbyPost(hobbyPostDTO: HobbyPostDTO): Observable<{hobby: HobbyPostDTO}> {
+    return this.http.post<{hobby: HobbyPostDTO}>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
       map(response => {
-        this.newPost = response;
+        this.newPost = response.hobby;
+        console.log(response);
+        this.messageSource.next("a");
         return response;
       })
     );

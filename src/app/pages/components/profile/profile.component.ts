@@ -65,6 +65,11 @@ export class ProfileComponent {
     this.getHobbiesFlashcardsOfUser();
 
     this.getProfileInformation();
+
+    this.hobbyService.currentMessage.subscribe((data)=>{
+      this.hobbyFlashcardsDTOs.push(this.hobbyService.getNewPost());
+    });
+
   }
 
   getProfileInformation(): void {
