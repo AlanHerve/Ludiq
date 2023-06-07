@@ -87,10 +87,14 @@ img {
 
   background-color:#307473;
   border-radius :20px;
+
+  transition: transform 0.2s ease-in-out;
 }
 
-flashcard:hover {
-  box-shadow: black ;
+.flashcard:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 @media only screen and (max-width :1000px) {
