@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 import {apiUrl} from "../../services/api-url";
 import {PostDTO} from "../models/post-dto";
-import {map} from "rxjs/operators";
-import {ActivityDTO} from "../../models/activity-dto";
+import {ActivityDTO} from "../models/activity-dto";
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class ActivityService {
     );
   }
   newActivity(formData: FormData): Observable<any> {
-    return this.http.post<any>(`${apiUrl}/post.php`, formData);
+    return this.http.post<any>(`${apiUrl}/activity.php`, formData);
   }
   getAllActivity(): Observable<ActivityDTO[]> {
     const params = new HttpParams()
