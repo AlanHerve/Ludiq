@@ -1,7 +1,6 @@
 
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {HobbyDTO} from "../../../models/hobby-dto";
-import {RequestDTO} from "../../../models/request-dto";
 import {HobbyService} from "../../../services/hobby.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HobbyPostDTO} from "../../../models/hobby-post-dto";

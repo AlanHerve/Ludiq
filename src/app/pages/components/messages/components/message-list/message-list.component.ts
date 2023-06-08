@@ -1,64 +1,39 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {MessageDTO} from "../../models/message-dto";
-import {MessageService} from "../../services/message.service";
-import {Subject, takeUntil} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
-import {map} from "rxjs/operators";
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { MessageDTO } from "../../models/message-dto";
+import { MessageService } from "../../services/message.service";
 
 @Component({
   selector: 'app-message-list',
   templateUrl: './message-list.component.html',
   styleUrls: ['./message-list.component.css']
 })
-export class MessageListComponent implements OnInit, OnDestroy {
+export class MessageListComponent implements OnInit, OnChanges {
   messagesDTO: MessageDTO[] = [];
   @Input() id_friend!: number;
-  private unsubscribe$: Subject<void> = new Subject<void>();
 
-  constructor(private messageService: MessageService,
-              private activatedRoute: ActivatedRoute) {
+  constructor(private messageService: MessageService) {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe(() => {
-        this.refreshMessageList();
-      });
-
-    // We call this function one time in order to display the messages the first time we navigate to this page
-    this.refreshMessageList();
-
-    // We add an Observable in order to observe if there are new messages, to display them without refreshing the window
-    this.messageService
-      .getMessageListUpdates()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => {
-        this.refreshMessageList();
-      });
+    this.loadMessages();
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['id_friend']) {
+      this.loadMessages();
+    }
   }
 
-  refreshMessageList(): void {
+  loadMessages(): void {
     let user = JSON.parse(localStorage.getItem('currentUser')!).id;
-    this.messageService
-      .getMessagesBetweenUsers(user, this.id_friend)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (response: MessageDTO[]) => {
-          console.log('success:', response);
-          this.messagesDTO = response;
-        },
-        error: (error) => {
-          console.log('error:', error);
-        }
-      });
+    this.messageService.getMessagesBetweenUsers(user, this.id_friend).subscribe({
+      next: (response: MessageDTO[]) => {
+        console.log('success:', response);
+        this.messagesDTO = response;
+      },
+      error: (error) => {
+        console.log('error:', error);
+      }
+    });
   }
-
 }

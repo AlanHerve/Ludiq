@@ -12,9 +12,8 @@ export class MessagesComponent implements OnInit {
   friend!: UserDTO;
 
   constructor(private userService: UserService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute) { }
 
-  }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {

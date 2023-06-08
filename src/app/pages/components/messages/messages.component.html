@@ -1,14 +1,19 @@
-<div class="wrapper">
+<div class="wrapper" >
   <div class="content">
-    <div class = "top-bar">
-      <img src="assets/images/icons/user.png">
-      <div class = "user">
-        <p class = "name">{{friend.name}}</p>
-        <p class = "username">{{friend.username}}</p>
+    <div *ngIf = "friend else elseBlock">
+      <div class = "top-bar">
+        <img src="assets/images/icons/user.png">
+        <div class = "user">
+          <p class = "name">{{friend.name}}</p>
+          <p class = "username">{{friend.username}}</p>
+        </div>
       </div>
+      <app-message-bar [id_friend]="friend.id"></app-message-bar>
+      <app-message-list [id_friend]="friend.id"></app-message-list>
     </div>
-    <app-message-list [id_friend]="friend.id"></app-message-list>
-    <app-message-bar [id_friend]="friend.id"></app-message-bar>
+    <ng-template #elseBlock>
+      <app-suggestion-conversation-list></app-suggestion-conversation-list>
+    </ng-template>
   </div>
   <app-navigation-bar></app-navigation-bar>
   <app-friend-list></app-friend-list>

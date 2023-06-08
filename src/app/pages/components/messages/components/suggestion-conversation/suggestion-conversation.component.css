@@ -1,0 +1,11 @@
+.content {
+  color:gray;
+}
+
+.conversation {
+  border: 1px black solid;
+  margin: 20px;
+  border-radius: 20px;
+  display: flex;
+  gap: 30px;
+}

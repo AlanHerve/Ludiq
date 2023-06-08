@@ -1,0 +1,4 @@
+<div class ="conversation">
+  <app-friend [friendDTO]="conversationDTO.userDTO"></app-friend>
+  <span class = "content" *ngIf="conversationDTO">{{conversationDTO.messagesDTO[conversationDTO.messagesDTO.length - 1].content  }}</span>
+</div>

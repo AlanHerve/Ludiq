@@ -27,9 +27,9 @@ export class ProfileComponent {
     new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', [])
   ]
 
-  hobbyFlashcardsDTOs: HobbyPostDTO[] = []
 
   protected favoriteHobby!: HobbyDTO;
+  hobbyFlashcardsDTOs: HobbyPostDTO[] = []
 
   protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
