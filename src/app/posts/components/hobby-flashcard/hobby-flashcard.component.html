@@ -8,5 +8,6 @@
     <button class = "level">{{this.hobbyPost.advancement}}</button>
     <p>Frequency</p>
     <button class = "frequency">{{this.hobbyPost.frequency}}</button>
+    <a *ngIf="isOwner()" class="cross" (click)="onClose()">&times;</a>
   </div>
 </div>

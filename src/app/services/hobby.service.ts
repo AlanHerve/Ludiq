@@ -19,6 +19,8 @@ export class HobbyService {
   private messageSource = new Subject<string>();
   currentMessage = this.messageSource.asObservable();
 
+  private needDelete = new Subject<number>();
+  currentDeleteState = this.needDelete.asObservable();
   constructor(private http: HttpClient) {}
 
   getAllHobbies(RequestDTO: RequestDTO): Observable<HobbyDTO[]> {
@@ -85,6 +87,18 @@ export class HobbyService {
 
   getNewPost(){
     return this.newPost;
+  }
+
+  destroyHobbyPost(id_hobby_post: number){
+    const params = new HttpParams()
+      .set('function_to_call', "destroyHobbyPost")
+      .set('id_hobby_post', id_hobby_post);
+    return this.http.get<String>(`${apiUrl}/hobbies.php`, {params}).pipe(
+      map(response => {
+        this.needDelete.next(id_hobby_post);
+        return response;
+      })
+    );
   }
 
   newHobbyPost(hobbyPostDTO: HobbyPostDTO): Observable<{hobby: HobbyPostDTO}> {

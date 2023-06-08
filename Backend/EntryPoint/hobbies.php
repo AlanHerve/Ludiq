@@ -49,7 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case "getHobbiesFlashcardsOfUser":
             echo json_encode($hobbyRepository->getHobbiesFlashcardsOfUser($id_user));
             break;
+        case "destroyHobbyPost":
+            $hobbyRepository->destroyHobbyPost($_GET["id_hobby_post"]);
+            break;
     }
+
+}elseif ($_SERVER["REQUEST_METHOD"] === "DELETE"){
 
 }
 

@@ -53,3 +53,16 @@ p {
   margin: 14px;
 }
 
+.cross {
+  top: 15px;
+  right: 25px;
+  font-family: Arial, sans-serif;
+  color: #9B9B9B;
+  font-size: 50px;
+  cursor: pointer;
+  transition: color 0.2s ease-out;
+}
+
+.cross:hover {
+  color: #333333;
+}

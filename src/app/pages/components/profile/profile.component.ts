@@ -76,6 +76,22 @@ export class ProfileComponent {
       this.hobbyFlashcardsDTOs.push(this.hobbyService.getNewPost());
     });
 
+    this.hobbyService.currentDeleteState.subscribe((data) => {
+      console.log("returned Data :" + data);
+      this.hobbyFlashcardsDTOs.splice(this.findHobbyDTOWithData(data), 1);
+    });
+
+  }
+
+  findHobbyDTOWithData(id: number){
+    const sizeOfArray: number = this.hobbyFlashcardsDTOs.length;
+
+    for (let i = 0; i < sizeOfArray; i++) {
+      if(this.hobbyFlashcardsDTOs[i].id_hobby_post == id) return i;
+    }
+
+    return -1;
+
   }
 
   getProfileInformation(): void {

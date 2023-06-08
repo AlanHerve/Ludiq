@@ -402,5 +402,21 @@ class HobbyRepository
         return null;
     }
 
+    public function destroyHobbyPost(mixed $id_hobby_post)
+    {
+        $stmt = $this->db->prepare("DELETE FROM hobby_post WHERE ID_HOBBY_POST = ?");
+        $stmt->bind_param("i", $id_hobby_post);
+        $stmt->execute();
+
+        if($stmt->affected_rows === 1){
+            $response = "Success";
+        }else{
+            $response = "Failure";
+        }
+
+        echo json_encode($response);
+
+    }
+
 
 }
