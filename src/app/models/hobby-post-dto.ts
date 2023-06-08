@@ -1,5 +1,6 @@
 export class HobbyPostDTO {
-  constructor(public id_user: number,
+  constructor(public id_hobby_post:number,
+              public id_user: number,
               public id_hobby: number,
               public frequency: string,
               public advancement: string,

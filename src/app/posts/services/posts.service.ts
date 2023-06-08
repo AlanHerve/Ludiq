@@ -26,7 +26,7 @@ export class PostsService {
   }
 
   newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
-    return this.http.post<HobbyDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+    return this.http.post<HobbyPostDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
       map(response => {
         return response;
       })
@@ -51,10 +51,8 @@ export class PostsService {
   }
 
   unlikePost(postId: number): Observable<any> {
-    const params = new HttpParams()
-      .set('function_to_call', "unlike")
-      .set('id_post', postId);
-    return this.http.post<any>(`${apiUrl}/post.php`, {params}).pipe(
+    const options = {'type': 'unlike', 'id_post': postId}
+    return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
       map(response => {
         return response;
       })

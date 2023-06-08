@@ -1,4 +1,4 @@
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./api-url";
@@ -13,6 +13,11 @@ import {HobbyPostDTO} from "../models/hobby-post-dto";
   providedIn: 'root'
 })
 export class HobbyService {
+
+  newPost!: HobbyPostDTO;
+
+  private messageSource = new BehaviorSubject('a');
+  currentMessage = this.messageSource.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -43,19 +48,22 @@ export class HobbyService {
     const params = new HttpParams()
       .set('function_to_call', "getHobbiesOfUser")
       .set('id_user', id_user);
+
     return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
+        console.log(response)
         return response;
       })
     );
   }
 
-  getHobbiesFlashcardsOfUser(id_user: number): Observable<HobbyPostDTO[]>{
+  getHobbiesFlashcardsOfUser(id_user: number): Observable<{hobbies: HobbyPostDTO[]}>{
     const params = new HttpParams()
       .set('function_to_call', "getHobbiesFlashcardsOfUser")
       .set('id_user', id_user);
-    return this.http.get<HobbyPostDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
+
+    return this.http.get<{hobbies: HobbyPostDTO[]}>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
         return response;
@@ -76,18 +84,14 @@ export class HobbyService {
     );
   }
 
+  getNewPost(){
+    return this.newPost;
+  }
 
-  newHobbyPost(hobbyPostDTO: HobbyPostDTO): Observable<any> {
-    let RequestDTO: RequestDTO = {
-      function_to_call: "newHobbyPost",
-      id_user: 2,
-      HobbyPostDTO: hobbyPostDTO
-    };
-
-    console.log("hey");
-    return this.http.post<HobbyRequestDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
-
+  newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
+    return this.http.post<HobbyPostDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
       map(response => {
+        this.newPost = response;
         return response;
       })
     );

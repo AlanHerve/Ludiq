@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {UserDTO} from "../../../../../models/user-dto";
-import {PostDTO} from "../../../../../posts/models/post-dto";
 import {FriendService} from "../../services/friend.service";
 
 @Component({

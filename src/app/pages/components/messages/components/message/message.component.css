@@ -4,7 +4,7 @@ div.message-container {
   align-items: flex-start;
 }
 
-p {
+.message {
   padding:20px;
   background-color: #F5F2F5;
   color: black;
@@ -14,6 +14,10 @@ p {
 
   overflow-wrap: break-word;
   max-width: 600px;
+}
+
+.date {
+
 }
 
 .content {

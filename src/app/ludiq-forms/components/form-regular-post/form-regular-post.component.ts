@@ -113,6 +113,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
 
   newRegularPost() {
     const formData = new FormData();
+    formData.append('new_post', '1');
     // @ts-ignore
     formData.append('id_hobby', this.postDTO.hobbyDTO.id);
     // @ts-ignore

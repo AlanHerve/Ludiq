@@ -53,13 +53,13 @@
       <div (click)="onSwitchTo('hobbies')" class="tab {{ type === 'hobbies' ? 'selected' : '' }}">Hobbies</div>
       <div (click)="onSwitchTo('activities')" class="tab {{ type === 'activities' ? 'selected' : '' }}">Activities</div>
     </div>
-    <app-post-list *ngIf="type === 'posts'" [postsDTO]="profileDTO.postsDTO"></app-post-list>
-    <app-activity-list *ngIf="type === 'activities'" [activitiesDTO]="this.activitiesDTO"></app-activity-list>
-    <app-hobby-flashcard-list *ngIf="type === 'hobbies'"
-                              [hobbyFlashcardsDTO]="this.hobbiesDTO"></app-hobby-flashcard-list>
+    <app-post-list [postsDTO]="profileDTO.postsDTO" *ngIf="type === 'posts'"></app-post-list>
+    <app-activity-list [activitiesDTO]="this.activitiesDTO" *ngIf="type === 'activities'"></app-activity-list>
+
+    <app-hobby-flashcard-list [hobbyFlashcardsDTO]="this.hobbyFlashcardsDTOs" *ngIf="type === 'hobbies'"></app-hobby-flashcard-list>
   </div>
   <app-navigation-bar></app-navigation-bar>
-  <app-user-hobbies-list></app-user-hobbies-list>
+  <app-user-hobbies-list [id]="getID()"></app-user-hobbies-list>
 </div>
 
 

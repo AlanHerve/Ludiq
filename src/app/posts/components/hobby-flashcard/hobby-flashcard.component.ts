@@ -8,6 +8,7 @@ import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 })
 export class HobbyFlashcardComponent implements OnInit {
 
+
   @Input() hobbyPost!: HobbyPostDTO;
 
   protected clicked: boolean = false;
