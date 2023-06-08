@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2023 at 04:56 PM
+-- Generation Time: Jun 08, 2023 at 10:26 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -36,24 +36,25 @@ CREATE TABLE `activity` (
   `DATE_POST` timestamp NULL DEFAULT current_timestamp(),
   `DATE_ACTIVITY` date DEFAULT NULL,
   `CURRENT_REGISTERED` int(4) DEFAULT 1,
-  `MAX_REGISTRATIONS` int(4) NOT NULL DEFAULT 10
+  `MAX_REGISTRATIONS` int(4) NOT NULL DEFAULT 10,
+  `IMAGE` varchar(60) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `activity`
 --
 
-INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVANCEMENT`, `DESCRIPTION`, `DATE_POST`, `DATE_ACTIVITY`, `CURRENT_REGISTERED`, `MAX_REGISTRATIONS`) VALUES
-(1, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 1, 10),
-(2, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 1, 10),
-(3, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10),
-(4, 2, 3, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10),
-(5, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10),
-(6, 3, 1, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
-(7, 3, 7, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
-(8, 3, 9, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
-(9, 3, 8, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
-(10, 3, 1, 'Beginner', NULL, '2023-05-27 14:29:09', NULL, 1, 10);
+INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVANCEMENT`, `DESCRIPTION`, `DATE_POST`, `DATE_ACTIVITY`, `CURRENT_REGISTERED`, `MAX_REGISTRATIONS`, `IMAGE`) VALUES
+(1, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 1, 10, NULL),
+(2, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 1, 10, NULL),
+(3, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL),
+(4, 2, 3, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL),
+(5, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL),
+(6, 3, 1, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL),
+(7, 3, 7, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL),
+(8, 3, 9, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL),
+(9, 3, 8, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL),
+(10, 3, 1, 'Beginner', NULL, '2023-05-27 14:29:09', NULL, 1, 10, NULL);
 
 -- --------------------------------------------------------
 
@@ -91,7 +92,7 @@ CREATE TABLE `comment` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `friend-list`
+-- Table structure for table `friends`
 --
 
 CREATE TABLE `friends` (
@@ -100,7 +101,7 @@ CREATE TABLE `friends` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `friend-list`
+-- Dumping data for table `friends`
 --
 
 INSERT INTO `friends` (`ID_USER`, `ID_USER_2`) VALUES
@@ -165,11 +166,18 @@ CREATE TABLE `hobby_post` (
 
 INSERT INTO `hobby_post` (`ID_HOBBY_POST`, `ID_HOBBY`, `ID_USER`, `EXPERIENCE`, `FREQUENCY`, `AVAILABLE`) VALUES
 (1, 1, 2, 'Expert', 'Daily', 1),
-(2, 1, 3, 'Beginner', '2-3/week', 0),
+(2, 1, 3, 'Advanced', '2-3/week', 0),
 (3, 1, 4, 'Advanced', 'Weekly', 1),
 (4, 9, 4, 'Expert', 'Monthly', 1),
 (5, 10, 2, 'Intermediate', 'Daily', 1),
-(6, 16, 2, 'Expert', 'Daily', 1);
+(6, 16, 2, 'Expert', '2-3/week', 0),
+(7, 5, 2, 'Advanced', 'Monthly', 0),
+(8, 2, 2, 'Beginner', 'Daily', 0),
+(21, 3, 2, 'Beginner', 'Daily', 1),
+(22, 4, 2, 'Beginner', 'Daily', 1),
+(23, 6, 2, 'Beginner', 'Daily', 1),
+(24, 7, 2, 'Expert', 'Daily', 1),
+(25, 8, 2, 'Beginner', 'Daily', 1);
 
 -- --------------------------------------------------------
 
@@ -349,7 +357,7 @@ ALTER TABLE `hobby`
 -- AUTO_INCREMENT for table `hobby_post`
 --
 ALTER TABLE `hobby_post`
-  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `message`
