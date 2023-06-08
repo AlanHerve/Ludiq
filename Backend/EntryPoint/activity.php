@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $images = $_FILES['images'];
   $uploadedFiles = saveFiles($images);
 
-  $activityDTO = new activityDTO(null, null, $hobbyDTO, null, $description, null, $time, null, null)
+  $activityDTO = new activityDTO(null, null, $hobbyDTO, null, $description, null, $time, null, null);
   $activityRepository = ActivityRepository::getInstance();
   echo json_encode($activityRepository->newActivity($activityDTO));
   }

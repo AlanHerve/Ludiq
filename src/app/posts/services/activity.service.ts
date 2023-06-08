@@ -3,7 +3,6 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {apiUrl} from "../../services/api-url";
-import {PostDTO} from "../models/post-dto";
 import {ActivityDTO} from "../models/activity-dto";
 
 

@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivityDTO} from "../../../../posts/models/activity-dto";
+import {ActivityService} from "../../../../posts/services/activity.service";
 
 @Component({
   selector: 'app-form-activity',
@@ -40,7 +41,10 @@ export class FormActivityComponent implements OnInit {
   }
   activityForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private location: Location) {
+  constructor(private formBuilder: FormBuilder,
+              private activityService:ActivityService,
+              private router: Router,
+              private location: Location) {
     this.activityForm = this.formBuilder.group({
       activityControl:new FormControl(),
       number: [null, [Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(1)]],
@@ -117,7 +121,7 @@ export class FormActivityComponent implements OnInit {
       formData.append('images[]', fileName);
     }
 
-    /* this.postsService.newPost(formData).subscribe({
+    this.activityService.newActivity(formData).subscribe({
        next: (response) => {
          // Traitement de la réponse du serveur en cas de succès
          console.log('Post avec succès', response);
@@ -128,5 +132,5 @@ export class FormActivityComponent implements OnInit {
          console.error('Erreur post : ', error);
        }
      });
-   }*/
-}}
+   }
+}
