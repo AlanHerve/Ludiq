@@ -26,7 +26,11 @@ export class ProfileComponent {
     new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', []),
     new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', [])
   ]
+
   hobbyFlashcardsDTOs: HobbyPostDTO[] = []
+
+  protected favoriteHobby!: HobbyDTO;
+
   protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
     userDTO: new UserDTO(-1, '', ''),
@@ -48,7 +52,9 @@ export class ProfileComponent {
 
   ngOnInit() {
 
-    //this.communicationService.currentMessage.subscribe(message => this.hobbyFlashcardsDTOs.push(this.hobbyService.getNewPost()));
+
+    this.favoriteHobby = new HobbyDTO(2, 'Cooking', 'assets/images/hobbies/Cooking.jpg');
+
 
     this.activatedRoute.params.subscribe(params => {
       this.profileDTO.userDTO.id = parseInt(params['id']);
