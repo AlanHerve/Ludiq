@@ -3,6 +3,7 @@ import  {CommonModule} from "@angular/common";
 import {OrganizationComponent} from "./organization.component";
 import {OrganizationRoutingModule} from "./organization-routing.module";
 import {CoreModule} from "../../../core/core.module";
+import {PostsModule} from "../../../posts/posts.module";
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import {CoreModule} from "../../../core/core.module";
     OrganizationRoutingModule,
     CommonModule,
     CoreModule,
+    PostsModule,
   ],
   exports: [
     OrganizationComponent,

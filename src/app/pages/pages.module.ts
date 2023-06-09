@@ -13,8 +13,7 @@ import {MessagesModule} from "./components/messages/messages.module";
 
 @NgModule({
   declarations: [
-    NotificationsComponent,
-    OrganizationComponent
+    NotificationsComponent
   ],
   exports: [
   ],
