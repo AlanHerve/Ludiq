@@ -37,12 +37,12 @@ export class FormRegularPostComponent extends Form implements OnInit {
     id: -1,
     userDTO: new UserDTO(-1, '', ''),
     hobbyDTO: new HobbyDTO(-1, '', ''),
-    images: [null, null, null, null],
+    images_str: [null, null, null, null],
     likes: 0,
     description: '',
     time: '',
     modified: 0,
-    files: []
+    images: [null, null, null, null]
   }
 
   ngOnInit() {
@@ -68,7 +68,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     const reader: FileReader = new FileReader();
 
     reader.onload = () => {
-      this.postDTO.images[this.index] = file.name;
+      this.postDTO.images[this.index] = file;
       if (this.index < this.postDTO.images.length) {
         const labelElement = document.querySelectorAll('.file-input-label')[this.index];
         labelElement?.classList.add('selected');
@@ -80,7 +80,8 @@ export class FormRegularPostComponent extends Form implements OnInit {
   }
 
   onRemoveImage(image: string) {
-    const index = this.postDTO.images.findIndex(img => img === image);
+    // @ts-ignore
+    const index = this.postDTO.images.findIndex(img => img?.name === image);
     if (index !== -1) {
       this.postDTO.images[index] = null;
       this.index--;
@@ -113,7 +114,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
 
   newRegularPost() {
     const formData = new FormData();
-    formData.append('new_post', '1');
+    formData.append('new_post','1');
     // @ts-ignore
     formData.append('id_hobby', this.postDTO.hobbyDTO.id);
     // @ts-ignore
@@ -124,18 +125,18 @@ export class FormRegularPostComponent extends Form implements OnInit {
     for (let i = 0; i < this.postDTO.images.length; i++) {
       const file = this.postDTO.images[i];
       // @ts-ignore
-      if(file != null)  formData.append('images[]', file, file.name);
+      if(file != null)  formData.append('images[]', file);
     }
 
     this.postsService.newPost(formData).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
-        console.log('Post avec succès', response);
+        console.log('Posted with success! ', response);
         this.onClose();
       },
       error: (error) => {
         // Gestion des erreurs en cas d'échec
-        console.error('Erreur post : ', error);
+        console.error('Error while posting post : ', error);
       }
     });
   }

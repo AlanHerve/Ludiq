@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivityDTO} from "../../../../posts/models/activity-dto";
+import {ActivityService} from "../../../../posts/services/activity.service";
 
 @Component({
   selector: 'app-form-activity',
@@ -33,14 +34,17 @@ export class FormActivityComponent implements OnInit {
     id_user: 1,
     id_hobby: 1,
     description:'',
-    images: [null,null,null,null],
+    images: [null],
     time: '',
     modified: 0,
     files: []
   }
   activityForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private location: Location) {
+  constructor(private formBuilder: FormBuilder,
+              private activityService:ActivityService,
+              private router: Router,
+              private location: Location) {
     this.activityForm = this.formBuilder.group({
       activityControl:new FormControl(),
       number: [null, [Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(1)]],
@@ -108,25 +112,25 @@ export class FormActivityComponent implements OnInit {
     // @ts-ignore
     formData.append('id_hobby', this.activityDTO.id_hobby.toString());
     // @ts-ignore
-    formData.append('id_activity',this.activityDTO.id_activity.toString());
-    formData.append('time',this.activityDTO.time.toString());
+    formData.append('id_activity', this.activityDTO.id_activity.toString());
+    formData.append('time', this.activityDTO.time.toString());
     formData.append('description', this.activityDTO.description);
-    for (let i = 0; i < this.activityDTO.images.length; i++) {
-      const file = this.activityDTO.images[i];
-      // @ts-ignore
-      if (file != null) formData.append('images[]', file, file.name);
+
+    const fileName = this.activityDTO.images[0]; // Assuming it's a string representing the file name
+    if (fileName != null) {
+      formData.append('images[]', fileName);
     }
-  }
-   /* this.postsService.newPost(formData).subscribe({
-      next: (response) => {
-        // Traitement de la réponse du serveur en cas de succès
-        console.log('Post avec succès', response);
-        this.onClose();
-      },
-      error: (error) => {
-        // Gestion des erreurs en cas d'échec
-        console.error('Erreur post : ', error);
-      }
-    });
-  }*/
+
+    this.activityService.newActivity(formData).subscribe({
+       next: (response) => {
+         // Traitement de la réponse du serveur en cas de succès
+         console.log('Post avec succès', response);
+         this.onClose();
+       },
+       error: (error) => {
+         // Gestion des erreurs en cas d'échec
+         console.error('Erreur post : ', error);
+       }
+     });
+   }
 }

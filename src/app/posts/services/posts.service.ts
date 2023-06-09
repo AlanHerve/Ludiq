@@ -33,9 +33,9 @@ export class PostsService {
     );
   }
 
-  getImage(imageName: string): Observable<Blob> {
+  getImage(image: string): Observable<Blob> {
     const options = { responseType: 'arraybuffer' as 'json' };
-    const params = new HttpParams().set('imageName', imageName);
+    const params = new HttpParams().set('image_name', image);
     return this.http.get<Blob>(`${apiUrl}/images.php`, { params, ...options }).pipe(
       map(response => new Blob([response], { type: 'image/jpeg' }))
     );

@@ -1,4 +1,5 @@
-<div class ="conversation">
+<div class ="conversation" (click) = "onConversationClicked()">
   <app-friend [friendDTO]="conversationDTO.userDTO"></app-friend>
-  <span class = "content" *ngIf="conversationDTO">{{conversationDTO.messagesDTO[conversationDTO.messagesDTO.length - 1].content  }}</span>
+  <span class = "content" *ngIf="conversationDTO">{{ this.croppedContent  }}</span>
+  <span class = "date" *ngIf="conversationDTO">{{conversationDTO.messagesDTO[conversationDTO.messagesDTO.length - 1].time | date:'dd/MM HH:mm' }}</span>
 </div>

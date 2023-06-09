@@ -1,4 +1,4 @@
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./api-url";
@@ -16,9 +16,11 @@ export class HobbyService {
 
   newPost!: HobbyPostDTO;
 
-  private messageSource = new BehaviorSubject('a');
+  private messageSource = new Subject<string>();
   currentMessage = this.messageSource.asObservable();
 
+  private needDelete = new Subject<number>();
+  currentDeleteState = this.needDelete.asObservable();
   constructor(private http: HttpClient) {}
 
   getAllHobbies(RequestDTO: RequestDTO): Observable<HobbyDTO[]> {
@@ -52,7 +54,7 @@ export class HobbyService {
     return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
-        console.log(response)
+
         return response;
       })
     );
@@ -78,7 +80,6 @@ export class HobbyService {
 
     return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
-        console.log(response);
         return response;
       })
     );
@@ -88,10 +89,24 @@ export class HobbyService {
     return this.newPost;
   }
 
-  newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
-    return this.http.post<HobbyPostDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+  destroyHobbyPost(id_hobby_post: number){
+    const params = new HttpParams()
+      .set('function_to_call', "destroyHobbyPost")
+      .set('id_hobby_post', id_hobby_post);
+    return this.http.get<String>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
-        this.newPost = response;
+        this.needDelete.next(id_hobby_post);
+        return response;
+      })
+    );
+  }
+
+  newHobbyPost(hobbyPostDTO: HobbyPostDTO): Observable<{hobby: HobbyPostDTO}> {
+    return this.http.post<{hobby: HobbyPostDTO}>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+      map(response => {
+        this.newPost = response.hobby;
+        console.log(response);
+        this.messageSource.next("a");
         return response;
       })
     );

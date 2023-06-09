@@ -27,8 +27,10 @@ export class ProfileComponent {
     new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', [])
   ]
 
+
   protected favoriteHobby!: HobbyDTO;
   hobbyFlashcardsDTOs: HobbyPostDTO[] = []
+
   protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
     userDTO: new UserDTO(-1, '', ''),
@@ -50,6 +52,7 @@ export class ProfileComponent {
 
   ngOnInit() {
 
+
     this.favoriteHobby = new HobbyDTO(2, 'Cooking', 'assets/images/hobbies/Cooking.jpg');
 
 
@@ -68,6 +71,27 @@ export class ProfileComponent {
     this.getHobbiesFlashcardsOfUser();
 
     this.getProfileInformation();
+
+    this.hobbyService.currentMessage.subscribe((data)=>{
+      this.hobbyFlashcardsDTOs.push(this.hobbyService.getNewPost());
+    });
+
+    this.hobbyService.currentDeleteState.subscribe((data) => {
+      console.log("returned Data :" + data);
+      this.hobbyFlashcardsDTOs.splice(this.findHobbyDTOWithData(data), 1);
+    });
+
+  }
+
+  findHobbyDTOWithData(id: number){
+    const sizeOfArray: number = this.hobbyFlashcardsDTOs.length;
+
+    for (let i = 0; i < sizeOfArray; i++) {
+      if(this.hobbyFlashcardsDTOs[i].id_hobby_post == id) return i;
+    }
+
+    return -1;
+
   }
 
   getProfileInformation(): void {

@@ -40,9 +40,7 @@ class ProfileRepository
         $numFriends = $this->friendRepository->getNumFriends($id_user);
         $hobbyPostsDTO = $this->postRepository->getHobbiesFlashcardsOfUser($id_user);
 
-
-
-        return new ProfileDTO($userDTO, $numPosts, $numHobbies, $numFriends, $userPosts, $hobbyPostsDTO);
+        return new ProfileDTO($userDTO, $numPosts, $numFriends, $numHobbies, $userPosts, $hobbyPostsDTO);
 
     }
 

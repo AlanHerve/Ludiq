@@ -5,14 +5,16 @@
   float: left;
   margin: 5px 5px 5px 20px;
 }
+/*
 .background-form{
-  height: 400px; /* Définissez la hauteur souhaitée pour votre formulaire */
-  overflow-y: auto; /* Ajoute une barre de défilement verticale lorsque né*/
-}
+  height: 400px;
+  overflow-y: auto;
+}*/
 
 form {
   position: absolute!important;
 }
+
 .file-input-label span {
   display: inline-block;
   padding: 6px 12px;
@@ -71,7 +73,7 @@ textarea {
   overflow-wrap: break-word;
   resize: none;
   height: 70px !important;
-  width:-webkit-fill-available;
+  /*width:-webkit-fill-available;*/
   margin: 10px 20px;
 }
 

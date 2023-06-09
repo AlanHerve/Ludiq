@@ -41,7 +41,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
   if(isset($_GET['type'])) {
     $postRepository = PostRepository::getInstance();
     if($_GET['type'] === 'home')
-      echo $postRepository->getAllPosts();
+      echo json_encode($postRepository->getAllPosts());
   }
   elseif (isset($_GET['user_page']) && isset($_GET['id_user'])){
     $id_user = $_GET['id_user'];

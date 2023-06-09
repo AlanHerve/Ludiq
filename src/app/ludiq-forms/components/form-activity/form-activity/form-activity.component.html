@@ -1,14 +1,14 @@
 <div class="background-form">
-
-  <form [@fadeIn]="true" >
+  <form [@fadeIn]="true" (ngSubmit)="newActivityPost()" >
     <h1>New activity</h1>
 
     <span (click)="onClose()" class="cross">&times;</span>
+
     <textarea [(ngModel)]="activityDTO.description" name="description" placeholder="Description of the activity"></textarea>
     <div class="images">
-      <label class="file-input-label" [class.disabled]="this.activityDTO.images[3] != null">
+      <label class="file-input-label" [class.disabled]="this.activityDTO.images[0] != null">
         <span class="file-input-text">Select an image</span>
-        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event)" [disabled]="activityDTO.images[3] != null">
+        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event)" [disabled]="activityDTO.images[0] != null">
       </label>
     </div>
     <div class="hobby-container" *ngIf="this.activityDTO.images[0] != null">
@@ -20,28 +20,28 @@
 <br><br>
     <div class="date">
       <p>Date of the activity</p>
-      <input type="date" name="date" [(ngModel)]="activityDTO.time">
+      <input type="date" name="date" id='time' [(ngModel)]="activityDTO.time">
     </div>
 
 
     <p>Choice of the related hobby</p>
-    <div class="tags-container">
-      <label class="tag">
-        <input type="radio" name="hobby">
-        Hobby 1
-      </label>
-      <label class="tag">
-        <input type="radio" name="hobby">
-        Hobby 2
-      </label>
-      <label class="tag">
-        <input type="radio" name="hobby">
-        Hobby 3
-      </label>
-    </div>
+    <select name="hobby" id="hobby">
+      <option value="books">Hobby1</option>
+      <option value="books">Hobby2</option>
+      <!-- parseInt(JSON.parse(localStorage.getItem('currentUser')!).id)
+      faire requete pour aller chercher tous les hobbys-->
+    </select>
+
+    <p>Choice of the related level</p>
+    <select name="level" id="level">
+      <option value="books">Débutant</option>
+      <option value="books">Intermédiarie</option>
+      <option value="books">Master</option>
+      <!--faire requete pour aller chercher tous les lv-->
+    </select>
 
     <div class="number" [formGroup]="activityForm">
-      <input type="number" name="number" min="2" max="200" formControlName="number" placeholder="Number of participants"
+      <input type="number" id='number' name="number" min="2" max="200" formControlName="number" placeholder="Number of participants"
              [ngClass]="{'valid-input': activityForm.controls['number'].valid}">
       <div *ngIf="activityForm.controls['number'].dirty && !activityForm.controls['number'].valid">
         <p *ngIf="activityForm.controls['number'].hasError('required')">
@@ -60,5 +60,5 @@
     <button type="submit">Post</button>
 
   </form>
-</div>
+  </div>
 

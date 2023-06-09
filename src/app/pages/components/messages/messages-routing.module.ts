@@ -6,10 +6,20 @@ const routes: Routes = [
   {
     path: '',
     component: MessagesComponent,
+    children: [
+      { path: 'hobby_post', loadChildren: () => import('../../../ludiq-forms/components/form-new-post/form-new-post.module').then(m => m.FormNewPostModule) },
+      { path: 'regular_post', loadChildren: () => import('../../../ludiq-forms/components/form-regular-post/form-regular-post.module').then(m => m.FormRegularPostModule) },
+      {path: 'activity', loadChildren: () => import('../../..//ludiq-forms/components/form-activity/form-activity/form-activity.module').then(m => m.FormActivityModule)}
+    ]
   },
   {
     path: ':id',
     component: MessagesComponent,
+    children: [
+      { path: 'hobby_post', loadChildren: () => import('../../../ludiq-forms/components/form-new-post/form-new-post.module').then(m => m.FormNewPostModule) },
+      { path: 'regular_post', loadChildren: () => import('../../../ludiq-forms/components/form-regular-post/form-regular-post.module').then(m => m.FormRegularPostModule) },
+      {path: 'activity', loadChildren: () => import('../../..//ludiq-forms/components/form-activity/form-activity/form-activity.module').then(m => m.FormActivityModule)}
+    ]
   },
 ];
 

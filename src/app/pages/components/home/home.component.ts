@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.postsService.getAllPosts().subscribe({
       next: (response: PostDTO[]) => {
-        console.log('success:', response);
+        console.log('success while finding all posts :', response);
         this.postsDTO = response;
       },
       error: (error) => {

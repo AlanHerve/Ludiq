@@ -18,6 +18,23 @@ export class PostComponent implements OnInit {
   constructor(private router: Router, private postService: PostsService) {
   }
   ngOnInit(): void {
+    this.loadImages();
+  }
+
+  loadImages(): void {
+    const images: File[] = [];
+    for (const image of this.postDTO.images) {
+      // @ts-ignore
+      this.postService.getImage(image).subscribe({
+        next: (response: Blob) => {
+          // @ts-ignore
+          const file = new File([response], image, { type: response.type });
+          images.push(file);
+        }
+      });
+    }
+    this.postDTO.images = images;
+    console.log(this.postDTO.images);
   }
 
   getFileUrl(file: File): string {
@@ -43,5 +60,7 @@ export class PostComponent implements OnInit {
   }
 
 
+  onClose() {
 
+  }
 }

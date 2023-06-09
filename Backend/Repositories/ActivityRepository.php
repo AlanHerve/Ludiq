@@ -1,61 +1,62 @@
 <?php
-
 require_once '../Database.php';
-require_once '../DTOs/PostDTO.php';
-require_once '../DTOs/UserDTO.php';
-require_once '../DTOs/HobbyDTO.php';
-require_once '../Repositories/UserRepository.php';
-require_once '../Repositories/HobbyRepository.php';
-require_once '../Repositories/ImageRepository.php';
-
-class PostRepository
+require_once '../DTOs/ActivityDTO.php';
+class ActivityRepository
 {
+  private $db;
+  private static $instance = null;
+  private $userRepository;
+  private $hobbyRepository;
+  private $OrganizationRepository;
 
-    private static $instance = null;
-    private $db;
-    private $userRepository;
-    private $hobbyRepository;
-    private $imageRepository;
+  public function __construct()
+  {
+    // Assign the database connection to the $db variable
+    $this->db = Database::getInstance()->getConnection();
 
-    public function __construct()
-    {
-        $this->db = Database::getInstance()->getConnection();
-        $this->hobbyRepository = HobbyRepository::getInstance();
-        $this->userRepository = UserRepository::getInstance();
-        $this->imageRepository = ImageRepository::getInstance();
+    // Initialize other repositories
+    $this->hobbyRepository = HobbyRepository::getInstance();
+    $this->userRepository = UserRepository::getInstance();
+    $this->OrganizationRepository = OrganizationRepository::getInstance();
+  }
+
+  // method to get an instance of ActivityRepository
+  public static function getInstance()
+  {
+    if (!self::$instance) { //if the instance doesn't exist then create a new one
+      self::$instance = new ActivityRepository();
+    }
+    return self::$instance; //return the instance
+  }
+
+  public function newActivity(ActivityDTO  $activityDTO)
+  {
+    $id_user = $activityDTO->userDTO->id ;
+    $id_hobby = $activityDTO->hobbyDTO->id ;
+    $description = $activityDTO->description;
+    $images = $activityDTO->images;
+
+    $stmt = $this->db->prepare("INSERT INTO activity (ID_ACTIVITY_DIRECTOR, ID_HOBBY, DESCRIPTION , DATE_ACTIVITY , MAX_REGISTRATIONS,IMAGE) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iissis", $id_activity_director, $id_hobby, $description, $time, $max_registrations, $images);
+    $stmt->execute();
+    //->inserer que ce qui n'a pas de valeur de base
+    //iisssss -> int int string string string...
+    //requetes pour aller chopper les bails à refaire
+
+    if ($stmt->affected_rows > 0) { //if rows are affected it means the database has been modified
+      $response = array(
+        'success' => 'true'
+      );
+    } else { //if not, nothing has been added in the database, therefore there is a problem somewhere
+      $response = array(
+        'success' => 'false'
+      );
     }
 
-    public static function getInstance()
-    {
-        if (!self::$instance) {
-            self::$instance = new PostRepository();
-        }
-        return self::$instance;
-    }
-
-    public function newPost(PostDTO $regularPostDTO)
-    {
-        $id_user = $regularPostDTO->userDTO->id;
-        $id_hobby = $regularPostDTO->hobbyDTO->id;
-        $description = $regularPostDTO->description;
-        $images = $regularPostDTO->images;
-        $stmt = $this->db->prepare("INSERT INTO regular_post (ID_USER, ID_HOBBY, DESCRIPTION, IMAGE1, IMAGE2, IMAGE3, IMAGE4) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iisssss", $id_user, $id_hobby, $description, $images[0], $images[1], $images[2], $images[3]);
-
-        $stmt->execute();
-
-        if ($stmt->affected_rows > 0) {
-            $response = array(
-                'success' => 'true'
-            );
-        } else {
-            $response = array(
-                'success' => 'false'
-            );
-        }
-
-        return json_encode($response);
-    }
+    return json_encode($response);
+  }
+}
+/*
 
     public function getUserPosts($id_user)
     {
@@ -126,7 +127,7 @@ class PostRepository
             while ($row = $result->fetch_assoc())
                 $postsDTO[] = $this->findPostById($row['ID_REGULAR_POST']);
         }
-        return $postsDTO;
+        return json_encode($postsDTO);
     }
 
     public function getNumPosts($id_user)
@@ -241,4 +242,4 @@ class PostRepository
 
 }
 
-?>
+?>*/

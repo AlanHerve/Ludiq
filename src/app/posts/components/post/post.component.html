@@ -18,8 +18,10 @@
     <button class="tag">{{postDTO.hobbyDTO.name}}</button>
   </div>
   <p class="post-content">{{ postDTO.description }}</p>
-  <div *ngFor="let image of postDTO.files">
-    <!--<img *ngIf="image" alt="image" class="post-image" [src]="getFileUrl(image)">-->
+  <div *ngFor="let image of postDTO.images">
+    <div *ngIf="image && image.name != 'null'">
+      <img alt="{{image}}" class="post-image" [src]="getFileUrl(image)">
+    </div>
   </div>
   <br>
   <img alt="Like image" class="interaction" [src]="isLiked ? '../../../../assets/images/icons/heart-liked.png' : '../../../../assets/images/icons/heart.png'" (click)="likePost()">
@@ -30,6 +32,5 @@
     <input type="text" [(ngModel)]="newComment" placeholder="Ajouter un commentaire">
     <button (click)="addComment()">Ajouter</button>
   </div>-->
-
 </div>
 
