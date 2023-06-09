@@ -6,11 +6,15 @@ import {PostsModule} from "../../../posts/posts.module";
 import {CommonModule} from "@angular/common";
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserComponent } from './components/user/user.component';
+import { TopActivityListComponent } from './components/top-activity-list/top-activity-list.component';
+import { TopActivityComponent } from './components/top-activity/top-activity.component';
 @NgModule({
   declarations: [
     HomeComponent,
     UserListComponent,
-    UserComponent
+    UserComponent,
+    TopActivityListComponent,
+    TopActivityComponent
   ],
   imports: [
     HomeRoutingModule,

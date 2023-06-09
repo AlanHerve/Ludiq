@@ -5,6 +5,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivityDTO} from "../../../../posts/models/activity-dto";
 import {ActivityService} from "../../../../posts/services/activity.service";
+import {UserDTO} from "../../../../models/user-dto";
+import {HobbyDTO} from "../../../../models/hobby-dto";
 
 @Component({
   selector: 'app-form-activity',
@@ -30,14 +32,16 @@ export class FormActivityComponent implements OnInit {
 
   activityDTO: ActivityDTO = {
     id_activity: -1,
+    userDTO: new UserDTO(-1, '', ''),
+    hobbyDTO: new HobbyDTO(-1, '', ''),
     title: '',
-    id_user: 1,
-    id_hobby: 1,
     description:'',
-    images: [null],
+    advancement: '',
     time: '',
-    modified: 0,
-    files: []
+    date_post: '',
+    current_registered: 0,
+    max_registrations: 0,
+    images: []
   }
   activityForm: FormGroup;
 

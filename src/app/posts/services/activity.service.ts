@@ -28,4 +28,10 @@ export class ActivityService {
       .set('type', 'home');
     return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
   }
+
+  getTop3Activities(): Observable<ActivityDTO[]> {
+    const params = new HttpParams()
+      .set('type', 'top3');
+    return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
+  }
 }

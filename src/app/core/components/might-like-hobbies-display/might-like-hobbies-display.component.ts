@@ -18,11 +18,6 @@ export class MightLikeHobbiesDisplayComponent {
   // request to fetch all hobbies
 
 
-  // request to fetch display hobbies
-  RequestDTO2: RequestDTO = {
-    function_to_call: "fetchDisplayHobbies"
-  };
-
   //Store top 3 hobbies
   top_hobbies: HobbyCountDTO[] = [];
 

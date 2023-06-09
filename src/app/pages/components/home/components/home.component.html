@@ -3,6 +3,9 @@
     <app-search-bar></app-search-bar>
 
     <div style="margin-top: 70px"></div>
+    <div *ngIf="!this.id_hobby">
+      <app-top-activity-list></app-top-activity-list>
+    </div>
     <div *ngIf="this.id_hobby">
       <app-user-list [id_hobby]="id_hobby"></app-user-list>
     </div>

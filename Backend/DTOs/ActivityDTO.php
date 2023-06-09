@@ -8,7 +8,7 @@ class ActivityDTO
   public $userDTO;
   public $hobbyDTO;
   public $images;
-  public $OrganizationDTO;
+  public $title;
 
   public
     $description,
@@ -18,11 +18,12 @@ class ActivityDTO
     $advancement,
     $date_post;
 
-  public function __construct($id, $OrganizationDTO, $hobbyDTO, $advancement, $description = null, $date_post = null, $time = null, $current_registered, $max_registrations, $images)
+  public function __construct($id, $userDTO, $hobbyDTO, $advancement, $description, $date_post, $time, $current_registered, $max_registrations, $images)
   {
     $this->id = $id;
-    $this->OrganizationDTO = $OrganizationDTO;
+    $this->userDTO = $userDTO;
     $this->hobbyDTO = $hobbyDTO;
+    $this->title = 'activity';
     $this->advancement = $advancement;
     $this->description = $description;
     $this->date_post = $date_post;

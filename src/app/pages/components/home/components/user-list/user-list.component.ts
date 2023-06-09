@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {HobbyService} from "../../../../../services/hobby.service";
 import {UserDTO} from "../../../../../models/user-dto";
 
@@ -7,7 +7,7 @@ import {UserDTO} from "../../../../../models/user-dto";
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnChanges {
 
   @Input() id_hobby!: number;
 
@@ -31,5 +31,11 @@ export class UserListComponent implements OnInit {
         console.log("Error while trying to finding users that are related to this hobby : ", this.id_hobby, " : ", error);
       }
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['id_hobby']) {
+      this.displayHobbyUsers();
+    }
   }
 }

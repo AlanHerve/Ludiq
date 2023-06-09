@@ -20,11 +20,11 @@ import {CommunicationService} from "../../../services/communication.service";
 export class ProfileComponent {
 
   activitiesDTO: ActivityDTO[] = [
-    new ActivityDTO(1, 'Cooking session', 2, 2, 'It\'s fun', [], 0, '', []),
+    /*new ActivityDTO(1, 'Cooking session', 2, 2, 'It\'s fun', [], 0, '', []),
     new ActivityDTO(1, 'Biking with friends', 2, 2, 'We like sport, come with us!', [], 0, '', []),
     new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', []),
     new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', []),
-    new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', [])
+    new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', [])*/
   ]
 
 
