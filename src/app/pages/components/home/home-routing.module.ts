@@ -13,7 +13,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: ':id',
+    path: 'hobby/:id',
     component: HomeComponent,
     children: [
       { path: 'hobby_post', loadChildren: () => import('../../../ludiq-forms/components/form-new-post/form-new-post.module').then(m => m.FormNewPostModule) },
