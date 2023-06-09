@@ -4,8 +4,11 @@ div.message-container {
   align-items: flex-start;
 }
 
+div.message-info {
+}
+
 .message {
-  padding:20px;
+  padding: 20px;
   background-color: #F5F2F5;
   color: black;
   border-radius: 33px 33px 33px 0;
@@ -16,8 +19,18 @@ div.message-container {
   max-width: 600px;
 }
 
-.date {
+.message-info {
+  display: flex;
+}
 
+.sender2 {
+  align-items: center;
+  display: flex;
+  align-self: flex-end;
+  justify-content: space-between;
+}
+
+.date {
 }
 
 .content {
