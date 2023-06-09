@@ -13,11 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $body = file_get_contents('php://input');
   $data = json_decode($body,true);
 
-  $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
+
+
+  if(isset($_POST['new_post'])) {
+    newPost();
+    return;
+  }
 
   $postId = $data['id_post'];
-  $id = null;
-
 
   $postRepository = PostRepository::getInstance();
   switch ($data['type']) {
@@ -26,9 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       break;
     case 'unlike':
       echo $postRepository->unlikePost($postId);
-      break;
-    case 'post':
-      newPost();
       break;
   }
 }
@@ -56,6 +56,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
 }
 
 function newPost() {
+  $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
   if(isset($_POST['id_hobby']) && $_POST['id_hobby'] != -1) {
     $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
   } else {
@@ -63,13 +64,7 @@ function newPost() {
   }
 
   $description = $_POST['description'];
-  $modified = null;
-  $likes = null;
-  $time = null;
 
-  if(isset($_POST['modified'])){
-    $modified = $_POST['modified'];
-  }
   $images = $_FILES['images'];
 
   $uploadedFiles = saveFiles($images);

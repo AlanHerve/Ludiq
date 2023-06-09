@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $user1 = $_GET['user1'];
         $user2 = $_GET['user2'];
         $messageRepository = MessageRepository::getInstance();
-        echo $messageRepository->getMessagesBewteenUsers($user1, $user2);
+        echo json_encode($messageRepository->getMessagesBetweenUsers($user1, $user2));
     }
 }
 

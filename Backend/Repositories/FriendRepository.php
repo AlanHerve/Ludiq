@@ -49,7 +49,7 @@ class FriendRepository
             while ($row = $result->fetch_assoc()) {
                 $usersDTO[] = $this->userRepository->findUserById($row['ID_USER_2']);
             }
-            return json_encode($usersDTO);
+            return $usersDTO;
         }
         return null;
     }
