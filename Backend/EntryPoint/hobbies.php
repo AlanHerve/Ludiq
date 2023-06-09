@@ -37,6 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case "fetchAllHobbies":
             $hobbyRepository->fetchAllHobbies();
             break;
+        case "hobby_users":
+            echo json_encode($hobbyRepository->getHobbyUsers($_GET['id_hobby']));
+            break;
         case "fetchDisplayHobbies":
             $hobbyRepository->fetchDisplayHobbies();
             break;

@@ -2,20 +2,27 @@ import { Component } from '@angular/core';
 import {OrganizationDTO} from "../../../models/organization-dto";
 import {ActivatedRoute} from "@angular/router";
 import {OrganizationService} from "../../../services/organization.services";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.css']
+  styleUrls: ['./organization.component.css',  '../../pages.css']
 })
 export class OrganizationComponent {
 
   organizationDTO: OrganizationDTO = {
     id_organization: 0,
+    postsDTO: [],
     name_organization: '',
-    avatar: ''
+    avatar: '',
+    description: ''
   }
-  constructor(private activatedRoute: ActivatedRoute, private organisationService: OrganizationService) {
+
+  protected type: string = 'posts';
+  constructor(private activatedRoute: ActivatedRoute,
+              private organisationService: OrganizationService,
+              private userService: UserService) {
 
   }
 
@@ -29,7 +36,7 @@ export class OrganizationComponent {
           // in case of success
 
           this.organizationDTO = response.organization;
-          
+
           console.log(response.organization.name_organization);
         },
         error: (error) => {
@@ -41,5 +48,12 @@ export class OrganizationComponent {
     });
   }
 
+  onSwitchTo(type: string): void {
+    this.type = type;
+  }
 
+
+  isPartOfOrganization() {
+    this.userService.isPartOfOrganization(this.organizationDTO.id_organization);
+  }
 }

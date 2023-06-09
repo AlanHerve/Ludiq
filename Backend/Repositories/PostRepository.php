@@ -129,6 +129,31 @@ class PostRepository
         return $postsDTO;
     }
 
+    public function getHobbyPosts($id_hobby)
+    {
+        $stmt = $this->db->prepare("
+            SELECT
+                *
+            FROM
+                regular_post reg
+            WHERE
+                reg.ID_HOBBY = ?
+            ORDER BY
+                reg.TIME
+            DESC
+            ;
+        ");
+        $stmt->bind_param('i', $id_hobby);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $postsDTO = [];
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc())
+                $postsDTO[] = $this->findPostById($row['ID_REGULAR_POST']);
+        }
+        return $postsDTO;
+    }
+
     public function getNumPosts($id_user)
     {
         $stmt = $this->db->prepare("

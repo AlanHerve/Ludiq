@@ -25,6 +25,13 @@ export class PostsService {
     return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
   }
 
+  getHobbyPosts(id_hobby: number): Observable<PostDTO[]> {
+    const params = new HttpParams()
+      .set('type', 'hobby')
+      .set('id_hobby', id_hobby);
+    return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
+  }
+
   newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
     return this.http.post<HobbyPostDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
       map(response => {

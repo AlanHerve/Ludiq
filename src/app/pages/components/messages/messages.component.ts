@@ -19,7 +19,7 @@ export class MessagesComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
-        const id_number = parseInt(id, 10);
+        const id_number = parseInt(id);
         this.userService.findUserById(id_number).subscribe({
           next: response => {
             console.log('success:', response);

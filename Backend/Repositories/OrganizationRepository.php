@@ -34,7 +34,7 @@ class OrganizationRepository
         $organizations = [];
 
         if($result){
-            while ($row = $result ->fetch_assoc()) array_push($organizations, new OrganizationDTO($row["ID_ORGANIZATION"], $row["NAME_ORGANIZATION"], $row["AVATAR"]));
+            while ($row = $result ->fetch_assoc()) array_push($organizations, new OrganizationDTO($row["ID_ORGANIZATION"], $row["NAME_ORGANIZATION"], $row["AVATAR"], $row["DESCRIPTION"]));
             $response = array(
                 'success' => true,
                 'organizations' => $organizations
@@ -67,7 +67,7 @@ class OrganizationRepository
         if($result){
             if($result->num_rows == 1){
                 $row = $result->fetch_assoc();
-                $organization = new OrganizationDTO($row["ID_ORGANIZATION"], $row["NAME_ORGANIZATION"], $row["AVATAR"]);
+                $organization = new OrganizationDTO($row["ID_ORGANIZATION"], $row["NAME_ORGANIZATION"], $row["AVATAR"], $row["DESCRIPTION"]);
                 $response = array(
                     'success'      => 'true',
                     'organization' => $organization

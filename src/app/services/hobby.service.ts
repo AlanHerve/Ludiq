@@ -8,6 +8,7 @@ import {RequestDTO} from "../models/request-dto";
 import {HobbyRequestDTO} from "../models/hobby-request-dto";
 import {HobbyDTO} from "../models/hobby-dto";
 import {HobbyPostDTO} from "../models/hobby-post-dto";
+import {UserDTO} from "../models/user-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -87,6 +88,13 @@ export class HobbyService {
 
   getNewPost(){
     return this.newPost;
+  }
+
+  getHobbyUsers(id_hobby: number): Observable<UserDTO[]> {
+    const params = new HttpParams()
+      .set('function_to_call', "hobby_users")
+      .set('id_hobby', id_hobby);
+    return this.http.get<UserDTO[]>(`${apiUrl}/hobbies.php`, {params});
   }
 
   destroyHobbyPost(id_hobby_post: number){

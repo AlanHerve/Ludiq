@@ -3,15 +3,18 @@
 require_once '../Database.php';
 require_once '../DTOs/HobbyDTO.php';
 require_once '../DTOs/HobbyCountDTO.php';
+require_once '../Repositories/UserRepository.php';
 
 class HobbyRepository
 {
     private $db;
     private static $instance = null;
+    private UserRepository $userRepository;
 
     public function __construct()
     {
         $this->db = Database::getInstance()->getConnection();
+        $this->userRepository = UserRepository::getInstance();
     }
 
     public static function getInstance()
@@ -329,6 +332,33 @@ class HobbyRepository
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
         return $row['num_hobbies'];
+    }
+
+    public function getHobbyUsers($id_hobby) {
+        $stmt = $this->db->prepare("
+            SELECT
+                u.ID_USER
+            FROM
+                user u
+            INNER JOIN HOBBY_POST hob
+                ON u.ID_USER = hob.ID_USER
+            WHERE
+                hob.ID_HOBBY = ?
+            ;
+        ");
+        $stmt->bind_param('i', $id_hobby);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        if($result->num_rows > 0) {
+            $usersDTO = [];
+            while($row = $result->fetch_assoc()) {
+                $userDTO = $this->userRepository->findUserById($row['ID_USER']);
+                $usersDTO[] = $userDTO;
+            }
+            return $usersDTO;
+        }
+        return null;
     }
 
     function newHobbyPost(HobbyPostDTO $hobbyPost)

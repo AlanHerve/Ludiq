@@ -1,7 +1,11 @@
 <div class="wrapper">
   <div class="content">
     <app-search-bar></app-search-bar>
-    <div style = "margin-top: 70px"></div>
+
+    <div style="margin-top: 70px"></div>
+    <div *ngIf="this.id_hobby">
+      <app-user-list [id_hobby]="id_hobby"></app-user-list>
+    </div>
     <app-post-list [postsDTO]="postsDTO"></app-post-list>
   </div>
   <app-navigation-bar></app-navigation-bar>
