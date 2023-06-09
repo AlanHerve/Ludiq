@@ -21,6 +21,9 @@ div.message-info {
 
 .message-info {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 800px;
 }
 
 .sender2 {
@@ -28,9 +31,12 @@ div.message-info {
   display: flex;
   align-self: flex-end;
   justify-content: space-between;
+  width: 800px;
 }
 
 .date {
+  font-size: 17px;
+  color: gray;
 }
 
 .content {
