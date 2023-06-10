@@ -5,12 +5,13 @@
     <span (click)="onClose()" class="cross">&times;</span>
 
     <textarea [(ngModel)]="activityDTO.description" name="description" placeholder="Description of the activity"></textarea>
-    <div class="images">
+
+    <!--<div class="images">
       <label class="file-input-label" [class.disabled]="this.activityDTO.images[0] != null">
         <span class="file-input-text">Select an image</span>
         <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event)" [disabled]="activityDTO.images[0] != null">
       </label>
-    </div>
+    </div>-->
     <div class="hobby-container" *ngIf="this.activityDTO.images[0] != null">
       <div class="file-container" *ngFor="let image of this.activityDTO.images">
         <span class = "file-name" *ngIf="image != null">{{ image }}</span>
@@ -23,13 +24,9 @@
       <input type="date" name="date" id='time' [(ngModel)]="activityDTO.time">
     </div>
 
-
-    <p>Choice of the related hobby</p>
-    <select name="hobby" id="hobby">
-      <option value="books">Hobby1</option>
-      <option value="books">Hobby2</option>
-      <!-- parseInt(JSON.parse(localStorage.getItem('currentUser')!).id)
-      faire requete pour aller chercher tous les hobbys-->
+    <p>Hobby</p>
+    <select id="hobbyType" name="hobbyType" [(ngModel)]="this.activityDTO.hobbyDTO.id">
+      <option *ngFor="let hobby of hobbies" [value]="hobby.id">{{hobby.name}}</option>
     </select>
 
     <p>Choice of the related level</p>

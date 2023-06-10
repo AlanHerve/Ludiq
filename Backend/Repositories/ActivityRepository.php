@@ -40,7 +40,7 @@ class ActivityRepository
         $images = $activityDTO->images;
 
         $stmt = $this->db->prepare("INSERT INTO activity (ID_ACTIVITY_DIRECTOR, ID_HOBBY, DESCRIPTION , DATE_ACTIVITY , MAX_REGISTRATIONS,IMAGE) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iissis", $id_activity_director, $id_hobby, $description, $time, $max_registrations, $images);
+        $stmt->bind_param("iissis", $id_user, $id_hobby, $description, $time, $max_registrations, $images);
         $stmt->execute();
         //->inserer que ce qui n'a pas de valeur de base
         //iisssss -> int int string string string...

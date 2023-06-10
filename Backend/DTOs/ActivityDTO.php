@@ -4,13 +4,13 @@ require_once '../DTOs/HobbyDTO.php';
 
 class ActivityDTO
 {
-  public $id;
   public $userDTO;
   public $hobbyDTO;
   public $images;
   public $title;
 
   public
+    $id,
     $description,
     $max_registrations,
     $current_registered,

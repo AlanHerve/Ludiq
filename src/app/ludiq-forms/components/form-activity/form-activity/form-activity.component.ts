@@ -5,9 +5,11 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivityDTO} from "../../../../posts/models/activity-dto";
 import {ActivityService} from "../../../../posts/services/activity.service";
+import {HobbyService} from "../../../../services/hobby.service";
 import {UserDTO} from "../../../../models/user-dto";
 import {HobbyDTO} from "../../../../models/hobby-dto";
 import {UserService} from "../../../../services/user.service";
+import {HobbyPostDTO} from "../../../../models/hobby-post-dto";
 
 @Component({
   selector: 'app-form-activity',
@@ -28,12 +30,12 @@ import {UserService} from "../../../../services/user.service";
 })
 export class FormActivityComponent implements OnInit {
   index: number = 0;
+  hobbies : HobbyDTO[] = [];
 
   previousRoute: string = '';
-
   activityDTO: ActivityDTO = {
     id_activity: -1,
-    userDTO: new UserDTO(-1, '', ''),
+    userDTO: new UserDTO( 0,'', ''),
     hobbyDTO: new HobbyDTO(-1, '', ''),
     title: '',
     description:'',
@@ -44,10 +46,20 @@ export class FormActivityComponent implements OnInit {
     max_registrations: 0,
     images: []
   }
+
+  hobbyPostDTO: HobbyPostDTO = {
+    id_hobby_post: 0,
+    id_user: 0,
+    id_hobby: 0,
+    advancement: '',
+    frequency: '',
+    availability: 1
+  }
   activityForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
               private activityService:ActivityService,
+              private hobbyService: HobbyService,
               private router: Router,
               private location: Location,
               private userService: UserService) {
@@ -62,10 +74,24 @@ export class FormActivityComponent implements OnInit {
     this.userService.findUserById(JSON.parse(localStorage.getItem('currentUser')!).id).subscribe({
       next: (response) => {
         this.activityDTO.userDTO = response;
+        console.log("Valeur de response :", response);
+
+        this.hobbyService.getAllHobbies().subscribe({
+          next: (hobbies) => {
+            console.log("Valeur des hobbies :", hobbies);
+            // Utilisez les données des hobbies ici, par exemple :
+            // this.activityDTO.hobbies = hobbies;
+          },
+          error: (error) => {
+            console.log("Erreur lors de l'appel à getAllHobbies() :", error);
+          }
+        });
       }
-    })
-    this.previousRoute = this.getPreviousRoute(); //to get the previous route
+    });
+
+    this.previousRoute = this.getPreviousRoute(); // Pour obtenir la route précédente
   }
+
 
   onClose(): void { //closing the form with the cross
     if (this.previousRoute) {
@@ -88,6 +114,17 @@ export class FormActivityComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  getUserHobbies(){
+    this.hobbyService.getHobbiesOfUser(this.activityDTO.hobbyDTO.id).subscribe({
+      next: (response) => {
+          this.hobbies= response
+      },
+      error: (error) => {
+        // in case of failure
+        console.error('Could not get the activity hobby', error);
+      }
+    });
+  }
 
   onRemoveImage(image: string) {
     const index = this.activityDTO.images.findIndex(img => img === image);

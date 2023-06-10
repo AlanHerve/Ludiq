@@ -11,29 +11,37 @@ require_once "../DTOs/ActivityDTO.php";
 require_once "../DTOs/UserDTO.php";
 require_once "../DTOs/HobbyDTO.php";
 require_once "../Repositories/ActivityRepository.php";
+require_once "../Repositories/UserRepository.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
+  $userRepository = UserRepository::getInstance();
+  $userDTO = $userRepository->findUserById($_POST['id_user']);
+  echo 'UserDTO: ';
+  var_dump($userDTO);
 
-    if ($_POST['id_hobby'] != -1) $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
-    else $hobbyDTO = new HobbyDTO(null);
+  //$userDTO = new UserDTO($_POST['user_id'], $_POST['user_name'], $_POST['user_username']);
+
+  if ($_POST['id_hobby'] != -1) $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
+  else $hobbyDTO = new HobbyDTO(null);
+
+  $description = $_POST['description'];
+  $time = $_POST['time'];
+
+  /*if (isset($data['modified'])) {
+    $modified = $data['modified'];
+  }*/
+
+  /*$images = $_FILES['images'];
+
+  $uploadedFiles = saveFiles($images);*/
+
+  $activityDTO = new ActivityDTO(null, $userDTO, $hobbyDTO, null, $description, null, $time, null, null, null);
 
 
-    $description = $_POST['description'];
-    $time = $_POST['time'];
-
-    /*if (isset($data['modified'])) {
-      $modified = $data['modified'];
-    }*/
-
-    $images = $_FILES['images'];
-
-    $uploadedFiles = saveFiles($images);
-
-    $activityDTO = new ActivityDTO(null, null, $hobbyDTO, null, $description, null, $time, null, null, null);
-    $activityRepository = ActivityRepository::getInstance();
-    echo json_encode($activityRepository->newActivity($activityDTO));
+  $activityRepository = ActivityRepository::getInstance();
+  $result = $activityRepository->newActivity($activityDTO);
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['type'])) {
