@@ -7,6 +7,7 @@ import {ActivityDTO} from "../../../../posts/models/activity-dto";
 import {ActivityService} from "../../../../posts/services/activity.service";
 import {UserDTO} from "../../../../models/user-dto";
 import {HobbyDTO} from "../../../../models/hobby-dto";
+import {UserService} from "../../../../services/user.service";
 
 @Component({
   selector: 'app-form-activity',
@@ -48,7 +49,8 @@ export class FormActivityComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private activityService:ActivityService,
               private router: Router,
-              private location: Location) {
+              private location: Location,
+              private userService: UserService) {
     this.activityForm = this.formBuilder.group({
       activityControl:new FormControl(),
       number: [null, [Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(1)]],
@@ -57,6 +59,11 @@ export class FormActivityComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.userService.findUserById(JSON.parse(localStorage.getItem('currentUser')!).id).subscribe({
+      next: (response) => {
+        this.activityDTO.userDTO = response;
+      }
+    })
     this.previousRoute = this.getPreviousRoute(); //to get the previous route
   }
 
@@ -112,11 +119,11 @@ export class FormActivityComponent implements OnInit {
   newActivityPost() {
     const formData = new FormData();
     // @ts-ignore
-    formData.append('id_user', this.activityDTO.id_user.toString());
+    formData.append('id_user', this.activityDTO.userDTO.id);
     // @ts-ignore
-    formData.append('id_hobby', this.activityDTO.id_hobby.toString());
+    formData.append('id_hobby', this.activityDTO.hobbyDTO.id);
     // @ts-ignore
-    formData.append('id_activity', this.activityDTO.id_activity.toString());
+    formData.append('id_activity', this.activityDTO.id_activity);
     formData.append('time', this.activityDTO.time.toString());
     formData.append('description', this.activityDTO.description);
 
