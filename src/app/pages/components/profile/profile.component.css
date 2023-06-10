@@ -4,11 +4,12 @@
   display: flex;
   justify-content: space-between;
   top:0;
-  width: calc(100% - 700px);
+  width: 55vw;
   backdrop-filter: blur(5px);
 }
+
 .text {
-  font-size: 22px;
+  font-size: clamp(1.1rem, 0.4rem + 1.2vw, 1.3rem);
   margin-left: 40px;
   margin-right: 40px;
 }
@@ -24,15 +25,9 @@
 }
 
 
-.binder {
-  margin-top: 50px;
-  display: flex;
-  font-size: 22px;
-  text-align: center;
-}
-
 .top-user-info {
   display: flex;
+  gap: 20px;
   align-items: center;
   justify-content: space-between;
 }
@@ -55,6 +50,7 @@
 
 .info {
   margin:10px;
+  font-size: clamp(1rem, 0.4rem + 1.2vw, 1.2rem);
 }
 
 .info.solo {
@@ -68,37 +64,15 @@
 
 .title-favorite-hobby {
   margin-top: 0;
-  font-size: 16px;
+  font-size: clamp(0.4rem, 0.4rem + 1.2vw, 1.2rem);;
 }
 
 .tag.favorite {
   margin-top: 3px;
   padding:6px!important;
-  font-size: 14px;
+  font-size: clamp(0.4rem, 0.4rem + 1.2vw, 1rem);;
 }
 
-
-.tab {
-  cursor: pointer;
-  width:33.3%;
-  padding: 20px;
-  border-top: #B6B6B6 1px solid;
-  border-bottom: #B6B6B6 1px solid;
-  transition: 0.2s background ease-in-out;
-}
-
-.tab:hover {
-  background-color: #f7f7f7;
-}
-
-
-.tab.selected {
-  cursor: pointer;
-  width:33.3%;
-  padding: 20px;
-  background-color: #EFEFEF;
-  border-bottom: #7421C2 3px solid;
-}
 
 .buttons {
   margin-left: 40px;
@@ -120,22 +94,27 @@
   margin-top: 5px;
   margin-bottom: 5px;
   font-weight: 600;
-  font-size: 22px;
+  font-size: clamp(1.2rem, 0.4rem + 1.2vw, 1.5rem);
 }
 
 .nickname {
   margin-top: 0;
   font-weight: 100;
+  font-size: clamp(1.2rem, 0.4rem + 1.2vw, 1.4rem);
   margin-bottom: 15px;
 }
 
-.friends {
-  color: #333333;
-  font-size: 16px;
-  margin-top: 0;
-}
 
 img {
-  width:180px;
+  width:clamp(7rem, 1rem + 10vw, 10rem);
   object-fit: contain;
+}
+
+
+@media (max-width: 1000px) {
+  .top-bar {
+    width: 100vw;
+    left: 0;
+    right: 0;
+  }
 }

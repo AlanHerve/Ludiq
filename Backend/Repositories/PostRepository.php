@@ -84,7 +84,7 @@ class PostRepository
         return [];
     }
 
-    private function findPostById($id)
+    public function findPostById($id)
     {
         $stmt = $this->db->prepare("
         SELECT
@@ -114,6 +114,7 @@ class PostRepository
             return new PostDTO($row['ID_REGULAR_POST'], $userDTO, $hobbyDTO, $row['DESCRIPTION'],
                 $images, $row['MODIFIED'], $row['LIKES'], $row['TIME']);
         }
+        return null;
     }
 
     public function getAllPosts()

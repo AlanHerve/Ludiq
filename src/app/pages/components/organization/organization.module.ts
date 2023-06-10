@@ -4,6 +4,7 @@ import {OrganizationComponent} from "./organization.component";
 import {OrganizationRoutingModule} from "./organization-routing.module";
 import {CoreModule} from "../../../core/core.module";
 import {PostsModule} from "../../../posts/posts.module";
+import {PagesModule} from "../../pages.module";
 
 @NgModule({
   declarations: [
@@ -12,8 +13,8 @@ import {PostsModule} from "../../../posts/posts.module";
   imports: [
     OrganizationRoutingModule,
     CommonModule,
-    CoreModule,
     PostsModule,
+    PagesModule,
   ],
   exports: [
     OrganizationComponent,

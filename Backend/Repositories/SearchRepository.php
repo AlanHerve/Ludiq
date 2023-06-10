@@ -5,6 +5,8 @@ require_once '../Database.php';
 require_once '../DTOs/HobbyDTO.php';
 require_once '../DTOs/UserDTO.php';
 require_once '../Repositories/UserRepository.php';
+require_once '../Repositories/PostRepository.php';
+require_once '../Repositories/HobbyRepository.php';
 
 class SearchRepository
 {

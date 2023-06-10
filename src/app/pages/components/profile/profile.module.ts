@@ -9,6 +9,7 @@ import {
   HobbyFlashcardListComponent
 } from "../../../posts/components/hobby-flashcard-list/hobby-flashcard-list.component";
 import {HobbyFlashcardComponent} from "../../../posts/components/hobby-flashcard/hobby-flashcard.component";
+import {PagesModule} from "../../pages.module";
 
 @NgModule({
 
@@ -16,11 +17,8 @@ import {HobbyFlashcardComponent} from "../../../posts/components/hobby-flashcard
 
   imports: [
     ProfileRoutingModule,
-    RouterOutlet,
-    CoreModule,
-    CommonModule,
-    PostsModule
-
+    PostsModule,
+    PagesModule
   ],
   exports: [
     ProfileRoutingModule

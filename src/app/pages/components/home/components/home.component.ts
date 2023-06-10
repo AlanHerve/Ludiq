@@ -3,6 +3,7 @@ import {PostDTO} from "../../../../posts/models/post-dto";
 import {PostsService} from "../../../../posts/services/posts.service";
 import {Location} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
+import {ActivityDTO} from "../../../../posts/models/activity-dto";
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,8 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
   postsDTO: PostDTO[] = [];
+  activitiesDTO: ActivityDTO[] = [];
+  protected type: string = 'posts';
   protected id_hobby!: number;
 
   constructor(private postsService: PostsService,
@@ -41,9 +44,11 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  displayAllPosts()
-    :
-    void {
+  onSwitchTo(type: string): void {
+    this.type = type;
+  }
+
+  displayAllPosts() : void {
     this.postsService.getAllPosts().subscribe({
       next: (response: PostDTO[]) => {
         console.log('success while finding all posts :', response);
