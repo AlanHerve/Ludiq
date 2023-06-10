@@ -10,7 +10,7 @@ class RegularPostDTO {
   , $time;
 
   public function __construct($id, $id_user, $id_hobby, $description
-                              , $images, $modified, $likes, $time) {
+    , $images, $modified, $likes, $time) {
 
     $this->id = $id;
     $this->id_user = $id_user;

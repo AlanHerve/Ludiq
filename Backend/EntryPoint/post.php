@@ -8,6 +8,7 @@ require_once "../DTOs/PostDTO.php";
 require_once "../DTOs/UserDTO.php";
 require_once "../DTOs/HobbyDTO.php";
 require_once "../Repositories/PostRepository.php";
+require_once "../Repositories/CommentRepository.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $body = file_get_contents('php://input');
@@ -20,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
   $postRepository = PostRepository::getInstance();
+  $commentRepository = CommentRepository::getInstance();
   switch ($data['type']) {
     case 'like':
       echo $postRepository->likePost($postId);
@@ -30,6 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case 'post':
       newPost();
       break;
+    case 'addComment':
+      echo $commentRepository->addComment($data['id_user'], $data['content'], $data['id_regular_post']);
+      break;
+
   }
 }
 

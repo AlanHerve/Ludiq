@@ -7,6 +7,7 @@ import {map} from "rxjs/operators";
 import {HobbyDTO} from "../../models/hobby-dto";
 import {HobbyPostDTO} from "../../models/hobby-post-dto";
 import {RequestDTO} from "../../models/request-dto";
+import {PostComment} from "../components/comment/comment";
 
 @Injectable({
   providedIn: 'root'
@@ -60,4 +61,10 @@ export class PostsService {
       })
     );
   }
+
+  addComment(comment: PostComment): Observable<any> {
+    return this.http.post<any>(`${apiUrl}/post.php`, comment);
+  }
+
+
 }
