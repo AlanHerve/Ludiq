@@ -8,6 +8,8 @@ import {ActivityDTO} from "../../../posts/models/activity-dto";
 import {FriendService} from "../messages/services/friend.service";
 import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
+import {HobbyService} from "../../../services/hobby.service";
+import {CommunicationService} from "../../../services/communication.service";
 
 
 @Component({
@@ -24,9 +26,11 @@ export class ProfileComponent {
     new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', []),
     new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', [])
   ]
-  hobbiesDTO: HobbyPostDTO[] = [
 
-  ]
+
+  protected favoriteHobby!: HobbyDTO;
+  hobbyFlashcardsDTOs: HobbyPostDTO[] = []
+
   protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
     userDTO: new UserDTO(-1, '', ''),
@@ -40,11 +44,18 @@ export class ProfileComponent {
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,
               private profileService: ProfileService,
+              private hobbyService: HobbyService,
               private friendService: FriendService,
+              private communicationService: CommunicationService,
               private router: Router) {
   }
 
   ngOnInit() {
+
+
+    this.favoriteHobby = new HobbyDTO(2, 'Cooking', 'assets/images/hobbies/Cooking.jpg');
+
+
     this.activatedRoute.params.subscribe(params => {
       this.profileDTO.userDTO.id = parseInt(params['id']);
     })
@@ -57,21 +68,30 @@ export class ProfileComponent {
       }
     });
 
-    /*this.hobbyService.getHobbiesFlashcardsOfUser(this.id_user).subscribe({
-
-      next: (response) => {
-        // in case of success
-        for (let i = 0; i < response.length; i++) {
-          this.hobby_flashcardsDTOs.push(response[i]);
-        }
-      },
-      error: (error) => {
-        // in case of failure
-        console.error('Could not get flashcards', error);
-      }
-    });*/
+    this.getHobbiesFlashcardsOfUser();
 
     this.getProfileInformation();
+
+    this.hobbyService.currentMessage.subscribe((data)=>{
+      this.hobbyFlashcardsDTOs.push(this.hobbyService.getNewPost());
+    });
+
+    this.hobbyService.currentDeleteState.subscribe((data) => {
+      console.log("returned Data :" + data);
+      this.hobbyFlashcardsDTOs.splice(this.findHobbyDTOWithData(data), 1);
+    });
+
+  }
+
+  findHobbyDTOWithData(id: number){
+    const sizeOfArray: number = this.hobbyFlashcardsDTOs.length;
+
+    for (let i = 0; i < sizeOfArray; i++) {
+      if(this.hobbyFlashcardsDTOs[i].id_hobby_post == id) return i;
+    }
+
+    return -1;
+
   }
 
   getProfileInformation(): void {
@@ -84,6 +104,27 @@ export class ProfileComponent {
       }
     })
   }
+
+  getHobbiesFlashcardsOfUser(){
+    this.hobbyService.getHobbiesFlashcardsOfUser(this.profileDTO.userDTO.id).subscribe({
+
+      next: (response) => {
+        // in case of success
+        console.log(response);
+        for (let i = 0; i < response.hobbies.length; i++) {
+          this.hobbyFlashcardsDTOs.push(response.hobbies[i]);
+        }
+
+      },
+      error: (error) => {
+        // in case of failure
+        console.error('Could not get flashcards', error);
+      }
+    });
+
+  }
+
+
 
   isConnectedUser(): boolean {
     return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.profileDTO.userDTO.id

@@ -13,4 +13,12 @@ class HobbyPostDTO
         $this->advancement = $advancement;
         $this->availability = $availability;
     }
+
+    public function insertIdHobbyPost($id_hobby_post){
+        $this->id_hobby_post = $id_hobby_post;
+    }
+
+    public function insertHobbyName($hobby_name){
+        $this->hobby_name = $hobby_name;
+    }
 }

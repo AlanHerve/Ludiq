@@ -23,6 +23,7 @@ class ActivityRepository
   // method to get an instance of ActivityRepository
   public static function getInstance()
   {
+    console.log("create an instance");
     if (!self::$instance) { //if the instance doesn't exist then create a new one
       self::$instance = new ActivityRepository();
     }
@@ -35,8 +36,9 @@ class ActivityRepository
     $id_hobby = $activityDTO->hobbyDTO->id ;
     $description = $activityDTO->description;
     $images = $activityDTO->images;
-
+    console.log("avant la requete");
     $stmt = $this->db->prepare("INSERT INTO activity (ID_ACTIVITY_DIRECTOR, ID_HOBBY, DESCRIPTION , DATE_ACTIVITY , MAX_REGISTRATIONS,IMAGE) VALUES (?, ?, ?, ?, ?, ?)");
+    console.log($stmt);
     $stmt->bind_param("iissis", $id_activity_director, $id_hobby, $description, $time, $max_registrations, $images);
     $stmt->execute();
     //->inserer que ce qui n'a pas de valeur de base

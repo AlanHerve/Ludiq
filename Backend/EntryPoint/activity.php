@@ -13,7 +13,6 @@ require_once "../DTOs/HobbyDTO.php";
 require_once "../Repositories/ActivityRepository.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $id = null;
   $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
 
   if ($_POST['id_hobby'] != -1) $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
@@ -22,14 +21,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $description = $_POST['description'];
   $time = $_POST['time'];
 
-  if (isset($data['modified'])) {
+  /*if (isset($data['modified'])) {
     $modified = $data['modified'];
-  }
+  }*/
 
   $images = $_FILES['images'];
-  $uploadedFiles = saveFiles($images);
 
-  $activityDTO = new activityDTO(null, null, $hobbyDTO, null, $description, null, $time, null, null);
+
+  $uploadedFiles = saveFiles($images);
+  console.log($uploadedFiles);
+  $activityDTO = new ActivityDTO(null, null, $hobbyDTO, null, $description, null, $time, null, null, $uploadedFiles);
   $activityRepository = ActivityRepository::getInstance();
   echo json_encode($activityRepository->newActivity($activityDTO));
   }

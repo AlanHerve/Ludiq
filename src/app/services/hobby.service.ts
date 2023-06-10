@@ -1,4 +1,4 @@
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./api-url";
@@ -14,6 +14,13 @@ import {HobbyPostDTO} from "../models/hobby-post-dto";
 })
 export class HobbyService {
 
+  newPost!: HobbyPostDTO;
+
+  private messageSource = new Subject<string>();
+  currentMessage = this.messageSource.asObservable();
+
+  private needDelete = new Subject<number>();
+  currentDeleteState = this.needDelete.asObservable();
   constructor(private http: HttpClient) {}
 
   getAllHobbies(RequestDTO: RequestDTO): Observable<HobbyDTO[]> {
@@ -43,25 +50,24 @@ export class HobbyService {
     const params = new HttpParams()
       .set('function_to_call', "getHobbiesOfUser")
       .set('id_user', id_user);
-    console.log("getting hobbies of user "+id_user);
+
     return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
-        console.log(response)
+
         return response;
       })
     );
   }
 
-  getHobbiesFlashcardsOfUser(id_user: number): Observable<HobbyPostDTO[]>{
+  getHobbiesFlashcardsOfUser(id_user: number): Observable<{hobbies: HobbyPostDTO[]}>{
     const params = new HttpParams()
       .set('function_to_call', "getHobbiesFlashcardsOfUser")
       .set('id_user', id_user);
-    console.log("getting hobbies of : "+id_user);
-    return this.http.get<HobbyPostDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
+
+    return this.http.get<{hobbies: HobbyPostDTO[]}>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
-        console.log(response);
         return response;
       })
     );
@@ -74,24 +80,33 @@ export class HobbyService {
 
     return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
-        console.log(response);
         return response;
       })
     );
   }
 
+  getNewPost(){
+    return this.newPost;
+  }
 
-  newHobbyPost(hobbyPostDTO: HobbyPostDTO): Observable<any> {
-    let RequestDTO: RequestDTO = {
-      function_to_call: "newHobbyPost",
-      id_user: 2,
-      HobbyPostDTO: hobbyPostDTO
-    };
-
-    console.log("hey");
-    return this.http.post<HobbyRequestDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
-
+  destroyHobbyPost(id_hobby_post: number){
+    const params = new HttpParams()
+      .set('function_to_call', "destroyHobbyPost")
+      .set('id_hobby_post', id_hobby_post);
+    return this.http.get<String>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
+        this.needDelete.next(id_hobby_post);
+        return response;
+      })
+    );
+  }
+
+  newHobbyPost(hobbyPostDTO: HobbyPostDTO): Observable<{hobby: HobbyPostDTO}> {
+    return this.http.post<{hobby: HobbyPostDTO}>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+      map(response => {
+        this.newPost = response.hobby;
+        console.log(response);
+        this.messageSource.next("a");
         return response;
       })
     );

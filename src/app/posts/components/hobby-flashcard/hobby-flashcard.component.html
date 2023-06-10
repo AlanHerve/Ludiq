@@ -2,10 +2,12 @@
   <button [class.tag]="this.clicked" [class.h2]="!this.clicked">{{this.hobbyPost.hobby_name}}</button>
   <div *ngIf="this.clicked">
     <p>Availability</p>
-    <img src = "assets/images/icons/available.png">
+    <img *ngIf="this.hobbyPost.availability == 0" src = "assets/images/icons/heart.png">
+    <img *ngIf="this.hobbyPost.availability == 1" src = "assets/images/icons/available.png">
     <p>Level</p>
-    <button class = "level">Beginner</button>
+    <button class = "level">{{this.hobbyPost.advancement}}</button>
     <p>Frequency</p>
-    <button class = "frequency">1/2 a week</button>
+    <button class = "frequency">{{this.hobbyPost.frequency}}</button>
+    <a *ngIf="isOwner()" class="cross" (click)="onClose()">&times;</a>
   </div>
 </div>

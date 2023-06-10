@@ -99,9 +99,9 @@ export class SearchBarComponent implements OnInit {
     this.searchBarService.searchPost(searchText).subscribe({
       next: (response) => {
         response.forEach((post) => {
-          if (post.id_regular_post) {
+          if (post.id) {
             const postDTO = post;
-            const existingPost = this.searchResults.find(post => post.id_regular_post == postDTO.id_regular_post);
+            const existingPost = this.searchResults.find(post => post.id_regular_post == postDTO.id);
             if (!existingPost) {
               this.searchResults.push(postDTO);
             }

@@ -4,9 +4,13 @@ import {MessagesComponent} from "./messages.component";
 
 const routes: Routes = [
   {
+    path: '',
+    component: MessagesComponent,
+  },
+  {
     path: ':id',
     component: MessagesComponent,
-  }
+  },
 ];
 
 @NgModule({

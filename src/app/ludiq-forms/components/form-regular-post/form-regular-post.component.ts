@@ -34,7 +34,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
   hobbies : HobbyDTO[] = [];
 
   postDTO: PostDTO = {
-    id_regular_post: -1,
+    id: -1,
     userDTO: new UserDTO(-1, '', ''),
     hobbyDTO: new HobbyDTO(-1, '', ''),
     images: [null, null, null, null],
@@ -113,6 +113,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
 
   newRegularPost() {
     const formData = new FormData();
+    formData.append('new_post', '1');
     // @ts-ignore
     formData.append('id_hobby', this.postDTO.hobbyDTO.id);
     // @ts-ignore

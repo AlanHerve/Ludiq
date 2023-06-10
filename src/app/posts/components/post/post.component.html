@@ -22,10 +22,14 @@
     <!--<img *ngIf="image" alt="image" class="post-image" [src]="getFileUrl(image)">-->
   </div>
   <br>
-  <img alt="Like image" class="interaction" src="../../../../assets/images/icons/heart.png">
-  <span class="count">{{postDTO.likes}}</span>
-  <img alt="Comment image" class="interaction" src="../../../../assets/images/icons/comment.png">
-  <span class="count">0</span>
-
+  <img alt="Like image" class="interaction" [src]="isLiked ? '../../../../assets/images/icons/heart-liked.png' : '../../../../assets/images/icons/heart.png'" (click)="likePost()">
+  <span class="count">{{ postDTO.likes }}</span>
+  <img alt="Comment image" class="interaction" src="../../../../assets/images/icons/comment.png" (click)="showCommentBox = true">
+  <!--<span class="count">{{ postDTO.comments.length }}</span>
+  <div *ngIf="showCommentBox">
+    <input type="text" [(ngModel)]="newComment" placeholder="Ajouter un commentaire">
+    <button (click)="addComment()">Ajouter</button>
+  </div>-->
+  <a class="cross" (click)="onClose()">&times;</a>
 </div>
 

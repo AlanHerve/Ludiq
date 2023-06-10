@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {catchError, Observable, tap, throwError} from "rxjs";
 import {apiUrl} from "../../services/api-url";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
@@ -26,7 +26,7 @@ export class PostsService {
   }
 
   newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
-    return this.http.post<HobbyDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+    return this.http.post<HobbyPostDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
       map(response => {
         return response;
       })
@@ -38,6 +38,24 @@ export class PostsService {
     const params = new HttpParams().set('imageName', imageName);
     return this.http.get<Blob>(`${apiUrl}/images.php`, { params, ...options }).pipe(
       map(response => new Blob([response], { type: 'image/jpeg' }))
+    );
+  }
+
+  likePost(postId: number): Observable<any> {
+    const options = {'type': 'like', 'id_post': postId}
+    return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
+      map(response => {
+        return response;
+      })
+    );
+  }
+
+  unlikePost(postId: number): Observable<any> {
+    const options = {'type': 'unlike', 'id_post': postId}
+    return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
+      map(response => {
+        return response;
+      })
     );
   }
 }
