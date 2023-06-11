@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {UserDTO} from "../../models/user-dto";
-import {UserService} from "../../services/user.service";
+import {UserDTO} from "../../../../models/user-dto";
+import {UserService} from "../../../../services/user.service";
 
 @Component({
   selector: 'app-messages',

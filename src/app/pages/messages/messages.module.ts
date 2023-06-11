@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import {MessagesRoutingModule} from "./messages-routing.module";
 import {RouterOutlet} from "@angular/router";
-import {MessagesComponent} from "./messages.component";
+import {MessagesComponent} from "./components/messages/messages.component";
 import { MessageComponent } from './components/message/message.component';
 import { MessageListComponent } from './components/message-list/message-list.component';
 import {AsyncPipe, CommonModule, DatePipe} from "@angular/common";

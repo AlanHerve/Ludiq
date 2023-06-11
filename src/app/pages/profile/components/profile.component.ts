@@ -1,23 +1,23 @@
 import {Component} from '@angular/core';
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserDTO} from "../../models/user-dto";
-import {ProfileDTO} from "./models/profile-dto";
-import {ProfileService} from "./services/profile.service";
-import {ActivityDTO} from "../../posts/models/activity-dto";
-import {FriendService} from "../messages/services/friend.service";
-import {HobbyPostDTO} from "../../models/hobby-post-dto";
-import {HobbyDTO} from "../../models/hobby-dto";
-import {HobbyService} from "../../services/hobby.service";
-import {CommunicationService} from "../../services/communication.service";
-import {ActivityService} from "../../posts/services/activity.service";
-import {TabService} from "../../shared/service/tab.service";
+import {UserDTO} from "../../../models/user-dto";
+import {ProfileDTO} from "../models/profile-dto";
+import {ProfileService} from "../services/profile.service";
+import {ActivityDTO} from "../../../posts/models/activity-dto";
+import {FriendService} from "../../messages/services/friend.service";
+import {HobbyPostDTO} from "../../../models/hobby-post-dto";
+import {HobbyDTO} from "../../../models/hobby-dto";
+import {HobbyService} from "../../../services/hobby.service";
+import {CommunicationService} from "../../../services/communication.service";
+import {ActivityService} from "../../../posts/services/activity.service";
+import {TabService} from "../../../shared/service/tab.service";
 
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css', '../pages.css']
+  styleUrls: ['./profile.component.css', '../../pages.css']
 })
 export class ProfileComponent {
 

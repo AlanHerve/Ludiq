@@ -1,14 +1,10 @@
 import { NgModule } from '@angular/core';
 import {CoreModule} from "../core/core.module";
-import { NotificationsComponent } from './notifications/notifications.component';
-import { ActivityComponent } from './activity/components/activity.component';
-
-
+import { NotificationsComponent } from './notifications/components/notifications.component';
 
 @NgModule({
   declarations: [
-    NotificationsComponent,
-    ActivityComponent
+    NotificationsComponent
   ],
   exports: [
     CoreModule,

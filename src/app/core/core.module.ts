@@ -28,15 +28,16 @@ import { ActivitySearchComponent } from './components/search-bar/components/acti
     PostSearchComponent,
     ActivitySearchComponent
   ],
-  exports: [
-    NavigationBarComponent,
-    SearchBarComponent,
-    MightLikeHobbiesDisplayComponent,
-    UserHobbiesListComponent,
-    UserComponent,
-    CommonModule,
-    RouterOutlet,
-  ],
+    exports: [
+        NavigationBarComponent,
+        SearchBarComponent,
+        MightLikeHobbiesDisplayComponent,
+        UserHobbiesListComponent,
+        UserComponent,
+        CommonModule,
+        RouterOutlet,
+        UserSearchComponent,
+    ],
   imports: [
     CommonModule,
     RouterOutlet,

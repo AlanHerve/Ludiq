@@ -8,7 +8,6 @@ import {UserListComponent} from './components/user-list/user-list.component';
 import {UserComponent} from './components/user/user.component';
 import {TopActivityListComponent} from './components/top-activity-list/top-activity-list.component';
 import {TopActivityComponent} from './components/top-activity/top-activity.component';
-import {AppModule} from "../../app.module";
 import {BinderComponent} from "../../shared/components/binder/binder.component";
 import {TabComponent} from "../../shared/components/tab/tab.component";
 

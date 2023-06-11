@@ -1,1 +1,47 @@
-<p>activity works!</p>
+<div class="content">
+  <div *ngIf="activityDTO">
+    <div class="top-bar">
+      <div class = "user">
+        <app-user-search [userDTO]="activityDTO.userDTO"></app-user-search>
+      </div>
+      <p class="creation-date">Posted on : {{activityDTO.date_post | date:'dd/MM HH:mm' }}</p>
+    </div>
+    <div class="image-container">
+      <img class="top-image" src="assets/images/hobbies/{{activityDTO.hobbyDTO.image}}">
+    </div>
+    <div class = "information">
+      <table>
+        <tr>
+          <th>Hobby</th>
+          <th>Advancement</th>
+          <th>Users registered</th>
+        </tr>
+        <tr>
+          <td>
+            <button class="tag">{{activityDTO.hobbyDTO.name}}</button>
+          </td>
+          <td>
+            <button class="level">{{activityDTO.advancement}}</button>
+          </td>
+          <td>
+            <p class="num_registered">{{activityDTO.current_registered}}/{{activityDTO.max_registrations}}</p>
+          </td>
+        </tr>
+      </table>
+        </div>
+    <p class="date">Date of the activity : {{activityDTO.time | date:'dd/MM HH:mm'}}</p>
+
+    <div>
+      <p>Description</p>
+      <p class="description">{{activityDTO.description}}</p>
+    </div>
+    <div class = "register-container">
+      <button>Register for the activity</button>
+    </div>
+
+  </div>
+</div>
+<app-navigation-bar></app-navigation-bar>
+<app-user-hobbies-list></app-user-hobbies-list>
+
+<router-outlet></router-outlet>

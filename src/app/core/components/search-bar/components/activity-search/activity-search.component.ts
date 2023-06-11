@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivityDTO} from "../../../../../posts/models/activity-dto";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-activity-search',
@@ -8,8 +9,14 @@ import {ActivityDTO} from "../../../../../posts/models/activity-dto";
 })
 export class ActivitySearchComponent implements OnInit {
   @Input() activityDTO!: ActivityDTO;
+
+  constructor(private router: Router) {
+  }
   ngOnInit(): void {
   }
 
+  onActivityClicked(): void {
+    this.router.navigateByUrl(`activity/${this.activityDTO.id}`)
+  }
 
 }

@@ -18,7 +18,12 @@ const routes: Routes = [
     canActivate: [() => inject(AuthGuard).canActivate()]
   },
   {path: 'messages', loadChildren: () => import('./pages/messages/messages.module')
-      .then(m => m.MessagesModule)
+      .then(m => m.MessagesModule),
+    canActivate: [() => inject(AuthGuard).canActivate()]
+  },
+  {path: 'activity', loadChildren: () => import('./pages/activity/activity.module')
+      .then(m => m.ActivityModule),
+    canActivate: [() => inject(AuthGuard).canActivate()]
   },
   {
     path: 'organization/:id', loadChildren: () => import('./pages/organization/organization.module')

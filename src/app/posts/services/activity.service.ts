@@ -40,4 +40,11 @@ export class ActivityService {
       .set('type', 'all_activities')
     return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
   }
+
+  findActivityById(id: number): Observable<ActivityDTO> {
+    const params = new HttpParams()
+      .set('type', 'activity')
+      .set('activityId', id)
+    return this.http.get<ActivityDTO>(`${apiUrl}/activity.php`, {params});
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {  Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";

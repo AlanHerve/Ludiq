@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import {OrganizationDTO} from "../../models/organization-dto";
+import {OrganizationDTO} from "../../../models/organization-dto";
 import {ActivatedRoute} from "@angular/router";
-import {OrganizationService} from "../../services/organization.services";
-import {UserService} from "../../services/user.service";
+import {OrganizationService} from "../../../services/organization.services";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.css',  '../pages.css']
+  styleUrls: ['./organization.component.css',  '../../pages.css']
 })
 export class OrganizationComponent {
 
