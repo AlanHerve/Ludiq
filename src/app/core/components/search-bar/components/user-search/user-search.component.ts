@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {UserComponent} from "../../../../../pages/components/home/components/user/user.component";
+import {UserComponent} from "../../../../../pages/home/components/user/user.component";
 
 @Component({
   selector: 'app-user-search',

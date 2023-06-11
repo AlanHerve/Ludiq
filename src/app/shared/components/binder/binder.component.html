@@ -1,0 +1,3 @@
+<div class="binder" [ngStyle]="{ 'grid-template-columns': 'repeat(' + buttons.length + ', 1fr)' }">
+  <app-tab *ngFor="let tab of buttons" [tab]="tab" [isActive]="tab === activeTab" (click)="onSwitchTo(tab)"></app-tab>
+</div>

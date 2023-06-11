@@ -2,27 +2,26 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { inject } from '@angular/core';
-import {OrganizationComponent} from "./pages/components/organization/organization.component";
 
 const routes: Routes = [
   {
-    path: 'hub', loadChildren: () => import('./pages/components/hub/hub.module').then(m=>m.HubModule)
+    path: 'hub', loadChildren: () => import('./pages/hub/hub.module').then(m=>m.HubModule)
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/components/home/home.module').then(m=>m.HomeModule),
+    loadChildren: () => import('./pages/home/home.module').then(m=>m.HomeModule),
     canActivate: [() => inject(AuthGuard).canActivate()]
   },
   {
     path: 'profile/:id',
-    loadChildren: () => import('./pages/components/profile/profile.module').then(m=>m.ProfileModule),
+    loadChildren: () => import('./pages/profile/profile.module').then(m=>m.ProfileModule),
     canActivate: [() => inject(AuthGuard).canActivate()]
   },
-  {path: 'messages', loadChildren: () => import('./pages/components/messages/messages.module')
+  {path: 'messages', loadChildren: () => import('./pages/messages/messages.module')
       .then(m => m.MessagesModule)
   },
   {
-    path: 'organization/:id', loadChildren: () => import('./pages/components/organization/organization.module')
+    path: 'organization/:id', loadChildren: () => import('./pages/organization/organization.module')
       .then(m => m.OrganizationModule)
   },
   /*{

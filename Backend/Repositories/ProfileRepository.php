@@ -41,7 +41,6 @@ class ProfileRepository
         $activitiesDTO = $this->activityRepository->getUserActivities($id_user);
 
         return new ProfileDTO($userDTO, $numPosts, $numFriends, $numHobbies, $postsDTO, $activitiesDTO);
-
     }
 
 }

@@ -8,7 +8,6 @@ include("../Repositories/ProfileRepository.php");
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
     $profileRepository = ProfileRepository::getInstance();
     echo json_encode($profileRepository->getProfileInformation($_GET['id_user']));
 }

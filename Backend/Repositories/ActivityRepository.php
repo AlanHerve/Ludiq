@@ -121,7 +121,7 @@ class ActivityRepository
             return $activitiesDTO;
         }
 
-        return null;
+        return [];
     }
 
     public function getAllActivities()
