@@ -13,6 +13,7 @@
   padding: 50px 100px;
 
   transition: transform 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .activity-background:hover{
