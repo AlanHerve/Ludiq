@@ -46,6 +46,9 @@
         <ng-template #friendBlock>
           <button (click)="removeFriend()" class="button2">Remove friend</button>
         </ng-template>
+
+        <button *ngIf="isWaitingAcceptation()" (click)="removeFriend()" class="button2">Cancel friendship request</button>
+
       </div>
     </ng-template>
     <div class="binder">

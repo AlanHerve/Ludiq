@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2023 at 10:26 AM
+-- Generation Time: Jun 10, 2023 at 05:43 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -169,15 +169,11 @@ INSERT INTO `hobby_post` (`ID_HOBBY_POST`, `ID_HOBBY`, `ID_USER`, `EXPERIENCE`, 
 (2, 1, 3, 'Advanced', '2-3/week', 0),
 (3, 1, 4, 'Advanced', 'Weekly', 1),
 (4, 9, 4, 'Expert', 'Monthly', 1),
-(5, 10, 2, 'Intermediate', 'Daily', 1),
 (6, 16, 2, 'Expert', '2-3/week', 0),
-(7, 5, 2, 'Advanced', 'Monthly', 0),
 (8, 2, 2, 'Beginner', 'Daily', 0),
-(21, 3, 2, 'Beginner', 'Daily', 1),
-(22, 4, 2, 'Beginner', 'Daily', 1),
-(23, 6, 2, 'Beginner', 'Daily', 1),
-(24, 7, 2, 'Expert', 'Daily', 1),
-(25, 8, 2, 'Beginner', 'Daily', 1);
+(26, 3, 2, 'Beginner', 'Daily', 1),
+(27, 9, 2, 'Beginner', 'Daily', 1),
+(28, 4, 2, 'Beginner', 'Daily', 1);
 
 -- --------------------------------------------------------
 
@@ -202,19 +198,21 @@ CREATE TABLE `message` (
 CREATE TABLE `organization` (
   `ID_ORGANIZATION` int(11) NOT NULL,
   `NAME_ORGANIZATION` varchar(64) NOT NULL,
-  `AVATAR` varchar(120) DEFAULT NULL
+  `AVATAR` varchar(120) DEFAULT NULL,
+  `DESCRIPTION` varchar(64) DEFAULT NULL,
+  `FAVORITE_HOBBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `organization`
 --
 
-INSERT INTO `organization` (`ID_ORGANIZATION`, `NAME_ORGANIZATION`, `AVATAR`) VALUES
-(1, 'Indépendant', NULL),
-(2, 'AE', NULL),
-(3, 'Troll Penché', NULL),
-(4, 'Cook\'UT', NULL),
-(5, 'Arrêt Dessin', NULL);
+INSERT INTO `organization` (`ID_ORGANIZATION`, `NAME_ORGANIZATION`, `AVATAR`, `DESCRIPTION`, `FAVORITE_HOBBY`) VALUES
+(1, 'Indépendant', NULL, NULL, NULL),
+(2, 'AE', NULL, NULL, NULL),
+(3, 'Troll Penché', NULL, NULL, NULL),
+(4, 'Cook\'UT', NULL, NULL, NULL),
+(5, 'Arrêt Dessin', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -248,18 +246,19 @@ CREATE TABLE `user` (
   `USER_PSEUDO` varchar(20) NOT NULL,
   `USER_PASSWORD` varchar(500) NOT NULL,
   `EMAIL` varchar(60) NOT NULL,
-  `AVATAR` varchar(60) DEFAULT NULL
+  `AVATAR` varchar(60) DEFAULT NULL,
+  `FAVORITE_HOBBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`ID_USER`, `USER_NAME`, `USER_PSEUDO`, `USER_PASSWORD`, `EMAIL`, `AVATAR`) VALUES
-(2, 'Alan', 'Alan', '$2y$10$mTVn.8PWcUhvUEMmethDxehWaTfDMVEO5haxH8QNf0jcUcN1q2jZW', 'alan@gmail.com', NULL),
-(3, 'Tegg', 'Tegg', '$2y$10$bQtqW3WS/LLj12H6AYha3uvW1z8xYRTWWElmQq88zFJq6DGuCvXua', 'Tegg@gmail.com', NULL),
-(4, 'Sand', 'Sand', '$2y$10$9yzrcEouJzVE1FQidXVVjuRMwriCsqKJ3J3MEFNndKTz5fnGiKWOW', 'Sand@gmail.com', NULL),
-(5, 'Tact', 'Tact', '$2y$10$BzPR88BwQBMYKYnA04.NsOFWAmettI9.7t.SLzN01LQKLO4C8kzBa', 'tact@gmail.com', NULL);
+INSERT INTO `user` (`ID_USER`, `USER_NAME`, `USER_PSEUDO`, `USER_PASSWORD`, `EMAIL`, `AVATAR`, `FAVORITE_HOBBY`) VALUES
+(2, 'Alan', 'Alan', '$2y$10$mTVn.8PWcUhvUEMmethDxehWaTfDMVEO5haxH8QNf0jcUcN1q2jZW', 'alan@gmail.com', NULL, NULL),
+(3, 'Tegg', 'Tegg', '$2y$10$bQtqW3WS/LLj12H6AYha3uvW1z8xYRTWWElmQq88zFJq6DGuCvXua', 'Tegg@gmail.com', NULL, NULL),
+(4, 'Sand', 'Sand', '$2y$10$9yzrcEouJzVE1FQidXVVjuRMwriCsqKJ3J3MEFNndKTz5fnGiKWOW', 'Sand@gmail.com', NULL, NULL),
+(5, 'Tact', 'Tact', '$2y$10$BzPR88BwQBMYKYnA04.NsOFWAmettI9.7t.SLzN01LQKLO4C8kzBa', 'tact@gmail.com', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -321,7 +320,8 @@ ALTER TABLE `message`
 -- Indexes for table `organization`
 --
 ALTER TABLE `organization`
-  ADD PRIMARY KEY (`ID_ORGANIZATION`);
+  ADD PRIMARY KEY (`ID_ORGANIZATION`),
+  ADD KEY `FAVORITE_HOBBY` (`FAVORITE_HOBBY`);
 
 --
 -- Indexes for table `regular_post`
@@ -335,7 +335,8 @@ ALTER TABLE `regular_post`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`ID_USER`);
+  ADD PRIMARY KEY (`ID_USER`),
+  ADD KEY `FAVORITE_HOBBY` (`FAVORITE_HOBBY`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -357,7 +358,7 @@ ALTER TABLE `hobby`
 -- AUTO_INCREMENT for table `hobby_post`
 --
 ALTER TABLE `hobby_post`
-  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `message`
@@ -430,11 +431,23 @@ ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`ID_USER_2`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `organization`
+--
+ALTER TABLE `organization`
+  ADD CONSTRAINT `organization_ibfk_1` FOREIGN KEY (`FAVORITE_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE SET NULL;
+
+--
 -- Constraints for table `regular_post`
 --
 ALTER TABLE `regular_post`
   ADD CONSTRAINT `regular_post_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `regular_post_ibfk_2` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`FAVORITE_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

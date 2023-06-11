@@ -39,7 +39,7 @@ export class ProfileComponent {
     numFriends: 0,
     postsDTO: []
   }
-  private isFriendWith: boolean = false;
+  private friendship_status: string = "!friend";
 
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,
@@ -59,9 +59,10 @@ export class ProfileComponent {
     this.activatedRoute.params.subscribe(params => {
       this.profileDTO.userDTO.id = parseInt(params['id']);
     })
-    this.friendService.isFriendWidth(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
+    this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
-        this.isFriendWith = response;
+        console.log(response);
+        this.friendship_status = response;
       },
       error: (error) => {
         console.log("Error while finding if the user is friend with another", error)
@@ -102,7 +103,7 @@ export class ProfileComponent {
       error: (error) => {
         console.log('error while accessing to profile informations : ', error);
       }
-    })
+    });
   }
 
   getHobbiesFlashcardsOfUser(){
@@ -111,9 +112,12 @@ export class ProfileComponent {
       next: (response) => {
         // in case of success
         console.log(response);
-        for (let i = 0; i < response.hobbies.length; i++) {
-          this.hobbyFlashcardsDTOs.push(response.hobbies[i]);
+        if(response.hobbies){
+          for (let i = 0; i < response.hobbies.length; i++) {
+            this.hobbyFlashcardsDTOs.push(response.hobbies[i]);
+          }
         }
+
 
       },
       error: (error) => {
@@ -135,7 +139,11 @@ export class ProfileComponent {
   }
 
   isFriend(): boolean {
-    return this.isFriendWith;
+    return this.friendship_status == "friend";
+  }
+
+  isWaitingAcceptation(): boolean {
+    return this.friendship_status == "waiting"
   }
 
   onSwitchTo(type: string): void {
@@ -149,11 +157,32 @@ export class ProfileComponent {
 
 
   addFriend(): void {
-    this.friendService.addFriend(this.profileDTO.userDTO.id);
+    const id_user = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
+    this.friendService.addFriend(id_user, this.profileDTO.userDTO.id).subscribe({
+      next: (response) => {
+        if(response=="friend") this.friendship_status = response;
+        else console.log("Could not add friend");
+        console.log(response);
+      },
+      error: (error) => {
+        console.log("Error adding friend", error)
+      }
+    });
   }
 
   removeFriend(): void {
-
+    const id_user = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
+    this.friendService.removeFriend(id_user, this.profileDTO.userDTO.id).subscribe({
+      next: (response) => {
+        if(response=="success") this.friendship_status = "!friend";
+        else console.log("Could not remove friendship");
+        console.log(response);
+      },
+      error: (error) => {
+        console.log("Error removing friend", error)
+      }
+    });
   }
+
 
 }

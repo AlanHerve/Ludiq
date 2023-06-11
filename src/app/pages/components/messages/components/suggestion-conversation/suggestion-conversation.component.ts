@@ -27,7 +27,7 @@ export class SuggestionConversationComponent implements OnInit {
   }
 
   onConversationClicked(): void {
-    this.router.navigateByUrl('messages/'+this.conversationDTO.userDTO.id);
+    this.router.navigateByUrl('messages/'+this.conversationDTO.userDTO.user.id);
   }
 
 }

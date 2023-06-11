@@ -18,7 +18,7 @@ export class SuggestionConversationListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let id_user = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
+    const id_user = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
     this.conversationService.getAllConversations(id_user).subscribe({
       next: (conversations) => {
         this.conversationsDTO = conversations;
