@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2023 at 05:43 PM
+-- Generation Time: Jun 11, 2023 at 12:45 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -37,7 +37,7 @@ CREATE TABLE `activity` (
   `DATE_ACTIVITY` date DEFAULT NULL,
   `CURRENT_REGISTERED` int(4) DEFAULT 1,
   `MAX_REGISTRATIONS` int(4) NOT NULL DEFAULT 10,
-  `IMAGE` varchar(60) DEFAULT NULL
+  `IMAGE` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
@@ -97,16 +97,18 @@ CREATE TABLE `comment` (
 
 CREATE TABLE `friends` (
   `ID_USER` int(11) NOT NULL,
-  `ID_USER_2` int(11) NOT NULL
+  `ID_USER_2` int(11) NOT NULL,
+  `WAITING` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `friends`
 --
 
-INSERT INTO `friends` (`ID_USER`, `ID_USER_2`) VALUES
-(2, 3),
-(4, 5);
+INSERT INTO `friends` (`ID_USER`, `ID_USER_2`, `WAITING`) VALUES
+(2, 3, 1),
+(4, 5, 1),
+(2, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -223,12 +225,12 @@ INSERT INTO `organization` (`ID_ORGANIZATION`, `NAME_ORGANIZATION`, `AVATAR`, `D
 CREATE TABLE `regular_post` (
   `ID_REGULAR_POST` int(11) NOT NULL,
   `ID_USER` int(11) NOT NULL,
-  `ID_HOBBY` int(11) NOT NULL,
+  `ID_HOBBY` int(11) DEFAULT NULL,
   `DESCRIPTION` text DEFAULT NULL,
-  `IMAGE1` varchar(60) DEFAULT NULL,
-  `IMAGE2` varchar(60) DEFAULT NULL,
-  `IMAGE3` varchar(60) DEFAULT NULL,
-  `IMAGE4` varchar(60) DEFAULT NULL,
+  `IMAGE1` varchar(200) DEFAULT NULL,
+  `IMAGE2` varchar(200) DEFAULT NULL,
+  `IMAGE3` varchar(200) DEFAULT NULL,
+  `IMAGE4` varchar(200) DEFAULT NULL,
   `MODIFIED` int(1) DEFAULT 0,
   `LIKES` int(11) DEFAULT 0,
   `TIME` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
