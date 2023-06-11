@@ -14,6 +14,7 @@
       <app-user-list [id_hobby]="id_hobby"></app-user-list>
     </div>
     <app-post-list [postsDTO]="postsDTO" *ngIf="type === 'posts'"></app-post-list>
+    <app-activity-list [activitiesDTO]="activitiesDTO" *ngIf="type === 'activities'"></app-activity-list>
   </div>
   <app-navigation-bar></app-navigation-bar>
   <app-user-hobbies-list></app-user-hobbies-list>

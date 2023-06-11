@@ -10,6 +10,7 @@ import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {HobbyService} from "../../../services/hobby.service";
 import {CommunicationService} from "../../../services/communication.service";
+import {ActivityService} from "../../../posts/services/activity.service";
 
 
 @Component({
@@ -19,13 +20,7 @@ import {CommunicationService} from "../../../services/communication.service";
 })
 export class ProfileComponent {
 
-  activitiesDTO: ActivityDTO[] = [
-    /*new ActivityDTO(1, 'Cooking session', 2, 2, 'It\'s fun', [], 0, '', []),
-    new ActivityDTO(1, 'Biking with friends', 2, 2, 'We like sport, come with us!', [], 0, '', []),
-    new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', []),
-    new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', []),
-    new ActivityDTO(1, 'Picnic', 2, 2, 'At the Forges Pond, don\'t miss it!!', [], 0, '', [])*/
-  ]
+  activitiesDTO: ActivityDTO[] = []
 
 
   protected favoriteHobby!: HobbyDTO;
@@ -37,7 +32,8 @@ export class ProfileComponent {
     numPosts: 0,
     numHobbies: 0,
     numFriends: 0,
-    postsDTO: []
+    postsDTO: [],
+    activitiesDTO: []
   }
   private friendship_status: string = "!friend";
 
@@ -47,14 +43,12 @@ export class ProfileComponent {
               private hobbyService: HobbyService,
               private friendService: FriendService,
               private communicationService: CommunicationService,
+              private activityService: ActivityService,
               private router: Router) {
   }
 
   ngOnInit() {
-
-
     this.favoriteHobby = new HobbyDTO(2, 'Cooking', 'assets/images/hobbies/Cooking.jpg');
-
 
     this.activatedRoute.params.subscribe(params => {
       this.profileDTO.userDTO.id = parseInt(params['id']);
@@ -70,7 +64,6 @@ export class ProfileComponent {
     });
 
     this.getHobbiesFlashcardsOfUser();
-
     this.getProfileInformation();
 
     this.hobbyService.currentMessage.subscribe((data)=>{

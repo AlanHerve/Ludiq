@@ -1,8 +1,11 @@
 <?php
 require_once '../Database.php';
 require_once '../DTOs/ActivityDTO.php';
+require_once '../DTOs/HobbyDTO.php';
+require_once '../DTOs/UserDTO.php';
 require_once '../Repositories/UserRepository.php';
 require_once '../Repositories/HobbyRepository.php';
+
 
 class ActivityRepository
 {
@@ -10,6 +13,7 @@ class ActivityRepository
     private $db;
     private $userRepository;
     private $hobbyRepository;
+
     //private $OrganizationRepository;
 
     public function __construct()
@@ -82,9 +86,9 @@ class ActivityRepository
 
         if ($result->num_rows > 0) {
             $activitiesDTO = [];
-            while($row = $result->fetch_assoc()){
+            while ($row = $result->fetch_assoc()) {
                 $activityDTO = $this->findActivityById($row['ID_ACTIVITY']);
-                if($activityDTO)
+                if ($activityDTO)
                     $activitiesDTO[] = $activityDTO;
             }
             return $activitiesDTO;
@@ -92,7 +96,8 @@ class ActivityRepository
         return null;
     }
 
-    private function findActivityById($id_activity) {
+    private function findActivityById($id_activity)
+    {
         $stmt = $this->db->prepare("
             SELECT
                 act.*
@@ -104,13 +109,94 @@ class ActivityRepository
         $stmt->bind_param('i', $id_activity);
         $stmt->execute();
         $result = $stmt->get_result();
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $userDTO = $this->userRepository->findUserById($row['ID_ACTIVITY_DIRECTOR']);
+            $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
+            return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
+                $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'],
+                $row['MAX_REGISTRATIONS'], null);
+        }
+        return null;
+    }
+
+
+    public function getUserActivities($id_user)
+    {
+        $stmt = $this->db->prepare("
+            SELECT
+                act.ID_ACTIVITY
+            FROM
+                user u
+            INNER JOIN activity act
+                ON act.ID_ACTIVITY_DIRECTOR = u.ID_USER
+            WHERE
+                act.ID_ACTIVITY_DIRECTOR = ?
+            ;
+        ");
+        $stmt->bind_param('i', $id_user);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $activitiesDTO = [];
+            while ($row = $result->fetch_assoc()) {
+                $activityDTO = $this->getActivityById($row['ID_ACTIVITY']);
+                $activitiesDTO[] = $activityDTO;
+            }
+            return $activitiesDTO;
+        }
+
+        return null;
+    }
+
+    public function getAllActivities()
+    {
+        $stmt = $this->db->prepare("
+            SELECT
+                act.ID_ACTIVITY
+            FROM
+                activity act
+            ;
+        ");
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $activitiesDTO = [];
+            while ($row = $result->fetch_assoc()) {
+                $activityDTO = $this->getActivityById($row['ID_ACTIVITY']);
+                $activitiesDTO[] = $activityDTO;
+            }
+            return $activitiesDTO;
+        }
+
+        return null;
+    }
+
+    private function getActivityById($id_activity)
+    {
+        $stmt = $this->db->prepare("
+            SELECT
+                act.*
+            FROM
+                activity act
+            WHERE
+                act.ID_ACTIVITY = ?
+        ");
+
+        $stmt->bind_param('i', $id_activity);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
         if($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $userDTO = $this->userRepository->findUserById($row['ID_ACTIVITY_DIRECTOR']);
             $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
-            return new ActivityDTO( $row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
-                                    $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'],
-                                    $row['MAX_REGISTRATIONS'], null);
+
+            return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
+                                $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'], $row['MAX_REGISTRATIONS'], $row['IMAGE']);
         }
         return null;
     }

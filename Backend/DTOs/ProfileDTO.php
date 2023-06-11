@@ -8,14 +8,16 @@ class ProfileDTO {
     public int $numFriends;
     /** @var PostDTO[] */
     public array $postsDTO;
+    public array $activitiesDTO;
 
-    public function __construct($userDTO, $numPosts, $numFriends, $numHobbies, $postsDTO)
+    public function __construct($userDTO, $numPosts, $numFriends, $numHobbies, $postsDTO, $activitiesDTO)
     {
         $this->userDTO = $userDTO;
         $this->numPosts = $numPosts;
         $this->numHobbies = $numHobbies;
         $this->numFriends = $numFriends;
         $this->postsDTO = $postsDTO;
+        $this->activitiesDTO = $activitiesDTO;
     }
 
 }

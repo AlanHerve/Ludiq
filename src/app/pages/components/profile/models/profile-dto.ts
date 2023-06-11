@@ -10,7 +10,7 @@ export class ProfileDTO {
               public numHobbies: number,
               public numFriends: number,
               public postsDTO: PostDTO[],
-              public activitesDTO?: ActivityDTO[],
+              public activitiesDTO: ActivityDTO[],
               public favoriteHobby?: HobbyDTO) {
   }
 }

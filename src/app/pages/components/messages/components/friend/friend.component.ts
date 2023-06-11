@@ -36,7 +36,7 @@ export class FriendComponent implements OnInit {
     return this.friendDTO.requester == this.friendDTO.user.id;
   }
 
-  accecptFriendship() {
+  acceptFriendship() {
     const user_id = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
     this.friendService.acceptFriendship(this.friendDTO.user.id, user_id).subscribe({
       next: (response) => {

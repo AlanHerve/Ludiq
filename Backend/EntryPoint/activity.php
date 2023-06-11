@@ -41,6 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $activityRepository = ActivityRepository::getInstance();
             echo json_encode($activityRepository->getTop3());
         }
+        if ($_GET['type'] === 'all_activities') {
+            $activityRepository = ActivityRepository::getInstance();
+            echo json_encode($activityRepository->getAllActivities());
+        }
     }
 }
 

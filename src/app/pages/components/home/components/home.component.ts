@@ -4,6 +4,7 @@ import {PostsService} from "../../../../posts/services/posts.service";
 import {Location} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {ActivityDTO} from "../../../../posts/models/activity-dto";
+import {ActivityService} from "../../../../posts/services/activity.service";
 
 @Component({
   selector: 'app-home',
@@ -18,12 +19,25 @@ export class HomeComponent implements OnInit {
 
   constructor(private postsService: PostsService,
               private location: Location,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private activityService: ActivityService) {
   }
 
   ngOnInit(): void {
     this.displayPosts();
+    this.getAllActivities();
+  }
 
+  getAllActivities(): void {
+    this.activityService.getAllActivites().subscribe({
+      next: (response) => {
+        this.activitiesDTO = response;
+        console.log("Successfully got all activities :", response)
+      },
+      error: (error) => {
+        console.log("Error while trying to find all activities : ", error)
+      }
+    })
   }
 
   displayPosts(): void {

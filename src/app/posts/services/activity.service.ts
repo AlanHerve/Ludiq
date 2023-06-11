@@ -34,4 +34,10 @@ export class ActivityService {
       .set('type', 'top3');
     return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
   }
+
+  getAllActivites(): Observable<ActivityDTO[]> {
+    const params = new HttpParams()
+      .set('type', 'all_activities')
+    return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
+  }
 }

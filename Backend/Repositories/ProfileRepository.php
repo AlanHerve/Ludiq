@@ -1,28 +1,28 @@
 <?php
 
-require_once('../Database.php');
 require_once('../DTOs/ProfileDTO.php');
 require_once('../Repositories/UserRepository.php');
 require_once('../Repositories/PostRepository.php');
 require_once('../Repositories/HobbyRepository.php');
 require_once('../Repositories/FriendRepository.php');
+require_once('../Repositories/ActivityRepository.php');
 
 class ProfileRepository
 {
-    private $db;
     private static $instance = null;
 
     private $userRepository;
     private $postRepository;
     private $hobbyRepository;
     private $friendRepository;
+    private $activityRepository;
 
     public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
         $this->userRepository = UserRepository::getInstance();
         $this->postRepository = PostRepository::getInstance();
         $this->hobbyRepository = HobbyRepository::getInstance();
         $this->friendRepository = FriendRepository::getInstance();
+        $this->activityRepository = ActivityRepository::getInstance();
     }
     public static function getInstance() {
         if(!self::$instance) {
@@ -36,11 +36,11 @@ class ProfileRepository
         $numPosts = $this->postRepository->getNumPosts($id_user);
         $numHobbies = $this->hobbyRepository->getNumHobbies($id_user);
         $userDTO = $this->userRepository->findUserById($id_user);
-        $userPosts = $this->postRepository->getUserPosts($id_user);
+        $postsDTO = $this->postRepository->getUserPosts($id_user);
         $numFriends = $this->friendRepository->getNumFriends($id_user);
-        $hobbyPostsDTO = $this->postRepository->getHobbiesFlashcardsOfUser($id_user);
+        $activitiesDTO = $this->activityRepository->getUserActivities($id_user);
 
-        return new ProfileDTO($userDTO, $numPosts, $numFriends, $numHobbies, $userPosts, $hobbyPostsDTO);
+        return new ProfileDTO($userDTO, $numPosts, $numFriends, $numHobbies, $postsDTO, $activitiesDTO);
 
     }
 
