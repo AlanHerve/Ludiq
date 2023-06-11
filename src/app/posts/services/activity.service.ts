@@ -20,8 +20,13 @@ export class ActivityService {
       map(response => new Blob([response], { type: 'image/jpeg' }))
     );
   }
-  newActivity(formData: FormData): Observable<any> {
-    return this.http.post<any>(`${apiUrl}/activity.php`, formData);
+  newActivity(formData: FormData): Observable<string> {
+    return this.http.post<string>(`${apiUrl}/activity.php`, formData).pipe(
+      map(response => {
+        console.log(response);
+        return response;
+      })
+    );;
   }
   getAllActivity(): Observable<ActivityDTO[]> {
     const params = new HttpParams()

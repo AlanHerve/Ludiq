@@ -75,12 +75,15 @@ export class FormActivityComponent implements OnInit {
       next: (response) => {
         this.activityDTO.userDTO = response;
         console.log("Valeur de response :", response);
+        console.log("test de alan <3 " + this.activityDTO.userDTO.id);
 
         this.hobbyService.getAllHobbies().subscribe({
           next: (hobbies) => {
-            console.log("Valeur des hobbies :", hobbies);
-            // Utilisez les données des hobbies ici, par exemple :
-            // this.activityDTO.hobbies = hobbies;
+            console.log(hobbies);
+            console.log(hobbies.hobbies.length)
+            for (let i = 0; i < hobbies.hobbies.length; i++) {
+              this.hobbies.push(hobbies.hobbies[i]);
+            }
           },
           error: (error) => {
             console.log("Erreur lors de l'appel à getAllHobbies() :", error);
@@ -160,9 +163,14 @@ export class FormActivityComponent implements OnInit {
     // @ts-ignore
     formData.append('id_hobby', this.activityDTO.hobbyDTO.id);
     // @ts-ignore
-    formData.append('id_activity', this.activityDTO.id_activity);
+    //formData.append('id_activity', this.activityDTO.id_activity);
     formData.append('time', this.activityDTO.time.toString());
     formData.append('description', this.activityDTO.description);
+    // @ts-ignore
+    this.activityDTO.max_registrations = this.activityForm.value.number;
+    formData.append('max_registration',this.activityDTO.max_registrations.toString());
+    formData.append('advancement',this.activityDTO.advancement);
+    console.log(this.activityDTO.max_registrations);
 
     const fileName = this.activityDTO.images[0]; // Assuming it's a string representing the file name
     if (fileName != null) {

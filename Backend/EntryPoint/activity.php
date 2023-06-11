@@ -14,18 +14,11 @@ require_once "../Repositories/ActivityRepository.php";
 require_once "../Repositories/UserRepository.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $userRepository = UserRepository::getInstance();
-  $userDTO = $userRepository->findUserById($_POST['id_user']);
-  echo 'UserDTO: ';
-  var_dump($userDTO);
+    $body = file_get_contents('php://input');
+    $data = json_decode($body, true);
 
   //$userDTO = new UserDTO($_POST['user_id'], $_POST['user_name'], $_POST['user_username']);
 
-  if ($_POST['id_hobby'] != -1) $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
-  else $hobbyDTO = new HobbyDTO(null);
-
-  $description = $_POST['description'];
-  $time = $_POST['time'];
 
   /*if (isset($data['modified'])) {
     $modified = $data['modified'];
@@ -33,13 +26,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   /*$images = $_FILES['images'];
 
+
   $uploadedFiles = saveFiles($images);*/
 
-  $activityDTO = new ActivityDTO(null, $userDTO, $hobbyDTO, null, $description, null, $time, null, null, null);
+    //$user = $data['id_user'];
 
+    if(isset($_POST['id_user']) && isset($_POST['id_hobby']) && isset($_POST['advancement']) && isset($_POST['description']) && isset($_POST['time']) && isset($_POST['max_registration']))
+    {
 
-  $activityRepository = ActivityRepository::getInstance();
-  $result = $activityRepository->newActivity($activityDTO);
+        $value = $_POST['max_registration'];
+        echo json_encode("Phooey");
+        $activityDTO = new ActivityDTO(null, $_POST['id_user'], $_POST['id_hobby'], $_POST['advancement'], $_POST['description'], null, $_POST['time'], null, $_POST['max_registration'], null);
+        $activityRepository = ActivityRepository::getInstance();
+        $result = $activityRepository->newActivity($activityDTO);
+        echo $result;
+    }//description, time, max_registration
+  /*$activityRepository = ActivityRepository::getInstance();
+  $result = $activityRe pository->newActivity($activityDTO);*/
 }
 
 

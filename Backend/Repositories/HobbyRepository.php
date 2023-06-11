@@ -25,7 +25,7 @@ class HobbyRepository
         return self::$instance;
     }
 
-    public function fetchAllHobbies()
+    public function getAllHobbies()
     {
 
         $hobbies = [];

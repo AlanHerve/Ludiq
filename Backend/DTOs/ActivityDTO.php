@@ -32,6 +32,10 @@ class ActivityDTO
     $this->max_registrations = $max_registrations;
     $this->images = $images;
   }
+
+  public function setID($id){
+      $this->id = $id;
+  }
 }
 
 

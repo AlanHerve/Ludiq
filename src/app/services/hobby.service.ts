@@ -24,14 +24,16 @@ export class HobbyService {
   currentDeleteState = this.needDelete.asObservable();
   constructor(private http: HttpClient) {}
 
-  getAllHobbies(): Observable<HobbyDTO[]> {
+  getAllHobbies(): Observable<{hobbies: HobbyDTO[]}> {
     const params = new HttpParams()
       .set('function_to_call', "getAllHobbies");
 
     //const function_to_call: string = "fetchALLHobbies";
-    return this.http.get<HobbyDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
+    return this.http.get<{hobbies: HobbyDTO[]}>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
+        console.log(response);
         return response;
+
       })
     );
   }
