@@ -54,43 +54,6 @@ class PostRepository
             );
         }
 
-        return $response;
-    }
-
-    public function likePost($postId)
-    {
-        $stmt = $this->db->prepare("UPDATE regular_post SET LIKES = LIKES + 1 WHERE ID_REGULAR_POST = ?");
-        $stmt->bind_param("i", $postId);
-        $stmt->execute();
-
-        if ($stmt->affected_rows > 0) {
-            $response = array(
-                'success' => true
-            );
-        } else {
-            $response = array(
-                'success' => false
-            );
-        }
-
-        return json_encode($response);
-    }
-
-    public function unlikePost($postId)
-    {
-        $stmt = $this->db->prepare("UPDATE regular_post SET LIKES = LIKES - 1 WHERE ID_REGULAR_POST = ?");
-        $stmt->bind_param("i", $postId);
-        $stmt->execute();
-
-        if ($stmt->affected_rows > 0) {
-            $response = array(
-                'success' => true
-            );
-        } else {
-            $response = array(
-                'success' => false
-            );
-        }
         return json_encode($response);
     }
 
@@ -121,7 +84,7 @@ class PostRepository
         return [];
     }
 
-    public function findPostById($id)
+    private function findPostById($id)
     {
         $stmt = $this->db->prepare("
         SELECT
@@ -151,7 +114,6 @@ class PostRepository
             return new PostDTO($row['ID_REGULAR_POST'], $userDTO, $hobbyDTO, $row['DESCRIPTION'],
                 $images, $row['MODIFIED'], $row['LIKES'], $row['TIME']);
         }
-        return null;
     }
 
     public function getAllPosts()
