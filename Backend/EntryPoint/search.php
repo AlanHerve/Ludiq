@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     else if($searchType === 'post') {
         $searchRepository = SearchRepository::getInstance();
         $output = $searchRepository->searchPost($searchTerm);
+
     }
 
     echo $output;

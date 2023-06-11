@@ -16,12 +16,10 @@ import {MessagesModule} from "./components/messages/messages.module";
     NotificationsComponent
   ],
   exports: [
+    CoreModule,
   ],
   imports: [
-    CommonModule,
-    RouterOutlet,
     CoreModule,
-    MessagesModule
   ]
 })
 export class PagesModule { }

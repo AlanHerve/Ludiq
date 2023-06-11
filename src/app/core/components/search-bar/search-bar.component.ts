@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {SearchBarService} from "../../services/search-bar.service";
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {UserDTO} from "../../../models/user-dto";
 
 import { Router } from '@angular/router';
+import {PostDTO} from "../../../posts/models/post-dto";
 
 @Component({
   selector: 'app-search-bar',
@@ -20,6 +21,29 @@ export class SearchBarComponent implements OnInit {
     this.buttons[2] = false;
     this.buttons[3] = false;
   }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+    const searchContainer = document.querySelector('.search-bar') as HTMLElement;
+    const menu = document.querySelector('.menu') as HTMLElement;
+    const listItems = document.querySelectorAll('.result li');
+
+    let isListItemClicked = false;
+    for (let i = 0; i < listItems.length; i++) {
+      if (listItems[i].contains(targetElement)) {
+        isListItemClicked = true;
+        break;
+      }
+    }
+
+    if (!searchContainer.contains(targetElement) || isListItemClicked) {
+      menu.classList.remove('open');
+    }
+  }
+
+
+
 
   ngOnInit(): void {
     const textarea = document.querySelector('.explorer') as HTMLTextAreaElement;
@@ -45,8 +69,8 @@ export class SearchBarComponent implements OnInit {
 
   displayContentOnclick(searchText: string): void {
     this.searchResults = [];
-    if (!this.buttons[0] && !this.buttons[1]) {
-      // Aucun bouton n'est coché, recherche globale
+    if (!this.buttons[0] && !this.buttons[1] && !this.buttons[2]) {
+      // Not any button clicked, global research
       this.onUserClicked(searchText);
       this.onHobbyClicked(searchText);
       this.onPostClicked(searchText);
@@ -70,6 +94,9 @@ export class SearchBarComponent implements OnInit {
     if (!this.buttons[1]) {
       this.searchResults = this.searchResults.filter(result => !(result instanceof HobbyDTO));
     }
+    if (!this.buttons[2]) {
+      this.searchResults = this.searchResults.filter(result => !(result instanceof PostDTO));
+    }
   }
 
   onUserClicked(searchText: string): void {
@@ -81,6 +108,8 @@ export class SearchBarComponent implements OnInit {
             const userDTO = new UserDTO(+user.id, user.name, user.username, user.password, user.email);
             console.log(userDTO.id);
             const existingUser = this.searchResults.find(user => user.id == userDTO.id);
+            console.log("not already existing!");
+            console.log(this.searchResults);
             if (!existingUser) {
               this.searchResults.push(userDTO);
             }
@@ -100,8 +129,9 @@ export class SearchBarComponent implements OnInit {
       next: (response) => {
         response.forEach((post) => {
           if (post.id) {
-            const postDTO = post;
-            const existingPost = this.searchResults.find(post => post.id_regular_post == postDTO.id);
+            const postDTO = new PostDTO(post.id, post.userDTO, post.hobbyDTO, post.description,
+                                        post.images_str, post.modified, post.likes, post.time, []);
+            const existingPost = this.searchResults.find(post => post.id == postDTO.id);
             if (!existingPost) {
               this.searchResults.push(postDTO);
             }
@@ -171,7 +201,7 @@ export class SearchBarComponent implements OnInit {
 
   onCheckPost(): void {
     const searchText = (document.querySelector('.explorer') as HTMLTextAreaElement).value;
-    if (this.buttons[1]) {
+    if (this.buttons[2]) {
       this.onPostClicked(searchText);
     }
     else {
@@ -184,6 +214,16 @@ export class SearchBarComponent implements OnInit {
    */
   onCheckActivity(): void {
 
+  }
+
+  protected isUser(object: any): boolean {
+    return object instanceof UserDTO;
+  }
+  protected isHobby(object: any): boolean {
+    return object instanceof HobbyDTO;
+  }
+  protected isPost(object: any): boolean {
+    return object instanceof PostDTO;
   }
 
   onActivityClicked(searchText: string): void {

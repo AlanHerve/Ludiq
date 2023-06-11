@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import {HobbyService} from "../../../services/hobby.service";
-import {RequestDTO} from "../../../models/request-dto";
-import {HobbyDTO} from "../../../models/hobby-dto";
 import {HobbyCountDTO} from "../../../models/hobby-count-dto";
 
 @Component({

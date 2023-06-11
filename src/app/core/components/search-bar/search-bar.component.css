@@ -7,8 +7,8 @@
 
   position: fixed;
   top: 0;
-  left: 350px;
-  right: 350px;
+  left: 22.5vw;
+  right: 22.5vw;
   z-index: 200;
   backdrop-filter: blur(5px);
 
@@ -40,7 +40,16 @@ textarea::placeholder {
 button {
   height: 50px;
 }
+.button2 {
+  font-size: clamp(0.4rem, 0.2rem + 1.2vw, 1.4rem);
+  padding: clamp(0.2rem, 0rem + 1vw, 0.2rem) 20px;
+}
 
+@media (max-width: 1000px) {
+  .button2 {
+    font-size: 20px;
+  }
+}
 .menu {
   position: absolute;
   left: 0;
@@ -86,9 +95,11 @@ button {
 
 .result {
   padding: 20px;
+  overflow-y: scroll;
+  max-height:300px;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
   .search-bar {
     width: 100vw;
     left: 0;
@@ -107,6 +118,7 @@ button {
 
 li {
   list-style: none;
+  margin: 15px 0;
 }
 
 .tags-container {
@@ -147,3 +159,5 @@ li {
   background-color: #000; /* Couleur de fond lorsque le checkbox est coché */
   color: #fff; /* Couleur du texte lorsque le checkbox est coché */
 }
+
+

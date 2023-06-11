@@ -1,0 +1,30 @@
+.post-info {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.username {
+  font-size: 17px;
+  font-weight: 100;
+  margin: 0;
+}
+.name {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.user-info {
+  flex-direction: column;
+}
+
+img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain!important;
+}
+
+.friend {
+  cursor: pointer;
+}
