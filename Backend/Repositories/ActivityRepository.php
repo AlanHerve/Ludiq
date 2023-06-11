@@ -95,32 +95,6 @@ class ActivityRepository
         }
         return null;
     }
-
-    private function findActivityById($id_activity)
-    {
-        $stmt = $this->db->prepare("
-            SELECT
-                act.*
-            FROM
-                activity act
-            WHERE
-                act.ID_ACTIVITY = ?
-        ");
-        $stmt->bind_param('i', $id_activity);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows == 1) {
-            $row = $result->fetch_assoc();
-            $userDTO = $this->userRepository->findUserById($row['ID_ACTIVITY_DIRECTOR']);
-            $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
-            return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
-                $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'],
-                $row['MAX_REGISTRATIONS'], null);
-        }
-        return null;
-    }
-
-
     public function getUserActivities($id_user)
     {
         $stmt = $this->db->prepare("
@@ -141,7 +115,7 @@ class ActivityRepository
         if ($result->num_rows > 0) {
             $activitiesDTO = [];
             while ($row = $result->fetch_assoc()) {
-                $activityDTO = $this->getActivityById($row['ID_ACTIVITY']);
+                $activityDTO = $this->findActivityById($row['ID_ACTIVITY']);
                 $activitiesDTO[] = $activityDTO;
             }
             return $activitiesDTO;
@@ -165,7 +139,7 @@ class ActivityRepository
         if ($result->num_rows > 0) {
             $activitiesDTO = [];
             while ($row = $result->fetch_assoc()) {
-                $activityDTO = $this->getActivityById($row['ID_ACTIVITY']);
+                $activityDTO = $this->findActivityById($row['ID_ACTIVITY']);
                 $activitiesDTO[] = $activityDTO;
             }
             return $activitiesDTO;
@@ -174,7 +148,7 @@ class ActivityRepository
         return null;
     }
 
-    private function getActivityById($id_activity)
+    public function findActivityById($id_activity)
     {
         $stmt = $this->db->prepare("
             SELECT

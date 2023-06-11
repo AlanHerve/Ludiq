@@ -13,6 +13,9 @@
         <label class = "tag">
           <input type="checkbox" [(ngModel)]="this.buttons[2]" (change)="onCheckPost()"> Post
         </label>
+        <label class = "tag">
+          <input type="checkbox" [(ngModel)]="this.buttons[3]" (change)="onCheckActivity()"> Activity
+        </label>
       </div>
     </div>
     <div class="result" *ngIf="searchResults.length > 0 else elseBlock">
@@ -20,10 +23,11 @@
         <app-user-search *ngIf="isUser(result)" [userDTO]="result" class = "user-search"></app-user-search>
         <app-hobby-search *ngIf="isHobby(result)" [hobbyDTO]="result" class = "user-search"></app-hobby-search>
         <app-post-search *ngIf="isPost(result)" [postDTO]="result" class = "user-search"></app-post-search>
+        <app-activity-search *ngIf="isActivity(result)" [activityDTO]="result" class = "user-search"></app-activity-search>
       </li>
     </div>
 
-    <ng-template #elseBlock class="result">
+    <ng-template #elseBlock class="result not-found">
       No result found
     </ng-template>
   </div>

@@ -28,6 +28,8 @@ class ConversationRepository {
         $friends = $this->friendRepository->getAllFriends($user_id);
         $conversationsDTO = array();
 
+        if(!$friends) return null;
+
         foreach ($friends as $friend) {
             $friendId = $friend->id;
             $messages = $this->messageRepository->getMessagesBetweenUsers($user_id, $friendId);

@@ -24,6 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $searchRepository = SearchRepository::getInstance();
         $output = $searchRepository->searchPost($searchTerm);
     }
+    else if($searchType === 'activity') {
+        $searchRepository = SearchRepository::getInstance();
+        $output = json_encode($searchRepository->searchActivity($searchTerm));
+    }
 
     echo $output;
 }

@@ -1,1 +1,6 @@
-<p>activity-search works!</p>
+<div class = "border">
+  <img [src]="'assets/images/hobbies/' + this.activityDTO.hobbyDTO.image">
+  <p>{{this.activityDTO.title}}</p>
+  <button class = "tag">{{this.activityDTO.hobbyDTO.name}}</button>
+  <p>{{this.activityDTO.description}}</p>
+</div>

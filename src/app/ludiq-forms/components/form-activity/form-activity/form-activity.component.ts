@@ -32,7 +32,7 @@ export class FormActivityComponent implements OnInit {
   previousRoute: string = '';
 
   activityDTO: ActivityDTO = {
-    id_activity: -1,
+    id: -1,
     userDTO: new UserDTO(-1, '', ''),
     hobbyDTO: new HobbyDTO(-1, '', ''),
     title: '',

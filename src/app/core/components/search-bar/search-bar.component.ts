@@ -5,6 +5,7 @@ import {UserDTO} from "../../../models/user-dto";
 
 import { Router } from '@angular/router';
 import {PostDTO} from "../../../posts/models/post-dto";
+import {ActivityDTO} from "../../../posts/models/activity-dto";
 
 @Component({
   selector: 'app-search-bar',
@@ -51,11 +52,8 @@ export class SearchBarComponent implements OnInit {
 
     textarea.addEventListener('input', () => {
       if (textarea.value.trim() !== '') {
-        console.log("Writing on explorer !!");
-        // Ajouter une classe pour activer l'animation d'ouverture du menu
         menu.classList.add('open');
       } else {
-        // Supprimer la classe pour désactiver l'animation d'ouverture du menu
         menu.classList.remove('open');
       }
     });
@@ -69,11 +67,12 @@ export class SearchBarComponent implements OnInit {
 
   displayContentOnclick(searchText: string): void {
     this.searchResults = [];
-    if (!this.buttons[0] && !this.buttons[1] && !this.buttons[2]) {
+    if (!this.buttons[0] && !this.buttons[1] && !this.buttons[2] && !this.buttons[3]) {
       // Not any button clicked, global research
       this.onUserClicked(searchText);
       this.onHobbyClicked(searchText);
       this.onPostClicked(searchText);
+      this.onActivityClicked(searchText);
     } else {
       if (this.buttons[0]) {
         this.onUserClicked(searchText);
@@ -82,6 +81,9 @@ export class SearchBarComponent implements OnInit {
         this.onHobbyClicked(searchText);
       }
       if (this.buttons[2]) {
+        this.onPostClicked(searchText);
+      }
+      if (this.buttons[3]) {
         this.onPostClicked(searchText);
       }
     }
@@ -97,15 +99,19 @@ export class SearchBarComponent implements OnInit {
     if (!this.buttons[2]) {
       this.searchResults = this.searchResults.filter(result => !(result instanceof PostDTO));
     }
+    if (!this.buttons[3]) {
+      this.searchResults = this.searchResults.filter(result => !(result instanceof ActivityDTO));
+    }
   }
 
   onUserClicked(searchText: string): void {
     this.removeContentOnClick();
     this.searchBarService.searchUser(searchText).subscribe({
       next: (response) => {
+        if(!response) return;
         response.forEach((user) => {
           if (user.id) {
-            const userDTO = new UserDTO(+user.id, user.name, user.username, user.password, user.email);
+            const userDTO = new UserDTO(user.id, user.name, user.username, user.password, user.email);
             console.log(userDTO.id);
             const existingUser = this.searchResults.find(user => user.id == userDTO.id);
             console.log("not already existing!");
@@ -127,6 +133,7 @@ export class SearchBarComponent implements OnInit {
     this.removeContentOnClick();
     this.searchBarService.searchPost(searchText).subscribe({
       next: (response) => {
+        if(!response) return;
         response.forEach((post) => {
           if (post.id) {
             const postDTO = new PostDTO(post.id, post.userDTO, post.hobbyDTO, post.description,
@@ -149,6 +156,7 @@ export class SearchBarComponent implements OnInit {
     this.removeContentOnClick();
     this.searchBarService.searchHobby(searchText).subscribe({
       next: (response) => {
+        if(!response) return;
         response.forEach((hobby) => {
           if (hobby.id) {
             const hobbyDTO = new HobbyDTO(hobby.id, hobby.name, hobby.image);
@@ -162,6 +170,28 @@ export class SearchBarComponent implements OnInit {
       error: (error) => {
         // Gestion des erreurs en cas d'échec
         console.error('Erreur lors de la récupération du hobby', error);
+      }
+    });
+  }
+
+  onActivityClicked(searchText: string): void {
+    this.removeContentOnClick();
+    this.searchBarService.searchActivity(searchText).subscribe( {
+      next: (response) => {
+        if(!response) return;
+        response.forEach((activity) => {
+          const activityDTO = new ActivityDTO(activity.id, activity.userDTO, activity.hobbyDTO, activity.title, activity.advancement,
+                      activity.description, activity.date_post, activity.time, activity.current_registered, activity.max_registrations, activity.images)
+          if (activityDTO.id) {
+            const existingActivity = this.searchResults.find(result => result instanceof ActivityDTO && result.id === activityDTO.id);
+            if (!existingActivity) {
+              this.searchResults.push(activityDTO);
+            }
+          }
+        });
+      },
+      error: (error) => {
+        console.log("Error while finding activity on search bar : ", error);
       }
     });
   }
@@ -213,7 +243,13 @@ export class SearchBarComponent implements OnInit {
    * Method that updates the search content in relation to the radio button
    */
   onCheckActivity(): void {
-
+    const searchText = (document.querySelector('.explorer') as HTMLTextAreaElement).value;
+    if (this.buttons[3]) {
+      this.onActivityClicked(searchText);
+    }
+    else {
+      this.displayContentOnclick(searchText);
+    }
   }
 
   protected isUser(object: any): boolean {
@@ -225,12 +261,10 @@ export class SearchBarComponent implements OnInit {
   protected isPost(object: any): boolean {
     return object instanceof PostDTO;
   }
-
-  onActivityClicked(searchText: string): void {
-    this.searchBarService.searchActivity(searchText).subscribe(response => {
-
-    });
+  protected isActivity(object: any): boolean {
+    return object instanceof ActivityDTO;
   }
+
   onClickNewActivity(): void {
     /*
     We determine the route that we are currently on
