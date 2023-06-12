@@ -3,6 +3,7 @@ require_once '../Database.php';
 require_once '../DTOs/ActivityDTO.php';
 require_once '../DTOs/HobbyDTO.php';
 require_once '../DTOs/UserDTO.php';
+require_once '../DTOs/ActivityParticipantsDTO.php';
 require_once '../Repositories/UserRepository.php';
 require_once '../Repositories/HobbyRepository.php';
 
@@ -172,6 +173,35 @@ class ActivityRepository
             return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
                                 $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'], $row['MAX_REGISTRATIONS'], $row['IMAGE']);
         }
+        return null;
+    }
+
+
+    public function getActivityParticipants($activityId) {
+        $stmt = $this->db->prepare("
+            SELECT
+                par.ID_USER
+            FROM
+                activity act
+            INNER JOIN activity_participants par
+                ON act.ID_ACTIVITY = par.ID_ACTIVITY
+            WHERE
+                act.ID_ACTIVITY = ?
+        ");
+
+        $stmt->bind_param('i', $activityId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        if($result->num_rows > 0) {
+            $activityDTO = $this->findActivityById($activityId);
+            $usersDTO = [];
+            while($row = $result->fetch_assoc()) {
+                $usersDTO[] = $this->userRepository->findUserById($row['ID_USER']);
+            }
+            return new ActivityParticipantsDTO($usersDTO, $activityDTO);
+        }
+
         return null;
     }
 }

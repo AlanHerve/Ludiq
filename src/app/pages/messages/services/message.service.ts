@@ -8,7 +8,6 @@ import {MessageDTO} from "../models/message-dto";
   providedIn: 'root'
 })
 export class MessageService {
-  private messageListSubject: Subject<void> = new Subject<void>();
 
   constructor(private http: HttpClient) {
   }
@@ -23,14 +22,6 @@ export class MessageService {
 
   createMessage(messageDTO: MessageDTO): Observable<string[]> {
     return this.http.put<string[]>(`${apiUrl}/message.php`, messageDTO);
-  }
-
-  updateMessageList(): void {
-    this.messageListSubject.next();
-  }
-
-  getMessageListUpdates(): Observable<void> {
-    return this.messageListSubject.asObservable();
   }
 
 }

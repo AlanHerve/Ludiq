@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MessageService} from "../../services/message.service";
 import {MessageDTO} from "../../models/message-dto";
 
@@ -30,8 +30,6 @@ export class MessageBarComponent implements OnInit {
       next: (response) => {
         console.log('success:', response);
         this.messageContent = '';
-        // Update of the messages displayed on the screen
-        this.messageService.updateMessageList();
       },
       error: (error) => {
         console.log('error:', error);

@@ -49,6 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $activityRepository = ActivityRepository::getInstance();
             echo json_encode($activityRepository->findActivityById($_GET['activityId']));
         }
+        if ($_GET['type'] === 'activity_participants') {
+            $activityRepository = ActivityRepository::getInstance();
+            echo json_encode($activityRepository->getActivityParticipants($_GET['activityId']));
+        }
     }
 }
 
