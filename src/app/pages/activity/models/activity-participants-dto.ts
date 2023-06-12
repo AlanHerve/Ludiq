@@ -3,7 +3,7 @@ import {ActivityDTO} from "../../../posts/models/activity-dto";
 
 export class ActivityParticipantsDTO {
 
-  constructor(public userDTO: UserDTO,
+  constructor(public usersDTO: UserDTO[],
               public activityDTO: ActivityDTO) {
   }
 

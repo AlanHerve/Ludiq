@@ -204,5 +204,45 @@ class ActivityRepository
 
         return null;
     }
+
+    public function registerUserToActivity($userId, $activityId)
+    {
+        $stmt = $this->db->prepare("
+            INSERT INTO
+                activity_participants (ID_USER, ID_ACTIVITY)
+            VALUES
+                (?, ?)
+            ;
+        ");
+
+        $stmt->bind_param('ii', $userId, $activityId);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) { //if rows are affected it means the database has been modified
+            return true;
+        }
+        return false;
+    }
+
+    public function deleteUserFromActivity($userId, $activityId)
+    {
+        $stmt = $this->db->prepare("
+            DELETE FROM
+                activity_participants
+            WHERE
+                ID_USER = ?
+                AND
+                ID_ACTIVITY = ?;
+            ;
+        ");
+
+        $stmt->bind_param('ii', $userId, $activityId);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) { //if rows are affected it means the database has been modified
+            return true;
+        }
+        return false;
+    }
 }
 

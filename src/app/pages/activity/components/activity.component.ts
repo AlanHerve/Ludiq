@@ -16,6 +16,8 @@ export class ActivityComponent implements OnInit{
   protected activityDTO!: ActivityDTO;
   protected activityParticipants!: ActivityParticipantsDTO;
   protected userDTO!: UserDTO;
+  protected registered: boolean = false;
+  protected activityDirector: boolean = false;
   constructor(private activatedRoute: ActivatedRoute,
               private activityService: ActivityService,
               private userService: UserService,
@@ -66,6 +68,8 @@ export class ActivityComponent implements OnInit{
     this.activityService.findActivityParticipants(this.activityDTO.id).subscribe({
       next: (response) => {
         this.activityParticipants = response;
+        this.registered = this.isRegistered();
+        this.activityDirector = this.isActivityDirector();
       },
       error: (error) => {
         console.log("Error while finding activity participants: ", error);
@@ -73,4 +77,39 @@ export class ActivityComponent implements OnInit{
     });
   }
 
+  private isRegistered(): boolean {
+    if (this.activityParticipants && this.activityParticipants.usersDTO) {
+      return this.activityParticipants.usersDTO.some(userDTO => userDTO.id === this.userDTO.id);
+    }
+    return false;
+  }
+
+
+  protected onRegister(): void {
+    this.activityService.registerUserToActivity(this.userDTO.id, this.activityDTO.id).subscribe({
+      next: () => {
+        console.log("Successfully registered to activity");
+        this.findActivityParticipants()
+      },
+      error: (error) => {
+        console.log("Error while registering to activity : ", error);
+      }
+    });
+  }
+
+  protected onUnregister(): void {
+    this.activityService.deleteUserFromActivity(this.userDTO.id, this.activityDTO.id).subscribe({
+      next: () => {
+        console.log("Successfully deleted user from activity");
+        this.findActivityParticipants()
+      },
+      error: (error) => {
+        console.log("Error while deleting user from activity : ", error);
+      }
+    });
+  }
+
+  private isActivityDirector(): boolean {
+    return this.activityDTO.userDTO.id == this.userDTO.id;
+  }
 }

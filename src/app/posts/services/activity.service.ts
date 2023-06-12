@@ -56,4 +56,22 @@ export class ActivityService {
       .set('activityId', activityId)
     return this.http.get<ActivityParticipantsDTO>(`${apiUrl}/activity.php`, {params});
   }
+
+  registerUserToActivity(userId: number, activityId: number) {
+    const params =  {
+      type: 'register_activity',
+      userId: userId,
+      activityId: activityId
+    }
+    return this.http.post<ActivityParticipantsDTO>(`${apiUrl}/activity.php`, params);
+  }
+
+  deleteUserFromActivity(userId: number, activityId: number) {
+    const params =  {
+      type: 'unregister_activity',
+      userId: userId,
+      activityId: activityId
+    }
+    return this.http.post<ActivityParticipantsDTO>(`${apiUrl}/activity.php`, params);
+  }
 }

@@ -5,11 +5,11 @@ require_once '../DTOs/ActivityDTO.php';
 
 class ActivityParticipantsDTO
 {
-    public array $userDTO;
+    public array $usersDTO;
     public ActivityDTO $activityDTO;
 
-    public function __construct($userDTO, $activityDTO) {
-        $this->userDTO = $userDTO;
+    public function __construct($usersDTO, $activityDTO) {
+        $this->usersDTO = $usersDTO;
         $this->activityDTO = $activityDTO;
     }
 }

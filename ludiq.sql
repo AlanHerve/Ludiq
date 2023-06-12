@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 12 juin 2023 à 14:21
+-- Généré le : lun. 12 juin 2023 à 15:42
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -82,16 +82,10 @@ INSERT INTO `activity_director` (`ID_USER`, `ID_ORGANIZATION`) VALUES
 --
 
 CREATE TABLE `activity_participants` (
+  `ID_ACTIVITY_PARTICIPANTS` int(11) NOT NULL,
   `ID_ACTIVITY` int(11) DEFAULT NULL,
   `ID_USER` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `activity_participants`
---
-
-INSERT INTO `activity_participants` (`ID_ACTIVITY`, `ID_USER`) VALUES
-(1, 2);
 
 -- --------------------------------------------------------
 
@@ -311,6 +305,7 @@ ALTER TABLE `activity_director`
 -- Index pour la table `activity_participants`
 --
 ALTER TABLE `activity_participants`
+  ADD PRIMARY KEY (`ID_ACTIVITY_PARTICIPANTS`),
   ADD KEY `ID_ACTIVITY` (`ID_ACTIVITY`),
   ADD KEY `ID_USER` (`ID_USER`);
 
@@ -382,6 +377,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `activity`
   MODIFY `ID_ACTIVITY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT pour la table `activity_participants`
+--
+ALTER TABLE `activity_participants`
+  MODIFY `ID_ACTIVITY_PARTICIPANTS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `hobby`

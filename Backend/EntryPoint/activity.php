@@ -13,7 +13,24 @@ require_once "../DTOs/HobbyDTO.php";
 require_once "../Repositories/ActivityRepository.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
+    $body = file_get_contents('php://input');
+    $data = json_decode($body, true);
+
+    if (isset($data['type'])) {
+        $activityRepository = ActivityRepository::getInstance();
+        if ($data['type'] === 'activity_post') {
+            return;
+        }
+        if ($data['type'] === 'register_activity') {
+            echo json_encode($activityRepository->registerUserToActivity($data['userId'], $data['activityId']));
+            return;
+        }
+        if ($data['type'] === 'unregister_activity') {
+            echo json_encode($activityRepository->deleteUserFromActivity($data['userId'], $data['activityId']));
+            return;
+        }
+    }
+    /*$userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
 
     if ($_POST['id_hobby'] != -1) $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
     else $hobbyDTO = new HobbyDTO(null);
@@ -22,9 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'];
     $time = $_POST['time'];
 
-    /*if (isset($data['modified'])) {
+    if (isset($data['modified'])) {
       $modified = $data['modified'];
-    }*/
+    }
 
     $images = $_FILES['images'];
 
@@ -33,24 +50,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $activityDTO = new ActivityDTO(null, null, $hobbyDTO, null, $description, null, $time, null, null, null);
     $activityRepository = ActivityRepository::getInstance();
     echo json_encode($activityRepository->newActivity($activityDTO));
+ */
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['type'])) {
+        $activityRepository = ActivityRepository::getInstance();
         if ($_GET['type'] === 'top3') {
-            $activityRepository = ActivityRepository::getInstance();
             echo json_encode($activityRepository->getTop3());
         }
         if ($_GET['type'] === 'all_activities') {
-            $activityRepository = ActivityRepository::getInstance();
             echo json_encode($activityRepository->getAllActivities());
         }
         if ($_GET['type'] === 'activity') {
-            $activityRepository = ActivityRepository::getInstance();
             echo json_encode($activityRepository->findActivityById($_GET['activityId']));
         }
         if ($_GET['type'] === 'activity_participants') {
-            $activityRepository = ActivityRepository::getInstance();
             echo json_encode($activityRepository->getActivityParticipants($_GET['activityId']));
         }
     }
