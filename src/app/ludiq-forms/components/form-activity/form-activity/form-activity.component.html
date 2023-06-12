@@ -4,7 +4,7 @@
 
     <span (click)="onClose()" class="cross">&times;</span>
 
-    <textarea [(ngModel)]="activityDTO.description" name="description" placeholder="Description of the activity"></textarea>
+    <textarea [(ngModel)]="activityDTO.description" class="description" name="description" placeholder="Description of the activity"></textarea>
 
     <!--<div class="images">
       <label class="file-input-label" [class.disabled]="this.activityDTO.images[0] != null">
@@ -31,14 +31,14 @@
 
     <p>Choice of the related level</p>
     <select name="level" id="level">
-      <option value="books">Débutant</option>
-      <option value="books">Intermédiarie</option>
-      <option value="books">Master</option>
-      <!--faire requete pour aller chercher tous les lv-->
+      <option value="books">Beginner</option>
+      <option value="books">Intermediate</option>
+      <option value="books">Advanced</option>
+      <option value="books">Expert</option>
     </select>
-
+    <p>Number of participants</p>
     <div class="number" [formGroup]="activityForm">
-      <input type="number" id='number' name="number" min="2" max="200" formControlName="number" placeholder="Number of participants"
+      <input type="number" id='number' name="number" min="2" max="200" formControlName="number" placeholder="How many people can participate?"
              [ngClass]="{'valid-input': activityForm.controls['number'].valid}">
       <div *ngIf="activityForm.controls['number'].dirty && !activityForm.controls['number'].valid">
         <p *ngIf="activityForm.controls['number'].hasError('required')">
