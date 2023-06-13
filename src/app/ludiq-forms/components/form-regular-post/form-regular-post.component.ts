@@ -39,6 +39,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     hobbyDTO: new HobbyDTO(-1, '', ''),
     images: [null, null, null, null],
     likes: 0,
+    comments: [],
     description: '',
     time: '',
     modified: 0,

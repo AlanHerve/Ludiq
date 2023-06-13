@@ -5,8 +5,6 @@ import { PostsService } from "../../services/posts.service";
 import {UserService} from "../../../services/user.service";
 import { PostComment } from "../comment/comment";
 
-
-
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
@@ -24,7 +22,21 @@ export class PostComponent implements OnInit {
   constructor(private userService: UserService,private postsService: PostsService, private router: Router, private postService: PostsService) {
   }
   ngOnInit(): void {
+    this.getComments(this.postDTO.id);
   }
+
+  getComments(postId: number): void {
+    this.postsService.getPost(postId).subscribe({
+      next: (response: PostDTO) => {
+        this.postDTO = response;
+        this.comments = response.comments;
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération du post : ', error);
+      }
+    });
+  }
+
 
   getFileUrl(file: File): string {
     return URL.createObjectURL(file);
@@ -69,8 +81,5 @@ export class PostComponent implements OnInit {
       }
     });
   }
-
-
-
 
 }
