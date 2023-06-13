@@ -72,7 +72,7 @@ export class PostsService {
 
 
   getPost(postId: string): Observable<PostDTO> {
-    return this.http.get<PostDTO>(`${this.apiUrl}/posts/${postId}`);
+    return this.http.get<PostDTO>(`${apiUrl}/posts/${postId}`);
   }
 
 
