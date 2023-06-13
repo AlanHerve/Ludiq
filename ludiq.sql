@@ -3,7 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 10 juin 2023 à 15:27
+
+-- Généré le : lun. 12 juin 2023 à 15:42
+
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -36,24 +38,25 @@ CREATE TABLE `activity` (
   `DATE_POST` timestamp NULL DEFAULT current_timestamp(),
   `DATE_ACTIVITY` date DEFAULT NULL,
   `CURRENT_REGISTERED` int(4) DEFAULT 1,
-  `MAX_REGISTRATIONS` int(4) NOT NULL DEFAULT 10
+  `MAX_REGISTRATIONS` int(4) NOT NULL DEFAULT 10,
+  `IMAGE` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Déchargement des données de la table `activity`
 --
 
-INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVANCEMENT`, `DESCRIPTION`, `DATE_POST`, `DATE_ACTIVITY`, `CURRENT_REGISTERED`, `MAX_REGISTRATIONS`) VALUES
-(1, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 1, 10),
-(2, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 1, 10),
-(3, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10),
-(4, 2, 3, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10),
-(5, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10),
-(6, 3, 1, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
-(7, 3, 7, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
-(8, 3, 9, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
-(9, 3, 8, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10),
-(10, 3, 1, 'Beginner', NULL, '2023-05-27 14:29:09', NULL, 1, 10);
+INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVANCEMENT`, `DESCRIPTION`, `DATE_POST`, `DATE_ACTIVITY`, `CURRENT_REGISTERED`, `MAX_REGISTRATIONS`, `IMAGE`) VALUES
+(1, 2, 1, 'Beginner', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id leo vitae eros elementum facilisis. Mauris ac eros a odio semper malesuada.', '2023-05-27 14:27:54', '2023-06-21', 1, 10, NULL),
+(2, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', '2023-06-23', 1, 10, NULL),
+(3, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', '2023-06-29', 1, 10, NULL),
+(4, 2, 3, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL),
+(5, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL),
+(6, 3, 1, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL),
+(7, 3, 7, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL),
+(8, 3, 9, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL),
+(9, 3, 8, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL),
+(10, 3, 1, 'Beginner', NULL, '2023-05-27 14:29:09', NULL, 1, 10, NULL);
 
 -- --------------------------------------------------------
 
@@ -77,6 +80,20 @@ INSERT INTO `activity_director` (`ID_USER`, `ID_ORGANIZATION`) VALUES
 -- --------------------------------------------------------
 
 --
+
+-- Structure de la table `activity_participants`
+--
+
+CREATE TABLE `activity_participants` (
+  `ID_ACTIVITY_PARTICIPANTS` int(11) NOT NULL,
+  `ID_ACTIVITY` int(11) DEFAULT NULL,
+  `ID_USER` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+
 -- Structure de la table `comment`
 --
 
@@ -104,16 +121,17 @@ INSERT INTO `comment` (`ID_COMMENT`, `ID_USER`, `CONTENT`, `ID_REGULAR_POST`, `T
 
 CREATE TABLE `friends` (
   `ID_USER` int(11) NOT NULL,
-  `ID_USER_2` int(11) NOT NULL
+  `ID_USER_2` int(11) NOT NULL,
+  `WAITING` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Déchargement des données de la table `friends`
 --
 
-INSERT INTO `friends` (`ID_USER`, `ID_USER_2`) VALUES
-(2, 3),
-(4, 5);
+INSERT INTO `friends` (`ID_USER`, `ID_USER_2`, `WAITING`) VALUES
+(2, 3, 1),
+(2, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -173,11 +191,16 @@ CREATE TABLE `hobby_post` (
 
 INSERT INTO `hobby_post` (`ID_HOBBY_POST`, `ID_HOBBY`, `ID_USER`, `EXPERIENCE`, `FREQUENCY`, `AVAILABLE`) VALUES
 (1, 1, 2, 'Expert', 'Daily', 1),
-(2, 1, 3, 'Beginner', '2-3/week', 0),
+(2, 1, 3, 'Advanced', '2-3/week', 0),
 (3, 1, 4, 'Advanced', 'Weekly', 1),
 (4, 9, 4, 'Expert', 'Monthly', 1),
-(5, 10, 2, 'Intermediate', 'Daily', 1),
-(6, 16, 2, 'Expert', 'Daily', 1);
+(6, 16, 2, 'Expert', '2-3/week', 0),
+(8, 2, 2, 'Beginner', 'Daily', 0),
+(26, 3, 2, 'Beginner', 'Daily', 1),
+(27, 9, 2, 'Beginner', 'Daily', 1),
+(28, 4, 2, 'Beginner', 'Daily', 1),
+(29, 1, 5, 'Beginner', 'Daily', 1),
+(30, 2, 5, 'Beginner', 'Daily', 0);
 
 -- --------------------------------------------------------
 
@@ -202,19 +225,21 @@ CREATE TABLE `message` (
 CREATE TABLE `organization` (
   `ID_ORGANIZATION` int(11) NOT NULL,
   `NAME_ORGANIZATION` varchar(64) NOT NULL,
-  `AVATAR` varchar(120) DEFAULT NULL
+  `AVATAR` varchar(120) DEFAULT NULL,
+  `DESCRIPTION` varchar(64) DEFAULT NULL,
+  `FAVORITE_HOBBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Déchargement des données de la table `organization`
 --
 
-INSERT INTO `organization` (`ID_ORGANIZATION`, `NAME_ORGANIZATION`, `AVATAR`) VALUES
-(1, 'Indépendant', NULL),
-(2, 'AE', NULL),
-(3, 'Troll Penché', NULL),
-(4, 'Cook\'UT', NULL),
-(5, 'Arrêt Dessin', NULL);
+INSERT INTO `organization` (`ID_ORGANIZATION`, `NAME_ORGANIZATION`, `AVATAR`, `DESCRIPTION`, `FAVORITE_HOBBY`) VALUES
+(1, 'Indépendant', NULL, NULL, NULL),
+(2, 'AE', NULL, NULL, NULL),
+(3, 'Troll Penché', NULL, NULL, NULL),
+(4, 'Cook\'UT', NULL, NULL, NULL),
+(5, 'Arrêt Dessin', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -225,12 +250,12 @@ INSERT INTO `organization` (`ID_ORGANIZATION`, `NAME_ORGANIZATION`, `AVATAR`) VA
 CREATE TABLE `regular_post` (
   `ID_REGULAR_POST` int(11) NOT NULL,
   `ID_USER` int(11) NOT NULL,
-  `ID_HOBBY` int(11) NOT NULL,
+  `ID_HOBBY` int(11) DEFAULT NULL,
   `DESCRIPTION` text DEFAULT NULL,
-  `IMAGE1` varchar(60) DEFAULT NULL,
-  `IMAGE2` varchar(60) DEFAULT NULL,
-  `IMAGE3` varchar(60) DEFAULT NULL,
-  `IMAGE4` varchar(60) DEFAULT NULL,
+  `IMAGE1` varchar(200) DEFAULT NULL,
+  `IMAGE2` varchar(200) DEFAULT NULL,
+  `IMAGE3` varchar(200) DEFAULT NULL,
+  `IMAGE4` varchar(200) DEFAULT NULL,
   `MODIFIED` int(1) DEFAULT 0,
   `LIKES` int(11) DEFAULT 0,
   `TIME` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -241,8 +266,10 @@ CREATE TABLE `regular_post` (
 --
 
 INSERT INTO `regular_post` (`ID_REGULAR_POST`, `ID_USER`, `ID_HOBBY`, `DESCRIPTION`, `IMAGE1`, `IMAGE2`, `IMAGE3`, `IMAGE4`, `MODIFIED`, `LIKES`, `TIME`) VALUES
+(1, 5, 1, 'test', NULL, NULL, NULL, NULL, 0, 1, '2023-06-11 15:48:42');
 (1, 5, 17, 'helloooo', '', '', '', '', 0, 6, '2023-06-08 15:08:29'),
 (3, 5, 17, 'helloooo', '', '', '', '', 0, 3, '2023-06-10 12:41:12');
+
 
 -- --------------------------------------------------------
 
@@ -256,18 +283,19 @@ CREATE TABLE `user` (
   `USER_PSEUDO` varchar(20) NOT NULL,
   `USER_PASSWORD` varchar(500) NOT NULL,
   `EMAIL` varchar(60) NOT NULL,
-  `AVATAR` varchar(60) DEFAULT NULL
+  `AVATAR` varchar(60) DEFAULT NULL,
+  `FAVORITE_HOBBY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`ID_USER`, `USER_NAME`, `USER_PSEUDO`, `USER_PASSWORD`, `EMAIL`, `AVATAR`) VALUES
-(2, 'Alan', 'Alan', '$2y$10$mTVn.8PWcUhvUEMmethDxehWaTfDMVEO5haxH8QNf0jcUcN1q2jZW', 'alan@gmail.com', NULL),
-(3, 'Tegg', 'Tegg', '$2y$10$bQtqW3WS/LLj12H6AYha3uvW1z8xYRTWWElmQq88zFJq6DGuCvXua', 'Tegg@gmail.com', NULL),
-(4, 'Sand', 'Sand', '$2y$10$9yzrcEouJzVE1FQidXVVjuRMwriCsqKJ3J3MEFNndKTz5fnGiKWOW', 'Sand@gmail.com', NULL),
-(5, 'Tact', 'Tact', '$2y$10$BzPR88BwQBMYKYnA04.NsOFWAmettI9.7t.SLzN01LQKLO4C8kzBa', 'tact@gmail.com', NULL);
+INSERT INTO `user` (`ID_USER`, `USER_NAME`, `USER_PSEUDO`, `USER_PASSWORD`, `EMAIL`, `AVATAR`, `FAVORITE_HOBBY`) VALUES
+(2, 'Alan', 'Alan', '$2y$10$mTVn.8PWcUhvUEMmethDxehWaTfDMVEO5haxH8QNf0jcUcN1q2jZW', 'alan@gmail.com', NULL, NULL),
+(3, 'Tegg', 'Tegg', '$2y$10$bQtqW3WS/LLj12H6AYha3uvW1z8xYRTWWElmQq88zFJq6DGuCvXua', 'Tegg@gmail.com', NULL, NULL),
+(4, 'Sand', 'Sand', '$2y$10$9yzrcEouJzVE1FQidXVVjuRMwriCsqKJ3J3MEFNndKTz5fnGiKWOW', 'Sand@gmail.com', NULL, NULL),
+(5, 'Tact', 'Tact', '$2y$10$BzPR88BwQBMYKYnA04.NsOFWAmettI9.7t.SLzN01LQKLO4C8kzBa', 'tact@gmail.com', NULL, NULL);
 
 --
 -- Index pour les tables déchargées
@@ -289,6 +317,16 @@ ALTER TABLE `activity_director`
   ADD KEY `ID_ORGANIZATION` (`ID_ORGANIZATION`);
 
 --
+
+-- Index pour la table `activity_participants`
+--
+ALTER TABLE `activity_participants`
+  ADD PRIMARY KEY (`ID_ACTIVITY_PARTICIPANTS`),
+  ADD KEY `ID_ACTIVITY` (`ID_ACTIVITY`),
+  ADD KEY `ID_USER` (`ID_USER`);
+
+--
+
 -- Index pour la table `comment`
 --
 ALTER TABLE `comment`
@@ -329,7 +367,8 @@ ALTER TABLE `message`
 -- Index pour la table `organization`
 --
 ALTER TABLE `organization`
-  ADD PRIMARY KEY (`ID_ORGANIZATION`);
+  ADD PRIMARY KEY (`ID_ORGANIZATION`),
+  ADD KEY `FAVORITE_HOBBY` (`FAVORITE_HOBBY`);
 
 --
 -- Index pour la table `regular_post`
@@ -343,7 +382,8 @@ ALTER TABLE `regular_post`
 -- Index pour la table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`ID_USER`);
+  ADD PRIMARY KEY (`ID_USER`),
+  ADD KEY `FAVORITE_HOBBY` (`FAVORITE_HOBBY`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -356,6 +396,14 @@ ALTER TABLE `activity`
   MODIFY `ID_ACTIVITY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+
+-- AUTO_INCREMENT pour la table `activity_participants`
+--
+ALTER TABLE `activity_participants`
+  MODIFY `ID_ACTIVITY_PARTICIPANTS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+
 -- AUTO_INCREMENT pour la table `hobby`
 --
 ALTER TABLE `hobby`
@@ -365,7 +413,7 @@ ALTER TABLE `hobby`
 -- AUTO_INCREMENT pour la table `hobby_post`
 --
 ALTER TABLE `hobby_post`
-  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT pour la table `message`
@@ -384,6 +432,7 @@ ALTER TABLE `organization`
 --
 ALTER TABLE `regular_post`
   MODIFY `ID_REGULAR_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 
 --
 -- AUTO_INCREMENT pour la table `user`
@@ -410,6 +459,15 @@ ALTER TABLE `activity_director`
   ADD CONSTRAINT `activity_director_ibfk_2` FOREIGN KEY (`ID_ORGANIZATION`) REFERENCES `organization` (`ID_ORGANIZATION`) ON DELETE CASCADE;
 
 --
+
+-- Contraintes pour la table `activity_participants`
+--
+ALTER TABLE `activity_participants`
+  ADD CONSTRAINT `activity_participants_ibfk_1` FOREIGN KEY (`ID_ACTIVITY`) REFERENCES `activity` (`ID_ACTIVITY`),
+  ADD CONSTRAINT `activity_participants_ibfk_2` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`);
+
+--
+
 -- Contraintes pour la table `comment`
 --
 ALTER TABLE `comment`
@@ -438,11 +496,25 @@ ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`ID_USER_2`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE;
 
 --
+
+-- Contraintes pour la table `organization`
+--
+ALTER TABLE `organization`
+  ADD CONSTRAINT `organization_ibfk_1` FOREIGN KEY (`FAVORITE_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE SET NULL;
+
+--
+
 -- Contraintes pour la table `regular_post`
 --
 ALTER TABLE `regular_post`
   ADD CONSTRAINT `regular_post_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `regular_post_ibfk_2` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`FAVORITE_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

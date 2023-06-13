@@ -14,30 +14,6 @@ export class PostListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    for (const post of this.postsDTO) {
-      this.loadImages(post);
-    }
-  }
-
-  loadImages(post: PostDTO): void {
-    const images: File[] = [];
-    for (const imageName of post.images) {
-      // @ts-ignore
-      this.postsService.getImage(imageName).subscribe({
-        next: (response: Blob) => {
-          if (typeof imageName === "string") {
-            const file = new File([response], imageName);
-            // @ts-ignore
-            images.push(file);
-          }
-        },
-        error: (error) => {
-          console.log('Error loading image:', error);
-        }
-      });
-    }
-    post.files = images;
-    console.log(post.files);
   }
 
 }

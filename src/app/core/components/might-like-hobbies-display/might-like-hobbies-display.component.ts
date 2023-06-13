@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import {HobbyService} from "../../../services/hobby.service";
-import {RequestDTO} from "../../../models/request-dto";
-import {HobbyDTO} from "../../../models/hobby-dto";
 import {HobbyCountDTO} from "../../../models/hobby-count-dto";
 
 @Component({
@@ -17,11 +15,6 @@ export class MightLikeHobbiesDisplayComponent {
 
   // request to fetch all hobbies
 
-
-  // request to fetch display hobbies
-  RequestDTO2: RequestDTO = {
-    function_to_call: "fetchDisplayHobbies"
-  };
 
   //Store top 3 hobbies
   top_hobbies: HobbyCountDTO[] = [];

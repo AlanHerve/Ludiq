@@ -25,17 +25,24 @@ export class PostsService {
     return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
   }
 
+  getHobbyPosts(id_hobby: number): Observable<PostDTO[]> {
+    const params = new HttpParams()
+      .set('type', 'hobby')
+      .set('id_hobby', id_hobby);
+    return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
+  }
+
   newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
-    return this.http.post<HobbyDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+    return this.http.post<HobbyPostDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
       map(response => {
         return response;
       })
     );
   }
 
-  getImage(imageName: string): Observable<Blob> {
+  getImage(image: string): Observable<Blob> {
     const options = { responseType: 'arraybuffer' as 'json' };
-    const params = new HttpParams().set('imageName', imageName);
+    const params = new HttpParams().set('image_name', image);
     return this.http.get<Blob>(`${apiUrl}/images.php`, { params, ...options }).pipe(
       map(response => new Blob([response], { type: 'image/jpeg' }))
     );
@@ -51,10 +58,8 @@ export class PostsService {
   }
 
   unlikePost(postId: number): Observable<any> {
-    const params = new HttpParams()
-      .set('function_to_call', "unlike")
-      .set('id_post', postId);
-    return this.http.post<any>(`${apiUrl}/post.php`, {params}).pipe(
+    const options = {'type': 'unlike', 'id_post': postId}
+    return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
       map(response => {
         return response;
       })

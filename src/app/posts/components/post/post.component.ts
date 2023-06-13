@@ -22,7 +22,23 @@ export class PostComponent implements OnInit {
   constructor(private userService: UserService,private postsService: PostsService, private router: Router, private postService: PostsService) {
   }
   ngOnInit(): void {
-    this.getComments(this.postDTO.id);
+    this.loadImages();
+  }
+
+  loadImages(): void {
+    const images: File[] = [];
+    for (const image of this.postDTO.images) {
+      // @ts-ignore
+      this.postService.getImage(image).subscribe({
+        next: (response: Blob) => {
+          // @ts-ignore
+          const file = new File([response], image, { type: response.type });
+          images.push(file);
+        }
+      });
+    }
+    this.postDTO.images = images;
+    console.log(this.postDTO.images);
   }
 
   getComments(postId: number): void {
@@ -82,4 +98,9 @@ export class PostComponent implements OnInit {
     });
   }
 
+
+
+  onClose() {
+
+  }
 }

@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {HobbyService} from "../../../services/hobby.service";
-import {HobbyFlashcardComponent} from "../hobby-flashcard/hobby-flashcard.component";
 import {ActivatedRoute} from "@angular/router";
 import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 
@@ -12,10 +11,20 @@ import {HobbyPostDTO} from "../../../models/hobby-post-dto";
 export class HobbyFlashcardListComponent {
 
   private id_user: number = 0;
-  @Input() hobbyFlashcardsDTO: HobbyPostDTO[] = [];
+  @Input() hobbyFlashcardsDTO!: HobbyPostDTO[];
     constructor(private hobbyService:HobbyService, private activatedRoute: ActivatedRoute) {
       this.activatedRoute.params.subscribe(params => {
         this.id_user = parseInt(params['id']);
       });
+
+
+
+
+
+    }
+
+    addElementToArray(hobbyFlashcard: HobbyPostDTO){
+      console.log("adding");
+      this.hobbyFlashcardsDTO.push(hobbyFlashcard);
     }
 }

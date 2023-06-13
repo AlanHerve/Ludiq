@@ -1,0 +1,66 @@
+div.message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+div.message-info {
+}
+
+.message {
+  padding: 20px;
+  background-color: #F5F2F5;
+  color: black;
+  border-radius: 33px 33px 33px 0;
+  margin-left: 20px;
+  width: max-content;
+
+  overflow-wrap: break-word;
+  max-width: 600px;
+}
+
+.message-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 800px;
+}
+
+.sender2 {
+  align-items: center;
+  display: flex;
+  align-self: flex-end;
+  justify-content: space-between;
+  width: 800px;
+}
+
+.date {
+  font-size: 17px;
+  color: gray;
+}
+
+.content {
+  position: absolute;
+  left: 350px;
+  width: 836px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sender {
+  align-self: flex-end;
+  border-radius: 33px 33px 0 33px;
+  margin-left: 0;
+  margin-right: 20px;
+  background-color: #307473;
+  color: white;
+}
+
+.sender p {
+  color: #333;
+}
+
+.receiver {
+  align-self: flex-start;
+  background-color: #F4F2F5;
+}

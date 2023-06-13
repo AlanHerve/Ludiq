@@ -6,19 +6,6 @@
   padding-left: 0;
 }
 
-.number {
-  background-color: #307473;
-  border-radius: 100px;
-  padding:13px;
-  color: white;
-  margin-left: 10px;
-}
-
-.tag {
-  width:190px;
-  margin-top: 7px;
-}
-
 h2 {
   font-size: 25px;
   font-weight: 400;
@@ -26,6 +13,21 @@ h2 {
   margin-top: 40px;
 }
 
-button {
-  margin: 15px 0;
+.right-sidebar {
+  width: 22.5vw;
+  height: 100vh;
+  border-left: rgba(116, 33, 194, 0.25) 1px solid;
+  position: fixed;
+  right: 0;
+  top:0;
+  text-align: center;
+}
+
+
+@media (max-width: 1000px) {
+  @media (max-width: 1000px) {
+    .right-sidebar {
+      display: none;
+    }
+  }
 }

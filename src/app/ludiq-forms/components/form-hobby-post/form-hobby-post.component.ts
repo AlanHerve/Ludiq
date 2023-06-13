@@ -1,7 +1,6 @@
 
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {HobbyDTO} from "../../../models/hobby-dto";
-import {RequestDTO} from "../../../models/request-dto";
 import {HobbyService} from "../../../services/hobby.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HobbyPostDTO} from "../../../models/hobby-post-dto";
@@ -33,6 +32,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 export class FormHobbyPostComponent extends Form implements OnInit {
 
+  @Output() hobbyPosted = new EventEmitter<string>();
 
   hobbies : HobbyDTO[] = [];
 
@@ -40,6 +40,7 @@ export class FormHobbyPostComponent extends Form implements OnInit {
   frequency_options: string[] = ["Daily", "3-4/week", "2-3/week", "Weekly", "Monthly", "Rarely"];
 
   hobbyPostDTO: HobbyPostDTO = {
+    id_hobby_post: 0,
     id_user: 0,
     id_hobby: 0,
     advancement: '',
@@ -76,10 +77,11 @@ export class FormHobbyPostComponent extends Form implements OnInit {
     // Converting string into int
     this.hobbyPostDTO.id_hobby = +this.hobbyPostDTO.id_hobby;
     this.newHobbyPost();
+    this.onClose();
   }
 
   newHobbyPost(){
-    this.postsService.newHobbyPost(this.hobbyPostDTO).subscribe({
+    this.hobbyService.newHobbyPost(this.hobbyPostDTO).subscribe({
       next: (response) => {
         // in case of success
         this.hobbies.length = 0;
@@ -96,10 +98,8 @@ export class FormHobbyPostComponent extends Form implements OnInit {
     this.hobbyService.getAvailableHobbiesOfUser(this.hobbyPostDTO.id_user).subscribe({
       next: (response) => {
         // in case of success
-        console.log(response);
         for (let i = 0; i < response.length; i++) {
           this.hobbies.push(response[i]);
-          console.log(response[i]);
         }
         this.hobbyPostDTO.id_hobby = this.hobbies[0].id;
         this.hobbyPostDTO.advancement = this.advancement_options[0];

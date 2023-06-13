@@ -1,0 +1,18 @@
+<div (click)="onClickFriend()" class="friend">
+  <div style = "display: flex">
+    <img src="assets/images/icons/user.png">
+    <div class="user-info">
+      <p class="name">{{friendDTO.user.name}}</p>
+      <p class="username">{{friendDTO.user.username}}</p>
+    </div>
+  </div>
+
+  <div *ngIf="isWaiting()" class="request-status">
+    <p><i>{{formatStatus()}}</i></p>
+    <button (click)="acceptFriendship()" *ngIf="isRequester()">Accept friend request</button>
+    <button (click)="removeFriend()" *ngIf="!isRequester()">Cancel friend request</button>
+  </div>
+  <div *ngIf="!isWaiting()" class="request-status">
+    <button (click)="removeFriend()">Remove friend</button>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+.list {
+  border-bottom: rgba(116, 33, 194, 0.25) 1px solid;
+  padding: 20px;
+  display: flex;
+  overflow-x: auto; /* Allows horizontal scroll */
+  white-space: nowrap;
+  gap: 60px;
+}
+.list::-webkit-scrollbar {
+  background-color: transparent;
+}
+
+.top-text {
+  margin: 20px 0 0 20px;
+  font-size: 20px;
+  color: gray;
+}

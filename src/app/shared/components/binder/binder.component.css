@@ -1,0 +1,7 @@
+.binder {
+  margin-top: 65px;
+  display: grid;
+  font-size: clamp(1.2rem, 0.4rem + 1.2vw, 1.4rem);
+  text-align: center;
+  width:100%;
+}

@@ -14,11 +14,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $body = file_get_contents('php://input');
   $data = json_decode($body,true);
 
+
   $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_pseudo']);
 
-  $postId = $data['id_post'];
-  $id = null;
 
+  $postId = $data['id_post'];
 
   $postRepository = PostRepository::getInstance();
   $commentRepository = CommentRepository::getInstance();
@@ -29,12 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case 'unlike':
       echo $postRepository->unlikePost($postId);
       break;
+
     case 'post':
       newPost();
       break;
     case 'addComment':
       echo $commentRepository->addComment($data['id_user'], $data['content'], $data['id_regular_post']);
       break;
+
 
   }
 }
@@ -47,7 +49,9 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
   if(isset($_GET['type'])) {
     $postRepository = PostRepository::getInstance();
     if($_GET['type'] === 'home')
-      echo $postRepository->getAllPosts();
+      echo json_encode($postRepository->getAllPosts());
+    elseif($_GET['type'] === 'hobby' && isset($_GET['id_hobby']))
+      echo json_encode($postRepository->getHobbyPosts($_GET['id_hobby']));
   }
   elseif (isset($_GET['user_page']) && isset($_GET['id_user'])){
     $id_user = $_GET['id_user'];
@@ -62,6 +66,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
 }
 
 function newPost() {
+  $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
   if(isset($_POST['id_hobby']) && $_POST['id_hobby'] != -1) {
     $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
   } else {
@@ -70,13 +75,7 @@ function newPost() {
 
   $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
   $description = $_POST['description'];
-  $modified = null;
-  $likes = null;
-  $time = null;
 
-  if(isset($_POST['modified'])){
-    $modified = $_POST['modified'];
-  }
   $images = $_FILES['images'];
 
   $uploadedFiles = saveFiles($images);

@@ -15,11 +15,13 @@
     </div>
   </div>
   <div class="post-info" *ngIf="postDTO.hobbyDTO != null">
-    <button class="tag">{{postDTO.hobbyDTO.name}}</button>
+    <app-hobby-button [hobbyDTO]="this.postDTO.hobbyDTO"></app-hobby-button>
   </div>
   <p class="post-content">{{ postDTO.description }}</p>
-  <div *ngFor="let image of postDTO.files">
-    <!--<img *ngIf="image" alt="image" class="post-image" [src]="getFileUrl(image)">-->
+  <div *ngFor="let image of postDTO.images">
+    <div *ngIf="image && image.name != 'null'">
+      <img alt="{{image}}" class="post-image" [src]="getFileUrl(image)">
+    </div>
   </div>
   <br>
   <img alt="Like image" class="interaction" [src]="isLiked ? '../../../../assets/images/icons/heart-liked.png' : '../../../../assets/images/icons/heart.png'" (click)="likePost()">

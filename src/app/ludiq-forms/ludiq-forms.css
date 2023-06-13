@@ -20,8 +20,9 @@ select {
   background-color: rgba(0,0,0,0.4);
   height: 100%;
   width: 100%;
-}
 
+
+}
 
 form {
   position: fixed;
@@ -33,8 +34,9 @@ form {
   background-color: #fefefe;
   padding: 20px 30px;
   width: 46%;
+  max-height: 600px !important;
+  overflow-y: auto !important;
 }
-
 
 input {
   margin: 5px;
@@ -47,6 +49,7 @@ input {
   font-size: 18px;
   font-weight: 300;
 }
+
 
 .cross {
   position: absolute;

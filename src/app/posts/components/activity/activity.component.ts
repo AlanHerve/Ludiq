@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivityDTO} from "../../models/activity-dto";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-activity',
@@ -10,10 +11,17 @@ export class ActivityComponent implements OnInit {
 
   @Input() activityDTO!: ActivityDTO;
 
-  constructor() {
+  constructor(private router: Router) {
   }
   ngOnInit(): void {
   }
 
+  onActivityClicked(): void {
+    this.router.navigateByUrl(`activity/${this.activityDTO.id}`)
+  }
 
+
+  isAble(): boolean {
+    return true;
+  }
 }
