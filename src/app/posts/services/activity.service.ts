@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {apiUrl} from "../../services/api-url";
 import {ActivityDTO} from "../models/activity-dto";
+import {ActivityParticipantsDTO} from "../../pages/activity/models/activity-participants-dto";
 
 
 @Injectable({
@@ -38,5 +39,44 @@ export class ActivityService {
     const params = new HttpParams()
       .set('type', 'top3');
     return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
+  }
+
+  getAllActivites(): Observable<ActivityDTO[]> {
+    const params = new HttpParams()
+      .set('type', 'all_activities')
+    return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
+  }
+
+  findActivityById(id: number): Observable<ActivityDTO> {
+    const params = new HttpParams()
+      .set('type', 'activity')
+      .set('activityId', id)
+    return this.http.get<ActivityDTO>(`${apiUrl}/activity.php`, {params});
+  }
+
+
+  findActivityParticipants(activityId: number): Observable<ActivityParticipantsDTO> {
+    const params = new HttpParams()
+      .set('type', 'activity_participants')
+      .set('activityId', activityId)
+    return this.http.get<ActivityParticipantsDTO>(`${apiUrl}/activity.php`, {params});
+  }
+
+  registerUserToActivity(userId: number, activityId: number) {
+    const params =  {
+      type: 'register_activity',
+      userId: userId,
+      activityId: activityId
+    }
+    return this.http.post<ActivityParticipantsDTO>(`${apiUrl}/activity.php`, params);
+  }
+
+  deleteUserFromActivity(userId: number, activityId: number) {
+    const params =  {
+      type: 'unregister_activity',
+      userId: userId,
+      activityId: activityId
+    }
+    return this.http.post<ActivityParticipantsDTO>(`${apiUrl}/activity.php`, params);
   }
 }

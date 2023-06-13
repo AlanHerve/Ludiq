@@ -1,0 +1,18 @@
+.text {
+  font-size: clamp(1.1rem, 0.4rem + 1.2vw, 1.3rem);
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.top-bar {
+  background-color: rgba(255, 255, 255, 0.4);
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  top:0;
+  left: 22.5vw;
+  right: 22.5vw;
+  width: 55vw;
+  z-index: 1000;
+}
+

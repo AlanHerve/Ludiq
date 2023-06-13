@@ -3,7 +3,7 @@
   <button [class.tag]="this.clicked" [class.h2]="!this.clicked">{{this.hobbyPost.hobby_name}}</button>
   <div *ngIf="this.clicked">
     <p>Availability</p>
-    <img *ngIf="this.hobbyPost.availability == 0" src = "assets/images/icons/heart.png">
+    <img *ngIf="this.hobbyPost.availability == 0" src = "assets/images/icons/not-available.png">
     <img *ngIf="this.hobbyPost.availability == 1" src = "assets/images/icons/available.png">
     <p>Level</p>
     <button class = "level">{{this.hobbyPost.advancement}}</button>

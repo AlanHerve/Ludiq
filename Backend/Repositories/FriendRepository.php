@@ -28,7 +28,6 @@ class FriendRepository
      * Method that find all the friends of a user, according to its ID
      *
      * @param int $id_user
-     * @return false|string
      */
     public function getAllFriends(int $id_user)
     {
@@ -48,6 +47,7 @@ class FriendRepository
         $stmt->bind_param("ii", $id_user, $id_user);
         $stmt->execute();
         $result = $stmt->get_result();
+
         if ($result->num_rows > 0) {
             $usersDTO = [];
             while ($row = $result->fetch_assoc()) {
@@ -202,6 +202,36 @@ class FriendRepository
 
         return "failure";
 
+    }
+
+    public function acceptedFriendship($userId, $friendId) {
+        $stmt = $this->db->prepare("
+            SELECT
+                *
+            FROM
+                friends fri
+            WHERE
+                (
+                    (fri.ID_USER = ?
+                    AND
+                    fri.ID_USER_2 = ?)
+                    OR
+                    (fri.ID_USER = ?
+                    AND
+                    fri.ID_USER_2 = ?)
+                )
+                AND
+                fri.WAITING = 0
+            ;
+        ");
+        $stmt->bind_param("iiii", $userId, $friendId, $friendId, $userId);
+        $stmt->execute();
+
+        if($stmt->get_result()->num_rows == 1){
+            return true;
+        }
+
+        return false;
     }
 
 }

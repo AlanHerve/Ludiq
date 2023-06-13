@@ -5,20 +5,24 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {PagesModule} from "./pages/pages.module";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    PagesModule
+    CommonModule,
+    PagesModule,
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'fr-FR' },
+    {provide: LOCALE_ID, useValue: 'fr-FR'},
+  ],
+  exports: [
   ],
   bootstrap: [AppComponent]
 })

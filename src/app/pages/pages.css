@@ -1,4 +1,5 @@
 .content {
+  top: 0;
   position:absolute;
   left: 22.5vw;
   width: calc(100% - 45vw);
@@ -23,7 +24,7 @@
 .binder {
   margin-top: 50px;
   display: flex;
-  font-size: clamp(1.2rem, 0.4rem + 1.2vw, 1.4rem);;
+  font-size: clamp(1.2rem, 0.4rem + 1.2vw, 1.4rem);
   text-align: center;
 }
 

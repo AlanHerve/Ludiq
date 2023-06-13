@@ -24,18 +24,23 @@ class ConversationRepository {
         return self::$instance;
     }
 
-    public function getAllConversations($user_id) {
-        $friends = $this->friendRepository->getAllFriends($user_id);
+    public function getAllConversations($userId) {
+        $friends = $this->friendRepository->getAllFriends($userId);
         $conversationsDTO = array();
+
+        if(!$friends) return [];
 
         foreach ($friends as $friend) {
             $friendId = $friend->id;
-            $messages = $this->messageRepository->getMessagesBetweenUsers($user_id, $friendId);
-            $conversationDTO = new ConversationDTO($friend, $messages);
-            $conversationsDTO[] = $conversationDTO;
+            if($this->friendRepository->acceptedFriendship($userId, $friendId)) {
+                $messages = $this->messageRepository->getMessagesBetweenUsers($userId, $friendId);
+                $conversationDTO = new ConversationDTO($friend, $messages);
+                $conversationsDTO[] = $conversationDTO;
+            }
         }
 
-        return $conversationsDTO;
+        if(count($conversationsDTO) > 0) return $conversationsDTO;
+        return [];
     }
 
 }

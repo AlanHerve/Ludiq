@@ -163,4 +163,22 @@ class UserRepository
         return $response;
     }
 
+    public function isActivityDirector($userId) {
+        $stmt = $this->db->prepare("
+            SELECT
+                *
+            FROM
+                activity_director dir
+            WHERE
+                dir.ID_USER = ?
+        ");
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+
+        if($stmt->get_result()->num_rows > 0) {
+            return true;
+        }
+        return false;
+    }
+
 }

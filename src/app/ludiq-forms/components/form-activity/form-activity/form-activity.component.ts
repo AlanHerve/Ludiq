@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {  Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
@@ -34,8 +34,8 @@ export class FormActivityComponent implements OnInit {
 
   previousRoute: string = '';
   activityDTO: ActivityDTO = {
-    id_activity: -1,
-    userDTO: new UserDTO( 0,'', ''),
+    id: -1,
+    userDTO: new UserDTO(-1, '', ''),
     hobbyDTO: new HobbyDTO(-1, '', ''),
     title: '',
     description:'',
@@ -44,7 +44,9 @@ export class FormActivityComponent implements OnInit {
     date_post: '',
     current_registered: 0,
     max_registrations: 0,
-    images: []
+    images: [],
+    orga_id: -1,
+    orga_name: ''
   }
 
   hobbyPostDTO: HobbyPostDTO = {

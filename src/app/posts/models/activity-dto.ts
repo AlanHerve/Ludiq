@@ -3,7 +3,7 @@ import {HobbyDTO} from "../../models/hobby-dto";
 
 export class ActivityDTO {
   constructor(
-    public id_activity: number,
+    public id: number,
     public userDTO: UserDTO,
     public hobbyDTO: HobbyDTO,
     public title: string,

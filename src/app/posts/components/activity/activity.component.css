@@ -3,6 +3,8 @@
   border-radius: 30px;
   padding: 20px 30px 30px;
   transition: transform 0.2s ease-in-out;
+  min-height: 379px;
+  cursor: pointer;
 }
 
 .border:hover {
@@ -24,4 +26,5 @@ img {
 .info {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }

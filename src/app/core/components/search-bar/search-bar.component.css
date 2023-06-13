@@ -99,6 +99,10 @@ button {
   max-height:300px;
 }
 
+.result.not-found {
+  padding:40px;
+}
+
 @media (max-width: 1000px) {
   .search-bar {
     width: 100vw;

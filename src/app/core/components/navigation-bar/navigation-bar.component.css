@@ -3,6 +3,14 @@ ul {
   padding-left: 0;
 }
 
+.ludiq-image {
+  width: 60px;
+  height: 60px;
+  margin-top: 40px;
+  position: fixed;
+  left: 65px;
+}
+
 li {
   list-style: none;
 }

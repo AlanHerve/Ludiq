@@ -1,0 +1,52 @@
+<div class="content">
+  <div *ngIf="activityDTO">
+    <div class="top-bar">
+      <div class="user">
+        <app-user-search [userDTO]="activityDTO.userDTO"></app-user-search>
+      </div>
+      <p class="creation-date">Posted on : {{activityDTO.date_post | date:'dd/MM HH:mm' }}</p>
+    </div>
+    <div class="image-container">
+      <img class="top-image" src="assets/images/hobbies/{{activityDTO.hobbyDTO.image}}">
+    </div>
+    <div class="information">
+      <table>
+        <tr>
+          <th>Hobby</th>
+          <th>Advancement</th>
+          <th>Users registered</th>
+        </tr>
+        <tr>
+          <td>
+            <app-hobby-button [hobbyDTO]="activityDTO.hobbyDTO"></app-hobby-button>
+          </td>
+          <td>
+            <button class="level">{{activityDTO.advancement}}</button>
+          </td>
+          <td>
+            <p class="num_registered">{{activityDTO.current_registered}}/{{activityDTO.max_registrations}}</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p class="date">Date of the activity : {{activityDTO.time | date:'dd/MM HH:mm'}}</p>
+
+    <div>
+      <p>Description</p>
+      <p class="description">{{activityDTO.description}}</p>
+    </div>
+    <div *ngIf="!this.registered && !this.activityDirector else elseBlock" class="register-container">
+      <button (click) = "onRegister()">Register for the activity</button>
+    </div>
+    <ng-template #elseBlock>
+      <div *ngIf="!this.activityDirector" class="register-container">
+        <button (click)="onUnregister()" class="button2">Unregister for the activity</button>
+      </div>
+    </ng-template>
+
+  </div>
+</div>
+<app-navigation-bar></app-navigation-bar>
+<app-user-hobbies-list></app-user-hobbies-list>
+
+<router-outlet></router-outlet>

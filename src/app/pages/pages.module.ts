@@ -1,22 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {RouterOutlet} from "@angular/router";
 import {CoreModule} from "../core/core.module";
-import { NotificationsComponent } from './components/notifications/notifications.component';
-
-import { MessagesComponent } from './components/messages/messages.component';
-
-import { OrganizationComponent } from './components/organization/organization.component';
-import {MessagesModule} from "./components/messages/messages.module";
-
-
+import { NotificationsComponent } from './notifications/components/notifications.component';
+import {TopBarComponent} from "../shared/components/top-bar/top-bar.component";
 
 @NgModule({
   declarations: [
-    NotificationsComponent
+    NotificationsComponent,
+    TopBarComponent
   ],
   exports: [
     CoreModule,
+    TopBarComponent
   ],
   imports: [
     CoreModule,
