@@ -1,0 +1,11 @@
+.list {
+  margin: 10px 5px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.trends {
+  text-align: center;
+}

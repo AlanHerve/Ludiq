@@ -3,19 +3,27 @@ ul {
   padding-left: 0;
 }
 
+.ludiq-image {
+  width: 60px;
+  height: 60px;
+  margin-top: 40px;
+  position: fixed;
+  left: 65px;
+}
+
 li {
   list-style: none;
 }
 
 .index {
   margin: 40px 0;
-  padding-left: 80px;
+  padding-left: clamp(0.2rem, 2rem + 3.2vw, 5rem);
   display: flex;
 }
 
 button {
   margin-top: 20px;
-  font-size: 25px;
+  font-size: clamp(0.4rem, 0.4rem + 1.2vw, 1.56rem);
 }
 
 .active {
@@ -23,7 +31,7 @@ button {
 }
 
 a {
-  font-size: 25px;
+  font-size: clamp(0.4rem, 0.4rem + 1.2vw, 1.56rem);
   margin-left: 20px;
   color: #1A072C;
   text-decoration: none;
@@ -31,7 +39,8 @@ a {
 
 img {
   margin-top: -5px;
-  width: 35px;
+  width: clamp(1rem, 1rem + 1.2vw, 2.18rem);
+  height: clamp(1rem, 1rem + 1.2vw, 2.18rem);
 }
 
 
@@ -40,25 +49,45 @@ a:visited {
 }
 
 .left-sidebar {
-  width: 350px;
+  width: 22.5vw;
   height: 100vh;
   border-right: rgba(116, 33, 194, 0.25) 1px solid;
-  position:fixed;
+  position: fixed;
   top: 0;
   left: 0;
   text-align: center;
 }
 
-@media (max-width: 768px) {
-   .left-sidebar {
+@media (max-width: 1000px) {
+  .left-sidebar {
     width: 100%;
     position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 0;
     border: none;
     height: auto;
+    z-index: 100;
+  }
+
+  ul {
+    margin-top: 46px;
+    display: flex;
+    font-size: clamp(0.4rem, 0.4rem + 2vw, 1.30rem);
+    justify-content: space-evenly;
+  }
+
+  .index {
+    padding: 0;
+  }
+
+  button {
+    height: 45px;
+    margin-top: 28px;
   }
 
   .index {
     display: inline-block;
-    margin: 20px;
   }
 }

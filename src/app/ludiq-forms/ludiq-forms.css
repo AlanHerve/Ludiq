@@ -12,7 +12,7 @@ select {
 
 .background-form {
   position: fixed;
-  z-index: 999;
+  z-index: 9999;
   left: 0;
   top: 0;
   overflow: auto;
@@ -20,8 +20,6 @@ select {
   background-color: rgba(0,0,0,0.4);
   height: 100%;
   width: 100%;
-
-
 }
 
 form {

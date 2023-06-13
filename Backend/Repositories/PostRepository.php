@@ -84,7 +84,7 @@ class PostRepository
         return [];
     }
 
-    private function findPostById($id)
+    public function findPostById($id)
     {
         $stmt = $this->db->prepare("
         SELECT
@@ -114,6 +114,46 @@ class PostRepository
             return new PostDTO($row['ID_REGULAR_POST'], $userDTO, $hobbyDTO, $row['DESCRIPTION'],
                 $images, $row['MODIFIED'], $row['LIKES'], $row['TIME']);
         }
+
+        return null;
+    }
+
+    public function likePost($postId)
+    {
+        $stmt = $this->db->prepare("UPDATE regular_post SET LIKES = LIKES + 1 WHERE ID_REGULAR_POST = ?");
+        $stmt->bind_param("i", $postId);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $response = array(
+                'success' => true
+            );
+        } else {
+            $response = array(
+                'success' => false
+            );
+        }
+
+        return json_encode($response);
+    }
+
+    public function unlikePost($postId)
+    {
+        $stmt = $this->db->prepare("UPDATE regular_post SET LIKES = LIKES - 1 WHERE ID_REGULAR_POST = ?");
+        $stmt->bind_param("i", $postId);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $response = array(
+                'success' => true
+            );
+        } else {
+            $response = array(
+                'success' => false
+            );
+        }
+
+        return json_encode($response);
     }
 
     public function getAllPosts()
@@ -171,99 +211,6 @@ class PostRepository
         $row = $result->fetch_assoc();
         return $row['num_posts'];
     }
-
-    public function getPosts($mode, PostDTO $regularPostDTO)
-    {
-        $result = null;
-        $arrayPost = [];
-        $success = false;
-        $content = 0;
-
-        if ($mode == "search") {
-
-
-        } elseif ($mode == "userPage") {
-
-
-            $id_user = $regularPostDTO->id;
-
-            $stmt = $this->db->prepare("SELECT * FROM regular_post reg WHERE reg.ID_USER=?");
-            $stmt->bind_param("s", $id_user);
-            $stmt->execute();
-
-            $result = $stmt->get_result();
-            if ($result) {
-                $success = true;
-                while ($row = $result->fetch_assoc()) {
-                    $content++;
-                    array_push($arrayPost, $row);
-                }
-            }
-            if ($success) {
-
-                if ($content == 0) {
-                    $response = array(
-                        'success' => true,
-                        'content' => "empty"
-                    );
-                } else {
-                    $response = array(
-                        'success' => true,
-                        'content' => "some",
-                        'posts' => $arrayPost
-                    );
-                }
-
-            } else {
-                $reponse = array(
-                    'success' => false
-                );
-            }
-
-
-        }
-
-    }
-
-    public function getSinglePost($id)
-    {
-
-    }
-
-    public function getHobbiesFlashcardsOfUser($id)
-    {
-        $hobbies = [];
-
-        $stmt = $this->db->prepare(
-            "SELECT
-                        hobby_post.ID_HOBBY_POST
-	                    , hobby_post.`ID_HOBBY`
-                        , hobby_post.`EXPERIENCE`
-                        , hobby_post.`AVAILABLE`
-                        , hobby_post.`FREQUENCY`
-                        , hobby.`HOBBY_NAME`
-                    FROM
-	                    hobby_post
-                        INNER JOIN
-	                        hobby ON hobby.`ID_HOBBY` = hobby_post.`ID_HOBBY`
-                    WHERE
-	                    hobby_post.`ID_USER` = ?");
-
-        $stmt->bind_param("i", $id_user);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
-
-        if ($result) {
-            if ($result->num_rows > 0) {
-
-                while ($row = $result->fetch_assoc()) array_push($hobbies, new HobbyPostDTO($row["ID_HOBBY_POST"], $id_user, $row["ID_HOBBY"], $row["HOBBY_NAME"], $row["FREQUENCY"], $row["EXPERIENCE"], $row["AVAILABLE"]));
-                $response = $hobbies;
-            }
-        }
-        return $hobbies;
-    }
-
 }
 
 ?>

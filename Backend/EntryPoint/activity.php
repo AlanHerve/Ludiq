@@ -17,6 +17,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = file_get_contents('php://input');
     $data = json_decode($body, true);
 
+    if (isset($data['type'])) {
+        $activityRepository = ActivityRepository::getInstance();
+        if ($data['type'] === 'activity_post') {
+            return;
+        }
+        if ($data['type'] === 'register_activity') {
+            echo json_encode($activityRepository->registerUserToActivity($data['userId'], $data['activityId']));
+            return;
+        }
+        if ($data['type'] === 'unregister_activity') {
+            echo json_encode($activityRepository->deleteUserFromActivity($data['userId'], $data['activityId']));
+            return;
+        }
+    }
+    /*$userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
+
   //$userDTO = new UserDTO($_POST['user_id'], $_POST['user_name'], $_POST['user_username']);
 
 
@@ -24,10 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $modified = $data['modified'];
   }*/
 
-  /*$images = $_FILES['images'];
+    if (isset($data['modified'])) {
+      $modified = $data['modified'];
+    }
 
 
-  $uploadedFiles = saveFiles($images);*/
+
+
+
 
     //$user = $data['id_user'];
 
@@ -43,14 +63,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }//description, time, max_registration
   /*$activityRepository = ActivityRepository::getInstance();
   $result = $activityRe pository->newActivity($activityDTO);*/
+
 }
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['type'])) {
+        $activityRepository = ActivityRepository::getInstance();
         if ($_GET['type'] === 'top3') {
-            $activityRepository = ActivityRepository::getInstance();
             echo json_encode($activityRepository->getTop3());
+        }
+        if ($_GET['type'] === 'all_activities') {
+            echo json_encode($activityRepository->getAllActivities());
+        }
+        if ($_GET['type'] === 'activity') {
+            echo json_encode($activityRepository->findActivityById($_GET['activityId']));
+        }
+        if ($_GET['type'] === 'activity_participants') {
+            echo json_encode($activityRepository->getActivityParticipants($_GET['activityId']));
         }
     }
 }

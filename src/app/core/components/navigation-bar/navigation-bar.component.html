@@ -1,5 +1,9 @@
 
 <div class="left-sidebar">
+  <img *ngIf="currentMonth != 6 else elseBlock" class = "ludiq-image" src = "assets/images/ludiq.svg">
+  <ng-template #elseBlock>
+    <img class = "ludiq-image" src = "assets/images/ludiq_pride_month.svg">
+  </ng-template>
   <ul>
     <div class = "index">
       <img src = "../../../../assets/images/icons/maison.png" alt = "home">

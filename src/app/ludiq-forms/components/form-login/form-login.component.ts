@@ -1,10 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserDTO} from "../../../models/user-dto";
 import {UserService} from "../../../services/user.service";
 import {Router} from "@angular/router";
 import {trigger,style,state,transition,animate,} from '@angular/animations';
-import { FormService } from 'src/app/form.service';
 
 
 @Component({
@@ -26,7 +25,6 @@ import { FormService } from 'src/app/form.service';
 })
 export class FormLoginComponent implements OnInit  {
 
-  @Output() close: EventEmitter<void> = new EventEmitter<void>();
   userDTO: UserDTO = {
     id: -1,
     name: '',
@@ -39,8 +37,7 @@ export class FormLoginComponent implements OnInit  {
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
-              private router: Router,
-              private formService: FormService){
+              private router: Router){
     this.loginForm = this.formBuilder.group({
       authentification: [null, [Validators.required
         , Validators.minLength(4)
@@ -74,6 +71,8 @@ export class FormLoginComponent implements OnInit  {
       }
     })
   }
+
+  // A SUPPRIMER ? DEJA EXISTANTE DANS LA CLASSE FORM.TS NON ?
   onClose(): void {
     this.router.navigate(['/']);
   }

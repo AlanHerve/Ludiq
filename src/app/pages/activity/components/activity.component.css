@@ -1,0 +1,67 @@
+.level {
+  margin:0;
+  background-color: #7CA851;
+}
+p {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.creation-date {
+  color: #333333;
+  font-size: 16px;
+}
+
+.information {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.user {
+  margin: 20px 20px;
+}
+
+th {
+  padding-top: 30px;
+  font-size: 20px;
+  font-weight: 100;
+}
+
+td {
+  text-align: center;
+  padding: 0 20px;
+}
+
+.num_registered {
+  font-size: 26px;
+}
+
+.top-image {
+  width: 100%;
+}
+
+.register-container {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.top-bar {
+  background-color: rgba(255, 255, 255, 0.4);
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top:0;
+  width: calc(100% - 45vw);
+  backdrop-filter: blur(5px);
+}
+
+.image-container {
+  width: 100%;
+  overflow: hidden;
+  height: 250px;
+}
+.image-container img {
+  height: 100%;
+  object-fit: cover;
+}

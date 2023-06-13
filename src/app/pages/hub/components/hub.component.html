@@ -1,0 +1,28 @@
+<div class = "container">
+  <div class = "flex-column">
+    <div class = "flexbox">
+      <img *ngIf="currentMonth != 6 else elseBlock" class = "ludiq-image" src = "assets/images/ludiq.svg">
+      <ng-template #elseBlock>
+        <img class = "ludiq-image" src = "assets/images/ludiq_pride_month.svg">
+      </ng-template>
+      <h1>Ludiq2</h1>
+    </div>
+    <h2>THE BEST WAY TO SHARE YOUR HOBBIES</h2>
+  </div>
+  <div *ngIf="!isLoggedIn()" class = "buttons">
+    <button (click)="onRegister()">Register</button>
+    <button (click)="onLogin()" class = "button2">Connection</button>
+  </div>
+  <div *ngIf="isLoggedIn()" class = "buttons">
+    <button (click)="onLogout()" class = "button2">Log Out</button>
+    <button (click)="onHome()">Visit</button>
+  </div>
+  <img src = "assets/images/hobbies/Cooking.jpg">
+  <div class = "flashcard-group">
+    <p class = "flashcard">Ludiq allows you to share your hobbies with the whole community.</p>
+    <p class = "flashcard">Users can check your availability for group participation and contact you accordingly.</p>
+    <p class = "flashcard">You can also post on a topic related to one of your hobbies, or participate in an organized activity.</p>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
