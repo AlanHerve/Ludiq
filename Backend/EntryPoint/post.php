@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $body = file_get_contents('php://input');
   $data = json_decode($body,true);
 
-  $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
+  $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_pseudo']);
 
   $postId = $data['id_post'];
   $id = null;
@@ -68,6 +68,7 @@ function newPost() {
     $hobbyDTO = new HobbyDTO(null);
   }
 
+  $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
   $description = $_POST['description'];
   $modified = null;
   $likes = null;

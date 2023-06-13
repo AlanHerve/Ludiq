@@ -29,7 +29,7 @@ class CommentRepository
     } else {
       $response = array('success' => false);
     }
-    return json_encode($response);
+    return $response;
   }
 
   public function getComments($id_regular_post)

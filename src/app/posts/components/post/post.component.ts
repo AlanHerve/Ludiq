@@ -50,9 +50,9 @@ export class PostComponent implements OnInit {
 
   addComment() {
     const comment = {
-      ID_USER: this.userService.getCurrentId(),
-      CONTENT: this.newComment,
-      ID_REGULAR_POST: this.postDTO.id,
+      id_user: this.userService.getCurrentId(),
+      content: this.newComment,
+      id_regular_post: this.postDTO.id,
       type: 'addComment'
     };
 

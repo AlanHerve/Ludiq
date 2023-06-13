@@ -1,6 +1,6 @@
 export interface PostComment {
-  ID_USER: number;
-  CONTENT: string;
-  ID_REGULAR_POST: number;
-  TIME?: string;
+  id_user: number;
+  content: string;
+  id_regular_post: number;
+  time?: string;
 }
