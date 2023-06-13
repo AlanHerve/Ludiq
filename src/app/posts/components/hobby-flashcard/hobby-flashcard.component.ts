@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HobbyPostDTO} from "../../../models/hobby-post-dto";
+import {HobbyFlashcardDTO} from "../../../models/hobby-flashcard-dto";
 import {HobbyService} from "../../../services/hobby.service";
 
 @Component({
@@ -8,9 +8,7 @@ import {HobbyService} from "../../../services/hobby.service";
   styleUrls: ['./hobby-flashcard.component.css']
 })
 export class HobbyFlashcardComponent implements OnInit {
-
-
-  @Input() hobbyPost!: HobbyPostDTO;
+  @Input() hobbyPost!: HobbyFlashcardDTO;
 
   protected clicked: boolean = false;
 

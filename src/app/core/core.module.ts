@@ -9,14 +9,14 @@ import {
   MightLikeHobbiesDisplayComponent
 } from './components/might-like-hobbies-display/might-like-hobbies-display.component';
 import {UserHobbiesListComponent} from './components/user-hobbies-list/user-hobbies-list.component';
-import {UserComponent} from "../pages/home/components/user/user.component";
+
 import {UserSearchComponent} from './components/search-bar/components/user-search/user-search.component';
 import {HobbySearchComponent} from './components/search-bar/components/hobby-search/hobby-search.component';
 import {PostSearchComponent} from './components/search-bar/components/post-search/post-search.component';
 import {ActivitySearchComponent} from './components/search-bar/components/activity-search/activity-search.component';
-import {HobbyButtonComponent} from "../shared/components/hobby-button/hobby-button.component";
 import {HobbyCountButtonComponent} from "../shared/components/hobby-count-button/hobby-count-button.component";
-
+import {HobbyButtonComponent} from "../shared/components/hobby-button/hobby-button.component";
+import {UserComponent} from "../pages/home/components/user/user.component";
 
 @NgModule({
   declarations: [

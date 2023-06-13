@@ -70,3 +70,9 @@ p {
 .delete:hover {
   color: #333333;
 }
+
+.tag {
+  color: white;
+  background-color: #A85751;
+}
+

@@ -6,7 +6,7 @@ import {ProfileDTO} from "../models/profile-dto";
 import {ProfileService} from "../services/profile.service";
 import {ActivityDTO} from "../../../posts/models/activity-dto";
 import {FriendService} from "../../messages/services/friend.service";
-import {HobbyPostDTO} from "../../../models/hobby-post-dto";
+import {HobbyFlashcardDTO} from "../../../models/hobby-flashcard-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {HobbyService} from "../../../services/hobby.service";
 import {CommunicationService} from "../../../services/communication.service";
@@ -23,10 +23,8 @@ export class ProfileComponent {
 
   activitiesDTO: ActivityDTO[] = []
 
-
-  protected favoriteHobby!: HobbyDTO;
   protected reward: string = "bronze";
-  hobbyFlashcardsDTOs: HobbyPostDTO[] = []
+  hobbyFlashcardsDTOs: HobbyFlashcardDTO[] = []
 
   protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
@@ -37,7 +35,8 @@ export class ProfileComponent {
     activityDirector: false,
     numActivities: 0,
     postsDTO: [],
-    activitiesDTO: []
+    activitiesDTO: [],
+    favoriteHobby: new HobbyDTO(-1, '', '')
   }
   private friendship_status: string = "!friend";
 
@@ -56,8 +55,6 @@ export class ProfileComponent {
   }
 
   ngOnInit() {
-    this.favoriteHobby = new HobbyDTO(2, 'Cooking', 'assets/images/hobbies/Cooking.jpg');
-
     this.activatedRoute.params.subscribe(params => {
       this.profileDTO.userDTO.id = parseInt(params['id']);
     })

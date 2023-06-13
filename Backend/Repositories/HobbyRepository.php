@@ -7,8 +7,8 @@ require_once '../Repositories/UserRepository.php';
 
 class HobbyRepository
 {
-    private $db;
     private static $instance = null;
+    private $db;
     private UserRepository $userRepository;
 
     public function __construct()
@@ -25,7 +25,7 @@ class HobbyRepository
         return self::$instance;
     }
 
-    public function fetchAllHobbies()
+    public function getAllHobbies()
     {
 
         $hobbies = [];
@@ -79,16 +79,16 @@ class HobbyRepository
         // top 3 most popular hobbies
         $stmt = $this->db->prepare(
             "SELECT
-	                  activity.`ID_HOBBY`
-                    , hobby.`HOBBY_NAME`
+	                  hobp.`ID_HOBBY`
+                    , hob.`HOBBY_NAME`
                     , COUNT(*)
                 FROM
-	                  activity
-	                  INNER JOIN
-    	                  hobby ON hobby.ID_HOBBY = activity.ID_HOBBY
+	                  hobby_post hobp
+                      INNER JOIN 
+	                      hobby hob on hob.ID_HOBBY = hobp.ID_HOBBY
                 GROUP BY
-	                  activity.ID_HOBBY
-                    , hobby.HOBBY_NAME
+	                  hobp.ID_HOBBY
+                    , hob.HOBBY_NAME
                 ORDER BY
 	                  COUNT(*) DESC LIMIT 3");
         $stmt->execute();
@@ -107,18 +107,19 @@ class HobbyRepository
                     // select 3 random hobbies, those hobbies won't be part of the top 3 most popular hobbies
                     $stmt = $this->db->prepare(
                         "SELECT DISTINCT
-                        activity.`ID_HOBBY`
-                        , hobby.`HOBBY_NAME`
+                        hobp.`ID_HOBBY`
+                        , hob.`HOBBY_NAME`
                         , COUNT(*)
                     FROM
-	                      activity
-	                      INNER JOIN
-    	                      hobby ON hobby.ID_HOBBY = activity.ID_HOBBY
+	                      hobby_post hobp
+                          INNER JOIN 
+	                      hobby hob on hob.ID_HOBBY = hobp.ID_HOBBY
+                    
                     WHERE
-                        activity.`ID_HOBBY` NOT IN (?, ?, ?)
+                        hob.`ID_HOBBY` NOT IN (?, ?, ?)
                     GROUP BY
-	                    activity.ID_HOBBY
-                        , hobby.HOBBY_NAME
+	                    hob.ID_HOBBY
+                        , hob.HOBBY_NAME
                     ORDER BY RAND() LIMIT 3");
                     $stmt->bind_param("iii", $top_hobbies[0]->hobbyDTO->id, $top_hobbies[1]->hobbyDTO->id, $top_hobbies[2]->hobbyDTO->id);
                     $stmt->execute();
@@ -298,14 +299,14 @@ class HobbyRepository
                     'success' => true,
                     'hobbies' => $hobbies
                 );
-            }else{
+            } else {
                 $response = array(
                     'success' => true,
                     'message' => 'user does not have any hobby',
                     "id" => $id_user
                 );
             }
-        }else{
+        } else {
             $response = array(
                 'success' => false,
                 'message' => "could not access dtb"
@@ -334,7 +335,8 @@ class HobbyRepository
         return $row['num_hobbies'];
     }
 
-    public function getHobbyUsers($id_hobby) {
+    public function getHobbyUsers($id_hobby)
+    {
         $stmt = $this->db->prepare("
             SELECT
                 u.ID_USER
@@ -350,9 +352,9 @@ class HobbyRepository
         $stmt->execute();
 
         $result = $stmt->get_result();
-        if($result->num_rows > 0) {
+        if ($result->num_rows > 0) {
             $usersDTO = [];
-            while($row = $result->fetch_assoc()) {
+            while ($row = $result->fetch_assoc()) {
                 $userDTO = $this->userRepository->findUserById($row['ID_USER']);
                 $usersDTO[] = $userDTO;
             }
@@ -385,12 +387,13 @@ class HobbyRepository
                 hob.ID_HOBBY = ?
             ");
 
+
             $stmt->bind_param("i", $hobbyPost->id_hobby);
             $stmt->execute();
             $result = $stmt->get_result();
 
-            if($result){
-                if ($result->num_rows == 1){
+            if ($result) {
+                if ($result->num_rows == 1) {
                     $row = $result->fetch_assoc();
                     $hobbyPost->insertHobbyName($row["HOBBY_NAME"]);
                 }
@@ -398,7 +401,7 @@ class HobbyRepository
 
             $response = array(
                 'success' => true,
-                'hobby'   => $hobbyPost
+                'hobby' => $hobbyPost
             );
         } else {
             $response = array(
@@ -425,7 +428,7 @@ class HobbyRepository
         $stmt->execute();
 
         $result = $stmt->get_result();
-        if($result->num_rows == 1) {
+        if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             return new HobbyDTO($row['ID_HOBBY'], $row['HOBBY_NAME'], $row['IMAGE']);
         }
@@ -438,14 +441,13 @@ class HobbyRepository
         $stmt->bind_param("i", $id_hobby_post);
         $stmt->execute();
 
-        if($stmt->affected_rows === 1){
+        if ($stmt->affected_rows === 1) {
             $response = "Success";
-        }else{
+        } else {
             $response = "Failure";
         }
 
         echo json_encode($response);
-
     }
 
 

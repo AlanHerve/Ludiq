@@ -3,6 +3,7 @@
 
 require_once '../Database.php';
 require_once '../DTOs/UserDTO.php';
+require_once '../Repositories/HobbyRepository.php';
 
 class UserRepository
 {
@@ -63,24 +64,24 @@ class UserRepository
                 user.*
                 , organization.ID_ORGANIZATION
                 , organization.NAME_ORGANIZATION
-            FROM	
+            FROM
                 user
-                LEFT OUTER JOIN organization ON organization.ID_ORGANIZATION = 
+                LEFT OUTER JOIN organization ON organization.ID_ORGANIZATION =
                     (
-                        SELECT 
-                            activity_director.ID_ORGANIZATION 
-                        FROM 
+                        SELECT
+                            activity_director.ID_ORGANIZATION
+                        FROM
                             activity_director
-                            INNER JOIN 
+                            INNER JOIN
                                 user ON user.ID_USER = activity_director.ID_USER
-                        WHERE 
+                        WHERE
                             user.USER_PSEUDO = ?
                             OR
                             user.EMAIL = ?
                     )
             WHERE
                 user.USER_PSEUDO = ?
-                OR 
+                OR
                 user.EMAIL = ?
             ;
         ");
@@ -144,7 +145,7 @@ class UserRepository
         return json_encode($response);
     }
 
-    public function findUserById($id)
+    public function findUserById($id): ?UserDTO
     {
         $stmt = $this->db->prepare("SELECT * FROM user WHERE ID_USER = ?");
         $stmt->bind_param("i", $id);
@@ -179,6 +180,28 @@ class UserRepository
             return true;
         }
         return false;
+    }
+
+    public function getFavoriteHobby($userId) {
+        $stmt = $this->db->prepare("
+            SELECT
+                fav.ID_HOBBY
+            FROM
+                favorite_hobby fav
+            WHERE
+                fav.ID_USER = ?
+        ");
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        if($result->num_rows  == 1) {
+            $row = $result->fetch_assoc();
+            $hobbyRepository = HobbyRepository::getInstance();
+            $hobbyDTO = $hobbyRepository->findHobbyById($row['ID_HOBBY']);
+            return $hobbyDTO;
+        }
+        return null;
     }
 
 }

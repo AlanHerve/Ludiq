@@ -21,4 +21,7 @@ export class ActivityComponent implements OnInit {
   }
 
 
+  isAble(): boolean {
+    return true;
+  }
 }

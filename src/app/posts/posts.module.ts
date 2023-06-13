@@ -7,6 +7,7 @@ import { ActivityListComponent } from './components/activity-list/activity-list.
 import {HobbyFlashcardComponent} from "./components/hobby-flashcard/hobby-flashcard.component";
 import {HobbyFlashcardListComponent} from "./components/hobby-flashcard-list/hobby-flashcard-list.component";
 import {PagesModule} from "../pages/pages.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -23,10 +24,11 @@ import {PagesModule} from "../pages/pages.module";
     ActivityListComponent,
     HobbyFlashcardListComponent
   ],
-    imports: [
-        DatePipe,
-        CommonModule,
-        PagesModule
-    ]
+  imports: [
+    DatePipe,
+    CommonModule,
+    PagesModule,
+    FormsModule
+  ]
 })
 export class PostsModule { }

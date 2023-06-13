@@ -21,8 +21,8 @@
       </div>
       <div class="favorite-hobby">
         <p class="title-favorite-hobby">Favorite hobby</p>
-        <img [src]="favoriteHobby.image" alt="favorite hobby img" class="image-favorite">
-        <button class="tag favorite">cooking</button>
+        <img [src]="'assets/images/hobbies/' + this.profileDTO.favoriteHobby.image" alt="favorite hobby img" class="image-favorite">
+        <app-hobby-button class="tag favorite" [hobbyDTO]="this.profileDTO.favoriteHobby"></app-hobby-button>
       </div>
     </div>
     <p class="username">{{this.profileDTO.userDTO.name}}</p>

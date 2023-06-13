@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hobbyRepository = HobbyRepository::getInstance();
 
     switch ($function_to_call) {
-        case "fetchAllHobbies":
-            $hobbyRepository->fetchAllHobbies();
+        case "getAllHobbies":
+            $hobbyRepository->getAllHobbies();
             break;
         case "hobby_users":
             echo json_encode($hobbyRepository->getHobbyUsers($_GET['id_hobby']));
@@ -54,6 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
         case "destroyHobbyPost":
             $hobbyRepository->destroyHobbyPost($_GET["id_hobby_post"]);
+            break;
+        case "findHobby":
+            $hobbyRepository->findHobbyById($_GET["id_hobby"]);
             break;
     }
 
