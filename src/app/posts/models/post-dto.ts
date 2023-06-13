@@ -1,6 +1,5 @@
 import {UserDTO} from "../../models/user-dto";
 import {HobbyDTO} from "../../models/hobby-dto";
-import {PostComment} from "../components/comment/comment";
 
 export class PostDTO {
 
@@ -12,7 +11,6 @@ export class PostDTO {
               public modified: number,
               public likes: number,
               public time: string,
-              public files: File[],
-              public comments: PostComment[]) {
+              public files: File[]) {
   }
 }
