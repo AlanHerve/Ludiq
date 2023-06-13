@@ -25,6 +25,7 @@ export class ProfileComponent {
 
 
   protected favoriteHobby!: HobbyDTO;
+  protected reward: string = "bronze";
   hobbyFlashcardsDTOs: HobbyPostDTO[] = []
 
   protected type: string = 'posts';
@@ -33,6 +34,8 @@ export class ProfileComponent {
     numPosts: 0,
     numHobbies: 0,
     numFriends: 0,
+    activityDirector: false,
+    numActivities: 0,
     postsDTO: [],
     activitiesDTO: []
   }
@@ -54,7 +57,6 @@ export class ProfileComponent {
 
   ngOnInit() {
     this.favoriteHobby = new HobbyDTO(2, 'Cooking', 'assets/images/hobbies/Cooking.jpg');
-
 
     this.activatedRoute.params.subscribe(params => {
       this.profileDTO.userDTO.id = parseInt(params['id']);
@@ -83,6 +85,23 @@ export class ProfileComponent {
 
   }
 
+  private determineReward(): void {
+    if(this.profileDTO.numActivities > 50) {
+      this.reward = "gold"
+    }
+    else if(this.profileDTO.numActivities > 25) {
+      this.reward = "iron"
+    }
+    else if(this.profileDTO.numActivities > 0){
+      this.reward = "bronze"
+    }
+  }
+
+  getUserType(): string {
+    if(this.isActivityDirector()) return 'Activity Director';
+    return 'Classical User';
+  }
+
   findHobbyDTOWithData(id: number){
     const sizeOfArray: number = this.hobbyFlashcardsDTOs.length;
 
@@ -98,6 +117,7 @@ export class ProfileComponent {
     this.profileService.getProfileInformation(this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
         this.profileDTO = response;
+        this.determineReward();
       },
       error: (error) => {
         console.log('error while accessing to profile informations : ', error);
@@ -116,8 +136,6 @@ export class ProfileComponent {
             this.hobbyFlashcardsDTOs.push(response.hobbies[i]);
           }
         }
-
-
       },
       error: (error) => {
         // in case of failure
@@ -126,8 +144,6 @@ export class ProfileComponent {
     });
 
   }
-
-
 
   isConnectedUser(): boolean {
     return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.profileDTO.userDTO.id
@@ -155,6 +171,16 @@ export class ProfileComponent {
     return this.profileDTO.userDTO.id;
   }
 
+  getActivitiesType(): string {
+    if(this.isActivityDirector()) {
+      return "organized";
+    }
+    return "participated";
+  }
+
+  isActivityDirector(): boolean {
+    return this.profileDTO.activityDirector;
+  }
 
   addFriend(): void {
     const id_user = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);

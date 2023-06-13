@@ -1,7 +1,5 @@
-<div class="top-bar">
-  <p class="text">{{ profileDTO.numPosts }} posts</p>
-  <p class="text">Activity Director</p>
-</div>
+<app-top-bar [content]="[profileDTO.numPosts.toString() + ' posts', this.getUserType()]"></app-top-bar>
+
 <div class="content">
   <div class="user">
     <div class="top-user-info">
@@ -9,8 +7,8 @@
 
       <div class="user-info">
         <div class="text-container">
-          <img class="badge" src="../../../../assets/images/icons/gold.png">
-          <p class="info">15 activities participated</p>
+          <img class="badge" src="../../../../assets/images/icons/{{this.reward}}.png">
+          <p class="info">{{profileDTO.numActivities }} activities {{this.getActivitiesType()}}</p>
         </div>
         <div class="text-container">
           <img class="badge" src="../../../../assets/images/icons/hobbies.png">

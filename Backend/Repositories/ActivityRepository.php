@@ -244,5 +244,47 @@ class ActivityRepository
         }
         return false;
     }
+
+    public function getNumActivitiesDirector($userId): int {
+        $stmt = $this->db->prepare("
+            SELECT
+                COUNT(*)
+            FROM
+                activity act
+            WHERE
+                act.ID_ACTIVITY_DIRECTOR = ?
+            ;
+        ");
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        if($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['COUNT(*)'];
+        }
+        return 0;
+    }
+
+    public function getNumActivitiesClassical($userId): int {
+        $stmt = $this->db->prepare("
+            SELECT
+                COUNT(*)
+            FROM
+                activity_participant par
+            WHERE
+                par.ID_USER = ?
+            ;
+        ");
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        if($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['COUNT(*)'];
+        }
+        return 0;
+    }
 }
 

@@ -5,7 +5,7 @@
     <p>{{this.activityDTO.description}}</p>
   </div>
   <div class = "info">
-    <button class = "tag">{{this.activityDTO.hobbyDTO.name}}</button>
+    <app-hobby-button [hobbyDTO]="activityDTO.hobbyDTO"></app-hobby-button>
     <p class = "date">{{this.activityDTO.time | date}}</p>
   </div>
 </div>

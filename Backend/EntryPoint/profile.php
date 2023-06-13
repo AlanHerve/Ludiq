@@ -9,5 +9,9 @@ include("../Repositories/ProfileRepository.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $profileRepository = ProfileRepository::getInstance();
-    echo json_encode($profileRepository->getProfileInformation($_GET['id_user']));
+    $organization = false;
+    if(isset($_GET['token'])) {
+        $token = true;
+    }
+    echo json_encode($profileRepository->getProfileInformation($_GET['id_user'], $token));
 }

@@ -21,10 +21,7 @@
         <button class="button2" routerLink="">Disconnect</button>
       </div>
     </div>
-    <div class="binder">
-      <div (click)="onSwitchTo('posts')" class="tab {{ type === 'posts' ? 'selected' : '' }}">Posts</div>
-      <div (click)="onSwitchTo('activities')" class="tab {{ type === 'activities' ? 'selected' : '' }}">Activities</div>
-    </div>
+    <app-binder [buttons]="['Posts', 'Activities']"></app-binder>
 
     <app-post-list [postsDTO]="organizationDTO.postsDTO" *ngIf="type === 'posts'"></app-post-list>
     <!--<app-activity-list [activitiesDTO]="this.activitiesDTO" *ngIf="type === 'activities'"></app-activity-list> -->

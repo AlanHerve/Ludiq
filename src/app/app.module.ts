@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {PagesModule} from "./pages/pages.module";
-import {CoreModule} from "./core/core.module";
 import {CommonModule} from "@angular/common";
 
 @NgModule({
@@ -17,9 +16,8 @@ import {CommonModule} from "@angular/common";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    CoreModule,
     CommonModule,
-    PagesModule
+    PagesModule,
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'fr-FR'},

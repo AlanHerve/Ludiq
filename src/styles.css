@@ -40,23 +40,6 @@ button:hover {
   background-color:#53188B;
 }
 
-.tag {
-  align-items: center;
-  padding: 10px 32px;
-
-  color: white;
-  background-color:#A85751 ;
-  font-size: 20px;
-  border: none;
-
-  border-radius :50px;
-  transition: background-color 0.2s ease-out;
-}
-
-.tag:hover {
-  color:white;
-  background-color: #753D38;
-}
 
 
 .button2 {

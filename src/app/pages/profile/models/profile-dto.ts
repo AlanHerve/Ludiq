@@ -9,6 +9,8 @@ export class ProfileDTO {
               public numPosts: number,
               public numHobbies: number,
               public numFriends: number,
+              public numActivities: number,
+              public activityDirector: boolean,
               public postsDTO: PostDTO[],
               public activitiesDTO: ActivityDTO[],
               public favoriteHobby?: HobbyDTO) {

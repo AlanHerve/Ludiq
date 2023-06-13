@@ -204,4 +204,34 @@ class FriendRepository
 
     }
 
+    public function acceptedFriendship($userId, $friendId) {
+        $stmt = $this->db->prepare("
+            SELECT
+                *
+            FROM
+                friends fri
+            WHERE
+                (
+                    (fri.ID_USER = ?
+                    AND
+                    fri.ID_USER_2 = ?)
+                    OR
+                    (fri.ID_USER = ?
+                    AND
+                    fri.ID_USER_2 = ?)
+                )
+                AND
+                fri.WAITING = 0
+            ;
+        ");
+        $stmt->bind_param("iiii", $userId, $friendId, $friendId, $userId);
+        $stmt->execute();
+
+        if($stmt->get_result()->num_rows == 1){
+            return true;
+        }
+
+        return false;
+    }
+
 }

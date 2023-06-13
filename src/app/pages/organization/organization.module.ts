@@ -5,17 +5,19 @@ import {OrganizationRoutingModule} from "./organization-routing.module";
 import {CoreModule} from "../../core/core.module";
 import {PostsModule} from "../../posts/posts.module";
 import {PagesModule} from "../pages.module";
+import {HomeModule} from "../home/home.module";
 
 @NgModule({
   declarations: [
     OrganizationComponent
   ],
-  imports: [
-    OrganizationRoutingModule,
-    CommonModule,
-    PostsModule,
-    PagesModule,
-  ],
+    imports: [
+        OrganizationRoutingModule,
+        CommonModule,
+        PostsModule,
+        PagesModule,
+        HomeModule,
+    ],
   exports: [
     OrganizationComponent,
     OrganizationRoutingModule

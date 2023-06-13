@@ -9,9 +9,11 @@ import {UserService} from "../../../services/user.service";
   styleUrls: ['./hub.component.css', '../../pages.css']
 })
 export class HubComponent implements OnInit {
+  protected currentMonth;
   constructor(private router: Router,
               private formService: FormService,
               private userService: UserService) {
+    this.currentMonth = new Date().getMonth() + 1;
   }
 
   ngOnInit(): void {
