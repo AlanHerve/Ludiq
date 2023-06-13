@@ -1,7 +1,5 @@
 <?php
 
-require_once '../Database.php';
-
 class ImageRepository
 {
     private $db;
@@ -12,24 +10,23 @@ class ImageRepository
     }
     public static function getInstance() {
         if(!self::$instance) {
-            self::$instance = new ImageRepository();
+            self::$instance = new HobbyRepository();
         }
         return self::$instance;
     }
 
-    public function createFile($imageName) {
-        $imageFolder = '../assets/images/';
-        $imagePath = $imageFolder . $imageName;
+    public function findImagesOnLocalStorage($strings)
+    {
+        $files = [];
+        foreach($strings as $string) {
+          $file = '../assets/images/'.$string;
+          if(file_exists($file)) {
+            $fileContent = file_get_contents($file);
 
-        if (file_exists($imagePath)) {
-            // Getting the mime type of the image
-            //$mimeType = mime_content_type($imagePath);
-            // Send content of the image
-            return readfile($imagePath);
+            $files[] = $fileContent;
+          }
         }
-        else {
-            return null;
-        }
+        return $files;
     }
 
 }

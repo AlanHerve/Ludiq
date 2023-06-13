@@ -32,18 +32,18 @@ class CommentRepository
     return $response;
   }
 
-  public function getComments($id_regular_post)
-  {
+  public function getComments($postId) {
     $stmt = $this->db->prepare("SELECT * FROM comment WHERE ID_REGULAR_POST = ?");
-    $stmt->bind_param("i", $id_regular_post);
+    $stmt->bind_param("i", $postId);
     $stmt->execute();
     $result = $stmt->get_result();
     $comments = [];
     while ($row = $result->fetch_assoc()) {
       $comments[] = $row;
     }
-    return json_encode($comments);
+    return $comments;
   }
+
 
   public function updateComment($id_comment, $content)
   {

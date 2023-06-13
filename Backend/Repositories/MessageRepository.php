@@ -21,7 +21,7 @@ class MessageRepository
 
     }
 
-    public function getMessagesBetweenUsers(int $id_user1, int $id_user2) {
+    public function getMessagesBewteenUsers(int $id_user1, int $id_user2) {
         $stmt = $this->db->prepare("
         SELECT
             mes.*
@@ -42,7 +42,7 @@ class MessageRepository
             $messageDTO = new MessageDTO($row['ID_MESSAGE'], $row['ID_USER'], $row['ID_USER_2'], $row['CONTENT'], $row['TIME']);
             $messagesDTO[] = $messageDTO;
         }
-        return $messagesDTO;
+        return json_encode($messagesDTO);
     }
 
     public function createMessage(MessageDTO $messageDTO) {

@@ -63,24 +63,24 @@ class UserRepository
                 user.*
                 , organization.ID_ORGANIZATION
                 , organization.NAME_ORGANIZATION
-            FROM
+            FROM	
                 user
-                LEFT OUTER JOIN organization ON organization.ID_ORGANIZATION =
+                LEFT OUTER JOIN organization ON organization.ID_ORGANIZATION = 
                     (
-                        SELECT
-                            activity_director.ID_ORGANIZATION
-                        FROM
+                        SELECT 
+                            activity_director.ID_ORGANIZATION 
+                        FROM 
                             activity_director
-                            INNER JOIN
+                            INNER JOIN 
                                 user ON user.ID_USER = activity_director.ID_USER
-                        WHERE
+                        WHERE 
                             user.USER_PSEUDO = ?
                             OR
                             user.EMAIL = ?
                     )
             WHERE
                 user.USER_PSEUDO = ?
-                OR
+                OR 
                 user.EMAIL = ?
             ;
         ");
@@ -144,7 +144,7 @@ class UserRepository
         return json_encode($response);
     }
 
-    public function findUserById($id): ?UserDTO
+    public function findUserById($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM user WHERE ID_USER = ?");
         $stmt->bind_param("i", $id);
@@ -161,24 +161,6 @@ class UserRepository
         }
 
         return $response;
-    }
-
-    public function isActivityDirector($userId) {
-        $stmt = $this->db->prepare("
-            SELECT
-                *
-            FROM
-                activity_director dir
-            WHERE
-                dir.ID_USER = ?
-        ");
-        $stmt->bind_param('i', $userId);
-        $stmt->execute();
-
-        if($stmt->get_result()->num_rows > 0) {
-            return true;
-        }
-        return false;
     }
 
 }
