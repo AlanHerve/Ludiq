@@ -79,4 +79,23 @@ export class ActivityService {
     }
     return this.http.post<ActivityParticipantsDTO>(`${apiUrl}/activity.php`, params);
   }
+
+  getOrganizationName(token: string): string {
+
+    let to_return: string = token;
+
+    to_return = to_return.replace(/([a-zA-Z0-9]*_){3,3}/,"");
+
+    return to_return;
+  }
+
+  getOrganizationID(token: string): number{
+
+    let to_return : string = token;
+
+    to_return = to_return.replace(/([a-zA-Z0-9]*_){2,2}/, "");
+    to_return = to_return.replace(/_[a-zA-Z0-9 À-ú]*/, "");
+
+    return parseInt(to_return);
+  }
 }

@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $value = $_POST['max_registration'];
         echo json_encode("Phooey");
-        $activityDTO = new ActivityDTO(null, $_POST['id_user'], $_POST['id_hobby'], $_POST['advancement'], $_POST['description'], null, $_POST['time'], null, $_POST['max_registration'], null);
+        $activityDTO = new ActivityDTO(null, $_POST['id_user'], $_POST['id_hobby'], $_POST['advancement'], $_POST['description'], null, $_POST['time'], null, $_POST['max_registration'], null, null, null, null);
         $activityRepository = ActivityRepository::getInstance();
         $result = $activityRepository->newActivity($activityDTO);
         echo $result;

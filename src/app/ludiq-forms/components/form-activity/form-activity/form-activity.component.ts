@@ -45,8 +45,8 @@ export class FormActivityComponent implements OnInit {
     current_registered: 0,
     max_registrations: 0,
     images: [],
-    orga_id: -1,
-    orga_name: ''
+    id_organization: -1,
+    name_organization: ''
   }
 
   hobbyPostDTO: HobbyPostDTO = {
@@ -73,11 +73,14 @@ export class FormActivityComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    console.log(JSON.parse(localStorage.getItem('currentUser')!).token);
+
+    this.activityDTO.name_organization = this.activityService.getOrganizationName(JSON.parse(localStorage.getItem('currentUser')!).token);
+    this.activityDTO.id_organization = this.activityService.getOrganizationID(JSON.parse(localStorage.getItem('currentUser')!).token);
+
     this.userService.findUserById(JSON.parse(localStorage.getItem('currentUser')!).id).subscribe({
       next: (response) => {
         this.activityDTO.userDTO = response;
-        console.log("Valeur de response :", response);
-        console.log("test de alan <3 " + this.activityDTO.userDTO.id);
 
         this.hobbyService.getAllHobbies().subscribe({
           next: (hobbies) => {
