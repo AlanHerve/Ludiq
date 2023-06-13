@@ -34,23 +34,38 @@ class ActivityRepository
 
     public function newActivity(ActivityDTO $activityDTO)
     {
-        $id_user = $activityDTO->userDTO->id;
-        $id_hobby = $activityDTO->hobbyDTO->id;
+
+        $id_user = $activityDTO->userDTO;
+
+        $id_hobby = $activityDTO->hobbyDTO;
         $description = $activityDTO->description;
         $images = $activityDTO->images;
 
-        $stmt = $this->db->prepare("INSERT INTO activity (ID_ACTIVITY_DIRECTOR, ID_HOBBY, DESCRIPTION , DATE_ACTIVITY , MAX_REGISTRATIONS,IMAGE) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iissis", $id_activity_director, $id_hobby, $description, $time, $max_registrations, $images);
+        $stmt = $this->db->prepare("INSERT INTO
+                                                activity
+                                                (ID_ACTIVITY_DIRECTOR
+                                                , ID_HOBBY
+                                                , DESCRIPTION
+                                                , DATE_ACTIVITY
+                                                , MAX_REGISTRATIONS
+                                                , IMAGE)
+                                            VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iissis", $id_user, $id_hobby, $description, $time, $activityDTO->max_registrations,$images);
         $stmt->execute();
+
         //->inserer que ce qui n'a pas de valeur de base
         //iisssss -> int int string string string...
         //requetes pour aller chopper les bails à refaire
 
+
+
         if ($stmt->affected_rows > 0) { //if rows are affected it means the database has been modified
+            $activityDTO->setID($stmt->insert_id);
             $response = array(
-                'success' => 'true'
+                'success' => 'true',
+                'Activity'=>$activityDTO,
             );
-        } else { //if not, nothing has been added in the database, therefore there is a problem somewhere
+        }  else { //if not, nothing has been added in the database, therefore there is a problem somewhere
             $response = array(
                 'success' => 'false'
             );

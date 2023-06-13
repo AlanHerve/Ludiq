@@ -38,7 +38,6 @@ form {
   overflow-y: auto !important;
 }
 
-
 input {
   margin: 5px;
   width: 70%;
@@ -50,6 +49,7 @@ input {
   font-size: 18px;
   font-weight: 300;
 }
+
 
 .cross {
   position: absolute;

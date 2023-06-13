@@ -11,29 +11,40 @@ require_once "../DTOs/ActivityDTO.php";
 require_once "../DTOs/UserDTO.php";
 require_once "../DTOs/HobbyDTO.php";
 require_once "../Repositories/ActivityRepository.php";
+require_once "../Repositories/UserRepository.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
+    $body = file_get_contents('php://input');
+    $data = json_decode($body, true);
 
-    if ($_POST['id_hobby'] != -1) $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
-    else $hobbyDTO = new HobbyDTO(null);
+  //$userDTO = new UserDTO($_POST['user_id'], $_POST['user_name'], $_POST['user_username']);
 
 
-    $description = $_POST['description'];
-    $time = $_POST['time'];
+  /*if (isset($data['modified'])) {
+    $modified = $data['modified'];
+  }*/
 
-    /*if (isset($data['modified'])) {
-      $modified = $data['modified'];
-    }*/
+  /*$images = $_FILES['images'];
 
-    $images = $_FILES['images'];
 
-    $uploadedFiles = saveFiles($images);
+  $uploadedFiles = saveFiles($images);*/
 
-    $activityDTO = new ActivityDTO(null, null, $hobbyDTO, null, $description, null, $time, null, null, null);
-    $activityRepository = ActivityRepository::getInstance();
-    echo json_encode($activityRepository->newActivity($activityDTO));
+    //$user = $data['id_user'];
+
+    if(isset($_POST['id_user']) && isset($_POST['id_hobby']) && isset($_POST['advancement']) && isset($_POST['description']) && isset($_POST['time']) && isset($_POST['max_registration']))
+    {
+
+        $value = $_POST['max_registration'];
+        echo json_encode("Phooey");
+        $activityDTO = new ActivityDTO(null, $_POST['id_user'], $_POST['id_hobby'], $_POST['advancement'], $_POST['description'], null, $_POST['time'], null, $_POST['max_registration'], null);
+        $activityRepository = ActivityRepository::getInstance();
+        $result = $activityRepository->newActivity($activityDTO);
+        echo $result;
+    }//description, time, max_registration
+  /*$activityRepository = ActivityRepository::getInstance();
+  $result = $activityRe pository->newActivity($activityDTO);*/
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['type'])) {
