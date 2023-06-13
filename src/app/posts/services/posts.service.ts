@@ -7,13 +7,14 @@ import {map} from "rxjs/operators";
 import {HobbyDTO} from "../../models/hobby-dto";
 import {HobbyPostDTO} from "../../models/hobby-post-dto";
 import {PostComment} from "../components/comment/comment";
+import {UserService} from "../../services/user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostsService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   newPost(formData: FormData): Observable<any> {
     return this.http.post<any>(`${apiUrl}/post.php`, formData);
@@ -41,8 +42,8 @@ export class PostsService {
     );
   }
 
-  likePost(postId: number): Observable<any> {
-    const options = {'type': 'like', 'id_post': postId}
+  likePost(postId: number, userId: number): Observable<any> {
+    const options = {'type': 'like', 'id_post': postId, 'id_user': userId}
     return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
       map(response => {
         return response;
@@ -50,11 +51,9 @@ export class PostsService {
     );
   }
 
-  unlikePost(postId: number): Observable<any> {
-    const params = new HttpParams()
-      .set('function_to_call', "unlike")
-      .set('id_post', postId);
-    return this.http.post<any>(`${apiUrl}/post.php`, {params}).pipe(
+  unlikePost(postId: number, userId: number): Observable<any> {
+    const options = {'type': 'unlike', 'id_post': postId, 'id_user': userId}
+    return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
       map(response => {
         return response;
       })
@@ -66,9 +65,21 @@ export class PostsService {
   }
 
 
-  getPost(postId: string): Observable<PostDTO> {
-    return this.http.get<PostDTO>(`${this.apiUrl}/posts/${postId}`);
+  /*getPost(postId: string): Observable<PostDTO> {
+    return this.http.get<PostDTO>(`${apiUrl}/posts/${postId}`);
+  }*/
+
+
+  hasLiked(postId: number): Observable<boolean> {
+    const userId = this.userService.getCurrentId();
+    const params = new HttpParams()
+      .set('type', 'hasLiked')
+      .set('id_user', userId)
+      .set('id_post', postId);
+    return this.http.get<boolean>(`${apiUrl}/post.php`, {params});
   }
+
+
 
 
 }

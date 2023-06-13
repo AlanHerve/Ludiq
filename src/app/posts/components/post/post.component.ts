@@ -22,11 +22,25 @@ export class PostComponent implements OnInit {
   constructor(private userService: UserService,private postsService: PostsService, private router: Router, private postService: PostsService) {
   }
   ngOnInit(): void {
-    this.getComments(this.postDTO.id);
+    /*this.postsService.getPost(this.postDTO.id.toString()).subscribe({
+      next: (response) => {
+        this.postDTO = response;
+        this.postDTO.comments = response.comments; // Ajoutez cette ligne
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération du post : ', error);
+      }
+    });*/
+
+    this.postsService.hasLiked(this.postDTO.id).subscribe(hasLiked => {
+      this.isLiked = hasLiked;
+      console.log("Has liked : " + hasLiked);
+    });
   }
 
-  getComments(postId: number): void {
-    this.postsService.getPost(postId).subscribe({
+
+  /*getComments(postId: number): void {
+    this.postsService.getPost(postId.toString()).subscribe({
       next: (response: PostDTO) => {
         this.postDTO = response;
         this.comments = response.comments;
@@ -35,7 +49,7 @@ export class PostComponent implements OnInit {
         console.error('Erreur lors de la récupération du post : ', error);
       }
     });
-  }
+  }*/
 
 
   getFileUrl(file: File): string {
@@ -50,11 +64,11 @@ export class PostComponent implements OnInit {
     this.isLiked = !this.isLiked;
 
     if (this.isLiked) {
-      this.postService.likePost(this.postDTO.id).subscribe(() => {
+      this.postService.likePost(this.postDTO.id, this.userService.getCurrentId()).subscribe(() => {
         this.postDTO.likes++;
       });
     } else {
-      this.postService.unlikePost(this.postDTO.id).subscribe(() => {
+      this.postService.unlikePost(this.postDTO.id, this.userService.getCurrentId()).subscribe(() => {
         this.postDTO.likes--;
       });
     }
