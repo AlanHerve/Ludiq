@@ -1,8 +1,8 @@
 <?php
 
 header("Access-Control-Allow-Origin: *");
-header('Access-Control-Allow-Methods: GET, POST');
-header('Access-Control-Allow-Headers: Origin,Content-Type');
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type");
 
 require_once "../DTOs/PostDTO.php";
 require_once "../DTOs/UserDTO.php";
@@ -14,33 +14,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $body = file_get_contents('php://input');
   $data = json_decode($body,true);
 
-  $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_pseudo']);
-
   $postId = $data['id_post'];
-  $id = null;
-
 
   $postRepository = PostRepository::getInstance();
   $commentRepository = CommentRepository::getInstance();
   switch ($data['type']) {
     case 'like':
-      echo $postRepository->likePost($postId);
-      break;
+      echo json_encode($postRepository->likePost($data['id_user'], $postId));
+      return;
     case 'unlike':
-      echo $postRepository->unlikePost($postId);
+      echo json_encode($postRepository->unlikePost($data['id_user'], $postId));
       break;
     case 'post':
       newPost();
       break;
-    case 'addComment':
-      echo $commentRepository->addComment($data['id_user'], $data['content'], $data['id_regular_post']);
-      break;
-
   }
 }
 
 elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
-
   $id = $id_user = $id_hobby = $description = $images = $modified = $likes = $time = $mode = null;
   $valid = false;
 
@@ -59,6 +50,11 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
     $mode = $_GET['search'];
     $valid = true;
   }
+  if (isset($_GET['id_post']) && isset($_GET['id_user']) && $_GET['type'] =='hasLiked'){
+    $postRepository = PostRepository::getInstance();
+    echo json_encode($postRepository->hasLiked($_GET['id_user'], $_GET['id_post']));
+  }
+
 }
 
 function newPost() {
