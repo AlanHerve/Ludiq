@@ -65,10 +65,7 @@ export class UserService {
     //const match =bracket.concat(underscore.toString()).concat(id_organization.toString()).concat(underscore.toString()).concat(bracket2.toString());
     const regex = new RegExp(match, 'gm');
     const token: String = JSON.parse(localStorage.getItem('currentUser')!).token;
-
-    console.log("mathc " + token.match(regex));
-    console.log(match);
-
+    
     return token.match(regex)!=null;
   }
 

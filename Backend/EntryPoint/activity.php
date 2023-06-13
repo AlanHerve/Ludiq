@@ -28,6 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       } elseif ($data['type'] === 'unregister_activity') {
         echo json_encode($activityRepository->deleteUserFromActivity($data['userId'], $data['activityId']));
         return;
+      }elseif ($data['type'] == 'deleteActivity'){
+          echo json_encode($activityRepository->deleteActivity($data['activityId']));
       } elseif (isset($_POST['id_user']) && isset($_POST['id_hobby']) && isset($_POST['advancement']) && isset($_POST['description']) && isset($_POST['time']) && isset($_POST['max_registration'])) {
 
         $value = $_POST['max_registration'];
@@ -49,14 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $activityRepository = ActivityRepository::getInstance();
         if ($_GET['type'] === 'top3') {
             echo json_encode($activityRepository->getTop3());
-        }
-        if ($_GET['type'] === 'all_activities') {
+        }elseif ($_GET['type'] === 'all_activities') {
             echo json_encode($activityRepository->getAllActivities());
-        }
-        if ($_GET['type'] === 'activity') {
+        }elseif ($_GET['type'] === 'activity') {
             echo json_encode($activityRepository->findActivityById($_GET['activityId']));
-        }
-        if ($_GET['type'] === 'activity_participants') {
+        }elseif ($_GET['type'] === 'activity_participants') {
             echo json_encode($activityRepository->getActivityParticipants($_GET['activityId']));
         }
     }

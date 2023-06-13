@@ -307,5 +307,20 @@ class ActivityRepository
         }
         return 0;
     }
+
+    public function deleteActivity(mixed $activityId)
+    {
+        $stmt = $this->db->prepare("
+        DELETE FROM
+            activity
+        WHERE
+            activity.ID_ACTIVITY = ?
+        ");
+
+        $stmt->bind_param("i", $activityId);
+        $stmt->execute();
+        if ($stmt->affected_rows > 0) return "success";
+        else return "failure";
+    }
 }
 
