@@ -112,4 +112,8 @@ export class ActivityComponent implements OnInit{
   private isActivityDirector(): boolean {
     return this.activityDTO.userDTO.id == this.userDTO.id;
   }
+
+  private isPartOfOrganization(): boolean {
+    return this.userService.isPartOfOrganization(this.activityDTO.id_organization);
+  }
 }

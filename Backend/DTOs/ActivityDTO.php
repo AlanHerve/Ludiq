@@ -16,14 +16,17 @@ class ActivityDTO
     $current_registered,
     $time, //date of the activity
     $advancement,
-    $date_post;
+    $date_post,
+    $id_organization,
+    $name_organization
+    ;
 
-  public function __construct($id, $userDTO, $hobbyDTO, $advancement, $description, $date_post, $time, $current_registered, $max_registrations, $images)
+  public function __construct($id, $userDTO, $hobbyDTO, $advancement, $description, $date_post, $time, $current_registered, $max_registrations, $images, $title, $id_organization, $name_organization)
   {
     $this->id = $id;
     $this->userDTO = $userDTO;
     $this->hobbyDTO = $hobbyDTO;
-    $this->title = 'activity';
+    $this->title = $title;
     $this->advancement = $advancement;
     $this->description = $description;
     $this->date_post = $date_post;
@@ -31,6 +34,8 @@ class ActivityDTO
     $this->current_registered = $current_registered;
     $this->max_registrations = $max_registrations;
     $this->images = $images;
+    $this->id_organization = $id_organization;
+    $this->name_organization = $name_organization;
   }
 
   public function setID($id){

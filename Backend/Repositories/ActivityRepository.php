@@ -169,8 +169,14 @@ class ActivityRepository
         $stmt = $this->db->prepare("
             SELECT
                 act.*
+                , org.ID_ORGANIZATION
+                , org.NAME_ORGANIZATION
             FROM
                 activity act
+                INNER JOIN
+                    activity_director actd ON act.ID_ACTIVITY_DIRECTOR = actd.ID_USER
+                INNER JOIN
+                    organization org on actd.ID_ORGANIZATION = org.ID_ORGANIZATION
             WHERE
                 act.ID_ACTIVITY = ?
         ");
@@ -186,7 +192,7 @@ class ActivityRepository
             $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
 
             return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
-                                $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'], $row['MAX_REGISTRATIONS'], $row['IMAGE']);
+                                $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'], $row['MAX_REGISTRATIONS'], $row['IMAGE'], $row["TITLE"],$row['ID_ORGANIZATION'], $row['NAME_ORGANIZATION']);
         }
         return null;
     }

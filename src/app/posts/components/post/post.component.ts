@@ -2,6 +2,10 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { PostDTO } from "../../models/post-dto";
 import { Router } from "@angular/router";
 import { PostsService } from "../../services/posts.service";
+import {UserService} from "../../../services/user.service";
+import { PostComment } from "../comment/comment";
+
+
 
 @Component({
   selector: 'app-post',
@@ -14,8 +18,10 @@ export class PostComponent implements OnInit {
   isLiked: boolean = false;
   showCommentBox: boolean = false;
   newComment: string = '';
+  comments: PostComment[] = [];
 
-  constructor(private router: Router, private postService: PostsService) {
+
+  constructor(private userService: UserService,private postsService: PostsService, private router: Router, private postService: PostsService) {
   }
   ngOnInit(): void {
     this.loadImages();
@@ -58,6 +64,29 @@ export class PostComponent implements OnInit {
       });
     }
   }
+
+  addComment() {
+    const comment = {
+      id_user: this.userService.getCurrentId(),
+      content: this.newComment,
+      id_regular_post: this.postDTO.id,
+      type: 'addComment'
+    };
+
+
+    this.postsService.addComment(comment).subscribe(response => {
+      if (response.success) {
+        // Ajoute le nouveau commentaire à la liste des commentaires
+        this.comments.push(comment);
+        // Réinitialise newComment pour vider le champ de saisie
+        this.newComment = '';
+      } else {
+        // Gére l'erreur
+        console.error('Erreur lors de l\'ajout du commentaire');
+      }
+    });
+  }
+
 
 
   onClose() {

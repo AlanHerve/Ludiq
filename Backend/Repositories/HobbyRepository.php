@@ -79,16 +79,16 @@ class HobbyRepository
         // top 3 most popular hobbies
         $stmt = $this->db->prepare(
             "SELECT
-	                  activity.`ID_HOBBY`
-                    , hobby.`HOBBY_NAME`
+	                  hobp.`ID_HOBBY`
+                    , hob.`HOBBY_NAME`
                     , COUNT(*)
                 FROM
-	                  activity
-	                  INNER JOIN
-    	                  hobby ON hobby.ID_HOBBY = activity.ID_HOBBY
+	                  hobby_post hobp
+                      INNER JOIN 
+	                      hobby hob on hob.ID_HOBBY = hobp.ID_HOBBY
                 GROUP BY
-	                  activity.ID_HOBBY
-                    , hobby.HOBBY_NAME
+	                  hobp.ID_HOBBY
+                    , hob.HOBBY_NAME
                 ORDER BY
 	                  COUNT(*) DESC LIMIT 3");
         $stmt->execute();
@@ -107,18 +107,19 @@ class HobbyRepository
                     // select 3 random hobbies, those hobbies won't be part of the top 3 most popular hobbies
                     $stmt = $this->db->prepare(
                         "SELECT DISTINCT
-                        activity.`ID_HOBBY`
-                        , hobby.`HOBBY_NAME`
+                        hobp.`ID_HOBBY`
+                        , hob.`HOBBY_NAME`
                         , COUNT(*)
                     FROM
-	                      activity
-	                      INNER JOIN
-    	                      hobby ON hobby.ID_HOBBY = activity.ID_HOBBY
+	                      hobby_post hobp
+                          INNER JOIN 
+	                      hobby hob on hob.ID_HOBBY = hobp.ID_HOBBY
+                    
                     WHERE
-                        activity.`ID_HOBBY` NOT IN (?, ?, ?)
+                        hob.`ID_HOBBY` NOT IN (?, ?, ?)
                     GROUP BY
-	                    activity.ID_HOBBY
-                        , hobby.HOBBY_NAME
+	                    hob.ID_HOBBY
+                        , hob.HOBBY_NAME
                     ORDER BY RAND() LIMIT 3");
                     $stmt->bind_param("iii", $top_hobbies[0]->hobbyDTO->id, $top_hobbies[1]->hobbyDTO->id, $top_hobbies[2]->hobbyDTO->id);
                     $stmt->execute();
@@ -384,6 +385,7 @@ class HobbyRepository
             WHERE
                 hob.ID_HOBBY = ?
             ");
+
 
             $stmt->bind_param("i", $hobbyPost->id_hobby);
             $stmt->execute();

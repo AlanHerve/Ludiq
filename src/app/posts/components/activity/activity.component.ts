@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivityDTO} from "../../models/activity-dto";
 import {Router} from "@angular/router";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-activity',
@@ -11,7 +12,7 @@ export class ActivityComponent implements OnInit {
 
   @Input() activityDTO!: ActivityDTO;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private userService: UserService) {
   }
   ngOnInit(): void {
   }
@@ -19,6 +20,7 @@ export class ActivityComponent implements OnInit {
   onActivityClicked(): void {
     this.router.navigateByUrl(`activity/${this.activityDTO.id}`)
   }
+
 
 
 }
