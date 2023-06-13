@@ -14,7 +14,8 @@ export class ActivityDTO {
     public current_registered: number,
     public max_registrations: number,
     public images : (string | null)[],
-
+    public orga_id: number,
+    public orga_name:string
     ) {
   }
 }
