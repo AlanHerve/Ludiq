@@ -1,5 +1,5 @@
 <div class = "background-form">
-  <form>
+  <form (ngSubmit)="modifyProfile()"  [formGroup]="profileForm" >
     <a class ="cross" [@fadeOut]="true" (click)="onClose()" >&times;</a>
     <h1>Profile modification</h1>
     <div class="image-container">
@@ -10,11 +10,11 @@
     </div>
     <input id="avatar" class="invisible" type="file" name="avatar">
 
-    <input name = "name" value = "Name">
-    <input name = "username" value = "Username">
-    <input name = "password" placeholder = "New password">
-    <input name = "confirm" placeholder = "Confirm new password">
+    <input name = "name" value = "{{this.userDTO.name}}" formControlName="name" >
+    <input name = "username" value = "{{this.userDTO.username}}" formControlName="username" >
+    <input name = "password" placeholder = "New password" formControlName="password" >
+    <input name = "confirm" placeholder = "Confirm new password" formControlName="confirm_password" >
 
-    <button>Modify</button>
+    <button type="submit" >Modify</button>
   </form>
 </div>
