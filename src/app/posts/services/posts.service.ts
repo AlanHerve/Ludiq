@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {catchError, Observable, tap, throwError} from "rxjs";
+import {Observable} from "rxjs";
 import {apiUrl} from "../../services/api-url";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
 import {HobbyDTO} from "../../models/hobby-dto";
 import {HobbyPostDTO} from "../../models/hobby-post-dto";
-import {RequestDTO} from "../../models/request-dto";
+import {PostComment} from "../components/comment/comment";
 
 @Injectable({
   providedIn: 'root'
@@ -65,4 +65,10 @@ export class PostsService {
       })
     );
   }
+
+  addComment(comment: PostComment): Observable<any> {
+    return this.http.post<any>(`${apiUrl}/comment.php`, comment);
+  }
+
+
 }

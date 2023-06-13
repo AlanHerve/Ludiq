@@ -3,7 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
+
 -- Généré le : lun. 12 juin 2023 à 15:42
+
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -78,6 +80,7 @@ INSERT INTO `activity_director` (`ID_USER`, `ID_ORGANIZATION`) VALUES
 -- --------------------------------------------------------
 
 --
+
 -- Structure de la table `activity_participants`
 --
 
@@ -90,6 +93,7 @@ CREATE TABLE `activity_participants` (
 -- --------------------------------------------------------
 
 --
+
 -- Structure de la table `comment`
 --
 
@@ -100,6 +104,14 @@ CREATE TABLE `comment` (
   `ID_REGULAR_POST` int(11) NOT NULL,
   `TIME` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Déchargement des données de la table `comment`
+--
+
+INSERT INTO `comment` (`ID_COMMENT`, `ID_USER`, `CONTENT`, `ID_REGULAR_POST`, `TIME`) VALUES
+(0, 3, 'yo', 3, '2023-06-10 13:25:11'),
+(1, 4, 'salut', 1, '2023-06-06 13:13:35');
 
 -- --------------------------------------------------------
 
@@ -255,6 +267,9 @@ CREATE TABLE `regular_post` (
 
 INSERT INTO `regular_post` (`ID_REGULAR_POST`, `ID_USER`, `ID_HOBBY`, `DESCRIPTION`, `IMAGE1`, `IMAGE2`, `IMAGE3`, `IMAGE4`, `MODIFIED`, `LIKES`, `TIME`) VALUES
 (1, 5, 1, 'test', NULL, NULL, NULL, NULL, 0, 1, '2023-06-11 15:48:42');
+(1, 5, 17, 'helloooo', '', '', '', '', 0, 6, '2023-06-08 15:08:29'),
+(3, 5, 17, 'helloooo', '', '', '', '', 0, 3, '2023-06-10 12:41:12');
+
 
 -- --------------------------------------------------------
 
@@ -302,6 +317,7 @@ ALTER TABLE `activity_director`
   ADD KEY `ID_ORGANIZATION` (`ID_ORGANIZATION`);
 
 --
+
 -- Index pour la table `activity_participants`
 --
 ALTER TABLE `activity_participants`
@@ -310,6 +326,7 @@ ALTER TABLE `activity_participants`
   ADD KEY `ID_USER` (`ID_USER`);
 
 --
+
 -- Index pour la table `comment`
 --
 ALTER TABLE `comment`
@@ -379,12 +396,14 @@ ALTER TABLE `activity`
   MODIFY `ID_ACTIVITY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+
 -- AUTO_INCREMENT pour la table `activity_participants`
 --
 ALTER TABLE `activity_participants`
   MODIFY `ID_ACTIVITY_PARTICIPANTS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
+
 -- AUTO_INCREMENT pour la table `hobby`
 --
 ALTER TABLE `hobby`
@@ -412,7 +431,8 @@ ALTER TABLE `organization`
 -- AUTO_INCREMENT pour la table `regular_post`
 --
 ALTER TABLE `regular_post`
-  MODIFY `ID_REGULAR_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_REGULAR_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 
 --
 -- AUTO_INCREMENT pour la table `user`
@@ -439,6 +459,7 @@ ALTER TABLE `activity_director`
   ADD CONSTRAINT `activity_director_ibfk_2` FOREIGN KEY (`ID_ORGANIZATION`) REFERENCES `organization` (`ID_ORGANIZATION`) ON DELETE CASCADE;
 
 --
+
 -- Contraintes pour la table `activity_participants`
 --
 ALTER TABLE `activity_participants`
@@ -446,6 +467,7 @@ ALTER TABLE `activity_participants`
   ADD CONSTRAINT `activity_participants_ibfk_2` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`);
 
 --
+
 -- Contraintes pour la table `comment`
 --
 ALTER TABLE `comment`
@@ -474,12 +496,14 @@ ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`ID_USER_2`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE;
 
 --
+
 -- Contraintes pour la table `organization`
 --
 ALTER TABLE `organization`
   ADD CONSTRAINT `organization_ibfk_1` FOREIGN KEY (`FAVORITE_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE SET NULL;
 
 --
+
 -- Contraintes pour la table `regular_post`
 --
 ALTER TABLE `regular_post`

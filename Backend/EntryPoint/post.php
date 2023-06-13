@@ -8,21 +8,20 @@ require_once "../DTOs/PostDTO.php";
 require_once "../DTOs/UserDTO.php";
 require_once "../DTOs/HobbyDTO.php";
 require_once "../Repositories/PostRepository.php";
+require_once "../Repositories/CommentRepository.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $body = file_get_contents('php://input');
   $data = json_decode($body,true);
 
 
+  $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_pseudo']);
 
-  if(isset($_POST['new_post'])) {
-    newPost();
-    return;
-  }
 
   $postId = $data['id_post'];
 
   $postRepository = PostRepository::getInstance();
+  $commentRepository = CommentRepository::getInstance();
   switch ($data['type']) {
     case 'like':
       echo $postRepository->likePost($postId);
@@ -30,6 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case 'unlike':
       echo $postRepository->unlikePost($postId);
       break;
+
+    case 'post':
+      newPost();
+      break;
+    case 'addComment':
+      echo $commentRepository->addComment($data['id_user'], $data['content'], $data['id_regular_post']);
+      break;
+
+
   }
 }
 
@@ -65,6 +73,7 @@ function newPost() {
     $hobbyDTO = new HobbyDTO(null);
   }
 
+  $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
   $description = $_POST['description'];
 
   $images = $_FILES['images'];
