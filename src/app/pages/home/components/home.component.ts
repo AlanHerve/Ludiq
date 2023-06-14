@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PostDTO} from "../../../posts/models/post-dto";
-import {PostsService} from "../../../posts/services/posts.service";
+import {PostService} from "../../../posts/services/post.service";
 import {Location} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {ActivityDTO} from "../../../posts/models/activity-dto";
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   protected type: string = 'posts';
   protected id_hobby!: number;
 
-  constructor(private postsService: PostsService,
+  constructor(private postsService: PostService,
               private location: Location,
               private activatedRoute: ActivatedRoute,
               private activityService: ActivityService,

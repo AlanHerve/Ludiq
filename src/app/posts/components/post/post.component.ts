@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { PostDTO } from "../../models/post-dto";
 import { Router } from "@angular/router";
-import { PostsService } from "../../services/posts.service";
+import { PostService } from "../../services/post.service";
 import {UserService} from "../../../services/user.service";
-import { PostComment } from "../comment/comment";
+import { CommentDTO } from "../../models/comment-dto";
 
 
 
@@ -17,14 +17,34 @@ export class PostComponent implements OnInit {
   @Output() postLiked: EventEmitter<PostDTO> = new EventEmitter<PostDTO>();
   isLiked: boolean = false;
   showCommentBox: boolean = false;
-  newComment: string = '';
-  comments: PostComment[] = [];
+
+  protected commentsDTO!: CommentDTO[];
 
 
-  constructor(private userService: UserService,private postsService: PostsService, private router: Router, private postService: PostsService) {
+  constructor(private userService: UserService, private router: Router, private postService: PostService) {
   }
   ngOnInit(): void {
     this.loadImages();
+  }
+
+  onCommentClicked(): void {
+    this.showCommentBox = !this.showCommentBox;
+
+  }
+
+  private displayThreeComments(): void {
+
+  }
+
+  private getAllComments(): void {
+    this.postService.getAllComments(this.postDTO.id).subscribe({
+      next: (comments) => {
+        this.commentsDTO = comments;
+      },
+      error: (error) => {
+        console.log("Error while finding all comments of post : " + this.postDTO.id, ". Error : ", error)
+    }
+    })
   }
 
   loadImages(): void {
@@ -64,30 +84,6 @@ export class PostComponent implements OnInit {
       });
     }
   }
-
-  addComment() {
-    const comment = {
-      id_user: this.userService.getCurrentId(),
-      content: this.newComment,
-      id_regular_post: this.postDTO.id,
-      type: 'addComment'
-    };
-
-
-    this.postsService.addComment(comment).subscribe(response => {
-      if (response.success) {
-        // Ajoute le nouveau commentaire à la liste des commentaires
-        this.comments.push(comment);
-        // Réinitialise newComment pour vider le champ de saisie
-        this.newComment = '';
-      } else {
-        // Gére l'erreur
-        console.error('Erreur lors de l\'ajout du commentaire');
-      }
-    });
-  }
-
-
 
   onClose() {
 

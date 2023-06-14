@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {apiUrl} from "../../services/api-url";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
-import {HobbyFlashcardDTO} from "../../models/hobby-flashcard-dto";
-import {PostComment} from "../components/comment/comment";
+import {CommentDTO} from "../models/comment-dto";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PostsService {
+export class PostService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   newPost(formData: FormData): Observable<any> {
     return this.http.post<any>(`${apiUrl}/post.php`, formData);
@@ -32,10 +32,10 @@ export class PostsService {
   }
 
   getImage(image: string): Observable<Blob> {
-    const options = { responseType: 'arraybuffer' as 'json' };
+    const options = {responseType: 'arraybuffer' as 'json'};
     const params = new HttpParams().set('image_name', image);
-    return this.http.get<Blob>(`${apiUrl}/images.php`, { params, ...options }).pipe(
-      map(response => new Blob([response], { type: 'image/jpeg' }))
+    return this.http.get<Blob>(`${apiUrl}/images.php`, {params, ...options}).pipe(
+      map(response => new Blob([response], {type: 'image/jpeg'}))
     );
   }
 
@@ -57,8 +57,16 @@ export class PostsService {
     );
   }
 
-  addComment(comment: PostComment): Observable<any> {
+  addComment(comment: CommentDTO): Observable<any> {
     return this.http.post<any>(`${apiUrl}/comment.php`, comment);
+  }
+
+  getAllComments(postID: number): Observable<CommentDTO[]> {
+    const params = new HttpParams()
+      .set('type', 'all_comments')
+      .set('postID', postID)
+
+    return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
   }
 
 

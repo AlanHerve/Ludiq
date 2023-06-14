@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {PostDTO} from "../../models/post-dto";
-import {PostsService} from "../../services/posts.service";
+import {PostService} from "../../services/post.service";
 
 @Component({
   selector: 'app-post-list',
@@ -10,7 +10,7 @@ import {PostsService} from "../../services/posts.service";
 export class PostListComponent implements OnInit {
   @Input() postsDTO: PostDTO[] = [];
 
-  constructor(private postsService: PostsService) {
+  constructor(private postsService: PostService) {
   }
 
   ngOnInit(): void {

@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hobbyRepository->destroyHobbyPost($_GET["id_hobby_post"]);
             break;
         case "findHobby":
-            $hobbyRepository->findHobbyById($_GET["id_hobby"]);
+            echo json_encode($hobbyRepository->findHobbyById($_GET["id_hobby"]));
             break;
     }
 

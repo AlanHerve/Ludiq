@@ -30,4 +30,5 @@ export class NavigationBarComponent implements  OnInit{
     this.router.navigateByUrl(`${currentRoute}/regular_post`);
   }
 
+
 }

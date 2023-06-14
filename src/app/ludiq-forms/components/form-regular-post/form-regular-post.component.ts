@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PostDTO} from "../../../posts/models/post-dto";
-import {PostsService} from "../../../posts/services/posts.service";
+import {PostService} from "../../../posts/services/post.service";
 import {Router} from "@angular/router";
 import {Location} from '@angular/common';
 import {Form} from "../../models/form";
@@ -54,7 +54,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     })
   }
 
-  constructor(private postsService: PostsService,
+  constructor(private postsService: PostService,
               private hobbyService: HobbyService,
               private userService: UserService,
               router: Router,

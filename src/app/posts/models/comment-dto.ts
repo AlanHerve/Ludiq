@@ -5,6 +5,7 @@ export class CommentDTO {
     public id: number,
     public userDTO: UserDTO,
     public content: string,
+    public postID: number,
     public time: string
   ) {}
 }

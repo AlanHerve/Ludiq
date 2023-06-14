@@ -21,9 +21,12 @@ img {
   padding: 10px;
   font-size: clamp(1rem, 0.4rem + 1.2vw, 1.2rem);
   width:22.5vw;
+  gap: 20px;
+  height: 50px;
+  align-items: center;
 }
 
 button{
-  padding: clamp(1rem, 0.4rem + 1vw, 1rem);
+  padding: 14px;
   font-size: clamp(1rem, 0.4rem + 1.2vw, 1.2rem)!important;
 }

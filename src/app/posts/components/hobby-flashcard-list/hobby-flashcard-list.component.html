@@ -1,3 +1,6 @@
-<div>
+<div class = "grid" *ngIf ="hobbyFlashcardsDTO.length != 0">
   <app-hobby-flashcard *ngFor="let flashcard of this.hobbyFlashcardsDTO" [hobbyPost]="flashcard"></app-hobby-flashcard>
+</div>
+<div *ngIf ="hobbyFlashcardsDTO.length == 0">
+  <p class = "no-hobby">This profile doesn't have any hobby.</p>
 </div>

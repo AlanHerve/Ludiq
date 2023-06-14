@@ -7,7 +7,7 @@ import {HobbyFlashcardDTO} from "../../../models/hobby-flashcard-dto";
 import {Location} from "@angular/common";
 import {Form} from "../../models/form";
 import {Router} from "@angular/router";
-import {PostsService} from "../../../posts/services/posts.service";
+import {PostService} from "../../../posts/services/post.service";
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -52,7 +52,7 @@ export class FormHobbyPostComponent extends Form implements OnInit {
   constructor(
     private builder: FormBuilder,
     private hobbyService: HobbyService,
-    private postsService: PostsService,
+    private postsService: PostService,
     router: Router,
     location: Location
   ) {

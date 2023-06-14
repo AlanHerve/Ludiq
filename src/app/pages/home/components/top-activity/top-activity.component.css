@@ -1,13 +1,12 @@
 .activity-background {
   position: relative;
-  background-color: #753D38; /* Couleur de fond */
-  background-image: url('../../../../../assets/images/hobbies/Cooking.jpg'); /* Image de fond */
+  background-color: #753D38;
+  background-image: url('../../../../../assets/images/hobbies/Cooking.jpg');
 
   background-repeat: no-repeat;
   background-position: center;
   background-size: 300px;
 
-  /* Effet de multiplicité de la couleur de fond et de l'image */
   background-blend-mode: multiply;
 
   padding: 50px 100px;
