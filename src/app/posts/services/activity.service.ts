@@ -83,7 +83,7 @@ export class ActivityService {
   getOrganizationName(token: string): string {
 
     let to_return: string = token;
-
+    console.log(to_return);
     to_return = to_return.replace(/([a-zA-Z0-9]*_){3,3}/,"");
 
     return to_return;
