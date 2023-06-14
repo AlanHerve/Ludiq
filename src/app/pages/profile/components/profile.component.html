@@ -55,7 +55,7 @@
   <app-hobby-flashcard-list *ngIf="type === 'hobbies'"
                             [hobbyFlashcardsDTO]="this.hobbyFlashcardsDTOs"></app-hobby-flashcard-list>
 
-  <app-activity-list *ngIf="type === 'activities'" [activitiesDTO]="this.profileDTO.activitiesDTO"></app-activity-list>
+  <app-activity-flashcard-list *ngIf="type === 'activities'" [activitiesDTO]="this.profileDTO.activitiesDTO"></app-activity-flashcard-list>
 
 </div>
 <app-navigation-bar></app-navigation-bar>

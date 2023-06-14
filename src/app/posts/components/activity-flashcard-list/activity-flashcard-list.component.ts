@@ -2,11 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivityDTO} from "../../models/activity-dto";
 
 @Component({
-  selector: 'app-activity-list',
-  templateUrl: './activity-list.component.html',
-  styleUrls: ['./activity-list.component.css']
+  selector: 'app-activity-flashcard-list',
+  templateUrl: './activity-flashcard-list.component.html',
+  styleUrls: ['./activity-flashcard-list.component.css']
 })
-export class ActivityListComponent implements OnInit {
+export class ActivityFlashcardListComponent implements OnInit {
   @Input() activitiesDTO: ActivityDTO[] = [];
 
   constructor() {

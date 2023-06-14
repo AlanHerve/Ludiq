@@ -3,11 +3,11 @@ import {ActivityDTO} from "../../models/activity-dto";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-activity',
-  templateUrl: './activity.component.html',
-  styleUrls: ['./activity.component.css']
+  selector: 'app-activity-flashcard',
+  templateUrl: './activity-flashcard.component.html',
+  styleUrls: ['./activity-flashcard.component.css']
 })
-export class ActivityComponent implements OnInit {
+export class ActivityFlashcardComponent implements OnInit {
 
   @Input() activityDTO!: ActivityDTO;
 
@@ -17,9 +17,8 @@ export class ActivityComponent implements OnInit {
   }
 
   onActivityClicked(): void {
-    this.router.navigateByUrl(`activity/${this.activityDTO.id}`)
+    this.router.navigateByUrl(`/activity/${this.activityDTO.id}`)
   }
-
 
   isAble(): boolean {
     return true;

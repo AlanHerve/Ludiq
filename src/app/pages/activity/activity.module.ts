@@ -12,9 +12,10 @@ import {ActivityRoutingModule} from "./activity-routing.module";
     CoreModule,
     CommonModule,
   ],
-  exports: [
-    ActivityRoutingModule
-  ],
+    exports: [
+        ActivityRoutingModule,
+        ActivityComponent
+    ],
   providers: [],
 })
 export class ActivityModule {

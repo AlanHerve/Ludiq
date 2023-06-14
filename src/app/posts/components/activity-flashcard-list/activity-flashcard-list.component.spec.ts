@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ActivityListComponent } from './activity-list.component';
+import { ActivityFlashcardListComponent } from './activity-flashcard-list.component';
 
 describe('ActivityListComponent', () => {
-  let component: ActivityListComponent;
-  let fixture: ComponentFixture<ActivityListComponent>;
+  let component: ActivityFlashcardListComponent;
+  let fixture: ComponentFixture<ActivityFlashcardListComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ActivityListComponent]
+      declarations: [ActivityFlashcardListComponent]
     });
-    fixture = TestBed.createComponent(ActivityListComponent);
+    fixture = TestBed.createComponent(ActivityFlashcardListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
