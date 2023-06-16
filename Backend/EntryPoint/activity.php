@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     if (isset($data['type'])) {
+
          $activityRepository = ActivityRepository::getInstance();
          if ($data['type'] === 'activity_post') {
              return;
@@ -40,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['id_user']) && isset($_POST['id_hobby']) && isset($_POST['advancement']) && isset($_POST['description']) && isset($_POST['time']) && isset($_POST['max_registration']) && isset($_POST['title'])) {
         echo json_encode("PONEY");
         echo json_encode($_POST['title']);
+
 
         $value = $_POST['max_registration'];
         echo json_encode("poney bien apres isset");
@@ -63,6 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             if ($_GET['type'] === 'activity_participants') {
                 echo json_encode($activityRepository->getActivityParticipants($_GET['activityId']));
+            }
+            if ($_GET['type'] === 'hobby_activities'){
+                echo json_encode($activityRepository->getHobbyActivities($_GET['hobbyId']));
             }
         }
     }

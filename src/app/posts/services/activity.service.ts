@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {map} from "rxjs/operators";
 import {apiUrl} from "../../services/urls";
 import {ActivityDTO} from "../models/activity-dto";
@@ -11,6 +11,10 @@ import {ActivityParticipantsDTO} from "../../pages/activity/models/activity-part
   providedIn: 'root'
 })
 export class ActivityService {
+
+  private needDelete = new Subject<number>();
+  currentDeleteState = this.needDelete.asObservable();
+
   constructor(private http: HttpClient) {}
 
 
@@ -27,9 +31,24 @@ export class ActivityService {
         console.log(response);
         return response;
       })
-    );;
+    );
   }
-  getAllActivity(): Observable<ActivityDTO[]> {
+
+
+  deleteActivity(activityId: number): Observable<string> {
+    const params =  {
+      type: 'deleteActivity',
+      activityId: activityId
+    };
+
+    return this.http.post<string>(`${apiUrl}/activity.php`, params).pipe(
+      map(response => {
+        return response;
+      })
+    );
+  }
+
+  getAllActivities(): Observable<ActivityDTO[]> {
     const params = new HttpParams()
       .set('type', 'home');
     return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
@@ -44,6 +63,13 @@ export class ActivityService {
   getAllActivites(): Observable<ActivityDTO[]> {
     const params = new HttpParams()
       .set('type', 'all_activities')
+    return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
+  }
+
+  getHobbyActivities(id: number): Observable<ActivityDTO[]> {
+    const params = new HttpParams()
+      .set('type', 'hobby_activities')
+      .set('hobbyId', id)
     return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
   }
 
@@ -98,4 +124,5 @@ export class ActivityService {
 
     return parseInt(to_return);
   }
+
 }

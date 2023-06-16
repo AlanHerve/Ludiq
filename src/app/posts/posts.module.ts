@@ -24,12 +24,13 @@ import {CommentListComponent} from './components/comment-list/comment-list.compo
     CommentComponent,
     CommentListComponent
   ],
-  exports: [
-    PostComponent,
-    PostListComponent,
-    ActivityFlashcardListComponent,
-    HobbyFlashcardListComponent
-  ],
+    exports: [
+        PostComponent,
+        PostListComponent,
+        ActivityFlashcardListComponent,
+        HobbyFlashcardListComponent,
+        HobbyFlashcardComponent
+    ],
   imports: [
     DatePipe,
     CommonModule,

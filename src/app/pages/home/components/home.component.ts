@@ -20,24 +20,23 @@ export class HomeComponent implements OnInit {
 
   constructor(private postsService: PostService,
               private location: Location,
-              private activatedRoute: ActivatedRoute,
               private activityService: ActivityService,
-              private tabService: TabService) {
+              private tabService: TabService,
+              private activatedRoute: ActivatedRoute) {
     this.tabService.tabChange$.subscribe(tab => {
       this.onTabChange(tab);
     });
   }
 
   ngOnInit(): void {
-    this.displayPosts();
-    this.getAllActivities();
+    this.displayContent();
   }
 
   onTabChange(tab: string): void {
     this.type = tab.toLowerCase();
   }
 
-  getAllActivities(): void {
+  displayAllActivities(): void {
     this.activityService.getAllActivites().subscribe({
       next: (response) => {
         this.activitiesDTO = response;
@@ -49,9 +48,22 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  displayPosts(): void {
+  displayHobbyActivities(id : number):void{
+    this.activityService.getHobbyActivities(id).subscribe({
+      next: (response)=> {
+        this.activitiesDTO = response;
+        console.log("Got all related Activities", response)
+      },
+      error: (error)=>{
+        console.log("Error while trying to find related activities:" , error)
+      }
+    })
+  }
+
+  displayContent(): void {
     if (this.location.path() == '/home') {
       this.displayAllPosts();
+      this.displayAllActivities()
     } else {
       this.findHobbyId();
       this.displayHobbyPosts();
@@ -62,7 +74,11 @@ export class HomeComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
         const id = params.get('id');
         if (!id) return;
-        this.id_hobby = parseInt(id);
+        else
+        {
+          this.id_hobby = parseInt(id);
+          this.displayHobbyActivities(this.id_hobby)
+        }
       }
     );
   }

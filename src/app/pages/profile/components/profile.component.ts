@@ -25,7 +25,7 @@ export class ProfileComponent implements Image {
   activitiesDTO: ActivityDTO[] = []
 
   protected reward: string = "bronze";
-  hobbyFlashcardsDTOs: HobbyFlashcardDTO[] = []
+  hobbyFlashcardsDTO: HobbyFlashcardDTO[] = [];
 
   protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
@@ -36,10 +36,13 @@ export class ProfileComponent implements Image {
     activityDirector: false,
     numActivities: 0,
     postsDTO: [],
+    hobbiesPostDTO: [],
     activitiesDTO: [],
-    favoriteHobby: new HobbyDTO(-1, '', '')
+    favoriteHobby: new HobbyDTO(-1, '', ''),
+    hobbiesDTO: []
   }
   private friendship_status: string = "!friend";
+
 
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,
@@ -57,37 +60,42 @@ export class ProfileComponent implements Image {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.userService.findUserById(parseInt(params['id'])).subscribe({
-        next: (user) => {
-          this.profileDTO.userDTO = user;
-          if(!this.profileDTO.userDTO) this.router.navigateByUrl("/home")
-          this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
-            next: (response) => {
-              console.log(response);
-              this.friendship_status = response;
-            },
-            error: (error) => {
-              console.log("Error while finding if the user is friend with another", error)
+        this.userService.findUserById(parseInt(params['id'])).subscribe({
+          next: (user) => {
+            this.profileDTO.userDTO = user;
+            if(!this.profileDTO.userDTO){
+              this.router.navigateByUrl('/home');
+              return;
             }
-          });
+            this.getProfileInformation();
 
-          this.getHobbiesFlashcardsOfUser();
-          this.getProfileInformation();
+            this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
+              next: (response) => {
+                console.log(response);
+                this.friendship_status = response;
+              },
+              error: (error) => {
+                console.log("Error while finding if the user is friend with another", error)
+              }
+            });
 
-          this.hobbyService.currentMessage.subscribe((data)=>{
-            this.hobbyFlashcardsDTOs.push(this.hobbyService.getNewPost());
-          });
 
-          this.hobbyService.currentDeleteState.subscribe((data) => {
-            console.log("returned Data :" + data);
-            this.hobbyFlashcardsDTOs.splice(this.findHobbyDTOWithData(data), 1);
-          });
-        },
-        error: (error) => {
-          console.log("Error while finding user on profile : ", error)
-        }
-      });
-    })
+            this.hobbyService.currentMessage.subscribe((data)=>{
+              this.hobbyFlashcardsDTO.push(this.hobbyService.getNewPost());
+            });
+
+            this.hobbyService.currentDeleteState.subscribe((data) => {
+              console.log("returned Data :" + data);
+              this.hobbyFlashcardsDTO.splice(this.findHobbyDTOWithData(data), 1);
+            });
+          },
+          error: (error) => {
+            console.log("Error while finding user : ", error)
+          }
+        })
+    });
+
+
 
   }
 
@@ -102,6 +110,9 @@ export class ProfileComponent implements Image {
     else if(this.profileDTO.numActivities > 0){
       this.reward = "bronze"
     }
+    else {
+      this.reward = "nothing"
+    }
   }
 
   getUserType(): string {
@@ -110,10 +121,10 @@ export class ProfileComponent implements Image {
   }
 
   findHobbyDTOWithData(id: number){
-    const sizeOfArray: number = this.hobbyFlashcardsDTOs.length;
+    const sizeOfArray: number = this.hobbyFlashcardsDTO.length;
 
     for (let i = 0; i < sizeOfArray; i++) {
-      if(this.hobbyFlashcardsDTOs[i].id_hobby_post == id) return i;
+      if(this.hobbyFlashcardsDTO[i].id_hobby_post == id) return i;
     }
 
     return -1;
@@ -132,25 +143,6 @@ export class ProfileComponent implements Image {
     });
   }
 
-  getHobbiesFlashcardsOfUser(){
-    this.hobbyService.getHobbiesFlashcardsOfUser(this.profileDTO.userDTO.id).subscribe({
-
-      next: (response) => {
-        // in case of success
-        console.log(response);
-        if(response.hobbies){
-          for (let i = 0; i < response.hobbies.length; i++) {
-            this.hobbyFlashcardsDTOs.push(response.hobbies[i]);
-          }
-        }
-      },
-      error: (error) => {
-        // in case of failure
-        console.error('Could not get flashcards', error);
-      }
-    });
-
-  }
 
   isConnectedUser(): boolean {
     return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.profileDTO.userDTO.id
