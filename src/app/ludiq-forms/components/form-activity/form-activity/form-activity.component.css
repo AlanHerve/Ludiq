@@ -5,14 +5,16 @@
   float: left;
   margin: 5px 5px 5px 20px;
 }
+/*
 .background-form{
-  height: 400px; /* Définissez la hauteur souhaitée pour votre formulaire */
-  overflow-y: auto; /* Ajoute une barre de défilement verticale lorsque né*/
-}
+  height: 400px;
+  overflow-y: auto;
+}*/
 
 form {
   position: absolute!important;
 }
+
 .file-input-label span {
   display: inline-block;
   padding: 6px 12px;
@@ -22,6 +24,28 @@ form {
   transition: background-color 0.3s ease-out;
   border-radius: 100px;
 }
+
+.description {
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4;
+  resize: none;
+  height: auto;
+  min-height: 100px;
+  width: 100%;
+  max-width: 500px;
+  margin: 10px auto;
+}
+
+.description:focus {
+  outline: none;
+  border-color: #7421C2;
+  box-shadow: 0 0 4px rgba(116, 33, 194, 0.4);
+}
+
 
 .file-input {
   position: absolute;
@@ -71,16 +95,16 @@ textarea {
   overflow-wrap: break-word;
   resize: none;
   height: 70px !important;
-  width:-webkit-fill-available;
+  /*width:-webkit-fill-available;*/
   margin: 10px 20px;
 }
 
 
 button {
-  float: right;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  display: block;
+  margin: 20px auto;
 }
+
 
 .file-name {
   margin-top: 3px;

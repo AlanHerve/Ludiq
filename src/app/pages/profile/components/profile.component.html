@@ -1,0 +1,65 @@
+<app-top-bar [content]="[profileDTO.numPosts.toString() + ' posts', this.getUserType()]"></app-top-bar>
+
+<div class="content">
+  <div class="user">
+    <div class="top-user-info">
+      <img alt="userImg" src="../../../../assets/images/icons/user.png">
+
+      <div class="user-info">
+        <div class="text-container">
+          <img class="badge" src="../../../../assets/images/icons/{{this.reward}}.png">
+          <p class="info">{{profileDTO.numActivities }} activities {{this.getActivitiesType()}}</p>
+        </div>
+        <div class="text-container">
+          <img class="badge" src="../../../../assets/images/icons/hobbies.png">
+          <p class="info">{{ profileDTO.numHobbies }} hobbies</p>
+        </div>
+        <div class="text-container">
+          <img class="badge" src="../../../../assets/images/icons/friends.png">
+          <p class="info">{{ this.profileDTO.numFriends }} friends</p>
+        </div>
+      </div>
+      <div class="favorite-hobby" *ngIf = "this.profileDTO.favoriteHobby.id != -1">
+        <p class="title-favorite-hobby">Favorite hobby</p>
+        <img [src]="'assets/images/hobbies/' + this.profileDTO.favoriteHobby.image" alt="favorite hobby img" class="image-favorite">
+        <app-hobby-button class="tag favorite" [hobbyDTO]="this.profileDTO.favoriteHobby"></app-hobby-button>
+      </div>
+    </div>
+    <p class="username">{{this.profileDTO.userDTO.name}}</p>
+    <p class="nickname">{{this.profileDTO.userDTO.username}}</p>
+  </div>
+
+  <div *ngIf="isConnectedUser() else elseBlock">
+    <div class="buttons">
+      <button class="tag" routerLink="add_hobby">Add an hobby</button>
+      <button routerLink="modify_profile">Modify profile</button>
+      <button class="button2" routerLink="">Disconnect</button>
+    </div>
+  </div>
+  <ng-template #elseBlock>
+    <div class="buttons">
+      <button (click)="onSendMessageClicked()" *ngIf="isFriend()">Send a message</button>
+      <button (click)="addFriend()" *ngIf="!isFriend() else friendBlock">Add friend</button>
+      <ng-template #friendBlock>
+        <button (click)="removeFriend()" class="button2">Remove friend</button>
+      </ng-template>
+
+      <button (click)="removeFriend()" *ngIf="isWaitingAcceptation()" class="button2">Cancel friendship request</button>
+
+    </div>
+  </ng-template>
+  <app-binder [buttons]="['Posts','Hobbies','Activities']"></app-binder>
+
+  <app-post-list *ngIf="type === 'posts'" [postsDTO]="profileDTO.postsDTO"></app-post-list>
+
+  <app-hobby-flashcard-list *ngIf="type === 'hobbies'"
+                            [hobbyFlashcardsDTO]="this.hobbyFlashcardsDTOs"></app-hobby-flashcard-list>
+
+  <app-activity-flashcard-list *ngIf="type === 'activities'" [activitiesDTO]="this.profileDTO.activitiesDTO"></app-activity-flashcard-list>
+
+</div>
+<app-navigation-bar></app-navigation-bar>
+<app-user-hobbies-list [id]="getID()"></app-user-hobbies-list>
+
+
+<router-outlet></router-outlet>

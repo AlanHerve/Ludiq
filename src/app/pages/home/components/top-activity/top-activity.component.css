@@ -1,0 +1,41 @@
+.activity-background {
+  position: relative;
+  background-color: #753D38;
+  background-image: url('../../../../../assets/images/hobbies/Cooking.jpg');
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 300px;
+
+  background-blend-mode: multiply;
+
+  padding: 50px 100px;
+
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.activity-background:hover{
+  transform: scale(1.04);
+  box-shadow: 0 0 8px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+p {
+  color: white;
+}
+
+.title {
+}
+
+.number {
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+}
+
+.level {
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+}

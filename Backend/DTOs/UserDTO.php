@@ -13,8 +13,8 @@ class UserDTO {
         $this->id = $id;
         $this->name = $name;
         $this->username = $username;
-        $this->email = $email;
         $this->password = $password;
+        $this->email = $email;
         $this->avatar = $avatar;
         $this->token = $token;
     }

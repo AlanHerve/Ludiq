@@ -1,0 +1,32 @@
+div, .user-info {
+  display: flex;
+}
+
+.user-info {
+  flex-direction: column;
+}
+
+img {
+  width:40px;
+}
+
+.friend {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.request-status {
+  padding: 10px;
+  font-size: clamp(1rem, 0.4rem + 1.2vw, 1.2rem);
+  width:22.5vw;
+  gap: 20px;
+  height: 50px;
+  align-items: center;
+}
+
+button{
+  padding: 14px;
+  font-size: clamp(1rem, 0.4rem + 1.2vw, 1.2rem)!important;
+}

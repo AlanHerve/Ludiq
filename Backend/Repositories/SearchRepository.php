@@ -5,6 +5,9 @@ require_once '../Database.php';
 require_once '../DTOs/HobbyDTO.php';
 require_once '../DTOs/UserDTO.php';
 require_once '../Repositories/UserRepository.php';
+require_once '../Repositories/PostRepository.php';
+require_once '../Repositories/ActivityRepository.php';
+require_once '../Repositories/HobbyRepository.php';
 
 class SearchRepository
 {
@@ -128,5 +131,39 @@ class SearchRepository
         } else {
             return json_encode([]);
         }
+    }
+
+    public function searchActivity($text) {
+        $stmt = $this->db->prepare("
+            SELECT
+                act.ID_ACTIVITY
+            FROM
+                activity act
+            INNER JOIN hobby hob
+                ON hob.ID_HOBBY = act.ID_HOBBY
+            WHERE
+                act.DESCRIPTION LIKE CONCAT('%', ?, '%')
+                /* OR 
+                act.TITLE LIKE CONCAT('%', ?, '%') */
+                OR
+                hob.HOBBY_NAME LIKE CONCAT('%', ?, '%')
+            ;
+        ");
+        $stmt->bind_param('ss', $text, $text);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $activitiesDTO = [];
+            while ($row = $result->fetch_assoc()) {
+                $activityRepository = ActivityRepository::getInstance();
+                $activityDTO = $activityRepository->findActivityById($row['ID_ACTIVITY']);
+                $activitiesDTO[] = $activityDTO;
+            }
+            return $activitiesDTO;
+        }
+
+        return null;
     }
 }

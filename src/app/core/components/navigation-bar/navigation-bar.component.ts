@@ -10,8 +10,11 @@ import {UserService} from "../../../services/user.service";
 export class NavigationBarComponent implements  OnInit{
 
   public id: number;
+  protected currentMonth!: number;
   constructor(private router: Router, private userService: UserService) {
     this.id = this.userService.getCurrentId();
+
+    this.currentMonth = new Date().getMonth() + 1;
   }
   ngOnInit(): void {
   }
@@ -26,5 +29,6 @@ export class NavigationBarComponent implements  OnInit{
      */
     this.router.navigateByUrl(`${currentRoute}/regular_post`);
   }
+
 
 }

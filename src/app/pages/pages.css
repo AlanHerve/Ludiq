@@ -1,11 +1,17 @@
 .content {
+  top: 0;
   position:absolute;
-  left: 350px;
-  width: calc(100% - 700px);
+  left: 22.5vw;
+  width: calc(100% - 45vw);
 }
 
+@media (min-width: 1000px) {
+  .gap {
+    margin-top: 70px;
+  }
+}
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .right-sidebar {
     width: 100%;
     position: static;
@@ -15,5 +21,34 @@
 
   .content {
     left: 0;
+    width: 100%;
   }
+}
+
+
+.binder {
+  margin-top: 50px;
+  display: flex;
+  font-size: clamp(1.2rem, 0.4rem + 1.2vw, 1.4rem);
+  text-align: center;
+}
+
+.tab:hover {
+  background-color: #f7f7f7;
+}
+.tab {
+  cursor: pointer;
+  width:33.3%;
+  padding: 20px;
+  border-top: #B6B6B6 1px solid;
+  border-bottom: #B6B6B6 1px solid;
+  transition: 0.2s background ease-in-out;
+}
+
+.tab.selected {
+  cursor: pointer;
+  width:33.3%;
+  padding: 20px;
+  background-color: #EFEFEF;
+  border-bottom: #7421C2 3px solid;
 }

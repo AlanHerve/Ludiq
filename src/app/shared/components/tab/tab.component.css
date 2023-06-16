@@ -1,0 +1,28 @@
+.tab:hover {
+  background-color: #f7f7f7;
+}
+.tab {
+  cursor: pointer;
+  padding: 20px;
+  border-top: #B6B6B6 1px solid;
+  border-bottom: #B6B6B6 1px solid;
+  transition: 0.2s background ease-in-out;
+}
+
+.tab.selected {
+  cursor: pointer;
+  padding: 20px;
+  position: relative;
+}
+
+.tab.selected::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: #7421C2;
+  border-radius: 4px;
+}
+

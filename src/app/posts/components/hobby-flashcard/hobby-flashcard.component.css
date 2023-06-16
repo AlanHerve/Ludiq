@@ -1,10 +1,17 @@
 .flashcard {
+  position:relative;
   background-color: #7421C2;
   border-radius: 30px;
   color: white;
   padding:40px 10px;
   text-align: center;
   transition: 0.2s background ease-in-out;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 300px;
+
+  background-blend-mode: multiply;
 }
 
 
@@ -25,7 +32,7 @@
   background-color: #F2EDF8;
   border-radius: 30px;
   color: #000000;
-  padding: 40px 10px 20px;
+  padding: 40px 10px 50px;
   text-align: center;
 }
 
@@ -51,5 +58,27 @@ img {
 
 p {
   margin: 14px;
+}
+
+.delete {
+  bottom: 20px;
+  right: 15px;
+  position: absolute;
+  font-family: Arial, sans-serif;
+  color: #9B9B9B;
+  font-size: 50px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  transition: color 0.2s ease-out;
+}
+
+.delete:hover {
+  color: #333333;
+}
+
+.tag {
+  color: white;
+  background-color: #A85751;
 }
 

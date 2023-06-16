@@ -1,5 +1,5 @@
 <div class="search-bar">
-  <textarea class="explorer" placeholder="Search" (input)="onSearch($event)"></textarea>
+  <textarea class="explorer" placeholder="Search a user, a hobby, a post, an activity..." (input)="onSearch($event)"></textarea>
   <div class="menu">
     <div class="first-division">
       <h2>Filter</h2>
@@ -13,24 +13,23 @@
         <label class = "tag">
           <input type="checkbox" [(ngModel)]="this.buttons[2]" (change)="onCheckPost()"> Post
         </label>
+        <label class = "tag">
+          <input type="checkbox" [(ngModel)]="this.buttons[3]" (change)="onCheckActivity()"> Activity
+        </label>
       </div>
     </div>
-    <p class="result" *ngIf="searchResults.length > 0">
+    <div class="result" *ngIf="searchResults.length > 0 else elseBlock">
       <li *ngFor="let result of searchResults">
-        <span>
-          {{ result.image}}
-        </span>
-        <span>
-          {{ result.name}}
-        </span>
-        <span>
-          {{ result.username}}
-        </span>
+        <app-user-search *ngIf="isUser(result)" [userDTO]="result" class = "user-search"></app-user-search>
+        <app-hobby-search *ngIf="isHobby(result)" [hobbyDTO]="result" class = "user-search"></app-hobby-search>
+        <app-post-search *ngIf="isPost(result)" [postDTO]="result" class = "user-search"></app-post-search>
+        <app-activity-search *ngIf="isActivity(result)" [activityDTO]="result" class = "user-search"></app-activity-search>
       </li>
-    </p>
-    <p class="result" *ngIf="searchResults.length === 0">
+    </div>
+
+    <ng-template #elseBlock class="result not-found">
       No result found
-    </p>
+    </ng-template>
   </div>
   <button (click)="onClickNewActivity()" class="button2">New activity</button>
 </div>

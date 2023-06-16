@@ -7,16 +7,16 @@
 
   position: fixed;
   top: 0;
-  left: 350px;
-  right: 350px;
+  left: 22.5vw;
+  right: 22.5vw;
   z-index: 200;
   backdrop-filter: blur(5px);
 
 }
 
 .explorer {
-  border-radius: 100px;
-  background-color: hsla(263, 10%, 95%, 0.85);
+  border-radius: 10px;
+  background-color: hsla(263, 10%, 100%, 0.90);
   background-image: url("../../../../assets/images/icons/search.png");
   background-repeat: no-repeat;
   background-position: right center;
@@ -40,16 +40,27 @@ textarea::placeholder {
 button {
   height: 50px;
 }
+.button2 {
+  font-size: clamp(0.4rem, 0.2rem + 1.2vw, 1.4rem);
+  padding: clamp(0.2rem, 0rem + 1vw, 0.2rem) 20px;
+}
 
+@media (max-width: 1000px) {
+  .button2 {
+    font-size: 20px;
+  }
+}
 .menu {
   position: absolute;
   left: 0;
   background-color: #FFF;
   margin: 0;
-  width: 100%;
-  top: 100%; /* Ajustement de la position du menu */
-  display: none; /* Masquage du menu par défaut */
-  border-bottom: black 1px solid;
+  width: 54.9vw;
+  top: 100%;
+  display: none;
+  border-bottom: rgba(116, 33, 194, 0.25) 1px solid;
+  border-left: rgba(116, 33, 194, 0.25) 1px solid;
+  border-right: rgba(116, 33, 194, 0.25) 1px solid;
 }
 
 .menu .first-division {
@@ -81,14 +92,20 @@ button {
 .explorer:focus {
   outline: 3px solid #7421C2;
   outline-offset: -3px;
-  background-color: #F4F2F5;
+  background-color: #ffffff;
 }
 
 .result {
   padding: 20px;
+  overflow-y: scroll;
+  max-height:300px;
 }
 
-@media (max-width: 700px) {
+.result.not-found {
+  padding:40px;
+}
+
+@media (max-width: 1000px) {
   .search-bar {
     width: 100vw;
     left: 0;
@@ -107,6 +124,7 @@ button {
 
 li {
   list-style: none;
+  margin: 15px 0;
 }
 
 .tags-container {
@@ -147,3 +165,5 @@ li {
   background-color: #000; /* Couleur de fond lorsque le checkbox est coché */
   color: #fff; /* Couleur du texte lorsque le checkbox est coché */
 }
+
+
