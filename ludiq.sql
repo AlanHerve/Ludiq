@@ -79,7 +79,7 @@ INSERT INTO `activity_director` (`ID_USER`, `ID_ORGANIZATION`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comment`
+-- Table structure for table `new-comment`
 --
 
 CREATE TABLE `comment` (

@@ -1,7 +1,11 @@
-div {
+.grid {
   margin:30px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 50px;
   text-align: center;
+}
+
+.no-hobby {
+  margin-left: 20px;
 }

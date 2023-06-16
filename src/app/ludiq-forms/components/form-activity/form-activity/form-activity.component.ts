@@ -9,9 +9,10 @@ import {HobbyService} from "../../../../services/hobby.service";
 import {UserDTO} from "../../../../models/user-dto";
 import {HobbyDTO} from "../../../../models/hobby-dto";
 import {UserService} from "../../../../services/user.service";
-import {HobbyPostDTO} from "../../../../models/hobby-post-dto";
 import {Form} from "../../../models/form";
 import {FriendService} from "../../../../pages/messages/services/friend.service";
+import {HobbyFlashcardDTO} from "../../../../models/hobby-flashcard-dto";
+
 
 @Component({
   selector: 'app-form-activity',
@@ -53,7 +54,7 @@ export class FormActivityComponent extends Form implements OnInit {
     name_organization: ''
   }
 
-  hobbyPostDTO: HobbyPostDTO = {
+  hobbyPostDTO: HobbyFlashcardDTO = {
     id_hobby_post: 0,
     id_user: 0,
     id_hobby: 0,

@@ -6,6 +6,12 @@
   padding:40px 10px;
   text-align: center;
   transition: 0.2s background ease-in-out;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 300px;
+
+  background-blend-mode: multiply;
 }
 
 
@@ -70,3 +76,9 @@ p {
 .delete:hover {
   color: #333333;
 }
+
+.tag {
+  color: white;
+  background-color: #A85751;
+}
+

@@ -15,8 +15,8 @@
 }
 
 .explorer {
-  border-radius: 100px;
-  background-color: hsla(263, 10%, 95%, 0.85);
+  border-radius: 10px;
+  background-color: hsla(263, 10%, 100%, 0.90);
   background-image: url("../../../../assets/images/icons/search.png");
   background-repeat: no-repeat;
   background-position: right center;
@@ -55,10 +55,12 @@ button {
   left: 0;
   background-color: #FFF;
   margin: 0;
-  width: 100%;
-  top: 100%; /* Ajustement de la position du menu */
-  display: none; /* Masquage du menu par défaut */
-  border-bottom: black 1px solid;
+  width: 54.9vw;
+  top: 100%;
+  display: none;
+  border-bottom: rgba(116, 33, 194, 0.25) 1px solid;
+  border-left: rgba(116, 33, 194, 0.25) 1px solid;
+  border-right: rgba(116, 33, 194, 0.25) 1px solid;
 }
 
 .menu .first-division {
@@ -90,7 +92,7 @@ button {
 .explorer:focus {
   outline: 3px solid #7421C2;
   outline-offset: -3px;
-  background-color: #F4F2F5;
+  background-color: #ffffff;
 }
 
 .result {

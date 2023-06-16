@@ -34,7 +34,7 @@ export class SearchBarService {
   }
 
   searchActivity(activity: string): Observable<ActivityDTO[]> {
-    return this.search('activity', activity);
+    return this.search('activity-flashcard', activity);
   }
 
 }

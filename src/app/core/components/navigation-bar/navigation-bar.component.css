@@ -9,6 +9,7 @@ ul {
   margin-top: 40px;
   position: fixed;
   left: 65px;
+  cursor: pointer;
 }
 
 li {

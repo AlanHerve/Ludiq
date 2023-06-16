@@ -11,5 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode($body, true);
     $commentRepository = CommentRepository::getInstance();
 
-    echo json_encode($commentRepository->addComment($data['id_user'], $data['content'], $data['id_regular_post']));
+
+    echo json_encode($commentRepository->addComment($data['userDTO']['id'], $data['content'], $data['postID']));
+}
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $commentRepository = CommentRepository::getInstance();
+
+    switch ($_GET['type']) {
+        case 'all_comments':
+            echo json_encode($commentRepository->getAllComments($_GET['postID']));
+            break;
+    }
 }

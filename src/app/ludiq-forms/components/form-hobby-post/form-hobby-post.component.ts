@@ -3,11 +3,11 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {HobbyService} from "../../../services/hobby.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {HobbyPostDTO} from "../../../models/hobby-post-dto";
+import {HobbyFlashcardDTO} from "../../../models/hobby-flashcard-dto";
 import {Location} from "@angular/common";
 import {Form} from "../../models/form";
 import {Router} from "@angular/router";
-import {PostsService} from "../../../posts/services/posts.service";
+import {PostService} from "../../../posts/services/post.service";
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -39,7 +39,7 @@ export class FormHobbyPostComponent extends Form implements OnInit {
   advancement_options: string[] = ["Beginner", "Intermediate", "Advanced", "Expert"];
   frequency_options: string[] = ["Daily", "3-4/week", "2-3/week", "Weekly", "Monthly", "Rarely"];
 
-  hobbyPostDTO: HobbyPostDTO = {
+  hobbyPostDTO: HobbyFlashcardDTO = {
     id_hobby_post: 0,
     id_user: 0,
     id_hobby: 0,
@@ -52,7 +52,7 @@ export class FormHobbyPostComponent extends Form implements OnInit {
   constructor(
     private builder: FormBuilder,
     private hobbyService: HobbyService,
-    private postsService: PostsService,
+    private postsService: PostService,
     router: Router,
     location: Location
   ) {

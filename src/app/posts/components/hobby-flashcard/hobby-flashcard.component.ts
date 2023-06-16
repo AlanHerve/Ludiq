@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HobbyPostDTO} from "../../../models/hobby-post-dto";
+import {HobbyFlashcardDTO} from "../../../models/hobby-flashcard-dto";
 import {HobbyService} from "../../../services/hobby.service";
+import {HobbyDTO} from "../../../models/hobby-dto";
 
 @Component({
   selector: 'app-hobby-flashcard',
@@ -8,9 +9,8 @@ import {HobbyService} from "../../../services/hobby.service";
   styleUrls: ['./hobby-flashcard.component.css']
 })
 export class HobbyFlashcardComponent implements OnInit {
-
-
-  @Input() hobbyPost!: HobbyPostDTO;
+  @Input() hobbyPost!: HobbyFlashcardDTO;
+  protected hobbyDTO!: HobbyDTO;
 
   protected clicked: boolean = false;
 
@@ -18,6 +18,14 @@ export class HobbyFlashcardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.hobbyService.findHobbyById(this.hobbyPost.id_hobby).subscribe({
+      next: (hobby) => {
+        this.hobbyDTO = hobby;
+      },
+      error: (error) => {
+        console.log("Error while trying to find hobbyDTO on hobby flashcard : ", error)
+      }
+    })
   }
 
   onClick(): void {

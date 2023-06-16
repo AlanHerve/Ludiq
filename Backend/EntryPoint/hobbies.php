@@ -55,6 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case "destroyHobbyPost":
             $hobbyRepository->destroyHobbyPost($_GET["id_hobby_post"]);
             break;
+        case "findHobby":
+            echo json_encode($hobbyRepository->findHobbyById($_GET["id_hobby"]));
+            break;
     }
 
 }elseif ($_SERVER["REQUEST_METHOD"] === "DELETE"){

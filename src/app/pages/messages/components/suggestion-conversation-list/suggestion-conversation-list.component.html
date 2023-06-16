@@ -1,5 +1,8 @@
 <div>
-  <h1>Conversations</h1>
+  <app-top-bar [content]="['Conversations']"></app-top-bar>
   <app-suggestion-conversation *ngFor="let conversation of conversationsDTO" [conversationDTO]="conversation"></app-suggestion-conversation>
+  <div *ngIf ="conversationsDTO.length == 0">
+    <p class = "no-conversation">You don't have any started conversation yet.</p>
+  </div>
 </div>
 
