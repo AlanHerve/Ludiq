@@ -45,16 +45,10 @@ class PostRepository
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
-            $response = array(
-                'success' => 'true'
-            );
+            return true;
         } else {
-            $response = array(
-                'success' => 'false'
-            );
+            return false;
         }
-
-        return $response;
     }
 
     public function getUserPosts($id_user)

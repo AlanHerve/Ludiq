@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {apiUrl} from "../../services/api-url";
+import {apiUrl} from "../../services/urls";
 import {UserDTO} from "../../models/user-dto";
 import {HobbyDTO} from "../../models/hobby-dto";
 import {ActivityDTO} from "../../posts/models/activity-dto";

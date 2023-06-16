@@ -17,19 +17,24 @@ class ImageRepository
         return self::$instance;
     }
 
-    public function createFile($imageName) {
-        $imageFolder = '../assets/images/';
-        $imagePath = $imageFolder . $imageName;
+  function saveImages($images)
+  {
+    $targetDir = '../assets/images/';
 
-        if (file_exists($imagePath)) {
-            // Getting the mime type of the image
-            //$mimeType = mime_content_type($imagePath);
-            // Send content of the image
-            return readfile($imagePath);
-        }
-        else {
-            return null;
-        }
+    if (!isset($images)) return null;
+
+    $uploadedFiles = [];
+    for ($i = 0; $i < count($images['name']); $i++) {
+      $uniqueFilename = uniqid() . '_' . basename($images['name'][$i]);
+      $targetFilePath = $targetDir . $uniqueFilename;
+
+      if (move_uploaded_file($images['tmp_name'][$i], $targetFilePath)) {
+        $uploadedFiles[] = $uniqueFilename;
+      } else {
+        echo 'Error while downloading file : ' . $images['tmp_name'][$i] . '\n';
+      }
     }
+    return $uploadedFiles;
+  }
 
 }

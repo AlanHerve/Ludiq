@@ -1,6 +1,7 @@
 <?php
 require_once '../Database.php';
 require_once '../DTOs/CommentDTO.php';
+require_once '../Repositories/UserRepository.php';
 
 class CommentRepository
 {
@@ -70,14 +71,15 @@ class CommentRepository
                 comment com
             WHERE
                 com.ID_REGULAR_POST = ?
+            ;
         ");
         $stmt->bind_param('i', $postID);
         $stmt->execute();
 
         $result = $stmt->get_result();
-        if($result->num_rows > 0) {
+        if ($result->num_rows > 0) {
             $commentsDTO = [];
-            while($row = $result->fetch_assoc()) {
+            while ($row = $result->fetch_assoc()) {
                 $userDTO = $this->userRepository->findUserById($row['ID_USER']);
                 $commentsDTO[] = new CommentDTO($row['ID_COMMENT'], $userDTO, $row['CONTENT'], $row['ID_REGULAR_POST'], $row['TIME']);
             }

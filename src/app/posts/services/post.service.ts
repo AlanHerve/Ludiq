@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {apiUrl} from "../../services/api-url";
+import {apiUrl} from "../../services/urls";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
 import {CommentDTO} from "../models/comment-dto";
@@ -14,8 +14,8 @@ export class PostService {
   constructor(private http: HttpClient) {
   }
 
-  newPost(formData: FormData): Observable<any> {
-    return this.http.post<any>(`${apiUrl}/post.php`, formData);
+  newPost(formData: FormData): Observable<boolean> {
+    return this.http.post<boolean>(`${apiUrl}/post.php`, formData);
   }
 
   getAllPosts(): Observable<PostDTO[]> {

@@ -3,7 +3,7 @@ import {UserDTO} from "../models/user-dto";
 import {Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {apiUrl} from "./api-url";
+import {apiUrl} from "./urls";
 
 @Injectable({
   providedIn: 'root'

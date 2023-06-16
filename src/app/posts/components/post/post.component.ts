@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {PostService} from "../../services/post.service";
 import {UserService} from "../../../services/user.service";
 import {CommentDTO} from "../../models/comment-dto";
+import {imagesUrl} from "../../../services/urls";
+import {Image} from "../../../models/image";
 
 
 @Component({
@@ -11,7 +13,7 @@ import {CommentDTO} from "../../models/comment-dto";
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, Image {
   @Input() postDTO!: PostDTO;
   @Output() postLiked: EventEmitter<PostDTO> = new EventEmitter<PostDTO>();
   isLiked: boolean = false;
@@ -24,8 +26,17 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadImages();
     this.getAllComments()
+    console.log(this.postDTO.images)
+  }
+
+  /**
+   * Method implemented by the interface Image in order to load an image from the imagesURL path
+   *
+   * @param image
+   */
+  loadImage(image: string): string {
+    return imagesUrl + "/" + image;
   }
 
   onCommentClicked(): void {
@@ -34,26 +45,6 @@ export class PostComponent implements OnInit {
 
   onPostClicked(): void {
     this.router.navigateByUrl(`/post/${this.postDTO.id}`)
-  }
-
-  loadImages(): void {
-    const images: File[] = [];
-    for (const image of this.postDTO.images) {
-      // @ts-ignore
-      this.postService.getImage(image).subscribe({
-        next: (response: Blob) => {
-          // @ts-ignore
-          const file = new File([response], image, {type: response.type});
-          images.push(file);
-        }
-      });
-    }
-    this.postDTO.images = images;
-    console.log(this.postDTO.images);
-  }
-
-  getFileUrl(file: File): string {
-    return URL.createObjectURL(file);
   }
 
   onUserClicked(): void {

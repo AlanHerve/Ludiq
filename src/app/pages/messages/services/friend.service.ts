@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {apiUrl} from "../../../services/api-url";
+import {apiUrl} from "../../../services/urls";
 import {FriendRequestDTO} from "../../../models/friend-request-dto";
 import {map} from "rxjs/operators";
 
