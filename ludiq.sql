@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 13, 2023 at 04:20 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Hôte : 127.0.0.1
+-- Généré le : ven. 16 juin 2023 à 10:29
+-- Version du serveur : 10.4.28-MariaDB
+-- Version de PHP : 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ludiq`
+-- Base de données : `ludiq`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `activity`
+-- Structure de la table `activity`
 --
 
 CREATE TABLE `activity` (
@@ -42,7 +42,7 @@ CREATE TABLE `activity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `activity`
+-- Déchargement des données de la table `activity`
 --
 
 INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVANCEMENT`, `DESCRIPTION`, `DATE_POST`, `DATE_ACTIVITY`, `CURRENT_REGISTERED`, `MAX_REGISTRATIONS`, `IMAGE`, `TITLE`) VALUES
@@ -60,7 +60,7 @@ INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `activity_director`
+-- Structure de la table `activity_director`
 --
 
 CREATE TABLE `activity_director` (
@@ -69,7 +69,7 @@ CREATE TABLE `activity_director` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `activity_director`
+-- Déchargement des données de la table `activity_director`
 --
 
 INSERT INTO `activity_director` (`ID_USER`, `ID_ORGANIZATION`) VALUES
@@ -79,7 +79,19 @@ INSERT INTO `activity_director` (`ID_USER`, `ID_ORGANIZATION`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `new-comment`
+-- Structure de la table `activity_participants`
+--
+
+CREATE TABLE `activity_participants` (
+  `ID_ACTIVITY_PARTICIPANTS` int(11) NOT NULL,
+  `ID_USER` int(11) DEFAULT NULL,
+  `ID_ACTIVITY` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `comment`
 --
 
 CREATE TABLE `comment` (
@@ -90,10 +102,36 @@ CREATE TABLE `comment` (
   `TIME` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Déchargement des données de la table `comment`
+--
+
+INSERT INTO `comment` (`ID_COMMENT`, `ID_USER`, `CONTENT`, `ID_REGULAR_POST`, `TIME`) VALUES
+(4, 2, 'ss', 1, '2023-06-14 11:33:39');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `friends`
+-- Structure de la table `favorite_hobby`
+--
+
+CREATE TABLE `favorite_hobby` (
+  `ID_FAVORITE_HOBBY` int(11) NOT NULL,
+  `ID_USER` int(11) DEFAULT NULL,
+  `ID_HOBBY` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `favorite_hobby`
+--
+
+INSERT INTO `favorite_hobby` (`ID_FAVORITE_HOBBY`, `ID_USER`, `ID_HOBBY`) VALUES
+(1, 2, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `friends`
 --
 
 CREATE TABLE `friends` (
@@ -103,7 +141,7 @@ CREATE TABLE `friends` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `friends`
+-- Déchargement des données de la table `friends`
 --
 
 INSERT INTO `friends` (`ID_USER`, `ID_USER_2`, `WAITING`) VALUES
@@ -114,7 +152,7 @@ INSERT INTO `friends` (`ID_USER`, `ID_USER_2`, `WAITING`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hobby`
+-- Structure de la table `hobby`
 --
 
 CREATE TABLE `hobby` (
@@ -124,7 +162,7 @@ CREATE TABLE `hobby` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `hobby`
+-- Déchargement des données de la table `hobby`
 --
 
 INSERT INTO `hobby` (`ID_HOBBY`, `HOBBY_NAME`, `IMAGE`) VALUES
@@ -151,7 +189,7 @@ INSERT INTO `hobby` (`ID_HOBBY`, `HOBBY_NAME`, `IMAGE`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hobby_post`
+-- Structure de la table `hobby_post`
 --
 
 CREATE TABLE `hobby_post` (
@@ -164,7 +202,7 @@ CREATE TABLE `hobby_post` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `hobby_post`
+-- Déchargement des données de la table `hobby_post`
 --
 
 INSERT INTO `hobby_post` (`ID_HOBBY_POST`, `ID_HOBBY`, `ID_USER`, `EXPERIENCE`, `FREQUENCY`, `AVAILABLE`) VALUES
@@ -181,7 +219,7 @@ INSERT INTO `hobby_post` (`ID_HOBBY_POST`, `ID_HOBBY`, `ID_USER`, `EXPERIENCE`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `message`
+-- Structure de la table `message`
 --
 
 CREATE TABLE `message` (
@@ -195,7 +233,7 @@ CREATE TABLE `message` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `organization`
+-- Structure de la table `organization`
 --
 
 CREATE TABLE `organization` (
@@ -207,7 +245,7 @@ CREATE TABLE `organization` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `organization`
+-- Déchargement des données de la table `organization`
 --
 
 INSERT INTO `organization` (`ID_ORGANIZATION`, `NAME_ORGANIZATION`, `AVATAR`, `DESCRIPTION`, `FAVORITE_HOBBY`) VALUES
@@ -220,7 +258,7 @@ INSERT INTO `organization` (`ID_ORGANIZATION`, `NAME_ORGANIZATION`, `AVATAR`, `D
 -- --------------------------------------------------------
 
 --
--- Table structure for table `regular_post`
+-- Structure de la table `regular_post`
 --
 
 CREATE TABLE `regular_post` (
@@ -237,10 +275,17 @@ CREATE TABLE `regular_post` (
   `TIME` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Déchargement des données de la table `regular_post`
+--
+
+INSERT INTO `regular_post` (`ID_REGULAR_POST`, `ID_USER`, `ID_HOBBY`, `DESCRIPTION`, `IMAGE1`, `IMAGE2`, `IMAGE3`, `IMAGE4`, `MODIFIED`, `LIKES`, `TIME`) VALUES
+(1, 2, NULL, 'szdergthyjujhygtrfe', NULL, NULL, NULL, NULL, 0, 1, '2023-06-15 14:25:52');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Structure de la table `user`
 --
 
 CREATE TABLE `user` (
@@ -254,7 +299,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `user`
+-- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`ID_USER`, `USER_NAME`, `USER_PSEUDO`, `USER_PASSWORD`, `EMAIL`, `AVATAR`, `FAVORITE_HOBBY`) VALUES
@@ -264,11 +309,11 @@ INSERT INTO `user` (`ID_USER`, `USER_NAME`, `USER_PSEUDO`, `USER_PASSWORD`, `EMA
 (5, 'Tact', 'Tact', '$2y$10$BzPR88BwQBMYKYnA04.NsOFWAmettI9.7t.SLzN01LQKLO4C8kzBa', 'tact@gmail.com', NULL, NULL);
 
 --
--- Indexes for dumped tables
+-- Index pour les tables déchargées
 --
 
 --
--- Indexes for table `activity`
+-- Index pour la table `activity`
 --
 ALTER TABLE `activity`
   ADD PRIMARY KEY (`ID_ACTIVITY`),
@@ -276,14 +321,22 @@ ALTER TABLE `activity`
   ADD KEY `ID_HOBBY` (`ID_HOBBY`);
 
 --
--- Indexes for table `activity_director`
+-- Index pour la table `activity_director`
 --
 ALTER TABLE `activity_director`
   ADD PRIMARY KEY (`ID_USER`,`ID_ORGANIZATION`),
   ADD KEY `ID_ORGANIZATION` (`ID_ORGANIZATION`);
 
 --
--- Indexes for table `comment`
+-- Index pour la table `activity_participants`
+--
+ALTER TABLE `activity_participants`
+  ADD PRIMARY KEY (`ID_ACTIVITY_PARTICIPANTS`),
+  ADD KEY `ID_USER` (`ID_USER`),
+  ADD KEY `ID_ACTIVITY` (`ID_ACTIVITY`);
+
+--
+-- Index pour la table `comment`
 --
 ALTER TABLE `comment`
   ADD PRIMARY KEY (`ID_COMMENT`),
@@ -291,20 +344,28 @@ ALTER TABLE `comment`
   ADD KEY `ID_REGULAR_POST` (`ID_REGULAR_POST`);
 
 --
--- Indexes for table `friends`
+-- Index pour la table `favorite_hobby`
+--
+ALTER TABLE `favorite_hobby`
+  ADD PRIMARY KEY (`ID_FAVORITE_HOBBY`),
+  ADD KEY `ID_HOBBY` (`ID_HOBBY`),
+  ADD KEY `ID_USER` (`ID_USER`);
+
+--
+-- Index pour la table `friends`
 --
 ALTER TABLE `friends`
   ADD KEY `ID_USER` (`ID_USER`),
   ADD KEY `ID_USER_2` (`ID_USER_2`);
 
 --
--- Indexes for table `hobby`
+-- Index pour la table `hobby`
 --
 ALTER TABLE `hobby`
   ADD PRIMARY KEY (`ID_HOBBY`);
 
 --
--- Indexes for table `hobby_post`
+-- Index pour la table `hobby_post`
 --
 ALTER TABLE `hobby_post`
   ADD PRIMARY KEY (`ID_HOBBY_POST`),
@@ -312,7 +373,7 @@ ALTER TABLE `hobby_post`
   ADD KEY `ID_HOBBY` (`ID_HOBBY`);
 
 --
--- Indexes for table `message`
+-- Index pour la table `message`
 --
 ALTER TABLE `message`
   ADD PRIMARY KEY (`ID_MESSAGE`),
@@ -320,14 +381,14 @@ ALTER TABLE `message`
   ADD KEY `ID_USER_2` (`ID_USER_2`);
 
 --
--- Indexes for table `organization`
+-- Index pour la table `organization`
 --
 ALTER TABLE `organization`
   ADD PRIMARY KEY (`ID_ORGANIZATION`),
   ADD KEY `FAVORITE_HOBBY` (`FAVORITE_HOBBY`);
 
 --
--- Indexes for table `regular_post`
+-- Index pour la table `regular_post`
 --
 ALTER TABLE `regular_post`
   ADD PRIMARY KEY (`ID_REGULAR_POST`),
@@ -335,125 +396,145 @@ ALTER TABLE `regular_post`
   ADD KEY `regular_post_ibfk_2` (`ID_HOBBY`);
 
 --
--- Indexes for table `user`
+-- Index pour la table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`ID_USER`),
   ADD KEY `FAVORITE_HOBBY` (`FAVORITE_HOBBY`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT for table `activity`
+-- AUTO_INCREMENT pour la table `activity`
 --
 ALTER TABLE `activity`
   MODIFY `ID_ACTIVITY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `comment`
+-- AUTO_INCREMENT pour la table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `ID_COMMENT` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_COMMENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `hobby`
+-- AUTO_INCREMENT pour la table `favorite_hobby`
+--
+ALTER TABLE `favorite_hobby`
+  MODIFY `ID_FAVORITE_HOBBY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `hobby`
 --
 ALTER TABLE `hobby`
   MODIFY `ID_HOBBY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT for table `hobby_post`
+-- AUTO_INCREMENT pour la table `hobby_post`
 --
 ALTER TABLE `hobby_post`
   MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT for table `message`
+-- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
   MODIFY `ID_MESSAGE` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `organization`
+-- AUTO_INCREMENT pour la table `organization`
 --
 ALTER TABLE `organization`
   MODIFY `ID_ORGANIZATION` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `regular_post`
+-- AUTO_INCREMENT pour la table `regular_post`
 --
 ALTER TABLE `regular_post`
-  MODIFY `ID_REGULAR_POST` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_REGULAR_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
   MODIFY `ID_USER` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables déchargées
 --
 
 --
--- Constraints for table `activity`
+-- Contraintes pour la table `activity`
 --
 ALTER TABLE `activity`
   ADD CONSTRAINT `activity_ibfk_1` FOREIGN KEY (`ID_ACTIVITY_DIRECTOR`) REFERENCES `activity_director` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `activity_ibfk_2` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE CASCADE;
 
 --
--- Constraints for table `activity_director`
+-- Contraintes pour la table `activity_director`
 --
 ALTER TABLE `activity_director`
   ADD CONSTRAINT `activity_director_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `activity_director_ibfk_2` FOREIGN KEY (`ID_ORGANIZATION`) REFERENCES `organization` (`ID_ORGANIZATION`) ON DELETE CASCADE;
 
 --
--- Constraints for table `comment`
+-- Contraintes pour la table `activity_participants`
+--
+ALTER TABLE `activity_participants`
+  ADD CONSTRAINT `activity_participants_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`),
+  ADD CONSTRAINT `activity_participants_ibfk_2` FOREIGN KEY (`ID_ACTIVITY`) REFERENCES `activity` (`ID_ACTIVITY`);
+
+--
+-- Contraintes pour la table `comment`
 --
 ALTER TABLE `comment`
   ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`ID_REGULAR_POST`) REFERENCES `regular_post` (`ID_REGULAR_POST`) ON DELETE CASCADE;
 
 --
--- Constraints for table `friends`
+-- Contraintes pour la table `favorite_hobby`
+--
+ALTER TABLE `favorite_hobby`
+  ADD CONSTRAINT `favorite_hobby_ibfk_1` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`),
+  ADD CONSTRAINT `favorite_hobby_ibfk_2` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`);
+
+--
+-- Contraintes pour la table `friends`
 --
 ALTER TABLE `friends`
   ADD CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`ID_USER_2`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE;
 
 --
--- Constraints for table `hobby_post`
+-- Contraintes pour la table `hobby_post`
 --
 ALTER TABLE `hobby_post`
   ADD CONSTRAINT `hobby_post_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `hobby_post_ibfk_2` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE CASCADE;
 
 --
--- Constraints for table `message`
+-- Contraintes pour la table `message`
 --
 ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`ID_USER_2`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE;
 
 --
--- Constraints for table `organization`
+-- Contraintes pour la table `organization`
 --
 ALTER TABLE `organization`
   ADD CONSTRAINT `organization_ibfk_1` FOREIGN KEY (`FAVORITE_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE SET NULL;
 
 --
--- Constraints for table `regular_post`
+-- Contraintes pour la table `regular_post`
 --
 ALTER TABLE `regular_post`
   ADD CONSTRAINT `regular_post_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `regular_post_ibfk_2` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE CASCADE;
 
 --
--- Constraints for table `user`
+-- Contraintes pour la table `user`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`FAVORITE_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE SET NULL;

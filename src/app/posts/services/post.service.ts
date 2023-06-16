@@ -69,5 +69,13 @@ export class PostService {
     return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
   }
 
+  findPostById(postID: number): Observable<PostDTO> {
+    const params = new HttpParams()
+      .set('type', 'find_post')
+      .set('postID', postID)
+
+    return this.http.get<PostDTO>(`${apiUrl}/post.php`, {params});
+  }
+
 
 }

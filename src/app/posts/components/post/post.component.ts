@@ -29,7 +29,10 @@ export class PostComponent implements OnInit {
 
   onCommentClicked(): void {
     this.showCommentBox = !this.showCommentBox;
+  }
 
+  onPostClicked(): void {
+    this.router.navigateByUrl(`/post/${this.postDTO.id}`)
   }
 
   private displayThreeComments(): void {
