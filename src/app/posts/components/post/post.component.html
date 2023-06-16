@@ -32,7 +32,9 @@
   <span class="count">{{ postDTO.comments.length }}</span>
   <div *ngIf="showCommentBox">
     <input type="text" [(ngModel)]="newComment" placeholder="add a comment">
-    <button (click)="addComment()">Comment</button>
+    <app-new-comment #newCommentComponent [postDTO]="postDTO"></app-new-comment>
+    <button (click)="newCommentComponent.addComment()">Comment</button>
+
   </div>
   <div *ngFor="let comment of postDTO.comments">
     <p>{{ comment.content }}</p>

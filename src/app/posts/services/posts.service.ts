@@ -5,8 +5,8 @@ import {apiUrl} from "../../services/api-url";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
 import {HobbyDTO} from "../../models/hobby-dto";
-import {HobbyPostDTO} from "../../models/hobby-post-dto";
-import {PostComment} from "../components/comment/comment";
+import {HobbyFlashcardDTO} from "../../models/hobby-flashcard-dto";
+import {CommentDTO} from "../models/comment-dto";
 import {UserService} from "../../services/user.service";
 
 @Injectable({
@@ -26,7 +26,7 @@ export class PostsService {
     return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
   }
 
-  newHobbyPost(hobbyPostDTO: HobbyPostDTO) {
+  newHobbyPost(hobbyPostDTO: HobbyFlashcardDTO) {
     return this.http.post<HobbyDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
       map(response => {
         return response;
@@ -60,7 +60,7 @@ export class PostsService {
     );
   }
 
-  addComment(comment: PostComment): Observable<any> {
+  addComment(comment: CommentDTO): Observable<any> {
     return this.http.post<any>(`${apiUrl}/comment.php`, comment);
   }
 

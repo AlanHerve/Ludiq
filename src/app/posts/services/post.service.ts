@@ -5,14 +5,15 @@ import {apiUrl} from "../../services/api-url";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
 import {CommentDTO} from "../models/comment-dto";
+import {UserService} from "../../services/user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient, private userService: UserService) {}
+
 
   newPost(formData: FormData): Observable<any> {
     return this.http.post<any>(`${apiUrl}/post.php`, formData);
@@ -39,8 +40,8 @@ export class PostService {
     );
   }
 
-  likePost(postId: number): Observable<any> {
-    const options = {'type': 'like', 'id_post': postId}
+  likePost(postId: number, userId: number): Observable<any> {
+    const options = {'type': 'like', 'id_post': postId, 'id_user': userId}
     return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
       map(response => {
         return response;
@@ -48,8 +49,8 @@ export class PostService {
     );
   }
 
-  unlikePost(postId: number): Observable<any> {
-    const options = {'type': 'unlike', 'id_post': postId}
+  unlikePost(postId: number, userId: number): Observable<any> {
+    const options = {'type': 'unlike', 'id_post': postId, 'id_user': userId}
     return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
       map(response => {
         return response;
@@ -67,6 +68,15 @@ export class PostService {
       .set('postID', postID)
 
     return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
+  }
+
+  hasLiked(postId: number): Observable<boolean> {
+    const userId = this.userService.getCurrentId();
+    const params = new HttpParams()
+      .set('type', 'hasLiked')
+      .set('id_user', userId)
+      .set('id_post', postId);
+    return this.http.get<boolean>(`${apiUrl}/post.php`, {params});
   }
 
   findPostById(postID: number): Observable<PostDTO> {

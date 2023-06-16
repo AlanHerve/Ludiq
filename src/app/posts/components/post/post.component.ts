@@ -15,8 +15,8 @@ export class PostComponent implements OnInit {
   @Output() postLiked: EventEmitter<PostDTO> = new EventEmitter<PostDTO>();
   isLiked: boolean = false;
   showCommentBox: boolean = false;
-
-  protected commentsDTO!: CommentDTO[];
+  newComment: string = '';
+  commentsDTO: CommentDTO[] = [];
 
 
   constructor(private userService: UserService, private router: Router, private postService: PostService) {
@@ -32,7 +32,7 @@ export class PostComponent implements OnInit {
       }
     });*/
 
-    this.postsService.hasLiked(this.postDTO.id).subscribe(hasLiked => {
+    this.postService.hasLiked(this.postDTO.id).subscribe(hasLiked => {
       this.isLiked = hasLiked;
       console.log("Has liked : " + hasLiked);
     });
