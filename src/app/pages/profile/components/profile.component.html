@@ -19,10 +19,10 @@
           <p class="info">{{ this.profileDTO.numFriends }} friends</p>
         </div>
       </div>
-      <div class="favorite-hobby">
+      <div class="favorite-hobby" *ngIf = "this.profileDTO.favoriteHobby.id != -1">
         <p class="title-favorite-hobby">Favorite hobby</p>
-        <img [src]="favoriteHobby.image" alt="favorite hobby img" class="image-favorite">
-        <button class="tag favorite">cooking</button>
+        <img [src]="'assets/images/hobbies/' + this.profileDTO.favoriteHobby.image" alt="favorite hobby img" class="image-favorite">
+        <app-hobby-button class="tag favorite" [hobbyDTO]="this.profileDTO.favoriteHobby"></app-hobby-button>
       </div>
     </div>
     <p class="username">{{this.profileDTO.userDTO.name}}</p>
@@ -55,7 +55,7 @@
   <app-hobby-flashcard-list *ngIf="type === 'hobbies'"
                             [hobbyFlashcardsDTO]="this.hobbyFlashcardsDTOs"></app-hobby-flashcard-list>
 
-  <app-activity-list *ngIf="type === 'activities'" [activitiesDTO]="this.profileDTO.activitiesDTO"></app-activity-list>
+  <app-activity-flashcard-list *ngIf="type === 'activities'" [activitiesDTO]="this.profileDTO.activitiesDTO"></app-activity-flashcard-list>
 
 </div>
 <app-navigation-bar></app-navigation-bar>

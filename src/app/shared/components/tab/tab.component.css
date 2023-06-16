@@ -12,6 +12,17 @@
 .tab.selected {
   cursor: pointer;
   padding: 20px;
-  background-color: #EFEFEF;
-  border-bottom: #7421C2 3px solid;
+  position: relative;
 }
+
+.tab.selected::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: #7421C2;
+  border-radius: 4px;
+}
+

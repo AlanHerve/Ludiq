@@ -54,7 +54,7 @@ class PostRepository
             );
         }
 
-        return json_encode($response);
+        return $response;
     }
 
     public function getUserPosts($id_user)

@@ -18,7 +18,7 @@
 }
 
 .favorite-hobby {
-  text-align: center;
+  align-items: center;
   display: flex;
   flex-direction: column;
   margin-right: 54px;
@@ -43,8 +43,9 @@
 }
 
 .image-favorite {
-  width: 105px;
+  width: 130px;
   mix-blend-mode: multiply;
+  border-radius: 10px;
 }
 
 .title-favorite-hobby {

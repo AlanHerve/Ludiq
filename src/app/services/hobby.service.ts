@@ -1,13 +1,12 @@
-import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./api-url";
 import {Injectable} from "@angular/core";
 
-import {RequestDTO} from "../models/request-dto";
 import {HobbyRequestDTO} from "../models/hobby-request-dto";
 import {HobbyDTO} from "../models/hobby-dto";
-import {HobbyPostDTO} from "../models/hobby-post-dto";
+import {HobbyFlashcardDTO} from "../models/hobby-flashcard-dto";
 import {UserDTO} from "../models/user-dto";
 
 @Injectable({
@@ -15,7 +14,7 @@ import {UserDTO} from "../models/user-dto";
 })
 export class HobbyService {
 
-  newPost!: HobbyPostDTO;
+  newPost!: HobbyFlashcardDTO;
 
   private messageSource = new Subject<string>();
   currentMessage = this.messageSource.asObservable();
@@ -64,12 +63,12 @@ export class HobbyService {
     );
   }
 
-  getHobbiesFlashcardsOfUser(id_user: number): Observable<{hobbies: HobbyPostDTO[]}>{
+  getHobbiesFlashcardsOfUser(id_user: number): Observable<{hobbies: HobbyFlashcardDTO[]}>{
     const params = new HttpParams()
       .set('function_to_call', "getHobbiesFlashcardsOfUser")
       .set('id_user', id_user);
 
-    return this.http.get<{hobbies: HobbyPostDTO[]}>(`${apiUrl}/hobbies.php`, {params}).pipe(
+    return this.http.get<{hobbies: HobbyFlashcardDTO[]}>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
         return response;
@@ -112,8 +111,8 @@ export class HobbyService {
     );
   }
 
-  newHobbyPost(hobbyPostDTO: HobbyPostDTO): Observable<{hobby: HobbyPostDTO}> {
-    return this.http.post<{hobby: HobbyPostDTO}>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+  newHobbyPost(hobbyPostDTO: HobbyFlashcardDTO): Observable<{hobby: HobbyFlashcardDTO}> {
+    return this.http.post<{hobby: HobbyFlashcardDTO}>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
       map(response => {
         this.newPost = response.hobby;
         console.log(response);
@@ -121,6 +120,13 @@ export class HobbyService {
         return response;
       })
     );
+  }
+
+  findHobbyById(hobbyId: number): Observable<HobbyDTO> {
+    const params = new HttpParams()
+      .set('function_to_call', "findHobby")
+      .set('id_hobby', hobbyId);
+    return this.http.get<HobbyDTO>(`${apiUrl}/hobbies.php`, {params});
   }
 
 }

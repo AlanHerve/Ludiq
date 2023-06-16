@@ -13,6 +13,6 @@ export class ProfileDTO {
               public activityDirector: boolean,
               public postsDTO: PostDTO[],
               public activitiesDTO: ActivityDTO[],
-              public favoriteHobby?: HobbyDTO) {
+              public favoriteHobby: HobbyDTO) {
   }
 }

@@ -1,4 +1,4 @@
-export class HobbyPostDTO {
+export class HobbyFlashcardDTO {
   constructor(public id_hobby_post:number,
               public id_user: number,
               public id_hobby: number,
