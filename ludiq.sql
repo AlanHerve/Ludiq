@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 13 juin 2023 à 17:48
+-- Généré le : ven. 16 juin 2023 à 16:09
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -37,24 +37,25 @@ CREATE TABLE `activity` (
   `DATE_ACTIVITY` date DEFAULT NULL,
   `CURRENT_REGISTERED` int(4) DEFAULT 1,
   `MAX_REGISTRATIONS` int(4) NOT NULL DEFAULT 10,
-  `IMAGE` varchar(200) DEFAULT NULL
+  `IMAGE` varchar(200) DEFAULT NULL,
+  `TITLE` varchar(64) DEFAULT 'Activity'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Déchargement des données de la table `activity`
 --
 
-INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVANCEMENT`, `DESCRIPTION`, `DATE_POST`, `DATE_ACTIVITY`, `CURRENT_REGISTERED`, `MAX_REGISTRATIONS`, `IMAGE`) VALUES
-(1, 2, 1, 'Beginner', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id leo vitae eros elementum facilisis. Mauris ac eros a odio semper malesuada.', '2023-05-27 14:27:54', '2023-06-21', 1, 10, NULL),
-(2, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', '2023-06-23', 1, 10, NULL),
-(3, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', '2023-06-29', 1, 10, NULL),
-(4, 2, 3, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL),
-(5, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL),
-(6, 3, 1, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL),
-(7, 3, 7, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL),
-(8, 3, 9, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL),
-(9, 3, 8, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL),
-(10, 3, 1, 'Beginner', NULL, '2023-05-27 14:29:09', NULL, 1, 10, NULL);
+INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVANCEMENT`, `DESCRIPTION`, `DATE_POST`, `DATE_ACTIVITY`, `CURRENT_REGISTERED`, `MAX_REGISTRATIONS`, `IMAGE`, `TITLE`) VALUES
+(1, 2, 1, 'Beginner', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id leo vitae eros elementum facilisis. Mauris ac eros a odio semper malesuada.', '2023-05-27 14:27:54', '2023-06-21', 1, 10, NULL, 'Activity'),
+(2, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', '2023-06-23', 1, 10, NULL, 'Activity'),
+(3, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', '2023-06-29', 1, 10, NULL, 'Activity'),
+(4, 2, 3, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL, 'Activity'),
+(5, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL, 'Activity'),
+(6, 3, 1, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL, 'Activity'),
+(7, 3, 7, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL, 'Activity'),
+(8, 3, 9, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL, 'Activity'),
+(9, 3, 8, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL, 'Activity'),
+(10, 3, 1, 'Beginner', NULL, '2023-05-27 14:29:09', NULL, 1, 10, NULL, 'Activity');
 
 -- --------------------------------------------------------
 
@@ -125,7 +126,10 @@ CREATE TABLE `friends` (
 --
 
 INSERT INTO `friends` (`ID_USER`, `ID_USER_2`, `WAITING`) VALUES
+(2, 3, 0),
+(2, 5, 1),
 (2, 3, 1),
+(4, 5, 1),
 (2, 5, 1);
 
 -- --------------------------------------------------------
@@ -186,7 +190,6 @@ CREATE TABLE `hobby_post` (
 
 INSERT INTO `hobby_post` (`ID_HOBBY_POST`, `ID_HOBBY`, `ID_USER`, `EXPERIENCE`, `FREQUENCY`, `AVAILABLE`) VALUES
 (1, 1, 2, 'Expert', 'Daily', 1),
-(2, 1, 3, 'Advanced', '2-3/week', 0),
 (3, 1, 4, 'Advanced', 'Weekly', 1),
 (4, 9, 4, 'Expert', 'Monthly', 1),
 (6, 16, 2, 'Expert', '2-3/week', 0),
@@ -195,7 +198,8 @@ INSERT INTO `hobby_post` (`ID_HOBBY_POST`, `ID_HOBBY`, `ID_USER`, `EXPERIENCE`, 
 (27, 9, 2, 'Beginner', 'Daily', 1),
 (28, 4, 2, 'Beginner', 'Daily', 1),
 (29, 1, 5, 'Beginner', 'Daily', 1),
-(30, 2, 5, 'Beginner', 'Daily', 0);
+(30, 2, 5, 'Beginner', 'Daily', 0),
+(31, 3, 3, 'Advanced', 'Rarely', 0);
 
 -- --------------------------------------------------------
 
@@ -261,7 +265,7 @@ CREATE TABLE `regular_post` (
 --
 
 INSERT INTO `regular_post` (`ID_REGULAR_POST`, `ID_USER`, `ID_HOBBY`, `DESCRIPTION`, `IMAGE1`, `IMAGE2`, `IMAGE3`, `IMAGE4`, `MODIFIED`, `LIKES`, `TIME`) VALUES
-(1, 5, 1, 'test', NULL, NULL, NULL, NULL, 0, 2, '2023-06-13 15:46:44');
+(1, 5, 1, 'test', NULL, NULL, NULL, NULL, 0, 2, '2023-06-16 13:44:29');
 
 -- --------------------------------------------------------
 
@@ -432,7 +436,7 @@ ALTER TABLE `hobby`
 -- AUTO_INCREMENT pour la table `hobby_post`
 --
 ALTER TABLE `hobby_post`
-  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT pour la table `message`
@@ -482,6 +486,53 @@ ALTER TABLE `activity_director`
 ALTER TABLE `activity_participants`
   ADD CONSTRAINT `activity_participants_ibfk_1` FOREIGN KEY (`ID_ACTIVITY`) REFERENCES `activity` (`ID_ACTIVITY`),
   ADD CONSTRAINT `activity_participants_ibfk_2` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`);
+
+--
+-- Contraintes pour la table `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`ID_REGULAR_POST`) REFERENCES `regular_post` (`ID_REGULAR_POST`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `friends`
+--
+ALTER TABLE `friends`
+  ADD CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
+  ADD CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`ID_USER_2`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `hobby_post`
+--
+ALTER TABLE `hobby_post`
+  ADD CONSTRAINT `hobby_post_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
+  ADD CONSTRAINT `hobby_post_ibfk_2` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `message`
+--
+ALTER TABLE `message`
+  ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
+  ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`ID_USER_2`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `organization`
+--
+ALTER TABLE `organization`
+  ADD CONSTRAINT `organization_ibfk_1` FOREIGN KEY (`FAVORITE_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE SET NULL;
+
+--
+-- Contraintes pour la table `regular_post`
+--
+ALTER TABLE `regular_post`
+  ADD CONSTRAINT `regular_post_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
+  ADD CONSTRAINT `regular_post_ibfk_2` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`FAVORITE_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE SET NULL;
 
 --
 -- Contraintes pour la table `userpostlikes`
