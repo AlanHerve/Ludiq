@@ -314,7 +314,7 @@ class ActivityRepository
             SELECT
                 COUNT(*)
             FROM
-                activity_participant par
+                activity_participants par
             WHERE
                 par.ID_USER = ?
             ;

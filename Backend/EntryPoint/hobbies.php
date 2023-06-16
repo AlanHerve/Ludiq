@@ -4,8 +4,8 @@ header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Origin,Content-Type');
 
-include("../Repositories/HobbyRepository.php");
-include("../DTOs/HobbyPostDTO.php");
+require_once ("../Repositories/HobbyRepository.php");
+require_once ("../DTOs/HobbyPostDTO.php");
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hobbyRepository->fetchDisplayHobbies();
             break;
         case "getHobbiesOfUser":
-            $hobbyRepository->fetchHobbiesOfUser($id_user);
+            echo json_encode($hobbyRepository->fetchHobbiesOfUser($id_user));
             break;
         case "fetchAvailableHobbiesOfUser":
             echo $hobbyRepository->fetchAvailableHobbiesOfUser($id_user);

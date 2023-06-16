@@ -3,6 +3,7 @@
 require_once '../Database.php';
 require_once '../DTOs/HobbyDTO.php';
 require_once '../DTOs/HobbyCountDTO.php';
+require_once '../DTOs/HobbyPostDTO.php';
 require_once '../Repositories/UserRepository.php';
 
 class HobbyRepository
@@ -294,11 +295,8 @@ class HobbyRepository
         if ($result) {
             if ($result->num_rows > 0) {
 
-                while ($row = $result->fetch_assoc()) array_push($hobbies, new HobbyPostDTO($row["ID_HOBBY_POST"], $id_user, $row["ID_HOBBY"], $row["HOBBY_NAME"], $row["FREQUENCY"], $row["EXPERIENCE"], $row["AVAILABLE"]));
-                $response = array(
-                    'success' => true,
-                    'hobbies' => $hobbies
-                );
+                while ($row = $result->fetch_assoc()) $hobbies[] = new HobbyPostDTO($row["ID_HOBBY_POST"], $id_user, $row["ID_HOBBY"], $row["HOBBY_NAME"], $row["FREQUENCY"], $row["EXPERIENCE"], $row["AVAILABLE"]);
+
             }else{
                 $response = array(
                     'success' => true,
@@ -312,7 +310,7 @@ class HobbyRepository
                 'message' => "could not access dtb"
             );
         }
-        return $response;
+        return $hobbies;
     }
 
     public function getNumHobbies($id_user)

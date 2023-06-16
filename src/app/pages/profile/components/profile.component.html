@@ -7,7 +7,7 @@
 
       <div class="user-info">
         <div class="text-container">
-          <img class="badge" src="../../../../assets/images/icons/{{this.reward}}.png">
+          <img *ngIf="this.reward != 'nothing'" class="badge" src="../../../../assets/images/icons/{{this.reward}}.png">
           <p class="info">{{profileDTO.numActivities }} activities {{this.getActivitiesType()}}</p>
         </div>
         <div class="text-container">
@@ -19,7 +19,7 @@
           <p class="info">{{ this.profileDTO.numFriends }} friends</p>
         </div>
       </div>
-      <div class="favorite-hobby" *ngIf = "this.profileDTO.favoriteHobby.id != -1">
+      <div class="favorite-hobby" *ngIf = "this.profileDTO.favoriteHobby">
         <p class="title-favorite-hobby">Favorite hobby</p>
         <img [src]="'assets/images/hobbies/' + this.profileDTO.favoriteHobby.image" alt="favorite hobby img" class="image-favorite">
         <app-hobby-button class="tag favorite" [hobbyDTO]="this.profileDTO.favoriteHobby"></app-hobby-button>
@@ -52,8 +52,10 @@
 
   <app-post-list *ngIf="type === 'posts'" [postsDTO]="profileDTO.postsDTO"></app-post-list>
 
-  <app-hobby-flashcard-list *ngIf="type === 'hobbies'"
-                            [hobbyFlashcardsDTO]="this.hobbyFlashcardsDTOs"></app-hobby-flashcard-list>
+  <app-hobby-flashcard-list *ngIf="type === 'hobbies' && this.hobbyFlashcardsDTO[0]"
+                            [hobbyFlashcardsDTO]="this.hobbyFlashcardsDTO"></app-hobby-flashcard-list>
+
+
 
   <app-activity-flashcard-list *ngIf="type === 'activities'" [activitiesDTO]="this.profileDTO.activitiesDTO"></app-activity-flashcard-list>
 

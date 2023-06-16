@@ -63,12 +63,12 @@ export class HobbyService {
     );
   }
 
-  getHobbiesFlashcardsOfUser(id_user: number): Observable<{hobbies: HobbyFlashcardDTO[]}>{
+  getHobbiesFlashcardsOfUser(id_user: number): Observable<HobbyFlashcardDTO[]>{
     const params = new HttpParams()
       .set('function_to_call', "getHobbiesFlashcardsOfUser")
       .set('id_user', id_user);
 
-    return this.http.get<{hobbies: HobbyFlashcardDTO[]}>(`${apiUrl}/hobbies.php`, {params}).pipe(
+    return this.http.get<HobbyFlashcardDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
         return response;

@@ -38,6 +38,7 @@ class ProfileRepository
         $userDTO = $this->userRepository->findUserById($id_user);
         $postsDTO = $this->postRepository->getUserPosts($id_user);
         $numFriends = $this->friendRepository->getNumFriends($id_user);
+        $hobbiesDTO = $this->hobbyRepository->getHobbiesFlashcardsOfUser($id_user);
         $activitiesDTO = $this->activityRepository->getUserActivities($id_user);
 
         if($this->userRepository->isActivityDirector($id_user)) {
@@ -50,7 +51,7 @@ class ProfileRepository
         }
 
 
-        return new ProfileDTO($userDTO, $numPosts, $numFriends, $numHobbies, $numActivities, $activityDirector, $postsDTO, $activitiesDTO);
+        return new ProfileDTO($userDTO, $numPosts, $numFriends, $numHobbies, $numActivities, $activityDirector, $postsDTO, $hobbiesDTO, $activitiesDTO);
     }
 
 }

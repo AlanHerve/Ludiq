@@ -144,7 +144,7 @@ class UserRepository
         return json_encode($response);
     }
 
-    public function findUserById($id): ?UserDTO
+    public function findUserById($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM user WHERE ID_USER = ?");
         $stmt->bind_param("i", $id);
@@ -155,12 +155,10 @@ class UserRepository
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $user = new UserDTO($row['ID_USER'], $row['USER_NAME'], $row['USER_PSEUDO'], $row['USER_PASSWORD'], $row['EMAIL'], $row['AVATAR']);
-            $response = $user;
-        }else{
-            $response = null;
+            return $user;
         }
 
-        return $response;
+        return null;
     }
 
     public function isActivityDirector($userId) {
