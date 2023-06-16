@@ -3,7 +3,6 @@
 
 require_once '../Database.php';
 require_once '../DTOs/UserDTO.php';
-require_once '../Repositories/HobbyRepository.php';
 
 class UserRepository
 {
@@ -180,28 +179,6 @@ class UserRepository
             return true;
         }
         return false;
-    }
-
-    public function getFavoriteHobby($userId) {
-        $stmt = $this->db->prepare("
-            SELECT
-                fav.ID_HOBBY
-            FROM
-                favorite_hobby fav
-            WHERE
-                fav.ID_USER = ?
-        ");
-        $stmt->bind_param('i', $userId);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
-        if($result->num_rows  == 1) {
-            $row = $result->fetch_assoc();
-            $hobbyRepository = HobbyRepository::getInstance();
-            $hobbyDTO = $hobbyRepository->findHobbyById($row['ID_HOBBY']);
-            return $hobbyDTO;
-        }
-        return null;
     }
 
 }
