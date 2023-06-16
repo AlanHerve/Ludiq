@@ -12,7 +12,7 @@ import {NotificationsComponent} from "./notifications/components/notifications.c
   ],
   exports: [
     CoreModule,
-    TopBarComponent
+    TopBarComponent,
   ],
   imports: [
     CoreModule,

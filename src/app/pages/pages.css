@@ -5,6 +5,11 @@
   width: calc(100% - 45vw);
 }
 
+@media (min-width: 1000px) {
+  .gap {
+    margin-top: 70px;
+  }
+}
 
 @media (max-width: 1000px) {
   .right-sidebar {

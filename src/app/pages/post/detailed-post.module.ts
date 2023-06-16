@@ -13,7 +13,8 @@ import {PostsModule} from "../../posts/posts.module";
     PostsModule
   ],
   exports: [
-    DetailedPostRoutingModule
+    DetailedPostRoutingModule,
+    PagesModule
   ],
 })
 export class DetailedPostModule {

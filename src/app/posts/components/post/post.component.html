@@ -1,18 +1,19 @@
-<div class="post">
-  <div class="user-profile">
+<div class="post" (click)="onPostClicked()">
+  <div class="user-profile" (click) = "onUserClicked()">
     <div class="profile-info">
       <img alt="Photo de profil" class="profile-image" src="../../../../assets/images/icons/user.png">
       <div style = "display: flex">
-        <div class = "user-info" (click) = "onUserClicked()">
+        <div class = "user-info" >
           <span class="username">{{postDTO.userDTO.name}}</span>
           <span class="nickname">{{postDTO.userDTO.username}}</span>
         </div>
-        <p class = "date" *ngIf="postDTO.modified === 1; else elseBlock">Modified - {{ postDTO.time | date:'dd/MM HH:mm' }}</p>
-        <ng-template #elseBlock>
-          <p class = "date">{{ postDTO.time | date:'dd/MM HH:mm' }}</p>
-        </ng-template>
+
       </div>
     </div>
+    <p class = "date" *ngIf="postDTO.modified === 1; else elseBlock">Modified - {{ postDTO.time | date:'dd/MM HH:mm' }}</p>
+    <ng-template #elseBlock>
+      <p class = "date">{{ postDTO.time | date:'dd/MM HH:mm' }}</p>
+    </ng-template>
   </div>
   <div class="post-info" *ngIf="postDTO.hobbyDTO != null">
     <app-hobby-button [hobbyDTO]="this.postDTO.hobbyDTO"></app-hobby-button>

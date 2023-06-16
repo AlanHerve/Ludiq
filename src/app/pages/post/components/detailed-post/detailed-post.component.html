@@ -1,4 +1,7 @@
+<app-top-bar [content]="['Post']"></app-top-bar>
+
 <div class="content">
+  <div class = "gap"></div>
   <div *ngIf="postDTO">
     <app-post [postDTO]="postDTO"></app-post>
   </div>

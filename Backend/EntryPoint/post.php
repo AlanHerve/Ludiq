@@ -42,6 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode($postRepository->getAllPosts());
         elseif ($_GET['type'] === 'hobby' && isset($_GET['id_hobby']))
             echo json_encode($postRepository->getHobbyPosts($_GET['id_hobby']));
+        elseif ($_GET['type'] === 'find_post') {
+            echo json_encode($postRepository->findPostById($_GET['postID']));
+        }
     } elseif (isset($_GET['user_page']) && isset($_GET['id_user'])) {
         $id_user = $_GET['id_user'];
         $mode = $_GET['user_page'];
