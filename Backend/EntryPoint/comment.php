@@ -13,3 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     echo json_encode($commentRepository->addComment($data['id_user'], $data['content'], $data['id_regular_post']));
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  $commentRepository = CommentRepository::getInstance();
+
+  switch ($_GET['type']) {
+    case 'all_comments':
+      echo json_encode($commentRepository->getAllComments($_GET['postID']));
+      break;
+  }
+}

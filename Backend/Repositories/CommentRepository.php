@@ -1,14 +1,17 @@
 <?php
 require_once '../Database.php';
+require_once '../DTOs/CommentDTO.php';
 
 class CommentRepository
 {
   private static $instance = null;
   private $db;
+  private $userRepository;
 
   public function __construct()
   {
     $this->db = Database::getInstance()->getConnection();
+    $this->userRepository = UserRepository::getInstance();
   }
 
   public static function getInstance()
@@ -45,6 +48,7 @@ class CommentRepository
     return json_encode($comments);
   }
 
+
   public function updateComment($id_comment, $content)
   {
     $stmt = $this->db->prepare("UPDATE comment SET CONTENT = ? WHERE ID_COMMENT = ?");
@@ -70,5 +74,31 @@ class CommentRepository
     }
     return json_encode($response);
   }
+
+  public function getAllComments($postID)
+  {
+    $stmt = $this->db->prepare("
+            SELECT
+                *
+            FROM
+                comment com
+            WHERE
+                com.ID_REGULAR_POST = ?
+        ");
+    $stmt->bind_param('i', $postID);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+      $commentsDTO = [];
+      while ($row = $result->fetch_assoc()) {
+        $userDTO = $this->userRepository->findUserById($row['ID_USER']);
+        $commentsDTO[] = new CommentDTO($row['ID_COMMENT'], $userDTO, $row['CONTENT'], $row['ID_REGULAR_POST'], $row['TIME']);
+      }
+      return $commentsDTO;
+    }
+    return null;
+  }
 }
+
 ?>

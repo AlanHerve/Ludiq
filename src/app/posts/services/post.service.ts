@@ -76,6 +76,4 @@ export class PostService {
 
     return this.http.get<PostDTO>(`${apiUrl}/post.php`, {params});
   }
-
-
 }

@@ -25,6 +25,7 @@ export class PostComponent implements OnInit {
   }
   ngOnInit(): void {
     this.loadImages();
+    this.getAllComments()
   }
 
   onCommentClicked(): void {
@@ -35,7 +36,7 @@ export class PostComponent implements OnInit {
     this.router.navigateByUrl(`/post/${this.postDTO.id}`)
   }
 
-  private displayThreeComments(): void {
+  private getThreeComments(): void {
 
   }
 
