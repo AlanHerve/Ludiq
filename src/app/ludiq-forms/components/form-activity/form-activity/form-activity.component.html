@@ -1,24 +1,16 @@
 <div class="background-form">
   <form [@fadeIn]="true" (ngSubmit)="newActivityPost()" >
     <h1>New activity</h1>
-
     <span (click)="onClose()" class="cross">&times;</span>
 
+    <p>Title of the activity</p>
+    <input [(ngModel)]="activityDTO.title" name="title"  type="text" maxlength="64" placeholder="Activity" >
+
+    <p>Description of the activity</p>
     <textarea [(ngModel)]="activityDTO.description" class="description" name="description" placeholder="Description of the activity"></textarea>
 
-    <!--<div class="images">
-      <label class="file-input-label" [class.disabled]="this.activityDTO.images[0] != null">
-        <span class="file-input-text">Select an image</span>
-        <input class="file-input" onchange="console.log('Adding a file')" type="file" (change)="onFileSelected($event)" [disabled]="activityDTO.images[0] != null">
-      </label>
-    </div>-->
-    <div class="hobby-container" *ngIf="this.activityDTO.images[0] != null">
-      <div class="file-container" *ngFor="let image of this.activityDTO.images">
-        <span class = "file-name" *ngIf="image != null">{{ image }}</span>
-        <span class="cross-file" *ngIf="image != null" (click)="onRemoveImage(image)">&times;</span>
-      </div>
-    </div>
 <br><br>
+
     <div class="date">
       <p>Date of the activity</p>
       <input type="date" name="date" id='time' [(ngModel)]="activityDTO.time">

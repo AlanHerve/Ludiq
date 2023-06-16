@@ -45,6 +45,7 @@ class ActivityRepository
         $id_hobby = $activityDTO->hobbyDTO;
         $description = $activityDTO->description;
         $images = $activityDTO->images;
+        $title = $activityDTO->title;
 
         $stmt = $this->db->prepare("INSERT INTO
                                                 activity
@@ -53,16 +54,11 @@ class ActivityRepository
                                                 , DESCRIPTION
                                                 , DATE_ACTIVITY
                                                 , MAX_REGISTRATIONS
-                                                , IMAGE)
-                                            VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iissis", $id_user, $id_hobby, $description, $time, $activityDTO->max_registrations,$images);
+                                                , IMAGE
+                                                , TITLE)
+                                            VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iississ", $id_user, $id_hobby, $description, $time, $activityDTO->max_registrations,$images, $title);
         $stmt->execute();
-
-        //->inserer que ce qui n'a pas de valeur de base
-        //iisssss -> int int string string string...
-        //requetes pour aller chopper les bails à refaire
-
-
 
         if ($stmt->affected_rows > 0) { //if rows are affected it means the database has been modified
             $activityDTO->setID($stmt->insert_id);
@@ -169,8 +165,14 @@ class ActivityRepository
         $stmt = $this->db->prepare("
             SELECT
                 act.*
+                , org.ID_ORGANIZATION
+                , org.NAME_ORGANIZATION
             FROM
                 activity act
+                INNER JOIN
+                    activity_director actd ON act.ID_ACTIVITY_DIRECTOR = actd.ID_USER
+                INNER JOIN
+                    organization org on actd.ID_ORGANIZATION = org.ID_ORGANIZATION
             WHERE
                 act.ID_ACTIVITY = ?
         ");
@@ -186,7 +188,7 @@ class ActivityRepository
             $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
 
             return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
-                                $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'], $row['MAX_REGISTRATIONS'], $row['IMAGE']);
+                                $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'], $row['MAX_REGISTRATIONS'], $row['IMAGE'], $row["TITLE"],$row['ID_ORGANIZATION'], $row['NAME_ORGANIZATION']);
         }
         return null;
     }

@@ -32,7 +32,7 @@ form {
   font-size: 18px;
   font-weight: 400;
   line-height: 1.4;
-  resize: vertical;
+  resize: none;
   height: auto;
   min-height: 100px;
   width: 100%;
