@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $commentRepository = CommentRepository::getInstance();
 
-    switch ($_GET['type']) {
+    switch($_GET['type']) {
         case 'all_comments':
             echo json_encode($commentRepository->getAllComments($_GET['postID']));
             break;
