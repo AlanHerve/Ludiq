@@ -2,6 +2,7 @@ import {UserDTO} from "../../../models/user-dto";
 import {PostDTO} from "../../../posts/models/post-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {ActivityDTO} from "../../../posts/models/activity-dto";
+import {HobbyFlashcardDTO} from "../../../models/hobby-flashcard-dto";
 
 export class ProfileDTO {
 
@@ -13,6 +14,7 @@ export class ProfileDTO {
               public activityDirector: boolean,
               public postsDTO: PostDTO[],
               public activitiesDTO: ActivityDTO[],
+              public hobbiesPostDTO: HobbyFlashcardDTO[],
               public favoriteHobby: HobbyDTO) {
   }
 }

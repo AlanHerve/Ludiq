@@ -66,6 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($_GET['type'] === 'activity_participants') {
                 echo json_encode($activityRepository->getActivityParticipants($_GET['activityId']));
             }
+            if ($_GET['type'] === 'hobby_activities'){
+                echo json_encode($activityRepository->getHobbyActivities($_GET['hobbyId']));
+            }
         }
     }
 

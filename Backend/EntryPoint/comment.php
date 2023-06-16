@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = file_get_contents('php://input');
     $data = json_decode($body, true);
     $commentRepository = CommentRepository::getInstance();
+
     echo json_encode($commentRepository->addComment($data['userDTO']['id'], $data['content'], $data['postID']));
 }
 
@@ -19,3 +20,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo json_encode($commentRepository->getAllComments($_GET['postID']));
     }
 }
+

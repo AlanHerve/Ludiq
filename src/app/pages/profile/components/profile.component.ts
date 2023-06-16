@@ -26,7 +26,7 @@ export class ProfileComponent implements Image {
   activitiesDTO: ActivityDTO[] = []
 
   protected reward: string = "bronze";
-  hobbyFlashcardsDTOs: HobbyFlashcardDTO[] = []
+  hobbyFlashcardsDTO: HobbyFlashcardDTO[] = []
 
   protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
@@ -37,6 +37,7 @@ export class ProfileComponent implements Image {
     activityDirector: false,
     numActivities: 0,
     postsDTO: [],
+    hobbiesPostDTO: [],
     activitiesDTO: [],
     favoriteHobby: new HobbyDTO(-1, '', '')
   }
@@ -59,7 +60,10 @@ export class ProfileComponent implements Image {
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.profileDTO.userDTO.id = parseInt(params['id']);
-    })
+    });
+
+
+    this.getProfileInformation();
     this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
         console.log(response);
@@ -70,16 +74,14 @@ export class ProfileComponent implements Image {
       }
     });
 
-    this.getHobbiesFlashcardsOfUser();
-    this.getProfileInformation();
 
     this.hobbyService.currentMessage.subscribe((data)=>{
-      this.hobbyFlashcardsDTOs.push(this.hobbyService.getNewPost());
+      this.hobbyFlashcardsDTO.push(this.hobbyService.getNewPost());
     });
 
     this.hobbyService.currentDeleteState.subscribe((data) => {
       console.log("returned Data :" + data);
-      this.hobbyFlashcardsDTOs.splice(this.findHobbyDTOWithData(data), 1);
+      this.hobbyFlashcardsDTO.splice(this.findHobbyDTOWithData(data), 1);
     });
 
   }
@@ -94,6 +96,9 @@ export class ProfileComponent implements Image {
     else if(this.profileDTO.numActivities > 0){
       this.reward = "bronze"
     }
+    else {
+      this.reward = "nothing"
+    }
   }
 
   getUserType(): string {
@@ -102,10 +107,10 @@ export class ProfileComponent implements Image {
   }
 
   findHobbyDTOWithData(id: number){
-    const sizeOfArray: number = this.hobbyFlashcardsDTOs.length;
+    const sizeOfArray: number = this.hobbyFlashcardsDTO.length;
 
     for (let i = 0; i < sizeOfArray; i++) {
-      if(this.hobbyFlashcardsDTOs[i].id_hobby_post == id) return i;
+      if(this.hobbyFlashcardsDTO[i].id_hobby_post == id) return i;
     }
 
     return -1;
@@ -116,6 +121,9 @@ export class ProfileComponent implements Image {
     this.profileService.getProfileInformation(this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
         this.profileDTO = response;
+        if (!this.profileDTO.userDTO) {
+          this.router.navigateByUrl('/home');
+        }
         this.determineReward();
       },
       error: (error) => {
@@ -125,15 +133,23 @@ export class ProfileComponent implements Image {
   }
 
   getHobbiesFlashcardsOfUser(){
+    console.log("get 3");
     this.hobbyService.getHobbiesFlashcardsOfUser(this.profileDTO.userDTO.id).subscribe({
 
       next: (response) => {
+        console.log("get 4");
         // in case of success
         console.log(response);
-        if(response.hobbies){
-          for (let i = 0; i < response.hobbies.length; i++) {
-            this.hobbyFlashcardsDTOs.push(response.hobbies[i]);
+        console.log("get 5");
+        console.log(response[1]);
+        if(response){
+          for (let i = 0; i < response.length; i++) {
+            this.hobbyFlashcardsDTO.push(response[i]);
           }
+        }
+
+        for (let i = 0; i < response.length; i++) {
+          console.log(this.hobbyFlashcardsDTO[i]);
         }
       },
       error: (error) => {

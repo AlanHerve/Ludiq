@@ -160,6 +160,32 @@ class ActivityRepository
         return null;
     }
 
+    public function getHobbyActivities($id_hobby){
+        $stmt = $this->db->prepare("
+        SELECT
+            act.ID_ACTIVITY
+         FROM
+             activity act
+        WHERE
+            act.ID_HOBBY = ?
+        ");
+        $stmt->bind_param('i' , $id_hobby);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) { //normalement la même que getAllActivities
+            $activitiesDTO = [];
+            while ($row = $result->fetch_assoc()) {
+                $activityDTO = $this->findActivityById($row['ID_ACTIVITY']);
+                $activitiesDTO[] = $activityDTO;
+            }
+            return $activitiesDTO;
+        }
+
+        return null;
+
+    }
+
     public function findActivityById($id_activity)
     {
         $stmt = $this->db->prepare("
@@ -288,7 +314,7 @@ class ActivityRepository
             SELECT
                 COUNT(*)
             FROM
-                activity_participant par
+                activity_participants par
             WHERE
                 par.ID_USER = ?
             ;

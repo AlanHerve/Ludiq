@@ -3,12 +3,13 @@
 require_once '../Database.php';
 require_once '../DTOs/HobbyDTO.php';
 require_once '../DTOs/HobbyCountDTO.php';
+require_once '../DTOs/HobbyPostDTO.php';
 require_once '../Repositories/UserRepository.php';
 
 class HobbyRepository
 {
-    private static $instance = null;
     private $db;
+    private static $instance = null;
     private UserRepository $userRepository;
 
     public function __construct()
@@ -294,25 +295,22 @@ class HobbyRepository
         if ($result) {
             if ($result->num_rows > 0) {
 
-                while ($row = $result->fetch_assoc()) array_push($hobbies, new HobbyPostDTO($row["ID_HOBBY_POST"], $id_user, $row["ID_HOBBY"], $row["HOBBY_NAME"], $row["FREQUENCY"], $row["EXPERIENCE"], $row["AVAILABLE"]));
-                $response = array(
-                    'success' => true,
-                    'hobbies' => $hobbies
-                );
-            } else {
+                while ($row = $result->fetch_assoc()) $hobbies[] = new HobbyPostDTO($row["ID_HOBBY_POST"], $id_user, $row["ID_HOBBY"], $row["HOBBY_NAME"], $row["FREQUENCY"], $row["EXPERIENCE"], $row["AVAILABLE"]);
+
+            }else{
                 $response = array(
                     'success' => true,
                     'message' => 'user does not have any hobby',
                     "id" => $id_user
                 );
             }
-        } else {
+        }else{
             $response = array(
                 'success' => false,
                 'message' => "could not access dtb"
             );
         }
-        return $response;
+        return $hobbies;
     }
 
     public function getNumHobbies($id_user)
@@ -335,8 +333,7 @@ class HobbyRepository
         return $row['num_hobbies'];
     }
 
-    public function getHobbyUsers($id_hobby)
-    {
+    public function getHobbyUsers($id_hobby) {
         $stmt = $this->db->prepare("
             SELECT
                 u.ID_USER
@@ -352,9 +349,9 @@ class HobbyRepository
         $stmt->execute();
 
         $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
+        if($result->num_rows > 0) {
             $usersDTO = [];
-            while ($row = $result->fetch_assoc()) {
+            while($row = $result->fetch_assoc()) {
                 $userDTO = $this->userRepository->findUserById($row['ID_USER']);
                 $usersDTO[] = $userDTO;
             }
@@ -392,8 +389,8 @@ class HobbyRepository
             $stmt->execute();
             $result = $stmt->get_result();
 
-            if ($result) {
-                if ($result->num_rows == 1) {
+            if($result){
+                if ($result->num_rows == 1){
                     $row = $result->fetch_assoc();
                     $hobbyPost->insertHobbyName($row["HOBBY_NAME"]);
                 }
@@ -401,7 +398,7 @@ class HobbyRepository
 
             $response = array(
                 'success' => true,
-                'hobby' => $hobbyPost
+                'hobby'   => $hobbyPost
             );
         } else {
             $response = array(
@@ -428,7 +425,7 @@ class HobbyRepository
         $stmt->execute();
 
         $result = $stmt->get_result();
-        if ($result->num_rows == 1) {
+        if($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             return new HobbyDTO($row['ID_HOBBY'], $row['HOBBY_NAME'], $row['IMAGE']);
         }
@@ -441,13 +438,14 @@ class HobbyRepository
         $stmt->bind_param("i", $id_hobby_post);
         $stmt->execute();
 
-        if ($stmt->affected_rows === 1) {
+        if($stmt->affected_rows === 1){
             $response = "Success";
-        } else {
+        }else{
             $response = "Failure";
         }
 
         echo json_encode($response);
+
     }
 
 

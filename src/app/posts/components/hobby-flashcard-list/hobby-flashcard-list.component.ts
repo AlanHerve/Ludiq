@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HobbyService} from "../../../services/hobby.service";
 import {ActivatedRoute} from "@angular/router";
 import {HobbyFlashcardDTO} from "../../../models/hobby-flashcard-dto";
@@ -8,7 +8,7 @@ import {HobbyFlashcardDTO} from "../../../models/hobby-flashcard-dto";
   templateUrl: './hobby-flashcard-list.component.html',
   styleUrls: ['./hobby-flashcard-list.component.css']
 })
-export class HobbyFlashcardListComponent {
+export class HobbyFlashcardListComponent implements OnInit {
 
   private id_user: number = 0;
   @Input() hobbyFlashcardsDTO!: HobbyFlashcardDTO[];
@@ -16,15 +16,13 @@ export class HobbyFlashcardListComponent {
       this.activatedRoute.params.subscribe(params => {
         this.id_user = parseInt(params['id']);
       });
-
-
-
-
-
     }
 
     addElementToArray(hobbyFlashcard: HobbyFlashcardDTO){
       console.log("adding");
       this.hobbyFlashcardsDTO.push(hobbyFlashcard);
     }
+
+  ngOnInit(): void {
+  }
 }
