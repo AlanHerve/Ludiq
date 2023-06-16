@@ -8,8 +8,9 @@ class ProfileDTO {
     public int $numHobbies;
     public int $numFriends;
     public int $numActivities;
-    public HobbyDTO $favoriteHobby;
-    public bool $activityDirector;
+  public ?HobbyDTO $favoriteHobby;
+
+  public bool $activityDirector;
     /** @var PostDTO[] */
     public array $postsDTO;
     public array $activitiesDTO;

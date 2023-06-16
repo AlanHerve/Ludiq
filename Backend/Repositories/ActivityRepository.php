@@ -187,8 +187,10 @@ class ActivityRepository
             $userDTO = $this->userRepository->findUserById($row['ID_ACTIVITY_DIRECTOR']);
             $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
 
-            return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
-                                $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'], $row['MAX_REGISTRATIONS'], $row['IMAGE'], $row["TITLE"],$row['ID_ORGANIZATION'], $row['NAME_ORGANIZATION']);
+          $title = isset($row['TITLE']) ? $row['TITLE'] : null;
+
+          return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
+            $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'], $row['MAX_REGISTRATIONS'], $row['IMAGE'], $title,$row['ID_ORGANIZATION'], $row['NAME_ORGANIZATION']);
         }
         return null;
     }
