@@ -74,8 +74,11 @@ class FriendRepository
         $stmt->bind_param("i", $id_user);
         $stmt->execute();
         $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        return $row['num_friends'];
+        if($result->num_rows > 0) {
+          $row = $result->fetch_assoc();
+          return $row['num_friends'];
+        }
+        return 0;
     }
 
     public function isFriendWith($user1, $user2) {
@@ -149,7 +152,7 @@ class FriendRepository
             *
         FROM
             friends fri
-        WHERE 
+        WHERE
             fri.WAITING = true
         ");
 
@@ -184,7 +187,7 @@ class FriendRepository
 
     public function acceptFriendship($id_user_1, $id_user_2){
         $stmt = $this->db->prepare("
-        UPDATE 
+        UPDATE
             friends fri
         SET
             fri.WAITING = 0

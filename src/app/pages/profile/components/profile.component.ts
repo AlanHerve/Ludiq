@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnChanges, SimpleChanges} from '@angular/core';
 import {UserService} from "../../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserDTO} from "../../../models/user-dto";
@@ -14,7 +14,6 @@ import {ActivityService} from "../../../posts/services/activity.service";
 import {TabService} from "../../../shared/service/tab.service";
 import {Image} from "../../../models/image";
 import {imagesUrl} from "../../../services/urls";
-
 
 @Component({
   selector: 'app-profile',
@@ -58,31 +57,40 @@ export class ProfileComponent implements Image {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.profileDTO.userDTO.id = parseInt(params['id']);
+      this.userService.findUserById(parseInt(params['id'])).subscribe({
+        next: (user) => {
+          this.profileDTO.userDTO = user;
+          if(!this.profileDTO.userDTO) this.router.navigateByUrl("/home")
+          this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
+            next: (response) => {
+              console.log(response);
+              this.friendship_status = response;
+            },
+            error: (error) => {
+              console.log("Error while finding if the user is friend with another", error)
+            }
+          });
+
+          this.getHobbiesFlashcardsOfUser();
+          this.getProfileInformation();
+
+          this.hobbyService.currentMessage.subscribe((data)=>{
+            this.hobbyFlashcardsDTOs.push(this.hobbyService.getNewPost());
+          });
+
+          this.hobbyService.currentDeleteState.subscribe((data) => {
+            console.log("returned Data :" + data);
+            this.hobbyFlashcardsDTOs.splice(this.findHobbyDTOWithData(data), 1);
+          });
+        },
+        error: (error) => {
+          console.log("Error while finding user on profile : ", error)
+        }
+      });
     })
-    this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.friendship_status = response;
-      },
-      error: (error) => {
-        console.log("Error while finding if the user is friend with another", error)
-      }
-    });
-
-    this.getHobbiesFlashcardsOfUser();
-    this.getProfileInformation();
-
-    this.hobbyService.currentMessage.subscribe((data)=>{
-      this.hobbyFlashcardsDTOs.push(this.hobbyService.getNewPost());
-    });
-
-    this.hobbyService.currentDeleteState.subscribe((data) => {
-      console.log("returned Data :" + data);
-      this.hobbyFlashcardsDTOs.splice(this.findHobbyDTOWithData(data), 1);
-    });
 
   }
+
 
   private determineReward(): void {
     if(this.profileDTO.numActivities > 50) {

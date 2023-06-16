@@ -22,7 +22,7 @@
           <p class="info">{{ this.profileDTO.numFriends }} friends</p>
         </div>
       </div>
-      <div class="favorite-hobby" *ngIf = "this.profileDTO.favoriteHobby.id != -1">
+      <div class="favorite-hobby" *ngIf = "this.profileDTO.favoriteHobby">
         <p class="title-favorite-hobby">Favorite hobby</p>
         <img [src]="'assets/images/hobbies/' + this.profileDTO.favoriteHobby.image" alt="favorite hobby img" class="image-favorite">
         <app-hobby-button class="tag favorite" [hobbyDTO]="this.profileDTO.favoriteHobby"></app-hobby-button>
@@ -32,14 +32,14 @@
     <p class="nickname">{{this.profileDTO.userDTO.username}}</p>
   </div>
 
-  <div *ngIf="isConnectedUser() else elseBlock">
+  <div *ngIf="isConnectedUser() else notConnected">
     <div class="buttons">
       <button class="tag" routerLink="add_hobby">Add an hobby</button>
       <button routerLink="modify_profile">Modify profile</button>
       <button class="button2" routerLink="">Disconnect</button>
     </div>
   </div>
-  <ng-template #elseBlock>
+  <ng-template #notConnected>
     <div class="buttons">
       <button (click)="onSendMessageClicked()" *ngIf="isFriend()">Send a message</button>
       <button (click)="addFriend()" *ngIf="!isFriend() else friendBlock">Add friend</button>

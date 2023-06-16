@@ -18,4 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if($_GET['type'] == "all_comments") {
         echo json_encode($commentRepository->getAllComments($_GET['postID']));
     }
+  if($_GET['type'] == "three_comments") {
+    echo json_encode($commentRepository->getThreeComments($_GET['postID']));
+  }
 }

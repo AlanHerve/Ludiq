@@ -1,35 +1,53 @@
-<div class="post" (click)="onPostClicked()">
-  <div class="user-profile" (click) = "onUserClicked()">
-    <div class="profile-info">
-      <img alt="Photo de profil" class="profile-image" src="../../../../assets/images/icons/user.png">
-      <div style = "display: flex">
-        <div class = "user-info" >
+<div class="post">
+  <div class="user-profile">
+    <div class="profile-info" (click)="onUserClicked()">
+      <img *ngIf="this.postDTO.userDTO.avatar else elseImage" [src]="this.loadImage(this.postDTO.userDTO.avatar)"
+           class="profile-image">
+      <ng-template #elseImage>
+        <img class="profile-image" src="assets/images/icons/user.png">
+      </ng-template>
+      <div style="display: flex" (click)="onUserClicked()">
+        <div class="user-info">
           <span class="username">{{postDTO.userDTO.name}}</span>
           <span class="nickname">{{postDTO.userDTO.username}}</span>
         </div>
-
       </div>
     </div>
-    <p class = "date" *ngIf="postDTO.modified === 1; else elseBlock">Modified - {{ postDTO.time | date:'dd/MM HH:mm' }}</p>
-    <ng-template #elseBlock>
-      <p class = "date">{{ postDTO.time | date:'dd/MM HH:mm' }}</p>
-    </ng-template>
+    <div (click)="onPostClicked()">
+      <p *ngIf="postDTO.modified === 1; else elseBlock" class="date">Modified
+        - {{ postDTO.time | date:'dd/MM HH:mm' }}</p>
+      <ng-template #elseBlock>
+        <p class="date">{{ postDTO.time | date:'dd/MM HH:mm' }}</p>
+      </ng-template>
+    </div>
+
   </div>
-  <div class="post-info" *ngIf="postDTO.hobbyDTO != null">
-    <app-hobby-button [hobbyDTO]="this.postDTO.hobbyDTO"></app-hobby-button>
-  </div>
-  <p class="post-content">{{ postDTO.description }}</p>
-  <div *ngFor="let image of postDTO.images">
-    <div *ngIf="image">
-      <img alt="{{image}}" class="post-image" [src]="loadImage(image)">
+  <div (click)="onPostClicked()">
+    <div *ngIf="postDTO.hobbyDTO != null" class="post-info">
+      <app-hobby-button [hobbyDTO]="this.postDTO.hobbyDTO"></app-hobby-button>
+    </div>
+    <p class="post-content">{{ postDTO.description }}</p>
+    <div class="images">
+      <div *ngFor="let image of postDTO.images">
+        <div *ngIf="image">
+          <img [src]="loadImage(image)" alt="{{image}}" class="post-image">
+        </div>
+      </div>
     </div>
   </div>
-  <br>
-  <img alt="Like image" class="interaction" [src]="isLiked ? '../../../../assets/images/icons/heart-liked.png' : '../../../../assets/images/icons/heart.png'" (click)="likePost()">
+  <img (click)="likePost()"
+       [src]="isLiked ? '../../../../assets/images/icons/heart-liked.png' : '../../../../assets/images/icons/heart.png'"
+       alt="Like image"
+       class="interaction">
   <span class="count">{{ postDTO.likes }}</span>
-  <img alt="Comment image" class="interaction" src="../../../../assets/images/icons/comment.png" (click)="onCommentClicked()">
+  <img (click)="onCommentClicked()" *ngIf="!this.detailedPost" alt="Comment image"
+       class="interaction" src="../../../../assets/images/icons/comment.png">
 </div>
-<div *ngIf="showCommentBox">
+<div *ngIf="showCommentBox && !this.detailedPost">
   <app-comment-list [commentsDTO]="commentsDTO"></app-comment-list>
   <app-new-comment [postDTO]="postDTO"></app-new-comment>
+</div>
+<div *ngIf="this.detailedPost">
+  <app-new-comment [postDTO]="postDTO"></app-new-comment>
+  <app-comment-list [commentsDTO]="commentsDTO"></app-comment-list>
 </div>

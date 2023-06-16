@@ -283,12 +283,12 @@ class ActivityRepository
         return 0;
     }
 
-    public function getNumActivitiesClassical($userId): int {
+    public function getNumActivitiesClassical($userId) {
         $stmt = $this->db->prepare("
             SELECT
                 COUNT(*)
             FROM
-                activity_participant par
+                activity_participants par
             WHERE
                 par.ID_USER = ?
             ;

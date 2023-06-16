@@ -1,4 +1,6 @@
-<div>
+
+<div class = "comments">
+  <p>Comments</p>
   <app-comment *ngFor="let comment of commentsDTO" [commentDTO]="comment"></app-comment>
   <div *ngIf = "commentsDTO.length == 0">
     <p class ="no-posts">There are no posts on this section.</p>

@@ -31,14 +31,6 @@ export class PostService {
     return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
   }
 
-  getImage(image: string): Observable<Blob> {
-    const options = {responseType: 'arraybuffer' as 'json'};
-    const params = new HttpParams().set('image_name', image);
-    return this.http.get<Blob>(`${apiUrl}/images.php`, {params, ...options}).pipe(
-      map(response => new Blob([response], {type: 'image/jpeg'}))
-    );
-  }
-
   likePost(postId: number): Observable<any> {
     const options = {'type': 'like', 'id_post': postId}
     return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
@@ -64,6 +56,13 @@ export class PostService {
   getAllComments(postID: number): Observable<CommentDTO[]> {
     const params = new HttpParams()
       .set('type', 'all_comments')
+      .set('postID', postID)
+    return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
+  }
+
+  getThreeComments(postID: number): Observable<CommentDTO[]> {
+    const params = new HttpParams()
+      .set('type', 'three_comments')
       .set('postID', postID)
     return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
   }
