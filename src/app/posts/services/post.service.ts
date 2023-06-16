@@ -65,7 +65,6 @@ export class PostService {
     const params = new HttpParams()
       .set('type', 'all_comments')
       .set('postID', postID)
-
     return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
   }
 
@@ -73,7 +72,6 @@ export class PostService {
     const params = new HttpParams()
       .set('type', 'find_post')
       .set('postID', postID)
-
     return this.http.get<PostDTO>(`${apiUrl}/post.php`, {params});
   }
 }

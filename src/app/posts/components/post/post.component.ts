@@ -1,10 +1,9 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { PostDTO } from "../../models/post-dto";
-import { Router } from "@angular/router";
-import { PostService } from "../../services/post.service";
+import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import {PostDTO} from "../../models/post-dto";
+import {Router} from "@angular/router";
+import {PostService} from "../../services/post.service";
 import {UserService} from "../../../services/user.service";
-import { CommentDTO } from "../../models/comment-dto";
-
+import {CommentDTO} from "../../models/comment-dto";
 
 
 @Component({
@@ -23,6 +22,7 @@ export class PostComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router, private postService: PostService) {
   }
+
   ngOnInit(): void {
     this.loadImages();
     this.getAllComments()
@@ -36,21 +36,6 @@ export class PostComponent implements OnInit {
     this.router.navigateByUrl(`/post/${this.postDTO.id}`)
   }
 
-  private getThreeComments(): void {
-
-  }
-
-  private getAllComments(): void {
-    this.postService.getAllComments(this.postDTO.id).subscribe({
-      next: (comments) => {
-        this.commentsDTO = comments;
-      },
-      error: (error) => {
-        console.log("Error while finding all comments of post : " + this.postDTO.id, ". Error : ", error)
-    }
-    })
-  }
-
   loadImages(): void {
     const images: File[] = [];
     for (const image of this.postDTO.images) {
@@ -58,7 +43,7 @@ export class PostComponent implements OnInit {
       this.postService.getImage(image).subscribe({
         next: (response: Blob) => {
           // @ts-ignore
-          const file = new File([response], image, { type: response.type });
+          const file = new File([response], image, {type: response.type});
           images.push(file);
         }
       });
@@ -72,7 +57,7 @@ export class PostComponent implements OnInit {
   }
 
   onUserClicked(): void {
-    this.router.navigateByUrl('profile/'+this.postDTO.userDTO.id);
+    this.router.navigateByUrl('profile/' + this.postDTO.userDTO.id);
   }
 
   likePost() {
@@ -91,5 +76,20 @@ export class PostComponent implements OnInit {
 
   onClose() {
 
+  }
+
+  private getThreeComments(): void {
+
+  }
+
+  private getAllComments(): void {
+    this.postService.getAllComments(this.postDTO.id).subscribe({
+      next: (comments) => {
+        this.commentsDTO = comments;
+      },
+      error: (error) => {
+        console.log("Error while finding all comments of post : " + this.postDTO.id, ". Error : ", error)
+      }
+    })
   }
 }

@@ -30,5 +30,6 @@
   <img alt="Comment image" class="interaction" src="../../../../assets/images/icons/comment.png" (click)="onCommentClicked()">
 </div>
 <div *ngIf="showCommentBox">
+  <app-comment-list [commentsDTO]="commentsDTO"></app-comment-list>
   <app-new-comment [postDTO]="postDTO"></app-new-comment>
 </div>
