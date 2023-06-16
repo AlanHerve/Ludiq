@@ -84,7 +84,7 @@ class HobbyRepository
                     , COUNT(*)
                 FROM
 	                  hobby_post hobp
-                      INNER JOIN 
+                      INNER JOIN
 	                      hobby hob on hob.ID_HOBBY = hobp.ID_HOBBY
                 GROUP BY
 	                  hobp.ID_HOBBY
@@ -112,9 +112,9 @@ class HobbyRepository
                         , COUNT(*)
                     FROM
 	                      hobby_post hobp
-                          INNER JOIN 
+                          INNER JOIN
 	                      hobby hob on hob.ID_HOBBY = hobp.ID_HOBBY
-                    
+
                     WHERE
                         hob.`ID_HOBBY` NOT IN (?, ?, ?)
                     GROUP BY
@@ -239,7 +239,7 @@ class HobbyRepository
                     WHERE
 	                    hob_p.ID_USER = ?
                     )
-                    ;       
+                    ;
         ");
         $stmt->bind_param("i", $id_user);
         $stmt->execute();
