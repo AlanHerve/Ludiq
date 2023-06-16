@@ -85,7 +85,7 @@ class HobbyRepository
                     , COUNT(*)
                 FROM
 	                  hobby_post hobp
-                      INNER JOIN 
+                      INNER JOIN
 	                      hobby hob on hob.ID_HOBBY = hobp.ID_HOBBY
                 GROUP BY
 	                  hobp.ID_HOBBY
@@ -113,9 +113,9 @@ class HobbyRepository
                         , COUNT(*)
                     FROM
 	                      hobby_post hobp
-                          INNER JOIN 
+                          INNER JOIN
 	                      hobby hob on hob.ID_HOBBY = hobp.ID_HOBBY
-                    
+
                     WHERE
                         hob.`ID_HOBBY` NOT IN (?, ?, ?)
                     GROUP BY
@@ -186,7 +186,8 @@ class HobbyRepository
         $stmt = $this->db->prepare(
             "SELECT
 	                    hobby_post.`ID_HOBBY`
-                        , hobby.`HOBBY_NAME`
+                      , hobby.`HOBBY_NAME`
+                      , hobby.`IMAGE`
                     FROM
 	                    hobby_post
                         INNER JOIN
@@ -201,7 +202,7 @@ class HobbyRepository
 
         if ($result) {
             if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) array_push($hobbies, new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], null));
+                while ($row = $result->fetch_assoc()) array_push($hobbies, new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], $row["IMAGE"]));
                 $response = $hobbies;
             } else {
                 $response = array(
@@ -215,7 +216,7 @@ class HobbyRepository
                 'message' => 'could not access table'
             );
         }
-        echo json_encode($response);
+        return $hobbies;
     }
 
     function fetchAvailableHobbiesOfUser($id)
@@ -240,7 +241,7 @@ class HobbyRepository
                     WHERE
 	                    hob_p.ID_USER = ?
                     )
-                    ;       
+                    ;
         ");
         $stmt->bind_param("i", $id_user);
         $stmt->execute();

@@ -15,6 +15,7 @@ export class ProfileDTO {
               public postsDTO: PostDTO[],
               public activitiesDTO: ActivityDTO[],
               public hobbiesPostDTO: HobbyFlashcardDTO[],
+              public hobbiesDTO: HobbyDTO[],
               public favoriteHobby: HobbyDTO) {
   }
 }

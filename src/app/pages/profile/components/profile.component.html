@@ -55,14 +55,15 @@
 
   <app-post-list *ngIf="type === 'posts'" [postsDTO]="profileDTO.postsDTO"></app-post-list>
 
-  <app-hobby-flashcard-list *ngIf="type === 'hobbies' && this.hobbyFlashcardsDTO[0]"
-                            [hobbyFlashcardsDTO]="this.hobbyFlashcardsDTO"></app-hobby-flashcard-list>
+  <app-hobby-flashcard-list *ngIf="type === 'hobbies' && this.loaded"
+                            [hobbyFlashcardsDTO]="this.profileDTO.hobbiesPostDTO" [hobbyDTOs]="this.profileDTO.hobbiesDTO"></app-hobby-flashcard-list>
 
 
 
   <app-activity-flashcard-list *ngIf="type === 'activities'" [activitiesDTO]="this.profileDTO.activitiesDTO"></app-activity-flashcard-list>
 
 </div>
+<p *ngIf="loaded">loaded</p>
 <app-navigation-bar></app-navigation-bar>
 <app-user-hobbies-list [id]="getID()"></app-user-hobbies-list>
 

@@ -26,7 +26,9 @@ export class ProfileComponent implements Image {
   activitiesDTO: ActivityDTO[] = []
 
   protected reward: string = "bronze";
-  hobbyFlashcardsDTO: HobbyFlashcardDTO[] = []
+  hobbyFlashcardsDTO: HobbyFlashcardDTO[] = [];
+
+  hobbyDTOs: HobbyDTO[] = [];
 
   protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
@@ -39,9 +41,12 @@ export class ProfileComponent implements Image {
     postsDTO: [],
     hobbiesPostDTO: [],
     activitiesDTO: [],
-    favoriteHobby: new HobbyDTO(-1, '', '')
+    favoriteHobby: new HobbyDTO(-1, '', ''),
+    hobbiesDTO: []
   }
   private friendship_status: string = "!friend";
+  loaded: boolean = false;
+
 
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,
@@ -64,6 +69,7 @@ export class ProfileComponent implements Image {
 
 
     this.getProfileInformation();
+    //this.getHobbiesFlashcardsOfUser();
     this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
         console.log(response);
@@ -120,11 +126,18 @@ export class ProfileComponent implements Image {
   getProfileInformation(): void {
     this.profileService.getProfileInformation(this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
+        console.log("Lionel");
+        console.log(response);
         this.profileDTO = response;
+
+        console.log("Hutz");
+        console.log(this.profileDTO.hobbiesDTO[0]);
+
         if (!this.profileDTO.userDTO) {
           this.router.navigateByUrl('/home');
         }
         this.determineReward();
+        this.loaded = true;
       },
       error: (error) => {
         console.log('error while accessing to profile informations : ', error);
@@ -151,12 +164,16 @@ export class ProfileComponent implements Image {
         for (let i = 0; i < response.length; i++) {
           console.log(this.hobbyFlashcardsDTO[i]);
         }
+
+
+
       },
       error: (error) => {
         // in case of failure
         console.error('Could not get flashcards', error);
       }
     });
+
 
   }
 

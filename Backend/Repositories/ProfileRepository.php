@@ -31,27 +31,29 @@ class ProfileRepository
         return self::$instance;
     }
 
-    public function getProfileInformation($id_user)
-    {
-        $numPosts = $this->postRepository->getNumPosts($id_user);
-        $numHobbies = $this->hobbyRepository->getNumHobbies($id_user);
-        $userDTO = $this->userRepository->findUserById($id_user);
-        $postsDTO = $this->postRepository->getUserPosts($id_user);
-        $numFriends = $this->friendRepository->getNumFriends($id_user);
-        $hobbiesDTO = $this->hobbyRepository->getHobbiesFlashcardsOfUser($id_user);
-        $activitiesDTO = $this->activityRepository->getUserActivities($id_user);
+  public function getProfileInformation($id_user)
+  {
+    $numPosts = $this->postRepository->getNumPosts($id_user);
+    $numHobbies = $this->hobbyRepository->getNumHobbies($id_user);
+    $userDTO = $this->userRepository->findUserById($id_user);
+    $postsDTO = $this->postRepository->getUserPosts($id_user);
+    $numFriends = $this->friendRepository->getNumFriends($id_user);
+    $activitiesDTO = $this->activityRepository->getUserActivities($id_user);
+    $favoriteHobby = $this->userRepository->getFavoriteHobby($id_user);
+    $hobbies = $this->hobbyRepository->fetchHobbiesOfUser($id_user);
+    $hobbiesPostDTO = $this->hobbyRepository->getHobbiesFlashcardsOfUser($id_user);
 
-        if($this->userRepository->isActivityDirector($id_user)) {
-            $activityDirector = true;
-            $numActivities = $this->activityRepository->getNumActivitiesDirector($id_user);
-        }
-        else {
-            $activityDirector = false;
-            $numActivities = $this->activityRepository->getNumActivitiesClassical($id_user);
-        }
-
-
-        return new ProfileDTO($userDTO, $numPosts, $numFriends, $numHobbies, $numActivities, $activityDirector, $postsDTO, $hobbiesDTO, $activitiesDTO);
+    if ($this->userRepository->isActivityDirector($id_user)) {
+      $activityDirector = true;
+      $numActivities = $this->activityRepository->getNumActivitiesDirector($id_user);
+    } else {
+      $activityDirector = false;
+      $numActivities = $this->activityRepository->getNumActivitiesClassical($id_user);
     }
+
+
+
+    return new ProfileDTO($userDTO, $numPosts, $numFriends, $numHobbies, $numActivities, $activityDirector, $postsDTO, $activitiesDTO, $favoriteHobby, $hobbies, $hobbiesPostDTO);
+  }
 
 }
