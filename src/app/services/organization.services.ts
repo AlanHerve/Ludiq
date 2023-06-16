@@ -1,7 +1,7 @@
 import {Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {apiUrl} from "./api-url";
+import {apiUrl} from "./urls";
 import {Injectable} from "@angular/core";
 import {OrganizationDTO} from "../models/organization-dto";
 

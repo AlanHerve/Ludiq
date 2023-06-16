@@ -3,7 +3,10 @@
 <div class="content">
   <div class="user">
     <div class="top-user-info">
-      <img alt="userImg" src="../../../../assets/images/icons/user.png">
+      <img *ngIf ="this.profileDTO.userDTO.avatar else elseBlock" [src]="this.loadImage(this.profileDTO.userDTO.avatar)">
+      <ng-template #elseBlock>
+        <img src="assets/images/icons/user.png">
+      </ng-template>
 
       <div class="user-info">
         <div class="text-container">

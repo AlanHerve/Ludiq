@@ -12,6 +12,8 @@ import {HobbyService} from "../../../services/hobby.service";
 import {CommunicationService} from "../../../services/communication.service";
 import {ActivityService} from "../../../posts/services/activity.service";
 import {TabService} from "../../../shared/service/tab.service";
+import {Image} from "../../../models/image";
+import {imagesUrl} from "../../../services/urls";
 
 
 @Component({
@@ -19,7 +21,7 @@ import {TabService} from "../../../shared/service/tab.service";
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css', '../../pages.css']
 })
-export class ProfileComponent {
+export class ProfileComponent implements Image {
 
   activitiesDTO: ActivityDTO[] = []
 
@@ -205,6 +207,10 @@ export class ProfileComponent {
         console.log("Error removing friend", error)
       }
     });
+  }
+
+  loadImage(image: string): string {
+    return imagesUrl + "/" + image;
   }
 
 

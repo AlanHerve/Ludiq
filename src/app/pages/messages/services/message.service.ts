@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {apiUrl} from "../../../services/api-url";
+import {apiUrl} from "../../../services/urls";
 import {MessageDTO} from "../models/message-dto";
 
 @Injectable({

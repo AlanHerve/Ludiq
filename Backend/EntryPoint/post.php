@@ -9,6 +9,7 @@ require_once "../DTOs/UserDTO.php";
 require_once "../DTOs/HobbyDTO.php";
 require_once "../Repositories/PostRepository.php";
 require_once "../Repositories/CommentRepository.php";
+require_once "../Repositories/ImageRepository.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = file_get_contents('php://input');
@@ -58,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 function newPost()
 {
-    $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
     if (isset($_POST['id_hobby']) && $_POST['id_hobby'] != -1) {
         $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
     } else {
@@ -70,7 +70,8 @@ function newPost()
 
     $images = $_FILES['images'];
 
-    $uploadedFiles = saveFiles($images);
+    $imageRepository = ImageRepository::getInstance();
+    $uploadedFiles = $imageRepository->saveImages($images);
 
     $postDTO = new PostDTO(null, $userDTO, $hobbyDTO, $description, $uploadedFiles);
 
@@ -78,25 +79,5 @@ function newPost()
     echo json_encode($postRepository->newPost($postDTO));
 }
 
-function saveFiles($images)
-{
-    $targetDir = '../assets/images/';
-
-    if (!isset($images)) return null;
-
-    $uploadedFiles = [];
-    for ($i = 0; $i < count($images['name']); $i++) {
-        $uniqueFilename = uniqid() . '_' . basename($images['name'][$i]);
-        $targetFilePath = $targetDir . $uniqueFilename;
-
-        if (move_uploaded_file($images['tmp_name'][$i], $targetFilePath)) {
-            $uploadedFiles[] = $uniqueFilename;
-            echo 'File downloaded successfully!\n';
-        } else {
-            echo 'Error while downloading file : ' . $images['tmp_name'][$i] . '\n';
-        }
-    }
-    return $uploadedFiles;
-}
 
 ?>

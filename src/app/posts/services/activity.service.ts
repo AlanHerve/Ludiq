@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {apiUrl} from "../../services/api-url";
+import {apiUrl} from "../../services/urls";
 import {ActivityDTO} from "../models/activity-dto";
 import {ActivityParticipantsDTO} from "../../pages/activity/models/activity-participants-dto";
 

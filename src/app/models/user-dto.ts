@@ -4,6 +4,7 @@ export class UserDTO {
               public username: string,
               public password?: string,
               public email?: string,
-              public token?: string) {
+              public token?: string,
+              public avatar?: string) {
   }
 }

@@ -20,8 +20,8 @@
   </div>
   <p class="post-content">{{ postDTO.description }}</p>
   <div *ngFor="let image of postDTO.images">
-    <div *ngIf="image && image.name != 'null'">
-      <img alt="{{image}}" class="post-image" [src]="getFileUrl(image)">
+    <div *ngIf="image">
+      <img alt="{{image}}" class="post-image" [src]="loadImage(image)">
     </div>
   </div>
   <br>
