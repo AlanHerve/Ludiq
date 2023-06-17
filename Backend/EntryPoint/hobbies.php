@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = file_get_contents('php://input');
     $data = json_decode($body, true);
 
-    
+
     if(isset($data['id_user']) && isset($data['id_hobby']) && isset($data['frequency']) && isset($data['advancement']) && isset($data['availability'])){
         $hobbyPostDTO = new HobbyPostDTO(null,$data['id_user'], $data['id_hobby'], null,$data['frequency'], $data['advancement'], $data['availability']);
     }else{
@@ -55,6 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case "destroyHobbyPost":
             $hobbyRepository->destroyHobbyPost($_GET["id_hobby_post"]);
             break;
+        case "getHobbyById":
+            echo $hobbyRepository->getHobbyById($_GET['id_hobby']);
+            break;
+
     }
 
 }elseif ($_SERVER["REQUEST_METHOD"] === "DELETE"){

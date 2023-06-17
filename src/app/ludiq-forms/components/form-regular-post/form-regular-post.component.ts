@@ -70,9 +70,9 @@ export class FormRegularPostComponent extends Form implements OnInit {
     const reader: FileReader = new FileReader();
 
     reader.onload = () => {
-      this.postDTO.images[this.index] = file.name;
-      this.imagesData[this.index] = file;
-      if (this.index < this.postDTO.images.length) {
+      if (this.index < 4) {
+        this.postDTO.images[this.index] = file.name;
+        this.imagesData[this.index] = file;
         const labelElement = document.querySelectorAll('.file-input-label')[this.index];
         labelElement?.classList.add('selected');
         this.index++;
@@ -83,23 +83,19 @@ export class FormRegularPostComponent extends Form implements OnInit {
   }
 
   onRemoveImage(image: string) {
-    // @ts-ignore
-    const index = this.postDTO.images.findIndex(img => img?.name === image);
+    const index = this.postDTO.images.findIndex(img => img === image);
     if (index !== -1) {
-      this.postDTO.images[index] = null;
-      this.imagesData[index] = null;
+      this.postDTO.images.splice(index, 1);
+      this.imagesData.splice(index, 1);
       this.index--;
     }
 
-    for (let i = index; i < this.postDTO.images.length; i++) {
-      if (i === this.postDTO.images.length - 1) {
-        this.postDTO.images[3] = null;
-        this.imagesData[3] = null;
-      } else {
-        this.postDTO.images[i] = this.postDTO.images[i + 1];
-        this.imagesData[i] = this.imagesData[i + 1];
-      }
+    // Réinitialiser les valeurs vides à la fin de la liste
+    if (this.postDTO.images.length < 4) {
+      this.postDTO.images.push(null);
+      this.imagesData.push(null);
     }
+
     console.log(this.postDTO.images);
   }
 
@@ -128,6 +124,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     formData.append('user_name', this.postDTO.userDTO.name);
     formData.append('user_username', this.postDTO.userDTO.username);
     formData.append('description', this.postDTO.description);
+
     for (let i = 0; i < this.imagesData.length; i++) {
       const file = this.imagesData[i];
       // @ts-ignore

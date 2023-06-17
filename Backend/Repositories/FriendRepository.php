@@ -69,6 +69,8 @@ class FriendRepository
                 friends fri
             WHERE
                 fri.ID_USER = ?
+            AND
+                fri.WAITING = 0
             ;
         ");
         $stmt->bind_param("i", $id_user);

@@ -81,3 +81,27 @@ img {
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
+.delete {
+  bottom: 20px;
+  right: 15px;
+  font-family: Arial, sans-serif;
+  color: #9B9B9B;
+  font-size: 50px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  transition: color 0.2s ease-out;
+}
+
+.delete:hover {
+  color: #333333;
+}
+
+.top-post-information {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+
+}

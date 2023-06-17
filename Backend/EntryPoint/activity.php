@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }else{
       if (isset($data['modified'])) {
         $modified = $data['modified'];
+
       }
 
       if (isset($_POST['id_user']) && isset($_POST['id_hobby']) && isset($_POST['advancement']) && isset($_POST['description']) && isset($_POST['time']) && isset($_POST['max_registration']) && isset($_POST['title'])) {

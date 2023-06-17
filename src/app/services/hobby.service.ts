@@ -16,7 +16,7 @@ export class HobbyService {
 
   newPost!: HobbyFlashcardDTO;
 
-  private messageSource = new Subject<string>();
+  private messageSource = new Subject<number>();
   currentMessage = this.messageSource.asObservable();
 
   private needDelete = new Subject<number>();
@@ -92,6 +92,18 @@ export class HobbyService {
     return this.newPost;
   }
 
+  getHobbyById(id_hobby: number): Observable<HobbyDTO> {
+    const params = new HttpParams()
+      .set('function_to_call', "getHobbyById")
+      .set('id_hobby', id_hobby);
+
+    return this.http.get<HobbyDTO>(`${apiUrl}/hobbies.php`, {params}).pipe(
+      map(response => {
+        return response;
+      })
+    );
+  }
+
   getHobbyUsers(id_hobby: number): Observable<UserDTO[]> {
     const params = new HttpParams()
       .set('function_to_call', "hobby_users")
@@ -116,7 +128,7 @@ export class HobbyService {
       map(response => {
         this.newPost = response.hobby;
         console.log(response);
-        this.messageSource.next("a");
+        this.messageSource.next(hobbyPostDTO.id_hobby);
         return response;
       })
     );
@@ -128,5 +140,6 @@ export class HobbyService {
       .set('id_hobby', hobbyId);
     return this.http.get<HobbyDTO>(`${apiUrl}/hobbies.php`, {params});
   }
+
 
 }

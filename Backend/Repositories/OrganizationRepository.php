@@ -49,7 +49,7 @@ class OrganizationRepository
         echo json_encode($response);
     }
 
-    public function getOrganzationById($id_organization){
+    public function findOrganizationById($id_organization){
 
         $response = null;
 
@@ -67,26 +67,10 @@ class OrganizationRepository
         if($result){
             if($result->num_rows == 1){
                 $row = $result->fetch_assoc();
-                $organization = new OrganizationDTO($row["ID_ORGANIZATION"], $row["NAME_ORGANIZATION"], $row["AVATAR"], $row["DESCRIPTION"]);
-                $response = array(
-                    'success'      => 'true',
-                    'organization' => $organization
-                );
-            }else{
-                $response = array(
-                    'success' => true,
-                    'message' => 'no organization with this id'
-                );
+                return new OrganizationDTO($row["ID_ORGANIZATION"], $row["NAME_ORGANIZATION"], $row["AVATAR"], $row["DESCRIPTION"]);
             }
-        }else{
-            $response = array(
-                'success' => true,
-                'message' => 'could not access bdd info : getOrganizationById'
-            );
         }
-
-
-        echo json_encode($response);
+        return null;
     }
 
 }

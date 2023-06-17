@@ -31,13 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case 'unlike':
       echo json_encode($postRepository->unlikePost($data['id_user'], $postId));
       break;
-
+    case 'deletePost':
+      echo $postRepository->deletePost($postId);
   }
 
-  if (isset($_POST['new_post'])) {
-    newPost();
-    return;
-  }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
   $id = $id_user = $id_hobby = $description = $images = $modified = $likes = $time = $mode = null;

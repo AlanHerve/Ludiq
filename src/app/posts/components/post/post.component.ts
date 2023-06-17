@@ -143,4 +143,21 @@ export class PostComponent implements OnInit, Image {
       }
     })
   }
+
+  isOwner(): boolean {
+    const user = JSON.parse(localStorage.getItem('currentUser')!).id;
+    return user == this.postDTO.userDTO.id;
+  }
+
+  onDelete(): void {
+    console.log("attempting delete");
+    this.postService.deletePost(this.postDTO.id).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.error("could not delete post", error);
+      }
+    });
+  }
 }

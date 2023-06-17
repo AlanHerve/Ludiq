@@ -449,5 +449,31 @@ class HobbyRepository
 
     }
 
+    public function getHobbyById($id_hobby)
+    {
+      $stmt = $this->db->prepare("
+        SELECT
+          *
+         FROM
+             hobby hob
+        WHERE
+            hob.ID_HOBBY = ?
+      ");
+      $stmt->bind_param("i", $id_hobby);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      if($result){
+
+        $row = $result->fetch_assoc();
+
+        return json_encode(new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], $row["IMAGE"]));
+
+      }else{
+        return json_encode($stmt->error);
+      }
+
+    }
+
 
 }

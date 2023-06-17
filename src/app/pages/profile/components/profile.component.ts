@@ -57,12 +57,46 @@ export class ProfileComponent implements Image {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.userService.findUserById(parseInt(params['id'])).subscribe({
-        next: (user) => {
-          this.profileDTO.userDTO = user;
-          if (!this.profileDTO.userDTO) {
-            this.router.navigateByUrl('/home');
-            return;
+        this.userService.findUserById(parseInt(params['id'])).subscribe({
+          next: (user) => {
+            this.profileDTO.userDTO = user;
+            if(!this.profileDTO.userDTO){
+              this.router.navigateByUrl('/home');
+              return;
+            }
+            this.getProfileInformation();
+
+            this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
+              next: (response) => {
+                console.log(response);
+                this.friendship_status = response;
+              },
+              error: (error) => {
+                console.log("Error while finding if the user is friend with another", error)
+              }
+            });
+
+
+            this.hobbyService.currentMessage.subscribe({
+              next: (response) => {
+               this.profileDTO.numHobbies++;
+              }
+            });
+
+            this.hobbyService.currentDeleteState.subscribe({
+              next: (response) => {
+                this.profileDTO.numHobbies--;
+              }
+            });
+
+            this.hobbyService.currentDeleteState.subscribe((data) => {
+              console.log("returned Data :" + data);
+              this.hobbyFlashcardsDTO.splice(this.findHobbyDTOWithData(data), 1);
+              this
+            });
+          },
+          error: (error) => {
+            console.log("Error while finding user : ", error)
           }
           this.getProfileInformation();
 
@@ -202,4 +236,4 @@ export class ProfileComponent implements Image {
   }
 
 
-}
+

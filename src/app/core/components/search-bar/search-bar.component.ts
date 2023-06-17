@@ -181,7 +181,7 @@ export class SearchBarComponent implements OnInit {
         if(!response) return;
         response.forEach((activity) => {
           const activityDTO = new ActivityDTO(activity.id, activity.userDTO, activity.hobbyDTO, activity.title, activity.advancement,
-                      activity.description, activity.date_post, activity.time, activity.current_registered, activity.max_registrations, activity.images, -1, "")
+                      activity.description, activity.date_post, activity.time, activity.current_registered, activity.max_registrations, activity.images, -1, activity.organizationDTO)
           if (activityDTO.id) {
             const existingActivity = this.searchResults.find(result => result instanceof ActivityDTO && result.id === activityDTO.id);
             if (!existingActivity) {

@@ -12,6 +12,7 @@ import {UserService} from "../../../../services/user.service";
 import {Form} from "../../../models/form";
 import {FriendService} from "../../../../pages/messages/services/friend.service";
 import {HobbyFlashcardDTO} from "../../../../models/hobby-flashcard-dto";
+import {OrganizationDTO} from "../../../../models/organization-dto";
 
 
 @Component({
@@ -51,7 +52,7 @@ export class FormActivityComponent extends Form implements OnInit {
     images: [],
     title: '',
     id_organization: -1,
-    name_organization: ''
+    organizationDTO: new OrganizationDTO(-1, '', '', '', [])
   }
 
   hobbyPostDTO: HobbyFlashcardDTO = {
@@ -90,8 +91,8 @@ export class FormActivityComponent extends Form implements OnInit {
   ngOnInit(): void {
     console.log(JSON.parse(localStorage.getItem('currentUser')!).token);
 
-    this.activityDTO.name_organization = this.activityService.getOrganizationName(JSON.parse(localStorage.getItem('currentUser')!).token);
-    console.log(this.activityDTO.name_organization);
+    this.activityDTO.organizationDTO.name_organization = this.activityService.getOrganizationName(JSON.parse(localStorage.getItem('currentUser')!).token);
+    console.log(this.activityDTO.organizationDTO.name_organization);
 
     this.activityDTO.id_organization = this.activityService.getOrganizationID(JSON.parse(localStorage.getItem('currentUser')!).token);
 
@@ -117,24 +118,6 @@ export class FormActivityComponent extends Form implements OnInit {
   }
 
 
-  /*
-
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    const reader: FileReader = new FileReader();
-
-    reader.onload = () => {
-      this.activityDTO.images[this.index] = file.name;
-      if (this.index < this.activityDTO.images.length) {
-        const labelElement = document.querySelectorAll('.file-input-label')[this.index];
-        labelElement?.classList.add('selected');
-        this.index++;
-      }
-    };
-
-    reader.readAsDataURL(file);
-  }*/
-
   getUserHobbies(){
     this.hobbyService.getHobbiesOfUser(this.activityDTO.hobbyDTO.id).subscribe({
       next: (response) => {
@@ -147,32 +130,6 @@ export class FormActivityComponent extends Form implements OnInit {
     });
   }
 
-  /*onRemoveImage(image: string) {
-    const index = this.activityDTO.images.findIndex(img => img === image);
-    if (index !== -1) {
-      this.activityDTO.images[index] = null;
-      this.index--;
-    }*/
-/*
-    for (let i = index; i < this.activityDTO.images.length; i++) {
-      if (i === this.activityDTO.images.length - 1) {
-        this.activityDTO.images[3] = null;
-      } else {
-        this.activityDTO.images[i] = this.activityDTO.images[i + 1];
-      }
-    }
-    console.log(this.activityDTO.images);
-  }
-*/
-    /**
-   * Method that returns the previous route of the current url
-   * @private
-   */
-  /*private getPreviousRoute(): string {
-    const currentUrl = this.location.path();
-
-    return currentUrl.slice(0, currentUrl.lastIndexOf('/'));
-  }*/
 
   newActivityPost() {
     const formData = new FormData();

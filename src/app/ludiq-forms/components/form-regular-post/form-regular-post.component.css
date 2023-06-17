@@ -1,16 +1,31 @@
+.background-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
 
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
 .selection {
-  float: left;
-  width:40%;
+  width: 70%;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .file-input-label {
   position: relative;
   display: inline-block;
   overflow: hidden;
-  float: left;
-  margin: 5px 5px 5px 20px;
+  margin: 5px;
 }
 
 .file-input-label span {
@@ -39,19 +54,27 @@
   color: #7421C2;
 }
 
-.files {
+.hobby-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .file-container {
   display: flex;
+  align-items: center;
+  margin-right: 10px;
 }
 
 .cross-file {
-  margin-left: 20px;
+  margin-left: 10px;
   font-size: 22px;
   cursor: pointer;
+}
+
+.file-input-text {
+  margin: 10px;
+  align-self: center;
 }
 
 .file-input-label.disabled span {
@@ -60,7 +83,6 @@
   color: rgba(255, 255, 255, 0.7);
   cursor: not-allowed;
 }
-
 
 textarea {
   border: #9B9B9B solid 1px;
@@ -71,15 +93,13 @@ textarea {
   overflow-wrap: break-word;
   resize: none;
   height: 70px !important;
-  width:-webkit-fill-available;
-  margin: 10px 20px;
+  width: 70%;
+  margin: 10px 0;
 }
 
-
 button {
-  float: right;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  align-self: flex-end;
+  margin-top: 10px;
 }
 
 .file-name {
