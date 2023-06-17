@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 17 juin 2023 à 11:55
+-- Généré le : sam. 17 juin 2023 à 12:11
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -45,10 +45,7 @@ CREATE TABLE `activity` (
 --
 
 INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVANCEMENT`, `DESCRIPTION`, `DATE_POST`, `DATE_ACTIVITY`, `MAX_REGISTRATIONS`, `IMAGE`, `TITLE`) VALUES
-(1, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 10, NULL, 'Activity'),
-(2, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 10, NULL, 'Activity'),
 (3, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 10, NULL, 'Activity'),
-(4, 2, 3, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 10, NULL, 'Activity'),
 (5, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 10, NULL, 'Activity'),
 (6, 3, 1, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 10, NULL, 'Activity'),
 (7, 3, 7, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 10, NULL, 'Activity'),
@@ -86,13 +83,6 @@ CREATE TABLE `activity_participants` (
   `ID_USER` int(11) DEFAULT NULL,
   `ID_ACTIVITY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `activity_participants`
---
-
-INSERT INTO `activity_participants` (`ID_ACTIVITY_PARTICIPANTS`, `ID_USER`, `ID_ACTIVITY`) VALUES
-(1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -522,7 +512,7 @@ ALTER TABLE `activity_director`
 --
 ALTER TABLE `activity_participants`
   ADD CONSTRAINT `activity_participants_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`),
-  ADD CONSTRAINT `activity_participants_ibfk_2` FOREIGN KEY (`ID_ACTIVITY`) REFERENCES `activity` (`ID_ACTIVITY`);
+  ADD CONSTRAINT `activity_participants_ibfk_2` FOREIGN KEY (`ID_ACTIVITY`) REFERENCES `activity` (`ID_ACTIVITY`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `comment`

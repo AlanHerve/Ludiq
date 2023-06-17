@@ -335,7 +335,7 @@ class ActivityRepository
     return 0;
   }
 
-  public function deleteActivity(mixed $activityId)
+  public function deleteActivity($activityId)
   {
     $stmt = $this->db->prepare("
         DELETE FROM
@@ -343,7 +343,6 @@ class ActivityRepository
         WHERE
             activity.ID_ACTIVITY = ?
         ");
-
     $stmt->bind_param("i", $activityId);
     $stmt->execute();
     if ($stmt->affected_rows > 0) return "success";
