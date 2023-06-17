@@ -1,6 +1,8 @@
 <div class="message-container">
   <div [ngClass]="{'sender2': onVerifySender()}" class = "message-info">
-    <p *ngIf="onVerifySender()" class="date">{{messageDTO.time | date:'dd/MM HH:mm'}}</p>
+    <p *ngIf="onVerifySender() && isDate()" class="date">{{messageDTO.time | date:'dd/MM HH:mm'}}</p>
+    <p *ngIf="onVerifySender() && !isDate()" class="date">Now</p>
+    <img *ngIf="isOwner()" class="delete" (click)="onDelete()" src = "assets/images/icons/delete.png">
     <p [ngClass]="{'sender': onVerifySender()}" class = "message">{{messageDTO.content}}</p>
     <p *ngIf="!onVerifySender()" class="date">{{messageDTO.time | date:'dd/MM HH:mm'}}</p>
   </div>

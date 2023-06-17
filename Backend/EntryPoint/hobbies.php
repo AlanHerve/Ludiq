@@ -12,17 +12,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = file_get_contents('php://input');
     $data = json_decode($body, true);
 
+  $hobbyRepository = HobbyRepository::getInstance();
 
-    if(isset($data['id_user']) && isset($data['id_hobby']) && isset($data['frequency']) && isset($data['advancement']) && isset($data['availability'])){
-        $hobbyPostDTO = new HobbyPostDTO(null,$data['id_user'], $data['id_hobby'], null,$data['frequency'], $data['advancement'], $data['availability']);
-    }else{
+    if($data['type'] == "newHobbyPost"){
+      if(isset($data['hobbyPostDTO']['id_user']) && isset($data['hobbyPostDTO']['id_hobby']) && isset($data['hobbyPostDTO']['frequency']) && isset($data['hobbyPostDTO']['advancement']) && isset($data['hobbyPostDTO']['availability'])){
+        $hobbyPostDTO = new HobbyPostDTO(null,$data['hobbyPostDTO']['id_user'], $data['hobbyPostDTO']['id_hobby'], null,$data['hobbyPostDTO']['frequency'], $data['hobbyPostDTO']['advancement'], $data['hobbyPostDTO']['availability']);
+      }else{
         echo json_encode(array('success' => false, 'message'=>'parameters not found') );
         exit(0);
+      }
+
+
+
+      echo $hobbyRepository->newHobbyPost($hobbyPostDTO);
+    }elseif($data['type'] == "setFavoriteHobby"){
+
+      echo $hobbyRepository->setFavoriteHobby($data['hobbyDTO'] , $data['id_user']);
     }
 
-    $hobbyRepository = HobbyRepository::getInstance();
 
-    echo $hobbyRepository->newHobbyPost($hobbyPostDTO);
+
 
 
 } elseif ($_SERVER["REQUEST_METHOD"] === 'GET') {

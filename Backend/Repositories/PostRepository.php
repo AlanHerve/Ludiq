@@ -43,9 +43,10 @@ class PostRepository
     $stmt->bind_param("iisssss", $id_user, $id_hobby, $description, $images[0], $images[1], $images[2], $images[3]);
 
     $stmt->execute();
-
+//TODO
     if ($stmt->affected_rows > 0) {
-      return true;
+      $inserted = $stmt->insert_id;
+      return $this->findPostById($inserted);
     } else {
       return false;
     }

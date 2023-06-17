@@ -17,7 +17,6 @@ export class Form {
   onClose(): void {
     // Coming back to the previous section
     if (this.previousRoute) {
-      console.log("navigate to : ", this.previousRoute)
       this.router.navigateByUrl(this.previousRoute);
     }
   }

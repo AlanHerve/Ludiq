@@ -475,5 +475,41 @@ class HobbyRepository
 
     }
 
+    public function setFavoriteHobby(mixed $id, mixed $id_user)
+    {
+
+
+      $stmt = $this->db->prepare("
+        DELETE FROM
+            favorite_hobby
+        WHERE
+            ID_USER = ?
+
+      ");
+      $stmt->bind_param("i", $id_user);
+      $stmt->execute();
+
+      if($stmt->error == null){
+
+
+        $stmt = $this->db->prepare("
+        INSERT INTO
+            favorite_hobby
+            (ID_USER, ID_HOBBY)
+        VALUES
+            (?, ?)
+        ");
+        $stmt->bind_param("ii", $id_user, $id);
+        $stmt->execute();
+
+        if($stmt->affected_rows == 1){
+          return json_encode($this->findHobbyById($id));
+        }
+
+
+      }
+
+    }
+
 
 }

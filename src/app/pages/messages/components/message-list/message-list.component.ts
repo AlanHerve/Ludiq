@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/cor
 import { MessageDTO } from "../../models/message-dto";
 import { MessageService } from "../../services/message.service";
 
+
 @Component({
   selector: 'app-message-list',
   templateUrl: './message-list.component.html',
@@ -15,7 +16,34 @@ export class MessageListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.messageService.currentNeedToAddMessage.subscribe({
+      next: (response) => {
+        this.messagesDTO.push(response);
+      }
+    });
+
+    this.messageService.currentNeedToDeleteMessage.subscribe({
+      next: (response) => {
+        const index_to_remove = this.findMessageIndexByID(response);
+        if(index_to_remove!=-1){
+          this.messagesDTO.splice(index_to_remove, 1);
+        }
+      }
+    })
     this.loadMessages();
+  }
+
+  findMessageIndexByID(id:number) :number{
+    let i = 0;
+    while (this.messagesDTO[i].id != id){
+      i++;
+      if(i == this.messagesDTO.length){
+        i = -1;
+        break;
+      }
+    }
+
+    return i;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

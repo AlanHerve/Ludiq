@@ -19,6 +19,12 @@ export class PostListComponent implements OnInit {
         }
       }
     });
+
+    this.postsService.currentneedAddPost.subscribe({
+      next: (response) => {
+        this.postsDTO.push(response);
+      }
+    })
   }
 
   ngOnInit(): void {

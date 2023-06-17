@@ -110,8 +110,6 @@ class CommentRepository
                 comment com
             WHERE
                 com.ID_REGULAR_POST = ?
-            ORDER BY
-                com.TIME
             DESC
             LIMIT 3
             ;

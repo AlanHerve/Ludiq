@@ -20,11 +20,20 @@ export class PostService {
   private needAddComment = new Subject<CommentDTO>();
   currentneedAddComment = this.needAddComment.asObservable();
 
+
+  private needAddPost = new Subject<PostDTO>();
+  currentneedAddPost = this.needAddPost.asObservable();
+
   constructor(private http: HttpClient) {
   }
 
-  newPost(formData: FormData): Observable<boolean> {
-    return this.http.post<boolean>(`${apiUrl}/post.php`, formData);
+  newPost(formData: FormData): Observable<PostDTO> {
+    return this.http.post<PostDTO>(`${apiUrl}/post.php`, formData).pipe(
+      map(response => {
+        this.needAddPost.next(response);
+        return response;
+      })
+    );
   }
 
   getAllPosts(): Observable<PostDTO[]> {

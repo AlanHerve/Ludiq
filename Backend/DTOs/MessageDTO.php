@@ -11,4 +11,8 @@ class MessageDTO
         $this->content = $content;
         $this->time = $time;
     }
+
+    public function insertIDMessage($id){
+      $this->id = $id;
+    }
 }

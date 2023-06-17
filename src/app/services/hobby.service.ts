@@ -21,6 +21,10 @@ export class HobbyService {
 
   private needDelete = new Subject<number>();
   currentDeleteState = this.needDelete.asObservable();
+
+  private needChangeFavorite = new Subject<HobbyDTO>();
+  currentNeedChangeFavorite = this.needChangeFavorite.asObservable();
+
   constructor(private http: HttpClient) {}
 
   getAllHobbies(): Observable<{hobbies: HobbyDTO[]}> {
@@ -120,7 +124,11 @@ export class HobbyService {
   }
 
   newHobbyPost(hobbyPostDTO: HobbyFlashcardDTO): Observable<{hobby: HobbyFlashcardDTO}> {
-    return this.http.post<{hobby: HobbyFlashcardDTO}>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+    const params =  {
+      type: 'newHobbyPost',
+      hobbyPostDTO: hobbyPostDTO
+    }
+    return this.http.post<{hobby: HobbyFlashcardDTO}>(`${apiUrl}/hobbies.php`, params).pipe(
       map(response => {
 
         console.log(response);
@@ -138,4 +146,20 @@ export class HobbyService {
   }
 
 
+  setFavoriteHobby(hobbyDTO: number, id_user: number): Observable<HobbyDTO> {
+    const params = {
+      type: "setFavoriteHobby",
+      hobbyDTO: hobbyDTO,
+      id_user: id_user
+    };
+    console.log("logging");
+    console.log(params.hobbyDTO);
+    console.log("logged");
+    return this.http.post<HobbyDTO>(`${apiUrl}/hobbies.php`, params).pipe(
+      map(response => {
+        this.needChangeFavorite.next(response);
+        return response;
+      })
+    );
+  }
 }

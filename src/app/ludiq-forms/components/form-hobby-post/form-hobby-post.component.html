@@ -1,4 +1,3 @@
-
 <div class = "background-form">
 <form [@fadeIn]="true" (ngSubmit)="submitted()">
   <span (click)="onClose()" class="cross">&times;</span>
@@ -11,7 +10,7 @@
 
     <p>Level</p>
     <select id="advancement" name="advancement" [(ngModel)]="this.hobbyPostDTO.advancement">
-      <option *ngFor="let advancement of advancement_options; let i = index" [value]="advancement">{{advancement}}</option>
+      <option *ngFor="let advancement of advancement_options" [value]="advancement">{{advancement}}</option>
     </select>
 
     <p>Frequency</p>
@@ -26,5 +25,4 @@
     </select>
     <button class = "submit" type="submit">Submit</button>
   </form>
-
 </div>

@@ -64,3 +64,20 @@ div.message-info {
   align-self: flex-start;
   background-color: #F4F2F5;
 }
+
+.delete {
+  bottom: 20px;
+  right: 15px;
+
+  font-family: Arial, sans-serif;
+  color: #9B9B9B;
+  font-size: 50px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  transition: color 0.2s ease-out;
+}
+
+.delete:hover {
+  color: #333333;
+}

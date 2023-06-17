@@ -79,6 +79,12 @@ export class ProfileComponent implements Image {
               }
             });
 
+            this.hobbyService.currentNeedChangeFavorite.subscribe({
+              next: (response) => {
+                this.profileDTO.favoriteHobby = response;
+              }
+            });
+
 
             this.hobbyService.currentNeedToAddHobby.subscribe({
               next: (response) => {
