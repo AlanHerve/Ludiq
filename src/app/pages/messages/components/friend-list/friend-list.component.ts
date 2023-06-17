@@ -25,7 +25,7 @@ export class FriendListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let user = JSON.parse(localStorage.getItem('currentUser')!).id;
+    const user = JSON.parse(localStorage.getItem('currentUser')!).id;
     this.friendsService.getAllFriends(user).subscribe({
       next: (response: FriendRequestDTO[]) => {
         console.log('success searching all friends :', response);
