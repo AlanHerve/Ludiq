@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 16 juin 2023 à 16:09
+-- Généré le : sam. 17 juin 2023 à 11:17
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -35,7 +35,6 @@ CREATE TABLE `activity` (
   `DESCRIPTION` text DEFAULT NULL,
   `DATE_POST` timestamp NULL DEFAULT current_timestamp(),
   `DATE_ACTIVITY` date DEFAULT NULL,
-  `CURRENT_REGISTERED` int(4) DEFAULT 1,
   `MAX_REGISTRATIONS` int(4) NOT NULL DEFAULT 10,
   `IMAGE` varchar(200) DEFAULT NULL,
   `TITLE` varchar(64) DEFAULT 'Activity'
@@ -45,17 +44,17 @@ CREATE TABLE `activity` (
 -- Déchargement des données de la table `activity`
 --
 
-INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVANCEMENT`, `DESCRIPTION`, `DATE_POST`, `DATE_ACTIVITY`, `CURRENT_REGISTERED`, `MAX_REGISTRATIONS`, `IMAGE`, `TITLE`) VALUES
-(1, 2, 1, 'Beginner', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id leo vitae eros elementum facilisis. Mauris ac eros a odio semper malesuada.', '2023-05-27 14:27:54', '2023-06-21', 1, 10, NULL, 'Activity'),
-(2, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', '2023-06-23', 1, 10, NULL, 'Activity'),
-(3, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', '2023-06-29', 1, 10, NULL, 'Activity'),
-(4, 2, 3, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL, 'Activity'),
-(5, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL, 'Activity'),
-(6, 3, 1, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL, 'Activity'),
-(7, 3, 7, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL, 'Activity'),
-(8, 3, 9, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL, 'Activity'),
-(9, 3, 8, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL, 'Activity'),
-(10, 3, 1, 'Beginner', NULL, '2023-05-27 14:29:09', NULL, 1, 10, NULL, 'Activity');
+INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVANCEMENT`, `DESCRIPTION`, `DATE_POST`, `DATE_ACTIVITY`, `MAX_REGISTRATIONS`, `IMAGE`, `TITLE`) VALUES
+(1, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 10, NULL, 'Activity'),
+(2, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 10, NULL, 'Activity'),
+(3, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 10, NULL, 'Activity'),
+(4, 2, 3, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 10, NULL, 'Activity'),
+(5, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 10, NULL, 'Activity'),
+(6, 3, 1, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 10, NULL, 'Activity'),
+(7, 3, 7, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 10, NULL, 'Activity'),
+(8, 3, 9, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 10, NULL, 'Activity'),
+(9, 3, 8, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 10, NULL, 'Activity'),
+(10, 3, 1, 'Beginner', NULL, '2023-05-27 14:29:09', NULL, 10, NULL, 'Activity');
 
 -- --------------------------------------------------------
 
@@ -84,8 +83,8 @@ INSERT INTO `activity_director` (`ID_USER`, `ID_ORGANIZATION`) VALUES
 
 CREATE TABLE `activity_participants` (
   `ID_ACTIVITY_PARTICIPANTS` int(11) NOT NULL,
-  `ID_ACTIVITY` int(11) DEFAULT NULL,
-  `ID_USER` int(11) DEFAULT NULL
+  `ID_USER` int(11) DEFAULT NULL,
+  `ID_ACTIVITY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -102,12 +101,24 @@ CREATE TABLE `comment` (
   `TIME` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+-- --------------------------------------------------------
+
 --
--- Déchargement des données de la table `comment`
+-- Structure de la table `favorite_hobby`
 --
 
-INSERT INTO `comment` (`ID_COMMENT`, `ID_USER`, `CONTENT`, `ID_REGULAR_POST`, `TIME`) VALUES
-(1, 3, 'yo', 1, '2023-06-13 15:46:48');
+CREATE TABLE `favorite_hobby` (
+  `ID_FAVORITE_HOBBY` int(11) NOT NULL,
+  `ID_USER` int(11) DEFAULT NULL,
+  `ID_HOBBY` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `favorite_hobby`
+--
+
+INSERT INTO `favorite_hobby` (`ID_FAVORITE_HOBBY`, `ID_USER`, `ID_HOBBY`) VALUES
+(1, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -126,8 +137,6 @@ CREATE TABLE `friends` (
 --
 
 INSERT INTO `friends` (`ID_USER`, `ID_USER_2`, `WAITING`) VALUES
-(2, 3, 0),
-(2, 5, 1),
 (2, 3, 1),
 (4, 5, 1),
 (2, 5, 1);
@@ -189,17 +198,14 @@ CREATE TABLE `hobby_post` (
 --
 
 INSERT INTO `hobby_post` (`ID_HOBBY_POST`, `ID_HOBBY`, `ID_USER`, `EXPERIENCE`, `FREQUENCY`, `AVAILABLE`) VALUES
-(1, 1, 2, 'Expert', 'Daily', 1),
+(2, 1, 3, 'Advanced', '2-3/week', 0),
 (3, 1, 4, 'Advanced', 'Weekly', 1),
 (4, 9, 4, 'Expert', 'Monthly', 1),
 (6, 16, 2, 'Expert', '2-3/week', 0),
-(8, 2, 2, 'Beginner', 'Daily', 0),
-(26, 3, 2, 'Beginner', 'Daily', 1),
-(27, 9, 2, 'Beginner', 'Daily', 1),
-(28, 4, 2, 'Beginner', 'Daily', 1),
-(29, 1, 5, 'Beginner', 'Daily', 1),
-(30, 2, 5, 'Beginner', 'Daily', 0),
-(31, 3, 3, 'Advanced', 'Rarely', 0);
+(29, 1, 2, 'Beginner', 'Daily', 1),
+(30, 2, 2, 'Beginner', 'Daily', 1),
+(31, 3, 2, 'Beginner', 'Daily', 1),
+(33, 5, 2, 'Beginner', 'Daily', 1);
 
 -- --------------------------------------------------------
 
@@ -265,7 +271,7 @@ CREATE TABLE `regular_post` (
 --
 
 INSERT INTO `regular_post` (`ID_REGULAR_POST`, `ID_USER`, `ID_HOBBY`, `DESCRIPTION`, `IMAGE1`, `IMAGE2`, `IMAGE3`, `IMAGE4`, `MODIFIED`, `LIKES`, `TIME`) VALUES
-(1, 5, 1, 'test', NULL, NULL, NULL, NULL, 0, 2, '2023-06-16 13:44:29');
+(23, 3, NULL, 'zdzdza', NULL, NULL, NULL, NULL, 0, 1, '2023-06-17 09:17:05');
 
 -- --------------------------------------------------------
 
@@ -288,7 +294,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`ID_USER`, `USER_NAME`, `USER_PSEUDO`, `USER_PASSWORD`, `EMAIL`, `AVATAR`, `FAVORITE_HOBBY`) VALUES
-(2, 'Alan', 'Alan', '$2y$10$mTVn.8PWcUhvUEMmethDxehWaTfDMVEO5haxH8QNf0jcUcN1q2jZW', 'alan@gmail.com', NULL, NULL),
+(2, 'Alan', 'Alan', '$2y$10$mTVn.8PWcUhvUEMmethDxehWaTfDMVEO5haxH8QNf0jcUcN1q2jZW', 'alan@gmail.com', 'glasses.png', NULL),
 (3, 'Tegg', 'Tegg', '$2y$10$bQtqW3WS/LLj12H6AYha3uvW1z8xYRTWWElmQq88zFJq6DGuCvXua', 'Tegg@gmail.com', NULL, NULL),
 (4, 'Sand', 'Sand', '$2y$10$9yzrcEouJzVE1FQidXVVjuRMwriCsqKJ3J3MEFNndKTz5fnGiKWOW', 'Sand@gmail.com', NULL, NULL),
 (5, 'Tact', 'Tact', '$2y$10$BzPR88BwQBMYKYnA04.NsOFWAmettI9.7t.SLzN01LQKLO4C8kzBa', 'tact@gmail.com', NULL, NULL);
@@ -309,6 +315,8 @@ CREATE TABLE `userpostlikes` (
 --
 
 INSERT INTO `userpostlikes` (`ID_USER`, `ID_REGULAR_POST`) VALUES
+(3, 22),
+(3, 23),
 (5, 1);
 
 --
@@ -335,8 +343,8 @@ ALTER TABLE `activity_director`
 --
 ALTER TABLE `activity_participants`
   ADD PRIMARY KEY (`ID_ACTIVITY_PARTICIPANTS`),
-  ADD KEY `ID_ACTIVITY` (`ID_ACTIVITY`),
-  ADD KEY `ID_USER` (`ID_USER`);
+  ADD KEY `ID_USER` (`ID_USER`),
+  ADD KEY `ID_ACTIVITY` (`ID_ACTIVITY`);
 
 --
 -- Index pour la table `comment`
@@ -345,6 +353,14 @@ ALTER TABLE `comment`
   ADD PRIMARY KEY (`ID_COMMENT`),
   ADD KEY `ID_USER` (`ID_USER`),
   ADD KEY `ID_REGULAR_POST` (`ID_REGULAR_POST`);
+
+--
+-- Index pour la table `favorite_hobby`
+--
+ALTER TABLE `favorite_hobby`
+  ADD PRIMARY KEY (`ID_FAVORITE_HOBBY`),
+  ADD KEY `ID_HOBBY` (`ID_HOBBY`),
+  ADD KEY `ID_USER` (`ID_USER`);
 
 --
 -- Index pour la table `friends`
@@ -415,16 +431,16 @@ ALTER TABLE `activity`
   MODIFY `ID_ACTIVITY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT pour la table `activity_participants`
---
-ALTER TABLE `activity_participants`
-  MODIFY `ID_ACTIVITY_PARTICIPANTS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
 -- AUTO_INCREMENT pour la table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `ID_COMMENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_COMMENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT pour la table `favorite_hobby`
+--
+ALTER TABLE `favorite_hobby`
+  MODIFY `ID_FAVORITE_HOBBY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `hobby`
@@ -436,7 +452,7 @@ ALTER TABLE `hobby`
 -- AUTO_INCREMENT pour la table `hobby_post`
 --
 ALTER TABLE `hobby_post`
-  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT pour la table `message`
@@ -454,7 +470,7 @@ ALTER TABLE `organization`
 -- AUTO_INCREMENT pour la table `regular_post`
 --
 ALTER TABLE `regular_post`
-  MODIFY `ID_REGULAR_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID_REGULAR_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT pour la table `user`
@@ -484,8 +500,8 @@ ALTER TABLE `activity_director`
 -- Contraintes pour la table `activity_participants`
 --
 ALTER TABLE `activity_participants`
-  ADD CONSTRAINT `activity_participants_ibfk_1` FOREIGN KEY (`ID_ACTIVITY`) REFERENCES `activity` (`ID_ACTIVITY`),
-  ADD CONSTRAINT `activity_participants_ibfk_2` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`);
+  ADD CONSTRAINT `activity_participants_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`),
+  ADD CONSTRAINT `activity_participants_ibfk_2` FOREIGN KEY (`ID_ACTIVITY`) REFERENCES `activity` (`ID_ACTIVITY`);
 
 --
 -- Contraintes pour la table `comment`
@@ -493,6 +509,13 @@ ALTER TABLE `activity_participants`
 ALTER TABLE `comment`
   ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`) ON DELETE CASCADE,
   ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`ID_REGULAR_POST`) REFERENCES `regular_post` (`ID_REGULAR_POST`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `favorite_hobby`
+--
+ALTER TABLE `favorite_hobby`
+  ADD CONSTRAINT `favorite_hobby_ibfk_1` FOREIGN KEY (`ID_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`),
+  ADD CONSTRAINT `favorite_hobby_ibfk_2` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`);
 
 --
 -- Contraintes pour la table `friends`
@@ -533,13 +556,6 @@ ALTER TABLE `regular_post`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`FAVORITE_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE SET NULL;
-
---
--- Contraintes pour la table `userpostlikes`
---
-ALTER TABLE `userpostlikes`
-  ADD CONSTRAINT `userpostlikes_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`),
-  ADD CONSTRAINT `userpostlikes_ibfk_2` FOREIGN KEY (`ID_REGULAR_POST`) REFERENCES `regular_post` (`ID_REGULAR_POST`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
