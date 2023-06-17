@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {PagesModule} from "./pages/pages.module";
 import {CommonModule} from "@angular/common";
 import { OrganizationButtonComponent } from './shared/components/organization-button/organization-button.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { OrganizationButtonComponent } from './shared/components/organization-bu
     HttpClientModule,
     CommonModule,
     PagesModule,
+    FormsModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'fr-FR'},

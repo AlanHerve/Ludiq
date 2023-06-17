@@ -255,7 +255,7 @@ class PostRepository
         }
         return $postsDTO;
     }
-    
+
 
     public function getPosts($mode, PostDTO $regularPostDTO)
     {

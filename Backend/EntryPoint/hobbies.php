@@ -58,6 +58,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case "getHobbyById":
             echo $hobbyRepository->getHobbyById($_GET['id_hobby']);
             break;
+        case "updateFavoriteHobby":
+          if(isset($_GET['id_user']) && isset($_GET['id_hobby'])) {
+            $userId = $_GET['id_user'];
+            $hobbyId = $_GET['id_hobby'];
+            $hobbyRepository->updateFavoriteHobby($userId, $hobbyId);
+          } else {
+            echo json_encode(array('success' => false, 'message'=>'User ID and/or Hobby ID not provided'));
+          }
+          break;
 
     }
 

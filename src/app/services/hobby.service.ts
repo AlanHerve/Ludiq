@@ -142,4 +142,19 @@ export class HobbyService {
   }
 
 
+  updateFavoriteHobby(userId: number, hobbyId: number): Observable<any> {
+    const params = new HttpParams()
+      .set('function_to_call', "updateFavoriteHobby")
+      .set('id_user', userId.toString())
+      .set('id_hobby', hobbyId.toString());
+
+    return this.http.get<any>(`${apiUrl}/hobbies.php`, {params})
+      .pipe(
+        map(response => {
+          return response;
+        })
+      );
+  }
+
+
 }
