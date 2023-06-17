@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 16 juin 2023 à 10:29
+-- Généré le : sam. 17 juin 2023 à 10:15
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -102,13 +102,6 @@ CREATE TABLE `comment` (
   `TIME` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Déchargement des données de la table `comment`
---
-
-INSERT INTO `comment` (`ID_COMMENT`, `ID_USER`, `CONTENT`, `ID_REGULAR_POST`, `TIME`) VALUES
-(4, 2, 'ss', 1, '2023-06-14 11:33:39');
-
 -- --------------------------------------------------------
 
 --
@@ -206,15 +199,14 @@ CREATE TABLE `hobby_post` (
 --
 
 INSERT INTO `hobby_post` (`ID_HOBBY_POST`, `ID_HOBBY`, `ID_USER`, `EXPERIENCE`, `FREQUENCY`, `AVAILABLE`) VALUES
-(1, 1, 2, 'Expert', 'Daily', 1),
 (2, 1, 3, 'Advanced', '2-3/week', 0),
 (3, 1, 4, 'Advanced', 'Weekly', 1),
 (4, 9, 4, 'Expert', 'Monthly', 1),
 (6, 16, 2, 'Expert', '2-3/week', 0),
-(8, 2, 2, 'Beginner', 'Daily', 0),
-(26, 3, 2, 'Beginner', 'Daily', 1),
-(27, 9, 2, 'Beginner', 'Daily', 1),
-(28, 4, 2, 'Beginner', 'Daily', 1);
+(29, 1, 2, 'Beginner', 'Daily', 1),
+(30, 2, 2, 'Beginner', 'Daily', 1),
+(31, 3, 2, 'Beginner', 'Daily', 1),
+(33, 5, 2, 'Beginner', 'Daily', 1);
 
 -- --------------------------------------------------------
 
@@ -280,7 +272,9 @@ CREATE TABLE `regular_post` (
 --
 
 INSERT INTO `regular_post` (`ID_REGULAR_POST`, `ID_USER`, `ID_HOBBY`, `DESCRIPTION`, `IMAGE1`, `IMAGE2`, `IMAGE3`, `IMAGE4`, `MODIFIED`, `LIKES`, `TIME`) VALUES
-(1, 2, NULL, 'szdergthyjujhygtrfe', NULL, NULL, NULL, NULL, 0, 1, '2023-06-15 14:25:52');
+(13, 2, NULL, 'aszdefrgtgrfedz', NULL, NULL, NULL, NULL, 0, 0, '2023-06-17 07:53:23'),
+(14, 2, NULL, 'coucou', '648d668758df2_coronavirus-2.jpg', NULL, NULL, NULL, 0, 0, '2023-06-17 07:53:43'),
+(15, 2, 1, 'hello!', '648d669869588_Cooking.jpg', NULL, NULL, NULL, 0, 1, '2023-06-17 07:57:23');
 
 -- --------------------------------------------------------
 
@@ -303,7 +297,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`ID_USER`, `USER_NAME`, `USER_PSEUDO`, `USER_PASSWORD`, `EMAIL`, `AVATAR`, `FAVORITE_HOBBY`) VALUES
-(2, 'Alan', 'Alan', '$2y$10$mTVn.8PWcUhvUEMmethDxehWaTfDMVEO5haxH8QNf0jcUcN1q2jZW', 'alan@gmail.com', NULL, NULL),
+(2, 'Alan', 'Alan', '$2y$10$mTVn.8PWcUhvUEMmethDxehWaTfDMVEO5haxH8QNf0jcUcN1q2jZW', 'alan@gmail.com', 'glasses.png', NULL),
 (3, 'Tegg', 'Tegg', '$2y$10$bQtqW3WS/LLj12H6AYha3uvW1z8xYRTWWElmQq88zFJq6DGuCvXua', 'Tegg@gmail.com', NULL, NULL),
 (4, 'Sand', 'Sand', '$2y$10$9yzrcEouJzVE1FQidXVVjuRMwriCsqKJ3J3MEFNndKTz5fnGiKWOW', 'Sand@gmail.com', NULL, NULL),
 (5, 'Tact', 'Tact', '$2y$10$BzPR88BwQBMYKYnA04.NsOFWAmettI9.7t.SLzN01LQKLO4C8kzBa', 'tact@gmail.com', NULL, NULL);
@@ -416,7 +410,7 @@ ALTER TABLE `activity`
 -- AUTO_INCREMENT pour la table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `ID_COMMENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID_COMMENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `favorite_hobby`
@@ -434,7 +428,7 @@ ALTER TABLE `hobby`
 -- AUTO_INCREMENT pour la table `hobby_post`
 --
 ALTER TABLE `hobby_post`
-  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `ID_HOBBY_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT pour la table `message`
@@ -452,7 +446,7 @@ ALTER TABLE `organization`
 -- AUTO_INCREMENT pour la table `regular_post`
 --
 ALTER TABLE `regular_post`
-  MODIFY `ID_REGULAR_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_REGULAR_POST` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT pour la table `user`
