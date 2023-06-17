@@ -44,6 +44,7 @@ export class ActivityService {
 
     return this.http.post<string>(`${apiUrl}/activity.php`, params).pipe(
       map(response => {
+        this.needDelete.next(activityId);
         return response;
       })
     );

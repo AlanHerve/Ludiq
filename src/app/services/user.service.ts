@@ -70,4 +70,8 @@ export class UserService {
     return token.match(regex)!=null;
   }
 
+  isAbleToDelete(id: number) {
+    const compare_id = JSON.parse(localStorage.getItem('currentUser')!).id;
+    return compare_id == id;
+  }
 }

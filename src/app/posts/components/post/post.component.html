@@ -13,13 +13,18 @@
         </div>
       </div>
     </div>
-    <div (click)="onPostClicked()">
-      <p *ngIf="postDTO.modified === 1; else elseBlock" class="date">Modified
-        - {{ postDTO.time | date:'dd/MM HH:mm' }}</p>
-      <ng-template #elseBlock>
-        <p class="date">{{ postDTO.time | date:'dd/MM HH:mm' }}</p>
-      </ng-template>
+    <div class ="top-post-information">
+      <div (click)="onPostClicked()">
+        <p *ngIf="postDTO.modified === 1; else elseBlock" class="date">Modified
+          - {{ postDTO.time | date:'dd/MM HH:mm' }}</p>
+        <ng-template #elseBlock>
+          <p class="date">{{ postDTO.time | date:'dd/MM HH:mm' }}</p>
+        </ng-template>
+
+      </div>
+      <img *ngIf="isOwner()" class="delete" (click)="onDelete()" src = "assets/images/icons/delete.png">
     </div>
+
 
   </div>
   <div (click)="onPostClicked()">

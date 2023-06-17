@@ -43,9 +43,8 @@ export class HobbyFlashcardComponent implements OnInit {
     return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.hobbyPost.id_user;
   }
 
-  onClose() {
+  onDelete() {
     this.hobbyService.destroyHobbyPost(this.hobbyPost.id_hobby_post).subscribe({
-
       next: (response) => {
         // in case of success
         console.log(response);

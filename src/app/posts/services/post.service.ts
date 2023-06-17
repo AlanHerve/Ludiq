@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {apiUrl} from "../../services/urls";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
@@ -10,6 +10,9 @@ import {CommentDTO} from "../models/comment-dto";
   providedIn: 'root'
 })
 export class PostService {
+
+  private needDelete = new Subject<number>();
+  currentDeleteState = this.needDelete.asObservable();
 
   constructor(private http: HttpClient) {
   }
@@ -56,7 +59,7 @@ export class PostService {
   getAllComments(postID: number): Observable<CommentDTO[]> {
     const params = new HttpParams()
       .set('type', 'all_comments')
-      .set('postID', postID)
+      .set('postID', postID);
     return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
   }
 
@@ -72,5 +75,20 @@ export class PostService {
       .set('type', 'find_post')
       .set('postID', postID)
     return this.http.get<PostDTO>(`${apiUrl}/post.php`, {params});
+  }
+
+  deletePost(postId: number): Observable<string> {
+    const params =  {
+      type: 'deletePost',
+      id_post: postId
+    };
+
+    return this.http.post<string>(`${apiUrl}/post.php`, params).pipe(
+      map(response => {
+        console.log("attempted");
+        this.needDelete.next(postId);
+        return response;
+      })
+    );
   }
 }

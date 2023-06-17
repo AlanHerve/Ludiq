@@ -22,30 +22,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
          $activityRepository = ActivityRepository::getInstance();
          if ($data['type'] === 'activity_post') {
-             return;
-         }
-         if ($data['type'] === 'register_activity') {
+         }elseif ($data['type'] === 'register_activity') {
              echo json_encode($activityRepository->registerUserToActivity($data['userId'], $data['activityId']));
-             return;
-         }
-         if ($data['type'] === 'unregister_activity') {
+         }elseif ($data['type'] === 'unregister_activity') {
              echo json_encode($activityRepository->deleteUserFromActivity($data['userId'], $data['activityId']));
-             return;
+         }elseif ($data['type'] === 'deleteActivity'){
+             echo json_encode($activityRepository->deleteActivity($data['activityId']));
          }
-    }
 
-    if (isset($data['modified'])) {
+
+    }else{
+      if (isset($data['modified'])) {
         $modified = $data['modified'];
+
     }
 
     if (isset($_POST['id_user']) && isset($_POST['id_hobby']) && isset($_POST['advancement']) && isset($_POST['description']) && isset($_POST['time']) && isset($_POST['max_registration']) && isset($_POST['title'])) {
 
         $value = $_POST['max_registration'];
+
         $activityDTO = new ActivityDTO(null, $_POST['id_user'], $_POST['id_hobby'], $_POST['advancement'], $_POST['description'], null, $_POST['time'], null, $_POST['max_registration'], null, $_POST['title'], null, null);
         $activityRepository = ActivityRepository::getInstance();
         $result = $activityRepository->newActivity($activityDTO);
         echo $result;
+      }
     }
+
+
 }
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if (isset($_GET['type'])) {

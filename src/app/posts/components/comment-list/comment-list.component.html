@@ -1,8 +1,9 @@
-
 <div class = "comments">
   <p>Comments</p>
-  <app-comment *ngFor="let comment of commentsDTO" [commentDTO]="comment"></app-comment>
-  <div *ngIf = "commentsDTO.length == 0">
-    <p class ="no-posts">There are no posts on this section.</p>
+  <div *ngIf="commentsDTO else elseBlock">
+    <app-comment *ngFor="let comment of commentsDTO" [commentDTO]="comment"></app-comment>
   </div>
+  <ng-template #elseBlock>
+    <p class ="no-posts">There are no comments on this post.</p>
+  </ng-template>
 </div>

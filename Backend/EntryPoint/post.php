@@ -30,6 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case 'unlike':
       echo $postRepository->unlikePost($postId);
       break;
+    case 'deletePost':
+      echo $postRepository->deletePost($postId);
   }
 
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
