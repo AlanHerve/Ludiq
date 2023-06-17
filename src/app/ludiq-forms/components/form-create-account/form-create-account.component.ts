@@ -80,18 +80,4 @@ export class FormCreateAccountComponent implements OnInit {
     })
   }
 
-  getFormValidationErrors() {
-    Object.keys(this.createForm.controls).forEach(key => {
-      let controlErrors: ValidationErrors;
-      // @ts-ignore
-      controlErrors = this.createForm.get(key).errors;
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach(keyError => {
-          console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
-        });
-      }
-    });
-  }
-
-
 }

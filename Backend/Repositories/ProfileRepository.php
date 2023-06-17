@@ -55,7 +55,6 @@ class ProfileRepository
       $activityDirector = false;
       $numActivities = $this->activityRepository->getNumActivitiesClassical($id_user);
     }
-
     return new ProfileDTO($userDTO, $numPosts, $numFriends, $numHobbies, $numActivities, $activityDirector, $postsDTO, $activitiesDTO, $favoriteHobby, $hobbies, $hobbiesPostDTO);
   }
 

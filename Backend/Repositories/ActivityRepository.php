@@ -154,11 +154,15 @@ class ActivityRepository
                 user u
             INNER JOIN activity act
                 ON act.ID_ACTIVITY_DIRECTOR = u.ID_USER
+            INNER JOIN activity_participants par
+                ON act.ID_ACTIVITY = par.ID_ACTIVITY
             WHERE
                 act.ID_ACTIVITY_DIRECTOR = ?
+                OR
+                par.ID_USER = ?
             ;
         ");
-    $stmt->bind_param('i', $id_user);
+    $stmt->bind_param('ii', $id_user, $id_user);
     $stmt->execute();
 
     $result = $stmt->get_result();

@@ -80,6 +80,7 @@ class PostRepository
       }
       return $postsDTO;
     }
+    return [];
   }
 
 

@@ -84,7 +84,7 @@ export class SearchBarComponent implements OnInit {
         this.onPostClicked(searchText);
       }
       if (this.buttons[3]) {
-        this.onPostClicked(searchText);
+        this.onActivityClicked(searchText);
       }
     }
   }

@@ -55,7 +55,7 @@ button {
   left: 0;
   background-color: #FFF;
   margin: 0;
-  width: 54.9vw;
+  width:100%;
   top: 100%;
   display: none;
   border-bottom: rgba(116, 33, 194, 0.25) 1px solid;

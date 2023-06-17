@@ -22,7 +22,6 @@ import {imagesUrl} from "../../../services/urls";
 })
 export class ProfileComponent implements Image {
 
-  activitiesDTO: ActivityDTO[] = []
   hobbyFlashcardsDTO: HobbyFlashcardDTO[] = [];
   protected reward: string = "bronze";
   protected type: string = 'posts';
@@ -103,11 +102,9 @@ export class ProfileComponent implements Image {
 
   findHobbyDTOWithData(id: number) {
     const sizeOfArray: number = this.hobbyFlashcardsDTO.length;
-
     for (let i = 0; i < sizeOfArray; i++) {
       if (this.hobbyFlashcardsDTO[i].id_hobby_post == id) return i;
     }
-
     return -1;
   }
 
@@ -115,6 +112,7 @@ export class ProfileComponent implements Image {
     this.userService.logoutUser();
     this.router.navigateByUrl('');
   }
+
   getProfileInformation(): void {
     this.profileService.getProfileInformation(this.profileDTO.userDTO.id).subscribe({
       next: (response) => {

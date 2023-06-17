@@ -1,7 +1,7 @@
 .message-bar {
   position: fixed;
   bottom: 0;
-  width: calc(100% - 700px);
+  width: calc(100% - 45vw);
   display: flex;
   align-items: center;
   background-color: #F5F2F5;
@@ -25,5 +25,5 @@
 img {
   width:40px;
   height: 40px;
-  margin: 0 10px;
+  margin: 0 20px 0 10px;
 }
