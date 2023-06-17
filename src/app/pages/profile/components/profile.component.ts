@@ -179,7 +179,21 @@ export class ProfileComponent implements Image {
 
   }
   onRemoveInvitationOrganization(): void {
-
+    this.userService.findOrganization(this.userService.getCurrentId()).subscribe({
+      next: (organization) => {
+        this.organizationService.removeInvitation(organization.id_organization, this.profileDTO.userDTO.id).subscribe({
+          next: (response) => {
+            console.log("Status of removing of invitation :", response)
+          },
+          error: (error) => {
+            console.log("Error while removing invitation : ", error)
+          }
+        })
+      },
+      error: (error) => {
+        console.log("Error while finding organization :", error)
+      }
+    })
   }
 
   isWaitingAcceptation(): boolean {

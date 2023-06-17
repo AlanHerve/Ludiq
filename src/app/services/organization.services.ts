@@ -57,10 +57,20 @@ export class OrganizationService {
 
   isUserAlreadyInvited(organizationId: any, userId: number): Observable<boolean> {
     const params = new HttpParams()
-      .set('type', 'isAlreadyInvited')
+      .set('function_to_call', 'isAlreadyInvited')
       .set('userId', userId)
       .set('id_organization', organizationId)
 
-    return this.http.put<boolean>(`${apiUrl}/organization.php`, {params});
+    return this.http.get<boolean>(`${apiUrl}/organization.php`, {params});
+  }
+
+  removeInvitation(organizationId: any, userId: number) {
+
+    const options = {
+      type : 'remove_invitation',
+      userId: userId,
+      organizationId: organizationId
+    };
+    return this.http.put<boolean>(`${apiUrl}/organization.php`, options);
   }
 }

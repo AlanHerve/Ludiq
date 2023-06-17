@@ -24,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $organizationRepository->getOrganzationById($id_organization);
       break;
     case "isAlreadyInvited":
-      $organizationRepository->isUserAlreadyInvited($id_organization, $_GET['userId']);
+      echo json_encode($organizationRepository->isUserAlreadyInvited($id_organization, $_GET['userId']));
+      break;
 
   }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
@@ -37,6 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     switch ($data['type']) {
       case "add_invitation":
         echo json_encode($organizationRepository->sendInvitation($data['organizationId'], $data['userId']));
+        return;
+      case "remove_invitation":
+        echo json_encode($organizationRepository->removeInvitation($data['organizationId'], $data['userId']));
         return;
     }
   }

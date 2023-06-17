@@ -189,6 +189,26 @@ class OrganizationRepository
   public function sendInvitation($organizationId, $userId)
   {
     $stmt = $this->db->prepare("
+        SELECT
+          *
+          FROM
+            invitation_organization inv
+        WHERE
+            inv.ID_ORGANIZATION = ?
+            AND
+            inv.ID_USER = ?
+        ;
+    ");
+
+    $stmt->bind_param("ii", $organizationId, $userId);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    if($result->num_rows > 0) {
+      return false;
+    }
+
+    $stmt = $this->db->prepare("
         INSERT INTO
             invitation_organization (ID_ORGANIZATION, ID_USER)
         VALUES
@@ -225,6 +245,44 @@ class OrganizationRepository
     }
 
     return false;
+  }
+
+  public function removeInvitation($organizationId, $userId)
+  {
+
+    $stmt = $this->db->prepare("
+        SELECT
+          *
+          FROM
+            invitation_organization inv
+        WHERE
+            inv.ID_ORGANIZATION = ?
+            AND
+            inv.ID_USER = ?
+        ;
+    ");
+
+    $stmt->bind_param("ii", $organizationId, $userId);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    if($result->num_rows == 0) {
+      return false;
+    }
+    
+    $stmt = $this->db->prepare("
+        DELETE FROM
+            invitation_organization
+        WHERE
+            ID_ORGANIZATION = ?
+            AND
+            ID_USER = ?
+    ");
+
+    $stmt->bind_param("ii", $organizationId, $userId);
+    $stmt->execute();
+
+    return $stmt->affected_rows > 0;
   }
 
 
