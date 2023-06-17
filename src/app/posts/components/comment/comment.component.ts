@@ -23,6 +23,11 @@ export class CommentComponent implements OnInit, Image {
   }
 
   onUserClicked(): void {
-    this.router.navigateByUrl(`/profile/${this.commentDTO.id}`)
+    this.router.navigateByUrl(`/profile/${this.commentDTO.userDTO.id}`)
   }
+
+  onDeleteComment(): void {
+
+  }
+
 }
