@@ -1,7 +1,7 @@
 import {Observable, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {apiUrl} from "./api-url";
+import {apiUrl} from "./urls";
 import {Injectable} from "@angular/core";
 
 import {HobbyRequestDTO} from "../models/hobby-request-dto";
@@ -63,12 +63,12 @@ export class HobbyService {
     );
   }
 
-  getHobbiesFlashcardsOfUser(id_user: number): Observable<{hobbies: HobbyFlashcardDTO[]}>{
+  getHobbiesFlashcardsOfUser(id_user: number): Observable<HobbyFlashcardDTO[]>{
     const params = new HttpParams()
       .set('function_to_call', "getHobbiesFlashcardsOfUser")
       .set('id_user', id_user);
 
-    return this.http.get<{hobbies: HobbyFlashcardDTO[]}>(`${apiUrl}/hobbies.php`, {params}).pipe(
+    return this.http.get<HobbyFlashcardDTO[]>(`${apiUrl}/hobbies.php`, {params}).pipe(
 
       map(response => {
         return response;

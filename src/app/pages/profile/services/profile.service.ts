@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {apiUrl} from "../../../services/api-url";
+import {apiUrl} from "../../../services/urls";
 import {ProfileDTO} from "../models/profile-dto";
 
 @Injectable({

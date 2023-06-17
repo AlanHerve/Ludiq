@@ -1,5 +1,8 @@
 <div class = "user" (click)="onUserClicked()">
-  <img src = "assets/images/icons/user.png">
+  <img *ngIf ="this.userDTO.avatar else elseBlock" [src]="this.loadImage(userDTO.avatar)">
+  <ng-template #elseBlock>
+    <img src="assets/images/icons/user.png">
+  </ng-template>
   <p class = "username">{{userDTO.name}}</p>
   <p class = "nickname">{{userDTO.username}}</p>
 </div>

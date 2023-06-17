@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnChanges, SimpleChanges} from '@angular/core';
 import {UserService} from "../../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserDTO} from "../../../models/user-dto";
@@ -12,19 +12,20 @@ import {HobbyService} from "../../../services/hobby.service";
 import {CommunicationService} from "../../../services/communication.service";
 import {ActivityService} from "../../../posts/services/activity.service";
 import {TabService} from "../../../shared/service/tab.service";
-
+import {Image} from "../../../models/image";
+import {imagesUrl} from "../../../services/urls";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css', '../../pages.css']
 })
-export class ProfileComponent {
+export class ProfileComponent implements Image {
 
   activitiesDTO: ActivityDTO[] = []
 
   protected reward: string = "bronze";
-  hobbyFlashcardsDTOs: HobbyFlashcardDTO[] = []
+  hobbyFlashcardsDTO: HobbyFlashcardDTO[] = [];
 
   protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
@@ -35,10 +36,13 @@ export class ProfileComponent {
     activityDirector: false,
     numActivities: 0,
     postsDTO: [],
+    hobbiesPostDTO: [],
     activitiesDTO: [],
-    favoriteHobby: new HobbyDTO(-1, '', '')
+    favoriteHobby: new HobbyDTO(-1, '', ''),
+    hobbiesDTO: []
   }
   private friendship_status: string = "!friend";
+
 
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,
@@ -56,31 +60,45 @@ export class ProfileComponent {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.profileDTO.userDTO.id = parseInt(params['id']);
-    })
-    this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.friendship_status = response;
-      },
-      error: (error) => {
-        console.log("Error while finding if the user is friend with another", error)
-      }
+        this.userService.findUserById(parseInt(params['id'])).subscribe({
+          next: (user) => {
+            this.profileDTO.userDTO = user;
+            if(!this.profileDTO.userDTO){
+              this.router.navigateByUrl('/home');
+              return;
+            }
+            this.getProfileInformation();
+
+            this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
+              next: (response) => {
+                console.log(response);
+                this.friendship_status = response;
+              },
+              error: (error) => {
+                console.log("Error while finding if the user is friend with another", error)
+              }
+            });
+
+
+            this.hobbyService.currentMessage.subscribe((data)=>{
+              this.hobbyFlashcardsDTO.push(this.hobbyService.getNewPost());
+            });
+
+            this.hobbyService.currentDeleteState.subscribe((data) => {
+              console.log("returned Data :" + data);
+              this.hobbyFlashcardsDTO.splice(this.findHobbyDTOWithData(data), 1);
+            });
+          },
+          error: (error) => {
+            console.log("Error while finding user : ", error)
+          }
+        })
     });
 
-    this.getHobbiesFlashcardsOfUser();
-    this.getProfileInformation();
 
-    this.hobbyService.currentMessage.subscribe((data)=>{
-      this.hobbyFlashcardsDTOs.push(this.hobbyService.getNewPost());
-    });
-
-    this.hobbyService.currentDeleteState.subscribe((data) => {
-      console.log("returned Data :" + data);
-      this.hobbyFlashcardsDTOs.splice(this.findHobbyDTOWithData(data), 1);
-    });
 
   }
+
 
   private determineReward(): void {
     if(this.profileDTO.numActivities > 50) {
@@ -92,6 +110,9 @@ export class ProfileComponent {
     else if(this.profileDTO.numActivities > 0){
       this.reward = "bronze"
     }
+    else {
+      this.reward = "nothing"
+    }
   }
 
   getUserType(): string {
@@ -100,10 +121,10 @@ export class ProfileComponent {
   }
 
   findHobbyDTOWithData(id: number){
-    const sizeOfArray: number = this.hobbyFlashcardsDTOs.length;
+    const sizeOfArray: number = this.hobbyFlashcardsDTO.length;
 
     for (let i = 0; i < sizeOfArray; i++) {
-      if(this.hobbyFlashcardsDTOs[i].id_hobby_post == id) return i;
+      if(this.hobbyFlashcardsDTO[i].id_hobby_post == id) return i;
     }
 
     return -1;
@@ -122,25 +143,6 @@ export class ProfileComponent {
     });
   }
 
-  getHobbiesFlashcardsOfUser(){
-    this.hobbyService.getHobbiesFlashcardsOfUser(this.profileDTO.userDTO.id).subscribe({
-
-      next: (response) => {
-        // in case of success
-        console.log(response);
-        if(response.hobbies){
-          for (let i = 0; i < response.hobbies.length; i++) {
-            this.hobbyFlashcardsDTOs.push(response.hobbies[i]);
-          }
-        }
-      },
-      error: (error) => {
-        // in case of failure
-        console.error('Could not get flashcards', error);
-      }
-    });
-
-  }
 
   isConnectedUser(): boolean {
     return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.profileDTO.userDTO.id
@@ -205,6 +207,10 @@ export class ProfileComponent {
         console.log("Error removing friend", error)
       }
     });
+  }
+
+  loadImage(image: string): string {
+    return imagesUrl + "/" + image;
   }
 
 

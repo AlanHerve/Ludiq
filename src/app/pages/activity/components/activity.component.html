@@ -26,6 +26,9 @@
           <td>
             <p class="num_registered">{{activityDTO.current_registered}}/{{activityDTO.max_registrations}}</p>
           </td>
+          <td>
+            <button *ngIf="isPartOfOrganization()" (click)="onDelete()">Delete Activity</button>
+          </td>
         </tr>
       </table>
     </div>

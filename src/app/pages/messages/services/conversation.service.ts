@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {ConversationDTO} from "../models/conversation-dto";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {apiUrl} from "../../../services/api-url";
+import {apiUrl} from "../../../services/urls";
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {apiUrl} from "../../services/api-url";
+import {apiUrl} from "../../services/urls";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
 import {CommentDTO} from "../models/comment-dto";
@@ -15,8 +15,8 @@ export class PostService {
   constructor(private http: HttpClient, private userService: UserService) {}
 
 
-  newPost(formData: FormData): Observable<any> {
-    return this.http.post<any>(`${apiUrl}/post.php`, formData);
+  newPost(formData: FormData): Observable<boolean> {
+    return this.http.post<boolean>(`${apiUrl}/post.php`, formData);
   }
 
   getAllPosts(): Observable<PostDTO[]> {
@@ -32,16 +32,8 @@ export class PostService {
     return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
   }
 
-  getImage(image: string): Observable<Blob> {
-    const options = {responseType: 'arraybuffer' as 'json'};
-    const params = new HttpParams().set('image_name', image);
-    return this.http.get<Blob>(`${apiUrl}/images.php`, {params, ...options}).pipe(
-      map(response => new Blob([response], {type: 'image/jpeg'}))
-    );
-  }
-
-  likePost(postId: number, userId: number): Observable<any> {
-    const options = {'type': 'like', 'id_post': postId, 'id_user': userId}
+  likePost(postId: number): Observable<any> {
+    const options = {'type': 'like', 'id_post': postId}
     return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
       map(response => {
         return response;
@@ -66,7 +58,13 @@ export class PostService {
     const params = new HttpParams()
       .set('type', 'all_comments')
       .set('postID', postID)
+    return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
+  }
 
+  getThreeComments(postID: number): Observable<CommentDTO[]> {
+    const params = new HttpParams()
+      .set('type', 'three_comments')
+      .set('postID', postID)
     return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
   }
 
@@ -83,9 +81,6 @@ export class PostService {
     const params = new HttpParams()
       .set('type', 'find_post')
       .set('postID', postID)
-
     return this.http.get<PostDTO>(`${apiUrl}/post.php`, {params});
   }
-
-
 }

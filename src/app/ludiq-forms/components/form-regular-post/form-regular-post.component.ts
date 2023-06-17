@@ -33,11 +33,12 @@ export class FormRegularPostComponent extends Form implements OnInit {
 
   hobbies : HobbyDTO[] = [];
 
+  imagesData: (File|null)[] = [];
+
   postDTO: PostDTO = {
     id: -1,
     userDTO: new UserDTO(-1, '', ''),
     hobbyDTO: new HobbyDTO(-1, '', ''),
-    images_str: [null, null, null, null],
     likes: 0,
     comments: [],
     description: '',
@@ -69,7 +70,8 @@ export class FormRegularPostComponent extends Form implements OnInit {
     const reader: FileReader = new FileReader();
 
     reader.onload = () => {
-      this.postDTO.images[this.index] = file;
+      this.postDTO.images[this.index] = file.name;
+      this.imagesData[this.index] = file;
       if (this.index < this.postDTO.images.length) {
         const labelElement = document.querySelectorAll('.file-input-label')[this.index];
         labelElement?.classList.add('selected');
@@ -85,14 +87,17 @@ export class FormRegularPostComponent extends Form implements OnInit {
     const index = this.postDTO.images.findIndex(img => img?.name === image);
     if (index !== -1) {
       this.postDTO.images[index] = null;
+      this.imagesData[index] = null;
       this.index--;
     }
 
     for (let i = index; i < this.postDTO.images.length; i++) {
       if (i === this.postDTO.images.length - 1) {
         this.postDTO.images[3] = null;
+        this.imagesData[3] = null;
       } else {
         this.postDTO.images[i] = this.postDTO.images[i + 1];
+        this.imagesData[i] = this.imagesData[i + 1];
       }
     }
     console.log(this.postDTO.images);
@@ -123,10 +128,10 @@ export class FormRegularPostComponent extends Form implements OnInit {
     formData.append('user_name', this.postDTO.userDTO.name);
     formData.append('user_username', this.postDTO.userDTO.username);
     formData.append('description', this.postDTO.description);
-    for (let i = 0; i < this.postDTO.images.length; i++) {
-      const file = this.postDTO.images[i];
+    for (let i = 0; i < this.imagesData.length; i++) {
+      const file = this.imagesData[i];
       // @ts-ignore
-      if(file != null)  formData.append('images[]', file);
+      if(file != null) formData.append('images[]', file);
     }
 
     this.postsService.newPost(formData).subscribe({

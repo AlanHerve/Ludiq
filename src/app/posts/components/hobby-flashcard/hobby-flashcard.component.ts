@@ -10,7 +10,9 @@ import {HobbyDTO} from "../../../models/hobby-dto";
 })
 export class HobbyFlashcardComponent implements OnInit {
   @Input() hobbyPost!: HobbyFlashcardDTO;
-  protected hobbyDTO!: HobbyDTO;
+
+
+  @Input() hobbyDTO!: HobbyDTO;
 
   protected clicked: boolean = false;
 
@@ -18,14 +20,19 @@ export class HobbyFlashcardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.hobbyService.findHobbyById(this.hobbyPost.id_hobby).subscribe({
+    console.log("FLASHCARD");
+    console.log(this.hobbyPost);
+
+    /*this.hobbyService.findHobbyById(this.hobbyPost.id_hobby).subscribe({
       next: (hobby) => {
         this.hobbyDTO = hobby;
+        console.log("BABABABAAFFAFAAF");
+        console.log(this.hobbyDTO);
       },
       error: (error) => {
         console.log("Error while trying to find hobbyDTO on hobby flashcard : ", error)
       }
-    })
+    });*/
   }
 
   onClick(): void {

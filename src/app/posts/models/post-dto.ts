@@ -8,11 +8,10 @@ export class PostDTO {
               public userDTO: UserDTO,
               public hobbyDTO: HobbyDTO,
               public description: string,
-              public images_str : (string | null)[],
+              public images : (string | null)[],
               public modified: number,
               public likes: number,
               public comments: CommentDTO[],
-              public time: string,
-              public images: (File | null)[]
+              public time: string
   ) { }
 }

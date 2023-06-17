@@ -36,7 +36,6 @@ export class ActivityComponent implements OnInit{
     });
   }
 
-
   private findActivity(): Observable<ActivityDTO> {
     return this.activatedRoute.params.pipe(
       switchMap(params => {
@@ -113,7 +112,28 @@ export class ActivityComponent implements OnInit{
     return this.activityDTO.userDTO.id == this.userDTO.id;
   }
 
-  private isPartOfOrganization(): boolean {
+  public isPartOfOrganization(): boolean {
+    console.log(this.userService.isPartOfOrganization(this.activityDTO.id_organization));
     return this.userService.isPartOfOrganization(this.activityDTO.id_organization);
+  }
+
+  onDelete() {
+    console.log("attempting delete");
+    this.activityService.deleteActivity(this.activityDTO.id).subscribe({
+      next: (response) => {
+        if(response=="success"){
+          console.log("Successfully deleted activity");
+
+          this.router.navigateByUrl('/home');
+        }else{
+          console.log("could not delete activity");
+        }
+
+      },
+      error: (error) => {
+        console.log("Error while deleting user from activity : ", error);
+      }
+    });
+
   }
 }

@@ -5,7 +5,7 @@
   color: white;
   padding:40px 10px;
   text-align: center;
-  transition: 0.2s background ease-in-out;
+  transition: 0.3s background ease-in-out;
 
   background-repeat: no-repeat;
   background-position: center;
@@ -26,7 +26,9 @@
 
 .flashcard:hover{
   background-color: #4c1680;
+  background-size: 340px;
 }
+
 
 .flashcard-clicked {
   background-color: #F2EDF8;
