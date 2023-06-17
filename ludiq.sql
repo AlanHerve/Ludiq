@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 17 juin 2023 à 10:15
+-- Généré le : sam. 17 juin 2023 à 10:38
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -35,7 +35,6 @@ CREATE TABLE `activity` (
   `DESCRIPTION` text DEFAULT NULL,
   `DATE_POST` timestamp NULL DEFAULT current_timestamp(),
   `DATE_ACTIVITY` date DEFAULT NULL,
-  `CURRENT_REGISTERED` int(4) DEFAULT 1,
   `MAX_REGISTRATIONS` int(4) NOT NULL DEFAULT 10,
   `IMAGE` varchar(200) DEFAULT NULL,
   `TITLE` varchar(64) DEFAULT 'Activity'
@@ -45,17 +44,17 @@ CREATE TABLE `activity` (
 -- Déchargement des données de la table `activity`
 --
 
-INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVANCEMENT`, `DESCRIPTION`, `DATE_POST`, `DATE_ACTIVITY`, `CURRENT_REGISTERED`, `MAX_REGISTRATIONS`, `IMAGE`, `TITLE`) VALUES
-(1, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 1, 10, NULL, 'Activity'),
-(2, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 1, 10, NULL, 'Activity'),
-(3, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL, 'Activity'),
-(4, 2, 3, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL, 'Activity'),
-(5, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 1, 10, NULL, 'Activity'),
-(6, 3, 1, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL, 'Activity'),
-(7, 3, 7, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL, 'Activity'),
-(8, 3, 9, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL, 'Activity'),
-(9, 3, 8, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 1, 10, NULL, 'Activity'),
-(10, 3, 1, 'Beginner', NULL, '2023-05-27 14:29:09', NULL, 1, 10, NULL, 'Activity');
+INSERT INTO `activity` (`ID_ACTIVITY`, `ID_ACTIVITY_DIRECTOR`, `ID_HOBBY`, `ADVANCEMENT`, `DESCRIPTION`, `DATE_POST`, `DATE_ACTIVITY`, `MAX_REGISTRATIONS`, `IMAGE`, `TITLE`) VALUES
+(1, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 10, NULL, 'Activity'),
+(2, 2, 1, 'Beginner', NULL, '2023-05-27 14:27:54', NULL, 10, NULL, 'Activity'),
+(3, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 10, NULL, 'Activity'),
+(4, 2, 3, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 10, NULL, 'Activity'),
+(5, 2, 4, 'Beginner', NULL, '2023-05-27 14:28:21', NULL, 10, NULL, 'Activity'),
+(6, 3, 1, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 10, NULL, 'Activity'),
+(7, 3, 7, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 10, NULL, 'Activity'),
+(8, 3, 9, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 10, NULL, 'Activity'),
+(9, 3, 8, 'Beginner', NULL, '2023-05-27 14:28:44', NULL, 10, NULL, 'Activity'),
+(10, 3, 1, 'Beginner', NULL, '2023-05-27 14:29:09', NULL, 10, NULL, 'Activity');
 
 -- --------------------------------------------------------
 

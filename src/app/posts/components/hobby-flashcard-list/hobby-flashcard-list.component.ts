@@ -20,7 +20,6 @@ export class HobbyFlashcardListComponent implements OnInit {
       this.id_user = parseInt(params['id']);
     });
 
-
     this.hobbyService.currentDeleteState.subscribe({
       next: (response) => {
         // in case of success
