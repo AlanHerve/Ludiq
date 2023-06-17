@@ -5,19 +5,25 @@ header('Access-Control-Allow-Headers: Content-Type');
 
 require_once "../DTOs/UserDTO.php";
 require_once "../Repositories/UserRepository.php";
+require_once "../Repositories/ImageRepository.php";
 
-if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $body = file_get_contents('php://input');
   $data = json_decode($body, true);
 
-  $userId = $data['id'];
-  $name = $data['name'];
-  $username = $data['username'];
-  $password = $data['password'];
-  $email = $data['email'];
-  $avatar = $data['avatar'];
+  $userDTOData = json_decode($_POST['userDTO'], true);
+  $userId = $userDTOData['id'];
+  $name = $userDTOData['name'];
+  $username = $userDTOData['username'];
+  $password = $userDTOData['password'];
+  $email = $userDTOData['email'];
 
-  $userDTO = new UserDTO($userId, $name, $username, $password, $email, $avatar);
+  $tab = [$_FILES['avatar']];
+
+  $imageRepository = ImageRepository::getInstance();
+  $avatar_name = $imageRepository->saveAvatar($_FILES['avatar']);
+
+  $userDTO = new UserDTO($userId, $name, $username, $password, $email, $avatar_name[0]);
 
   $userRepository = UserRepository::getInstance();
   $userRepository->updateUser($userDTO);

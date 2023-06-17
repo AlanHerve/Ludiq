@@ -4,11 +4,11 @@
     <span class="cross" (click)="onClose()">&times;</span>
     <div class="image-container">
       <label for="avatar">
-        <img class="avatar-modification" src="assets/images/icons/user.png" alt="Search button">
+        <img class="avatar-modification" src="assets/images/icons/user.png" alt="Search button" >
         <div class="overlay"></div>
       </label>
     </div>
-    <input id="avatar" class="invisible" type="file" name="avatar" (change)="onAvatarChange($event)">
+    <input id="avatar" class="invisible" type="file" name="avatar" (change)="onAvatarChange($event)" formControlName="avatar">
     <input name="name" [value]="userDTO.name" formControlName="name">
     <input name="username" [value]="userDTO.username" formControlName="username">
     <input name="password" placeholder="New password" formControlName="password">

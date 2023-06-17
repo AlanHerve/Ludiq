@@ -3,9 +3,9 @@
 <div class="content">
   <div class="user">
     <div class="top-user-info">
-      <img *ngIf ="this.profileDTO.userDTO.avatar else elseBlock" [src]="this.loadImage(this.profileDTO.userDTO.avatar)">
+      <img *ngIf ="this.profileDTO.userDTO.avatar else elseBlock" [src]="this.loadImage(this.profileDTO.userDTO.avatar)" class ="profile-image">
       <ng-template #elseBlock>
-        <img src="assets/images/icons/user.png">
+        <img src="assets/images/icons/user.png" class ="profile-image">
       </ng-template>
 
       <div class="user-info">

@@ -70,9 +70,15 @@ export class UserService {
     return token.match(regex)!=null;
   }
 
-  updateUserProfile(userDTO: UserDTO): Observable<UserDTO> {
-    return this.http.put<UserDTO>(`${apiUrl}/updateUser.php`, userDTO);
+  updateUserProfile(userDTO: UserDTO, avatar: File | null): Observable<UserDTO> {
+    const formData = new FormData();
+    formData.append('userDTO', JSON.stringify(userDTO));
+    if (avatar) {
+      formData.append('avatar', avatar, avatar.name);
+    }
+    return this.http.post<UserDTO>(`${apiUrl}/updateUser.php`, formData);
   }
+
 
 
 }

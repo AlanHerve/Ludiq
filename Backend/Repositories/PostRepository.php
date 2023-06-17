@@ -63,7 +63,7 @@ class PostRepository
         SELECT
             *
         FROM
-            userpostlikes lik
+            user_post_likes lik
         WHERE
             lik.ID_USER = ?
             AND
@@ -82,7 +82,7 @@ class PostRepository
         // L'utilisateur n'a pas encore aimé ce post, ajoute un like
         $stmt = $this->db->prepare("
         INSERT INTO
-            userpostlikes (ID_USER, ID_REGULAR_POST)
+            user_post_likes (ID_USER, ID_REGULAR_POST)
         VALUES (?, ?)
         ;
     ");
@@ -123,7 +123,7 @@ class PostRepository
         SELECT
             *
         FROM
-            userpostlikes lik
+            user_post_likes lik
         WHERE
             lik.ID_USER = ?
             AND
@@ -138,7 +138,7 @@ class PostRepository
             // L'utilisateur a déjà aimé ce post, supprimer le like
             $stmt = $this->db->prepare("
             DELETE FROM
-                userpostlikes
+                user_post_likes
             WHERE
                 ID_USER = ?
                 AND
@@ -350,7 +350,7 @@ class PostRepository
 
     public function hasLiked($userId, $postId)
     {
-        $stmt = $this->db->prepare("SELECT * FROM userpostlikes WHERE ID_USER = ? AND ID_REGULAR_POST = ?");
+        $stmt = $this->db->prepare("SELECT * FROM user_post_likes WHERE ID_USER = ? AND ID_REGULAR_POST = ?");
         $stmt->bind_param("ii", $userId, $postId);
         $stmt->execute();
         $result = $stmt->get_result();

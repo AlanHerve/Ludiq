@@ -5,6 +5,8 @@ import { Location } from "@angular/common";
 import { UserDTO } from "../../../models/user-dto";
 import { UserService } from "../../../services/user.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { CustomValidators } from "../../../custom-validators";
+
 
 @Component({
   selector: 'app-form-modify-profile',
@@ -33,12 +35,18 @@ export class FormModifyProfileComponent extends Form implements OnInit {
       }
     });
 
-    this.profileForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      username: ['', Validators.required],
-      password: [''],
-      confirm_password: [''],
-    }, { validator: this.passwordMatchValidator });
+    this.profileForm = this.formBuilder.group(
+      {
+        name: ["", Validators.required],
+        username: ["", Validators.required],
+        password: [""],
+        confirm_password: [""],
+        avatar: [],
+      },
+      {
+        validator: CustomValidators.confirmEqualValidator("password", "confirm_password"),
+      }
+    );
   }
 
   modifyProfile(): void {
@@ -46,6 +54,7 @@ export class FormModifyProfileComponent extends Form implements OnInit {
     const username = this.profileForm.value.username;
     const password = this.profileForm.value.password;
     const confirm = this.profileForm.value.confirm_password;
+    const avatar = this.selectedFile;
 
     if (password !== confirm) {
       console.error('Password and confirmation password do not match.');
@@ -64,7 +73,7 @@ export class FormModifyProfileComponent extends Form implements OnInit {
       updatedUser.password = password;
     }
 
-    this.userService.updateUserProfile(updatedUser)
+    this.userService.updateUserProfile(updatedUser, avatar)
       .subscribe({
         next: (user) => {
           console.log('Profile updated successfully!', user);
