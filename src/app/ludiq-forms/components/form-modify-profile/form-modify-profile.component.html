@@ -13,12 +13,36 @@
     </div>
     <input id="avatar" class="invisible" type="file" name="avatar" (change)="onAvatarChange($event)" formControlName="avatar">
     <input name="name" [value]="userDTO.name" formControlName="name">
-    <input name="username" [value]="userDTO.username" formControlName="username">
-    <input name="password" placeholder="New password" formControlName="password">
-    <input name="confirm" placeholder="Confirm new password" formControlName="confirm_password">
-    <div class="error-message" *ngIf="profileForm.hasError('passwordMismatch') && profileForm.touched">
-      Password and confirmation do not match.
+    <div *ngIf="profileForm.controls['name'].dirty && !profileForm.controls['name'].valid">
+      Name not valid
+      <p *ngIf="profileForm.controls['name'].hasError('minlength')">La taille minimum n'est pas respectée (4)</p>
+      <p *ngIf="profileForm.controls['name'].hasError('maxlength')">La taille maximum n'est pas respectée (20)</p>
     </div>
+    <input name="pseudo" [value]="userDTO.username" formControlName="pseudo">
+
+    <div *ngIf="profileForm.controls['pseudo'].dirty && !profileForm.controls['pseudo'].valid">
+      Username not valid
+      <p *ngIf="profileForm.controls['pseudo'].hasError('minlength')">La taille minimum n'est pas respectée (4)</p>
+      <p *ngIf="profileForm.controls['pseudo'].hasError('maxlength')">La taille maximum n'est pas respectée (20)</p>
+    </div>
+
+    <input name="password" placeholder="New password" formControlName="password">
+
+    <div *ngIf="profileForm.controls['password'].dirty && !profileForm.controls['password'].valid">
+      Password not valid
+      <p *ngIf="profileForm.controls['password'].hasError('pattern')">You need to have at least 1 capital letter, 1 number and 1 special character</p>
+      <p *ngIf="profileForm.controls['password'].hasError('minlength')">Your password must have more than 8 characters</p>
+    </div>
+
+
+    <input name="confirm" placeholder="Confirm new password" formControlName="confirm">
+
+    <div *ngIf="profileForm.controls['password'].dirty && profileForm.getError('noMatch')">
+      Confirmation password not valid
+      <p *ngIf="!profileForm.controls['confirm'].dirty">Please confirm your password</p>
+      <p *ngIf="profileForm.getError('noMatch')">Password and confirmation don't match</p>
+    </div>
+
     <div class="confirmation-message" *ngIf="isProfileModified">
       Profile updated successfully!
     </div>

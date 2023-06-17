@@ -32,8 +32,8 @@
            placeholder="Password" [ngClass]="{'valid-input': createForm.controls['password'].valid && createForm.controls['confirm'].valid && !createForm.getError('noMatch')}">
 
     <div *ngIf="createForm.controls['password'].dirty && !createForm.controls['password'].valid">
-      Password not
-      <p *ngIf="!createForm.controls['password'].hasError('pattern')">You need to have at least 1 capital letter, 1 number and 1 special character</p>
+      Password not valid
+      <p *ngIf="createForm.controls['password'].hasError('pattern')">You need to have at least 1 capital letter, 1 number and 1 special character</p>
       <p *ngIf="createForm.controls['password'].hasError('minlength')">Your password must have more than 8 characters</p>
     </div>
 
@@ -41,7 +41,7 @@
            [ngClass]="{'valid-input': createForm.controls['confirm'].valid && !createForm.getError('noMatch')}">
 
     <div *ngIf="createForm.controls['password'].dirty && createForm.getError('noMatch')">
-      not valid confirm
+      Confirmation password not valid
       <p *ngIf="!createForm.controls['confirm'].dirty">Please confirm your password</p>
       <p *ngIf="createForm.getError('noMatch')">Password and confirmation don't match</p>
     </div>

@@ -39,23 +39,34 @@ export class FormModifyProfileComponent extends Form implements OnInit, Image {
 
     this.profileForm = this.formBuilder.group(
       {
-        name: ["", Validators.required],
-        username: ["", Validators.required],
-        password: [""],
-        confirm_password: [""],
+        name: [null, [Validators.required
+          , Validators.minLength(4)
+          , Validators.maxLength(20)
+          , Validators.pattern(/^[a-zA-Z0-9]*$/)
+        ]],
+        pseudo: [null, [Validators.required
+          , Validators.minLength(4)
+          , Validators.maxLength(20)
+          , Validators.pattern(/^[a-zA-Z0-9]*$/)
+        ]],
+        password: [null, [Validators.required
+          , Validators.minLength(8)
+          , Validators.maxLength(20)
+          , Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/)
+        ]],
+        confirm: [null, [Validators.required]],
         avatar: [],
+      },{
+        validators: [CustomValidators.confirmEqualValidator('password', 'confirm')],
       },
-      {
-        validator: CustomValidators.confirmEqualValidator("password", "confirm_password"),
-      }
     );
   }
 
   modifyProfile(): void {
     const name = this.profileForm.value.name;
-    const username = this.profileForm.value.username;
+    const username = this.profileForm.value.pseudo;
     const password = this.profileForm.value.password;
-    const confirm = this.profileForm.value.confirm_password;
+    const confirm = this.profileForm.value.confirm;
     const avatar = this.selectedFile;
 
     if (password !== confirm) {
@@ -68,7 +79,7 @@ export class FormModifyProfileComponent extends Form implements OnInit, Image {
     if (this.profileForm.controls['name'].dirty) {
       updatedUser.name = name;
     }
-    if (this.profileForm.controls['username'].dirty) {
+    if (this.profileForm.controls['pseudo'].dirty) {
       updatedUser.username = username;
     }
     if (this.profileForm.controls['password'].dirty) {
@@ -82,7 +93,7 @@ export class FormModifyProfileComponent extends Form implements OnInit, Image {
           this.isProfileModified = true;
           setTimeout(() => {
             this.isProfileModified = false;
-            this.router.navigate(['/profile', this.userService.getCurrentId()]);
+            this.onClose();
           }, 2000);
         },
         error: (error) => {
@@ -96,19 +107,8 @@ export class FormModifyProfileComponent extends Form implements OnInit, Image {
     this.selectedFile = files.item(0);
   }
 
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password')?.value;
-    const confirm = form.get('confirm_password')?.value;
-    if (password !== confirm) {
-      form.get('confirm_password')?.setErrors({ passwordMismatch: true });
-    } else {
-      form.get('confirm_password')?.setErrors(null);
-    }
-  }
-
   loadImage(image: string): string {
     return imagesUrl + "/" + image;
   }
-
 
 }
