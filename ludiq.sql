@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 17 juin 2023 à 10:38
+-- Généré le : sam. 17 juin 2023 à 11:55
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -87,6 +87,13 @@ CREATE TABLE `activity_participants` (
   `ID_ACTIVITY` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `activity_participants`
+--
+
+INSERT INTO `activity_participants` (`ID_ACTIVITY_PARTICIPANTS`, `ID_USER`, `ID_ACTIVITY`) VALUES
+(1, 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -100,6 +107,13 @@ CREATE TABLE `comment` (
   `ID_REGULAR_POST` int(11) NOT NULL,
   `TIME` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Déchargement des données de la table `comment`
+--
+
+INSERT INTO `comment` (`ID_COMMENT`, `ID_USER`, `CONTENT`, `ID_REGULAR_POST`, `TIME`) VALUES
+(10, 2, 'azerty', 15, '2023-06-17 08:47:07');
 
 -- --------------------------------------------------------
 
@@ -273,7 +287,7 @@ CREATE TABLE `regular_post` (
 INSERT INTO `regular_post` (`ID_REGULAR_POST`, `ID_USER`, `ID_HOBBY`, `DESCRIPTION`, `IMAGE1`, `IMAGE2`, `IMAGE3`, `IMAGE4`, `MODIFIED`, `LIKES`, `TIME`) VALUES
 (13, 2, NULL, 'aszdefrgtgrfedz', NULL, NULL, NULL, NULL, 0, 0, '2023-06-17 07:53:23'),
 (14, 2, NULL, 'coucou', '648d668758df2_coronavirus-2.jpg', NULL, NULL, NULL, 0, 0, '2023-06-17 07:53:43'),
-(15, 2, 1, 'hello!', '648d669869588_Cooking.jpg', NULL, NULL, NULL, 0, 1, '2023-06-17 07:57:23');
+(15, 2, 1, 'hello!', '648d669869588_Cooking.jpg', NULL, NULL, NULL, 0, 1, '2023-06-17 09:55:28');
 
 -- --------------------------------------------------------
 
@@ -300,6 +314,18 @@ INSERT INTO `user` (`ID_USER`, `USER_NAME`, `USER_PSEUDO`, `USER_PASSWORD`, `EMA
 (3, 'Tegg', 'Tegg', '$2y$10$bQtqW3WS/LLj12H6AYha3uvW1z8xYRTWWElmQq88zFJq6DGuCvXua', 'Tegg@gmail.com', NULL, NULL),
 (4, 'Sand', 'Sand', '$2y$10$9yzrcEouJzVE1FQidXVVjuRMwriCsqKJ3J3MEFNndKTz5fnGiKWOW', 'Sand@gmail.com', NULL, NULL),
 (5, 'Tact', 'Tact', '$2y$10$BzPR88BwQBMYKYnA04.NsOFWAmettI9.7t.SLzN01LQKLO4C8kzBa', 'tact@gmail.com', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user_post_likes`
+--
+
+CREATE TABLE `user_post_likes` (
+  `ID_USER_POST_LIKES` int(11) NOT NULL,
+  `ID_USER` int(11) DEFAULT NULL,
+  `ID_REGULAR_POST` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Index pour les tables déchargées
@@ -396,6 +422,14 @@ ALTER TABLE `user`
   ADD KEY `FAVORITE_HOBBY` (`FAVORITE_HOBBY`);
 
 --
+-- Index pour la table `user_post_likes`
+--
+ALTER TABLE `user_post_likes`
+  ADD PRIMARY KEY (`ID_USER_POST_LIKES`),
+  ADD KEY `ID_USER` (`ID_USER`),
+  ADD KEY `ID_REGULAR_POST` (`ID_REGULAR_POST`);
+
+--
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
@@ -406,10 +440,16 @@ ALTER TABLE `activity`
   MODIFY `ID_ACTIVITY` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT pour la table `activity_participants`
+--
+ALTER TABLE `activity_participants`
+  MODIFY `ID_ACTIVITY_PARTICIPANTS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT pour la table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `ID_COMMENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID_COMMENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `favorite_hobby`
@@ -452,6 +492,12 @@ ALTER TABLE `regular_post`
 --
 ALTER TABLE `user`
   MODIFY `ID_USER` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT pour la table `user_post_likes`
+--
+ALTER TABLE `user_post_likes`
+  MODIFY `ID_USER_POST_LIKES` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Contraintes pour les tables déchargées
@@ -531,6 +577,13 @@ ALTER TABLE `regular_post`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`FAVORITE_HOBBY`) REFERENCES `hobby` (`ID_HOBBY`) ON DELETE SET NULL;
+
+--
+-- Contraintes pour la table `user_post_likes`
+--
+ALTER TABLE `user_post_likes`
+  ADD CONSTRAINT `user_post_likes_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`),
+  ADD CONSTRAINT `user_post_likes_ibfk_2` FOREIGN KEY (`ID_REGULAR_POST`) REFERENCES `regular_post` (`ID_REGULAR_POST`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

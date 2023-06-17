@@ -1,5 +1,10 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type");
+
+
 require_once '../Database.php';
 require_once '../DTOs/PostDTO.php';
 require_once '../DTOs/UserDTO.php';
@@ -75,8 +80,131 @@ class PostRepository
       }
       return $postsDTO;
     }
-    return [];
   }
+
+
+
+    function likePost($userId, $postId)
+    {
+        //Vérifie d'abord si l'utilisateur a déjà aimé ce post
+        $stmt = $this->db->prepare("
+        SELECT
+            *
+        FROM
+            user_post_likes lik
+        WHERE
+            lik.ID_USER = ?
+            AND
+            lik.ID_REGULAR_POST = ?
+        ;
+    ");
+        $stmt->bind_param("ii", $userId, $postId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            // L'utilisateur a déjà aimé ce post, ne rien faire
+            return [];
+        }
+
+        // L'utilisateur n'a pas encore aimé ce post, ajoute un like
+        $stmt = $this->db->prepare("
+        INSERT INTO
+            user_post_likes (ID_USER, ID_REGULAR_POST)
+        VALUES (?, ?)
+        ;
+    ");
+        $stmt->bind_param("ii", $userId, $postId);
+        $stmt->execute();
+
+        // Augmente également le nombre de likes du post
+        $stmt = $this->db->prepare("
+        UPDATE
+            regular_post reg
+        SET
+            reg.LIKES = reg.LIKES + 1
+        WHERE
+            reg.ID_REGULAR_POST = ?
+        ;
+    ");
+        $stmt->bind_param("i", $postId);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $response = array(
+                'success' => true
+            );
+        } else {
+            $response = array(
+                'success' => false
+            );
+        }
+
+        return $response;
+    }
+
+
+    function unlikePost($userId, $postId)
+    {
+        // Vérifie d'abord si l'utilisateur a déjà aimé ce post
+        $stmt = $this->db->prepare("
+        SELECT
+            *
+        FROM
+            user_post_likes lik
+        WHERE
+            lik.ID_USER = ?
+            AND
+            lik.ID_REGULAR_POST = ?
+        ;
+    ");
+        $stmt->bind_param("ii", $userId, $postId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            // L'utilisateur a déjà aimé ce post, supprimer le like
+            $stmt = $this->db->prepare("
+            DELETE FROM
+                user_post_likes
+            WHERE
+                ID_USER = ?
+                AND
+                ID_REGULAR_POST = ?
+            ;
+        ");
+            $stmt->bind_param("ii", $userId, $postId);
+            $stmt->execute();
+
+            // Diminue également le nombre de likes du post
+            $stmt = $this->db->prepare("
+            UPDATE
+                regular_post reg
+            SET
+                reg.LIKES = reg.LIKES - 1
+            WHERE
+                reg.ID_REGULAR_POST = ?
+            ;
+        ");
+            $stmt->bind_param("i", $postId);
+            $stmt->execute();
+
+            if ($stmt->affected_rows > 0) {
+                $response = array(
+                    'success' => true
+                );
+            } else {
+                $response = array(
+                    'success' => false
+                );
+            }
+
+            return $response;
+        }
+
+        // L'utilisateur n'a pas encore aimé ce post, ne rien faire
+        return [];
+    }
 
   public function findPostById($id)
   {
@@ -100,72 +228,142 @@ class PostRepository
 
     $result = $stmt->get_result();
 
-    if ($result->num_rows == 1) {
-      $row = $result->fetch_assoc();
-      $images = [$row['IMAGE1'], $row['IMAGE2'], $row['IMAGE3'], $row['IMAGE4']];
-      $userDTO = $this->userRepository->findUserById($row['ID_USER']);
-      $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
-      return new PostDTO($row['ID_REGULAR_POST'], $userDTO, $hobbyDTO, $row['DESCRIPTION'],
-        $images, $row['MODIFIED'], $row['LIKES'], $row['TIME']);
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $images = [$row['IMAGE1'], $row['IMAGE2'], $row['IMAGE3'], $row['IMAGE4']];
+            $userDTO = $this->userRepository->findUserById($row['ID_USER']);
+            $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
+            return new PostDTO($row['ID_REGULAR_POST'], $userDTO, $hobbyDTO, $row['DESCRIPTION'],
+                $images, $row['MODIFIED'], $row['LIKES'], $row['TIME']);
+        }
     }
 
-    return null;
-  }
-
-  public function likePost($postId)
-  {
-    $stmt = $this->db->prepare("UPDATE regular_post SET LIKES = LIKES + 1 WHERE ID_REGULAR_POST = ?");
-    $stmt->bind_param("i", $postId);
-    $stmt->execute();
-
-    if ($stmt->affected_rows > 0) {
-      $response = array(
-        'success' => true
-      );
-    } else {
-      $response = array(
-        'success' => false
-      );
+    public function getAllPosts()
+    {
+        $stmt = $this->db->prepare("SELECT * FROM regular_post reg ORDER BY reg.TIME DESC");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $postsDTO = [];
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $postDTO = $this->findPostById($row['ID_REGULAR_POST']);
+                $postDTO->commentCount = $this->getCommentCount($row['ID_REGULAR_POST']);
+                $postDTO->comments = $this->getComments($row['ID_REGULAR_POST']);
+                $postsDTO[] = $postDTO;
+            }
+        }
+        return $postsDTO;
     }
 
-    return json_encode($response);
-  }
 
-  public function unlikePost($postId)
-  {
-    $stmt = $this->db->prepare("UPDATE regular_post SET LIKES = LIKES - 1 WHERE ID_REGULAR_POST = ?");
-    $stmt->bind_param("i", $postId);
-    $stmt->execute();
-
-    if ($stmt->affected_rows > 0) {
-      $response = array(
-        'success' => true
-      );
-    } else {
-      $response = array(
-        'success' => false
-      );
+    public function getNumPosts($id_user)
+    {
+        $stmt = $this->db->prepare("
+      SELECT
+        COUNT(*)    AS num_posts
+      FROM
+        regular_post reg
+      WHERE
+        reg.ID_USER = ?
+      ;
+    ");
+        $stmt->bind_param("i", $id_user);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row['num_posts'];
     }
 
-    return json_encode($response);
-  }
+    public function getPosts($mode, PostDTO $regularPostDTO)
+    {
+        $result = null;
+        $arrayPost = [];
+        $success = false;
+        $content = 0;
 
-  public function getAllPosts()
-  {
-    $stmt = $this->db->prepare("SELECT * FROM regular_post reg ORDER BY reg.TIME DESC");
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $postsDTO = [];
-    if ($result->num_rows > 0) {
-      while ($row = $result->fetch_assoc())
-        $postsDTO[] = $this->findPostById($row['ID_REGULAR_POST']);
+        if ($mode == "search") {
+
+
+        } elseif ($mode == "userPage") {
+
+
+            $id_user = $regularPostDTO->id;
+
+            $stmt = $this->db->prepare("SELECT * FROM regular_post reg WHERE reg.ID_USER=?");
+            $stmt->bind_param("s", $id_user);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            if ($result) {
+                $success = true;
+                while ($row = $result->fetch_assoc()) {
+                    $content++;
+                    array_push($arrayPost, $row);
+                }
+            }
+            if ($success) {
+
+                if ($content == 0) {
+                    $response = array(
+                        'success' => true,
+                        'content' => "empty"
+                    );
+                } else {
+                    $response = array(
+                        'success' => true,
+                        'content' => "some",
+                        'posts' => $arrayPost
+                    );
+                }
+
+            } else {
+                $reponse = array(
+                    'success' => false
+                );
+            }
+
+
+        }
+
     }
-    return $postsDTO;
-  }
 
-  public function getHobbyPosts($id_hobby)
-  {
-    $stmt = $this->db->prepare("
+    public function getSinglePost($id)
+    {
+
+    }
+
+    public function getCommentCount($postId)
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(*) as commentCount FROM comment WHERE ID_REGULAR_POST = ?");
+        $stmt->bind_param("i", $postId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row['commentCount'];
+    }
+
+    public function getComments($postId)
+    {
+        $commentRepository = CommentRepository::getInstance();
+        return $commentRepository->getComments($postId);
+    }
+
+    public function hasLiked($userId, $postId)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM user_post_likes WHERE ID_USER = ? AND ID_REGULAR_POST = ?");
+        $stmt->bind_param("ii", $userId, $postId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getHobbyPosts($id_hobby)
+    {
+        $stmt = $this->db->prepare("
+>>>>>>> origin/eileen2
             SELECT
                 *
             FROM
@@ -186,24 +384,6 @@ class PostRepository
         $postsDTO[] = $this->findPostById($row['ID_REGULAR_POST']);
     }
     return $postsDTO;
-  }
-
-  public function getNumPosts($id_user)
-  {
-    $stmt = $this->db->prepare("
-            SELECT
-                COUNT(*)    AS num_posts
-            FROM
-                regular_post reg
-            WHERE
-                reg.ID_USER = ?
-            ;
-        ");
-    $stmt->bind_param("i", $id_user);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    return $row['num_posts'];
   }
 }
 

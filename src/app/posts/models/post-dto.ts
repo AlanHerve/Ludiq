@@ -1,5 +1,6 @@
 import {UserDTO} from "../../models/user-dto";
 import {HobbyDTO} from "../../models/hobby-dto";
+import {CommentDTO} from "./comment-dto";
 
 export class PostDTO {
 
@@ -10,6 +11,7 @@ export class PostDTO {
               public images : (string | null)[],
               public modified: number,
               public likes: number,
+              public comments: CommentDTO[],
               public time: string
   ) { }
 }

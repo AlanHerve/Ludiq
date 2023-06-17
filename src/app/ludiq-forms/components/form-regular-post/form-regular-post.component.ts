@@ -40,6 +40,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     userDTO: new UserDTO(-1, '', ''),
     hobbyDTO: new HobbyDTO(-1, '', ''),
     likes: 0,
+    comments: [],
     description: '',
     time: '',
     modified: 0,

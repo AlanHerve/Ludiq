@@ -31,7 +31,22 @@ export class PostComponent implements OnInit, Image {
   }
 
   ngOnInit(): void {
+    /*this.postsService.getPost(this.postDTO.id.toString()).subscribe({
+      next: (response) => {
+        this.postDTO = response;
+        this.postDTO.comments = response.comments; // Ajoutez cette ligne
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération du post : ', error);
+      }
+    });*/
+
     this.determineDetailedPostOrNot();
+
+    this.postService.hasLiked(this.postDTO.id).subscribe(hasLiked => {
+      this.isLiked = hasLiked;
+      console.log("Has liked : " + hasLiked);
+    });
   }
 
   /**
@@ -93,11 +108,11 @@ export class PostComponent implements OnInit, Image {
     this.isLiked = !this.isLiked;
 
     if (this.isLiked) {
-      this.postService.likePost(this.postDTO.id).subscribe(() => {
+      this.postService.likePost(this.postDTO.id,  this.userService.getCurrentId()).subscribe(() => {
         this.postDTO.likes++;
       });
     } else {
-      this.postService.unlikePost(this.postDTO.id).subscribe(() => {
+      this.postService.unlikePost(this.postDTO.id, this.userService.getCurrentId()).subscribe(() => {
         this.postDTO.likes--;
       });
     }

@@ -220,14 +220,11 @@ class ActivityRepository
       }
       return $activitiesDTO;
     }
-
-    return null;
-
   }
 
-  public function getActivityParticipants($activityId)
-  {
-    $stmt = $this->db->prepare("
+
+    public function getActivityParticipants($activityId) {
+        $stmt = $this->db->prepare("
             SELECT
                 par.ID_USER
             FROM

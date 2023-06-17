@@ -1,22 +1,23 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {apiUrl} from "../../services/urls";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
+import {HobbyDTO} from "../../models/hobby-dto";
+import {HobbyFlashcardDTO} from "../../models/hobby-flashcard-dto";
 import {CommentDTO} from "../models/comment-dto";
 import {UserService} from "../../services/user.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
+export class PostsService {
 
   constructor(private http: HttpClient, private userService: UserService) {}
 
-
-  newPost(formData: FormData): Observable<boolean> {
-    return this.http.post<boolean>(`${apiUrl}/post.php`, formData);
+  newPost(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${apiUrl}/post.php`, formData);
   }
 
   getAllPosts(): Observable<PostDTO[]> {
@@ -25,11 +26,20 @@ export class PostService {
     return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
   }
 
-  getHobbyPosts(id_hobby: number): Observable<PostDTO[]> {
-    const params = new HttpParams()
-      .set('type', 'hobby')
-      .set('id_hobby', id_hobby);
-    return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
+  newHobbyPost(hobbyPostDTO: HobbyFlashcardDTO) {
+    return this.http.post<HobbyDTO>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+      map(response => {
+        return response;
+      })
+    );
+  }
+
+  getImage(imageName: string): Observable<Blob> {
+    const options = { responseType: 'arraybuffer' as 'json' };
+    const params = new HttpParams().set('imageName', imageName);
+    return this.http.get<Blob>(`${apiUrl}/images.php`, { params, ...options }).pipe(
+      map(response => new Blob([response], { type: 'image/jpeg' }))
+    );
   }
 
   likePost(postId: number, userId: number): Observable<any> {
@@ -54,19 +64,11 @@ export class PostService {
     return this.http.post<any>(`${apiUrl}/comment.php`, comment);
   }
 
-  getAllComments(postID: number): Observable<CommentDTO[]> {
-    const params = new HttpParams()
-      .set('type', 'all_comments')
-      .set('postID', postID)
-    return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
-  }
 
-  getThreeComments(postID: number): Observable<CommentDTO[]> {
-    const params = new HttpParams()
-      .set('type', 'three_comments')
-      .set('postID', postID)
-    return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
-  }
+  /*getPost(postId: string): Observable<PostDTO> {
+    return this.http.get<PostDTO>(`${apiUrl}/posts/${postId}`);
+  }*/
+
 
   hasLiked(postId: number): Observable<boolean> {
     const userId = this.userService.getCurrentId();
@@ -77,10 +79,7 @@ export class PostService {
     return this.http.get<boolean>(`${apiUrl}/post.php`, {params});
   }
 
-  findPostById(postID: number): Observable<PostDTO> {
-    const params = new HttpParams()
-      .set('type', 'find_post')
-      .set('postID', postID)
-    return this.http.get<PostDTO>(`${apiUrl}/post.php`, {params});
-  }
+
+
+
 }

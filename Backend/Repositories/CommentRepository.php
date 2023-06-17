@@ -24,10 +24,10 @@ class CommentRepository
     return self::$instance;
   }
 
-  public function addComment($id_user, $content, $id_regular_post)
+  public function addComment($userId, $content, $id_regular_post)
   {
     $stmt = $this->db->prepare("INSERT INTO comment (ID_USER, CONTENT, ID_REGULAR_POST) VALUES (?, ?, ?)");
-    $stmt->bind_param("isi", $id_user, $content, $id_regular_post);
+    $stmt->bind_param("isi", $userId, $content, $id_regular_post);
     $stmt->execute();
     if ($stmt->affected_rows > 0) {
       $response = array('success' => true);
@@ -73,33 +73,34 @@ class CommentRepository
     } else {
       $response = array('success' => false);
     }
-
+    return json_encode($response);
   }
-    public function getAllComments($postID)
-    {
-        $stmt = $this->db->prepare("
-            SELECT
-                *
-            FROM
-                comment com
-            WHERE
-                com.ID_REGULAR_POST = ?
-            ;
-        ");
-        $stmt->bind_param('i', $postID);
-        $stmt->execute();
 
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $commentsDTO = [];
-            while ($row = $result->fetch_assoc()) {
-                $userDTO = $this->userRepository->findUserById($row['ID_USER']);
-                $commentsDTO[] = new CommentDTO($row['ID_COMMENT'], $userDTO, $row['CONTENT'], $row['ID_REGULAR_POST'], $row['TIME']);
-            }
-            return $commentsDTO;
-        }
-        return null;
+  public function getAllComments($postID)
+  {
+    $stmt = $this->db->prepare("
+        SELECT
+            *
+        FROM
+            comment com
+        WHERE
+            com.ID_REGULAR_POST = ?
+        ;
+    ");
+    $stmt->bind_param('i', $postID);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+      $commentsDTO = [];
+      while ($row = $result->fetch_assoc()) {
+        $userDTO = $this->userRepository->findUserById($row['ID_USER']);
+        $commentsDTO[] = new CommentDTO($row['ID_COMMENT'], $userDTO, $row['CONTENT'], $row['ID_REGULAR_POST'], $row['TIME']);
+      }
+      return $commentsDTO;
     }
+    return null;
+  }
 
   public function getThreeComments($postID)
   {

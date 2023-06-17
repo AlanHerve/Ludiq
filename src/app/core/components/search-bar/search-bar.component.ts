@@ -137,7 +137,7 @@ export class SearchBarComponent implements OnInit {
         response.forEach((post) => {
           if (post.id) {
             const postDTO = new PostDTO(post.id, post.userDTO, post.hobbyDTO, post.description,
-                                        post.images, post.modified, post.likes, post.time);
+                                        post.images, post.modified, post.likes, post.comments, post.time);
             const existingPost = this.searchResults.find(post => post.id == postDTO.id);
             if (!existingPost) {
               this.searchResults.push(postDTO);

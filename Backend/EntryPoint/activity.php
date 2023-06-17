@@ -14,12 +14,11 @@ require_once "../Repositories/ActivityRepository.php";
 require_once "../Repositories/UserRepository.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $body = file_get_contents('php://input');
-    $data = json_decode($body, true);
+  $body = file_get_contents('php://input');
+  $data = json_decode($body, true);
 
 
-    if (isset($data['type'])) {
-
+  if (isset($data['type'])) {
          $activityRepository = ActivityRepository::getInstance();
          if ($data['type'] === 'activity_post') {
          }elseif ($data['type'] === 'register_activity') {
@@ -47,48 +46,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
     }
 
-
 }
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        if (isset($_GET['type'])) {
-            $activityRepository = ActivityRepository::getInstance();
-            if ($_GET['type'] === 'top3') {
-                echo json_encode($activityRepository->getTop3());
-            }
-            if ($_GET['type'] === 'all_activities') {
-                echo json_encode($activityRepository->getAllActivities());
-            }
-            if ($_GET['type'] === 'activity') {
-                echo json_encode($activityRepository->findActivityById($_GET['activityId']));
-            }
-            if ($_GET['type'] === 'activity_participants') {
-                echo json_encode($activityRepository->getActivityParticipants($_GET['activityId']));
-            }
-            if ($_GET['type'] === 'hobby_activities'){
-                echo json_encode($activityRepository->getHobbyActivities($_GET['hobbyId']));
-            }
-        }
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  if (isset($_GET['type'])) {
+    $activityRepository = ActivityRepository::getInstance();
+    if ($_GET['type'] === 'top3') {
+      echo json_encode($activityRepository->getTop3());
     }
-
-    function saveFiles($images)
-    {
-        $targetDir = '../assets/images/';
-
-        if (!isset($images)) return null;
-
-        $uploadedFiles = [];
-        for ($i = 0; $i < count($images['name']); $i++) {
-            $uniqueFilename = uniqid() . '_' . basename($images['name'][$i]);
-            $targetFilePath = $targetDir . $uniqueFilename;
-
-            if (move_uploaded_file($images['tmp_name'][$i], $targetFilePath)) {
-                $uploadedFiles[] .= $uniqueFilename;
-                echo 'File downloaded successfully!\n';
-            } else {
-                echo 'Error while downloading file : ' . $images['tmp_name'][$i] . '\n';
-            }
-        }
-        return $uploadedFiles;
-
+    if ($_GET['type'] === 'all_activities') {
+      echo json_encode($activityRepository->getAllActivities());
+    }
+    if ($_GET['type'] === 'activity') {
+      echo json_encode($activityRepository->findActivityById($_GET['activityId']));
+    }
+    if ($_GET['type'] === 'activity_participants') {
+      echo json_encode($activityRepository->getActivityParticipants($_GET['activityId']));
+    }
+    if ($_GET['type'] === 'hobby_activities'){
+      echo json_encode($activityRepository->getHobbyActivities($_GET['hobbyId']));
+    }
+  }
 }
 
+function saveFiles($images)
+{
+  $targetDir = '../assets/images/';
+
+  if (!isset($images)) return null;
+
+  $uploadedFiles = [];
+  for ($i = 0; $i < count($images['name']); $i++) {
+    $uniqueFilename = uniqid() . '_' . basename($images['name'][$i]);
+    $targetFilePath = $targetDir . $uniqueFilename;
+
+    if (move_uploaded_file($images['tmp_name'][$i], $targetFilePath)) {
+      $uploadedFiles[] .= $uniqueFilename;
+      echo 'File downloaded successfully!\n';
+    } else {
+      echo 'Error while downloading file : ' . $images['tmp_name'][$i] . '\n';
+    }
+  }
+  return $uploadedFiles;
+
+}
