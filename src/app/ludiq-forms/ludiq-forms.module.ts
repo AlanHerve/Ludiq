@@ -14,6 +14,7 @@ import { FormModifyProfileComponent } from './components/form-modify-profile/for
 
 import { FormActivityComponent } from './components/form-activity/form-activity/form-activity.component';
 import { FormActivityModule } from './components/form-activity/form-activity/form-activity.module';
+import { FormCreateOrganizationComponent } from './components/form-create-organization/form-create-organization.component';
 
 
 
@@ -25,7 +26,8 @@ import { FormActivityModule } from './components/form-activity/form-activity/for
     FormNewPostComponent,
     FormRegularPostComponent,
     FormModifyProfileComponent,
-    FormActivityComponent
+    FormActivityComponent,
+    FormCreateOrganizationComponent
   ],
     exports: [
       FormCreateAccountComponent,

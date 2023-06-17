@@ -63,12 +63,9 @@
 .buttons {
   margin-left: 40px;
   display: flex;
-
+  gap: 20px;
   justify-content: space-between;
   margin-right: 40px;
-}
-.buttons button:nth-child(2) {
-  margin-left: -100px;
 }
 
 .user {

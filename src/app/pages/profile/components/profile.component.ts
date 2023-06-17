@@ -4,7 +4,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UserDTO} from "../../../models/user-dto";
 import {ProfileDTO} from "../models/profile-dto";
 import {ProfileService} from "../services/profile.service";
-import {ActivityDTO} from "../../../posts/models/activity-dto";
 import {FriendService} from "../../messages/services/friend.service";
 import {HobbyFlashcardDTO} from "../../../models/hobby-flashcard-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
@@ -25,6 +24,7 @@ export class ProfileComponent implements Image {
   hobbyFlashcardsDTO: HobbyFlashcardDTO[] = [];
   protected reward: string = "bronze";
   protected type: string = 'posts';
+  protected isPartOfOrganization: boolean = false;
   protected profileDTO: ProfileDTO = {
     userDTO: new UserDTO(-1, '', ''),
     numPosts: 0,
@@ -118,9 +118,10 @@ export class ProfileComponent implements Image {
       next: (response) => {
         this.profileDTO = response;
         this.determineReward();
+        this.isPartOfAnOrganization();
       },
       error: (error) => {
-        console.log('error while accessing to profile informations : ', error);
+        console.log('error while accessing to profile information : ', error);
       }
     });
   }
@@ -155,6 +156,17 @@ export class ProfileComponent implements Image {
 
   isActivityDirector(): boolean {
     return this.profileDTO.activityDirector;
+  }
+
+  isPartOfAnOrganization(): void {
+    this.userService.isPartOfAnOrganization(this.profileDTO.userDTO).subscribe({
+      next: (response) => {
+        this.isPartOfOrganization = response;
+      },
+      error: (error) => {
+        console.log("Error while finding if part of a organization  : ", error)
+      }
+    })
   }
 
   addFriend(): void {

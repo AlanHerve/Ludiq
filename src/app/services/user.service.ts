@@ -74,6 +74,13 @@ export class UserService {
     return token.match(regex)!=null;
   }
 
+  isPartOfAnOrganization(userDTO: UserDTO): Observable<boolean> {
+    const params = new HttpParams()
+      .set('type', 'is_part_of_organization')
+      .set('userId', userDTO.id)
+    return this.http.get<boolean>(`${apiUrl}/user.php`, {params});
+  }
+
   isAbleToDelete(id: number) {
     const compare_id = JSON.parse(localStorage.getItem('currentUser')!).id;
     return compare_id == id;

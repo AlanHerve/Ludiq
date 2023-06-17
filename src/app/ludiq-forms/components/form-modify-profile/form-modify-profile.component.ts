@@ -74,6 +74,9 @@ export class FormModifyProfileComponent extends Form implements OnInit, Image {
     if (this.profileForm.controls['password'].dirty) {
       updatedUser.password = password;
     }
+    else {
+      updatedUser.password = '';
+    }
 
     this.userService.updateUserProfile(updatedUser, avatar)
       .subscribe({
@@ -82,7 +85,7 @@ export class FormModifyProfileComponent extends Form implements OnInit, Image {
           this.isProfileModified = true;
           setTimeout(() => {
             this.isProfileModified = false;
-            this.router.navigate(['/profile', this.userService.getCurrentId()]);
+            this.onClose();
           }, 2000);
         },
         error: (error) => {

@@ -58,7 +58,7 @@ class UserRepository
       $stmt->execute();
     }
 
-    if($stmt->affected_rows > 0) {
+    if ($stmt->affected_rows > 0) {
       return true;
     }
     return false;
@@ -237,18 +237,56 @@ class UserRepository
     $id = $userDTO->id;
     $name = $userDTO->name;
     $username = $userDTO->username;
-    $email = $userDTO->email;
-    $password = password_hash($userDTO->password, PASSWORD_DEFAULT);
     $avatar = $userDTO->avatar;
-    if ($avatar == null) {
-      $stmt = $this->db->prepare("UPDATE user SET USER_NAME = ?, USER_PSEUDO = ?, USER_PASSWORD = ?, EMAIL = ? WHERE ID_USER = ?");
-      $stmt->bind_param("ssssi", $name, $username, $password, $email, $id);
-    } else {
-      $stmt = $this->db->prepare("UPDATE user SET USER_NAME = ?, USER_PSEUDO = ?, USER_PASSWORD = ?, EMAIL = ?, AVATAR = ? WHERE ID_USER = ?");
-      $stmt->bind_param("sssssi", $name, $username, $password, $email, $avatar, $id);
+
+    $query = "UPDATE user SET USER_NAME = ?, USER_PSEUDO = ?";
+    $params = array($name, $username);
+
+    if ($avatar != null) {
+      $query .= ", AVATAR = ?";
+      $params[] = $avatar;
     }
 
-    $stmt->execute();
+    if ($userDTO->password != '') {
+      $password = password_hash($userDTO->password, PASSWORD_DEFAULT);
+      $query .= ", USER_PASSWORD = ?";
+      $params[] = $password;
+    }
+
+    $query .= " WHERE ID_USER = ?";
+    $params[] = $id;
+
+    $stmt = $this->db->prepare($query);
+
+    if ($stmt) {
+      $types = str_repeat('s', count($params) - 1) . 'i'; // All parameters except the last one are strings, and the last one is an int
+      $stmt->bind_param($types, ...$params);
+      $stmt->execute();
+      $stmt->close();
+    }
   }
+
+
+  public function isPartOfAnOrganization(int $userId)
+  {
+    $stmt = $this->db->prepare("
+        SELECT
+            act_d.ID_ORGANIZATION
+        FROM
+            activity_director act_d
+        WHERE
+            act_d.ID_USER = ?
+        ;
+    ");
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if($result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      return $row['ID_ORGANIZATION'] != 1;
+    }
+    return false;
+  }
+
 
 }
