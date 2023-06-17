@@ -11,28 +11,55 @@ import {HobbyDTO} from "../../../models/hobby-dto";
 })
 export class HobbyFlashcardListComponent implements OnInit {
 
-  private id_user: number = 0;
   @Input() hobbyFlashcardsDTO!: HobbyFlashcardDTO[];
-
   @Input() hobbyDTOs!: HobbyDTO[];
+  private id_user: number = 0;
 
-    constructor(private hobbyService:HobbyService, private activatedRoute: ActivatedRoute) {
-      this.activatedRoute.params.subscribe(params => {
-        this.id_user = parseInt(params['id']);
-      });
-
-      console.log("list");
+  constructor(private hobbyService: HobbyService, private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.params.subscribe(params => {
+      this.id_user = parseInt(params['id']);
+    });
 
 
+    this.hobbyService.currentDeleteState.subscribe({
+      next: (response) => {
+        // in case of success
+        let index_to_remove: number;
+        if ((index_to_remove = this.findIndexByIDHobbyPost(response)) != -1) {
+            this.hobbyFlashcardsDTO.splice(index_to_remove, 1);
+        }
+        console.log(response);
+      },
+      error: (error) => {
+        // in case of failure
+        console.error('Could not delete flashcards', error);
+      }
+    });
+
+    console.log("list");
+  }
+
+  findIndexByIDHobbyPost(id_hobby_post: number): number {
+    let i = 0;
+    while (this.hobbyFlashcardsDTO[i].id_hobby_post != id_hobby_post) {
+      i++;
+      if (i == this.hobbyFlashcardsDTO.length) {
+        i = -1;
+        break;
+      }
     }
 
-    addElementToArray(hobbyFlashcard: HobbyFlashcardDTO){
-      console.log("adding");
-      this.hobbyFlashcardsDTO.push(hobbyFlashcard);
-    }
+    return i;
+
+  }
+
+  addElementToArray(hobbyFlashcard: HobbyFlashcardDTO) {
+    console.log("adding");
+    this.hobbyFlashcardsDTO.push(hobbyFlashcard);
+  }
 
   ngOnInit(): void {
-      console.log("ONINIT");
+    console.log("ONINIT");
     for (let i = 0; i < this.hobbyDTOs.length; i++) {
       console.log(this.hobbyDTOs[i]);
     }
