@@ -131,14 +131,33 @@ class OrganizationRepository
 
   public function modifiyActivityDirectorOrganization($userId, $organizationId) {
     $stmt = $this->db->prepare("
+      SELECT
+          act_d.ID_USER
+      FROM
+          activity_director act_d
+      WHERE
+          act_d.ID_USER = ?
+    ");
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows == 0) {
+      $stmt = $this->db->prepare("
+        INSERT INTO
+            activity_director (ID_ORGANIZATION, ID_USER)
+        VALUES
+            (?, ?)
+      ");
+    } else {
+      $stmt = $this->db->prepare("
         UPDATE
             activity_director act_d
         SET
             act_d.ID_ORGANIZATION = ?
         WHERE
             act_d.ID_USER = ?
-        ;
       ");
+    }
     $stmt->bind_param("ii",  $organizationId, $userId);
 
     $stmt->execute();

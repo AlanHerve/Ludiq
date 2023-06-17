@@ -14,7 +14,6 @@ import {TabService} from "../../../shared/service/tab.service";
 import {Image} from "../../../models/image";
 import {imagesUrl} from "../../../services/urls";
 import {OrganizationService} from "../../../services/organization.services";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-profile',
@@ -154,7 +153,7 @@ export class ProfileComponent implements Image {
           }
         })
       },
-        error: () => {
+        error: (error) => {
           console.log("Error while finding organization :", error)
       }
     })

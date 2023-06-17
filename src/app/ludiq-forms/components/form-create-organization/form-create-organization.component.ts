@@ -53,6 +53,4 @@ export class FormCreateOrganizationComponent extends Form implements OnInit {
       }
     })
   }
-
-
 }
