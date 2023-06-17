@@ -37,11 +37,10 @@ export class FormActivityComponent extends Form implements OnInit {
   hobbies : HobbyDTO[] = [];
 
   //previousRoute: string = '';
-  activityDTO: ActivityDTO = {
+  activityDTO: ActivityDTO = { //define a new ActivityDTO
 
     id: -1,
     userDTO: new UserDTO(-1, '', ''),
-
     hobbyDTO: new HobbyDTO(-1, '', ''),
     description:'',
     advancement: '',
@@ -55,7 +54,7 @@ export class FormActivityComponent extends Form implements OnInit {
     organizationDTO: new OrganizationDTO(-1, '', '', '', [], [])
   }
 
-  hobbyPostDTO: HobbyFlashcardDTO = {
+  hobbyPostDTO: HobbyFlashcardDTO = { //define a new hobbyFlashcardDTO
     id_hobby_post: 0,
     id_user: 0,
     id_hobby: 0,
@@ -69,8 +68,6 @@ export class FormActivityComponent extends Form implements OnInit {
               private formBuilder: FormBuilder,
               private activityService:ActivityService,
               private hobbyService: HobbyService,
-              //private router: Router,
-              //private location: Location,
               router: Router,
               location: Location,
               private userService: UserService) {
@@ -81,17 +78,22 @@ export class FormActivityComponent extends Form implements OnInit {
       hobby: [this.hobbies[0], [Validators.required]],
     })
 
+    //form validators for the number of participants
     this.activityForm = this.formBuilder.group({
       activityControl:new FormControl(),
       number: [null, [Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(1)]],
     });
 
 
+
+
   }
   ngOnInit(): void {
     console.log(JSON.parse(localStorage.getItem('currentUser')!).token);
+    //
 
     this.activityDTO.organizationDTO.name_organization = this.activityService.getOrganizationName(JSON.parse(localStorage.getItem('currentUser')!).token);
+    //
     console.log(this.activityDTO.organizationDTO.name_organization);
 
     this.activityDTO.id_organization = this.activityService.getOrganizationID(JSON.parse(localStorage.getItem('currentUser')!).token);
@@ -143,15 +145,8 @@ export class FormActivityComponent extends Form implements OnInit {
     // @ts-ignore
     this.activityDTO.max_registrations = this.activityForm.value.number;
     formData.append('title', this.activityDTO.title);
-
-    console.log( formData.append('title', this.activityDTO.title));
     formData.append('max_registration',this.activityDTO.max_registrations.toString());
     formData.append('advancement',this.activityDTO.advancement);
-    this.onClose()
-    /*const fileName = this.activityDTO.images[0]; // Assuming it's a string representing the file name
-    if (fileName != null) {
-      formData.append('images[]', fileName);
-    }*/
 
     this.activityService.newActivity(formData).subscribe({
        next: (response) => {
