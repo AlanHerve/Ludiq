@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnChanges, SimpleChanges} from '@angular/core';
 import {UserService} from "../../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserDTO} from "../../../models/user-dto";
@@ -22,8 +22,11 @@ import {imagesUrl} from "../../../services/urls";
 })
 export class ProfileComponent implements Image {
 
-  hobbyFlashcardsDTO: HobbyFlashcardDTO[] = [];
+  activitiesDTO: ActivityDTO[] = []
+
   protected reward: string = "bronze";
+  hobbyFlashcardsDTO: HobbyFlashcardDTO[] = [];
+
   protected type: string = 'posts';
   protected profileDTO: ProfileDTO = {
     userDTO: new UserDTO(-1, '', ''),
@@ -57,46 +60,12 @@ export class ProfileComponent implements Image {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-        this.userService.findUserById(parseInt(params['id'])).subscribe({
-          next: (user) => {
-            this.profileDTO.userDTO = user;
-            if(!this.profileDTO.userDTO){
-              this.router.navigateByUrl('/home');
-              return;
-            }
-            this.getProfileInformation();
-
-            this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
-              next: (response) => {
-                console.log(response);
-                this.friendship_status = response;
-              },
-              error: (error) => {
-                console.log("Error while finding if the user is friend with another", error)
-              }
-            });
-
-
-            this.hobbyService.currentMessage.subscribe({
-              next: (response) => {
-               this.profileDTO.numHobbies++;
-              }
-            });
-
-            this.hobbyService.currentDeleteState.subscribe({
-              next: (response) => {
-                this.profileDTO.numHobbies--;
-              }
-            });
-
-            this.hobbyService.currentDeleteState.subscribe((data) => {
-              console.log("returned Data :" + data);
-              this.hobbyFlashcardsDTO.splice(this.findHobbyDTOWithData(data), 1);
-              this
-            });
-          },
-          error: (error) => {
-            console.log("Error while finding user : ", error)
+      this.userService.findUserById(parseInt(params['id'])).subscribe({
+        next: (user) => {
+          this.profileDTO.userDTO = user;
+          if(!this.profileDTO.userDTO){
+            this.router.navigateByUrl('/home');
+            return;
           }
           this.getProfileInformation();
 
@@ -111,13 +80,22 @@ export class ProfileComponent implements Image {
           });
 
 
-          this.hobbyService.currentMessage.subscribe((data) => {
-            this.hobbyFlashcardsDTO.push(this.hobbyService.getNewPost());
+          this.hobbyService.currentMessage.subscribe({
+            next: (response) => {
+              this.profileDTO.numHobbies++;
+            }
+          });
+
+          this.hobbyService.currentDeleteState.subscribe({
+            next: (response) => {
+              this.profileDTO.numHobbies--;
+            }
           });
 
           this.hobbyService.currentDeleteState.subscribe((data) => {
             console.log("returned Data :" + data);
             this.hobbyFlashcardsDTO.splice(this.findHobbyDTOWithData(data), 1);
+            this
           });
         },
         error: (error) => {
@@ -127,24 +105,39 @@ export class ProfileComponent implements Image {
     });
 
 
+
+  }
+
+
+  private determineReward(): void {
+    if(this.profileDTO.numActivities > 50) {
+      this.reward = "gold"
+    }
+    else if(this.profileDTO.numActivities > 25) {
+      this.reward = "iron"
+    }
+    else if(this.profileDTO.numActivities > 0){
+      this.reward = "bronze"
+    }
+    else {
+      this.reward = "nothing"
+    }
   }
 
   getUserType(): string {
-    if (this.isActivityDirector()) return 'Activity Director';
+    if(this.isActivityDirector()) return 'Activity Director';
     return 'Classical User';
   }
 
-  findHobbyDTOWithData(id: number) {
+  findHobbyDTOWithData(id: number){
     const sizeOfArray: number = this.hobbyFlashcardsDTO.length;
-    for (let i = 0; i < sizeOfArray; i++) {
-      if (this.hobbyFlashcardsDTO[i].id_hobby_post == id) return i;
-    }
-    return -1;
-  }
 
-  protected onLogout(): void {
-    this.userService.logoutUser();
-    this.router.navigateByUrl('');
+    for (let i = 0; i < sizeOfArray; i++) {
+      if(this.hobbyFlashcardsDTO[i].id_hobby_post == id) return i;
+    }
+
+    return -1;
+
   }
 
   getProfileInformation(): void {
@@ -158,6 +151,7 @@ export class ProfileComponent implements Image {
       }
     });
   }
+
 
   isConnectedUser(): boolean {
     return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.profileDTO.userDTO.id
@@ -180,8 +174,13 @@ export class ProfileComponent implements Image {
     console.log(this.type);
   }
 
+
+  getID(): number{
+    return this.profileDTO.userDTO.id;
+  }
+
   getActivitiesType(): string {
-    if (this.isActivityDirector()) {
+    if(this.isActivityDirector()) {
       return "organized";
     }
     return "participated";
@@ -195,7 +194,7 @@ export class ProfileComponent implements Image {
     const id_user = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
     this.friendService.addFriend(id_user, this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
-        if (response == "friend") this.friendship_status = response;
+        if(response=="friend") this.friendship_status = response;
         else console.log("Could not add friend");
         console.log(response);
       },
@@ -209,7 +208,7 @@ export class ProfileComponent implements Image {
     const id_user = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
     this.friendService.removeFriend(id_user, this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
-        if (response == "success") this.friendship_status = "!friend";
+        if(response=="success") this.friendship_status = "!friend";
         else console.log("Could not remove friendship");
         console.log(response);
       },
@@ -223,17 +222,10 @@ export class ProfileComponent implements Image {
     return imagesUrl + "/" + image;
   }
 
-  private determineReward(): void {
-    if (this.profileDTO.numActivities > 50) {
-      this.reward = "gold"
-    } else if (this.profileDTO.numActivities > 25) {
-      this.reward = "iron"
-    } else if (this.profileDTO.numActivities > 0) {
-      this.reward = "bronze"
-    } else {
-      this.reward = "nothing"
-    }
+
+
+  protected onLogout(): void {
+    this.userService.logoutUser();
+    this.router.navigateByUrl('');
   }
-
-
-
+}
