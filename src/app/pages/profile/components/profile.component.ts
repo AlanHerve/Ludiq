@@ -268,6 +268,9 @@ export class ProfileComponent implements Image {
           next: (response) => {
             console.log('Favorite hobby updated successfully');
             this.isChoosingFavoriteHobby = false;
+
+            // vider la liste des hobbies après avoir choisi le hobby préféré
+            this.favoriteHobbyList = [];
           },
           error: (error) => {
             console.error('Could not update favorite hobby', error);
@@ -277,6 +280,8 @@ export class ProfileComponent implements Image {
       console.error('Hobby is undefined');
     }
   }
+
+
 
 
 }
