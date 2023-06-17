@@ -47,6 +47,7 @@
       Profile updated successfully!
     </div>
 
-    <button type="submit">Modify</button>
+
+    <button type="submit" class="submit" [disabled]="!profileForm.valid">Modify</button>
   </form>
 </div>
