@@ -1,20 +1,25 @@
-<div class = "background-form">
-  <form (ngSubmit)="modifyProfile()"  [formGroup]="profileForm" >
-    <a class ="cross" [@fadeOut]="true" (click)="onClose()" >&times;</a>
+<div class="background-form">
+  <form (ngSubmit)="modifyProfile()" [formGroup]="profileForm">
     <h1>Profile modification</h1>
+    <span class="cross" (click)="onClose()">&times;</span>
     <div class="image-container">
       <label for="avatar">
         <img class="avatar-modification" src="assets/images/icons/user.png" alt="Search button">
         <div class="overlay"></div>
       </label>
     </div>
-    <input id="avatar" class="invisible" type="file" name="avatar">
+    <input id="avatar" class="invisible" type="file" name="avatar" (change)="onAvatarChange($event)">
+    <input name="name" [value]="userDTO.name" formControlName="name">
+    <input name="username" [value]="userDTO.username" formControlName="username">
+    <input name="password" placeholder="New password" formControlName="password">
+    <input name="confirm" placeholder="Confirm new password" formControlName="confirm_password">
+    <div class="error-message" *ngIf="profileForm.hasError('passwordMismatch') && profileForm.touched">
+      Password and confirmation do not match.
+    </div>
+    <div class="confirmation-message" *ngIf="isProfileModified">
+      Profile updated successfully!
+    </div>
 
-    <input name = "name" value = "{{this.userDTO.name}}" formControlName="name" >
-    <input name = "username" value = "{{this.userDTO.username}}" formControlName="username" >
-    <input name = "password" placeholder = "New password" formControlName="password" >
-    <input name = "confirm" placeholder = "Confirm new password" formControlName="confirm_password" >
-
-    <button type="submit" >Modify</button>
+    <button type="submit">Modify</button>
   </form>
 </div>

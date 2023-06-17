@@ -70,4 +70,9 @@ export class UserService {
     return token.match(regex)!=null;
   }
 
+  updateUserProfile(userDTO: UserDTO): Observable<UserDTO> {
+    return this.http.put<UserDTO>(`${apiUrl}/updateUser.php`, userDTO);
+  }
+
+
 }
