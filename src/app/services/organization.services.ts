@@ -54,4 +54,13 @@ export class OrganizationService {
     };
     return this.http.put<boolean>(`${apiUrl}/organization.php`, options);
   }
+
+  isUserAlreadyInvited(organizationId: any, userId: number): Observable<boolean> {
+    const params = new HttpParams()
+      .set('type', 'isAlreadyInvited')
+      .set('userId', userId)
+      .set('id_organization', organizationId)
+
+    return this.http.put<boolean>(`${apiUrl}/organization.php`, {params});
+  }
 }

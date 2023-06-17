@@ -8,28 +8,39 @@ include("../Repositories/OrganizationRepository.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-}elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-    $function_to_call = $_GET['function_to_call'];
+  $function_to_call = $_GET['function_to_call'];
 
-    if(isset($_GET['id_organization'])) $id_organization = $_GET['id_organization'];
+  if (isset($_GET['id_organization'])) $id_organization = $_GET['id_organization'];
 
-    $organizationRepository = OrganizationRepository::getInstance();
+  $organizationRepository = OrganizationRepository::getInstance();
 
-    switch ($function_to_call) {
-        case "fetchAllOrganization":
-            $organizationRepository->fetchAllOrganizations();
-            break;
-        case "getOrganzationById":
-            $organizationRepository->getOrganzationById($id_organization);
-            break;
+  switch ($function_to_call) {
+    case "fetchAllOrganization":
+      $organizationRepository->fetchAllOrganizations();
+      break;
+    case "getOrganzationById":
+      $organizationRepository->getOrganzationById($id_organization);
+      break;
+    case "isAlreadyInvited":
+      $organizationRepository->isUserAlreadyInvited($id_organization, $_GET['userId']);
 
-    }
-}
-elseif($_SERVER['REQUEST_METHOD'] === 'PUT') {
+  }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
   $body = file_get_contents('php://input');
   $data = json_decode($body, true);
+
   $organizationRepository = OrganizationRepository::getInstance();
+
+  if (isset($data['type'])) {
+    switch ($data['type']) {
+      case "add_invitation":
+        echo json_encode($organizationRepository->sendInvitation($data['organizationId'], $data['userId']));
+        return;
+    }
+  }
+
 
   echo json_encode($organizationRepository->addOrganization($data['userId'], $data['jsonOrganizationDTO']));
 }

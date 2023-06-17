@@ -13,6 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if($_GET['type'] == 'is_part_of_organization') {
       echo json_encode($userRepository->isPartOfAnOrganization($_GET['userId']));
     }
+    elseif($_GET['type'] == 'find_organization') {
+      $organizationRepository = OrganizationRepository::getInstance();
+      echo json_encode($userRepository->findUserOrganization($_GET['userId']));
+    }
     return;
   }
 

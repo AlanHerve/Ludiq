@@ -277,11 +277,36 @@ class UserRepository
     $stmt->bind_param('i', $userId);
     $stmt->execute();
     $result = $stmt->get_result();
-    if($result->num_rows > 0) {
+    if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
       return $row['ID_ORGANIZATION'] != 1;
     }
     return false;
+  }
+
+  public function findUserOrganization($userId)
+  {
+    $stmt = $this->db->prepare("
+        SELECT
+            org.ID_ORGANIZATION
+        FROM
+            organization org
+        INNER JOIN activity_director act_d
+            ON act_d.ID_ORGANIZATION = org.ID_ORGANIZATION
+        WHERE
+            act_d.ID_USER = ?
+    ");
+
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    if($result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      return $this->organizationRepository->findOrganizationById($row['ID_ORGANIZATION']);
+    }
+
+    return null;
   }
 
 

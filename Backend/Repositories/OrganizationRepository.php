@@ -106,7 +106,7 @@ class OrganizationRepository
     $stmt->bind_param('ss', $organization['name_organization'], $organization['description']);
     $stmt->execute();
 
-    if($stmt->affected_rows > 0) {
+    if ($stmt->affected_rows > 0) {
       $organizationId = $stmt->insert_id;
       $this->modifiyActivityDirectorOrganization($userId, $organizationId);
 
@@ -115,21 +115,8 @@ class OrganizationRepository
     return false;
   }
 
-
-  public function addActivityDirector($userId, $organizationId) {
-    $stmt = $this->db->prepare("
-        INSERT INTO
-            activity_director (ID_USER, ID_ORGANIZATION)
-        VALUES
-            (?, ?)
-        ;
-      ");
-    $stmt->bind_param("ii", $userId, $organizationId);
-
-    $stmt->execute();
-  }
-
-  public function modifiyActivityDirectorOrganization($userId, $organizationId) {
+  public function modifiyActivityDirectorOrganization($userId, $organizationId)
+  {
     $stmt = $this->db->prepare("
       SELECT
           act_d.ID_USER
@@ -158,9 +145,88 @@ class OrganizationRepository
             act_d.ID_USER = ?
       ");
     }
-    $stmt->bind_param("ii",  $organizationId, $userId);
+    $stmt->bind_param("ii", $organizationId, $userId);
 
     $stmt->execute();
   }
+
+  public function addActivityDirector($userId, $organizationId)
+  {
+    $stmt = $this->db->prepare("
+        INSERT INTO
+            activity_director (ID_USER, ID_ORGANIZATION)
+        VALUES
+            (?, ?)
+        ;
+      ");
+    $stmt->bind_param("ii", $userId, $organizationId);
+
+    $stmt->execute();
+  }
+
+  public function findOrganizationById($organizationId)
+  {
+    $stmt = $this->db->prepare("
+        SELECT
+            org.*
+        FROM
+            organization org
+        WHERE
+            org.ID_ORGANIZATION = ?
+    ");
+    $stmt->bind_param('i', $organizationId);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if($result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      return new OrganizationDTO($row['ID_ORGANIZATION'],$row['NAME_ORGANIZATION'], $row['AVATAR'], $row['DESCRIPTION']);
+    }
+    return null;
+  }
+
+  public function sendInvitation($organizationId, $userId)
+  {
+    $stmt = $this->db->prepare("
+        INSERT INTO
+            invitation_organization (ID_ORGANIZATION, ID_USER)
+        VALUES
+            (?, ?)
+    ");
+
+    $stmt->bind_param("ii", $organizationId, $userId);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function isUserAlreadyInvited($id_organization, $userId)
+  {
+    $stmt = $this->db->prepare("
+        SELECT
+            *
+        FROM
+            invitation_organization
+        WHERE
+            ID_ORGANIZATION = ?
+            AND ID_USER = ?
+    ");
+
+    $stmt->bind_param("ii", $id_organization, $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if($result->num_rows > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+
 
 }

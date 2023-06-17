@@ -26,7 +26,7 @@ export class ProfileComponent implements Image {
   protected reward: string = "bronze";
   protected type: string = 'posts';
   protected isPartOfOrganization: boolean = false;
-  protected isInvitedToOrganization: boolean = false;
+  protected isInvited: boolean = false;
   protected profileDTO: ProfileDTO = {
     userDTO: new UserDTO(-1, '', ''),
     numPosts: 0,
@@ -122,6 +122,7 @@ export class ProfileComponent implements Image {
         this.profileDTO = response;
         this.determineReward();
         this.isPartOfAnOrganization();
+        this.isInvitedToOrganization();
       },
       error: (error) => {
         console.log('error while accessing to profile information : ', error);
@@ -131,6 +132,24 @@ export class ProfileComponent implements Image {
 
   isConnectedUser(): boolean {
     return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.profileDTO.userDTO.id
+  }
+
+  isInvitedToOrganization(): void {
+    this.userService.findOrganization(this.userService.getCurrentId()).subscribe({
+      next: (organization) => {
+        this.organizationService.isUserAlreadyInvited(organization.id_organization, this.profileDTO.userDTO.id).subscribe({
+          next: (boolean) => {
+            this.isInvited = boolean;
+          },
+          error: (error) => {
+            console.log("Can't determine if already invented on organization or not : ", error)
+          }
+        })
+      },
+      error: (error) => {
+        console.log("Error while finding organization :", error)
+      }
+    })
   }
 
   onSendMessageClicked(): void {
