@@ -14,13 +14,6 @@
       <p class="nickname">{{this.organizationDTO.description}}</p>
     </div>
 
-    <div *ngIf="isPartOfOrganization()">
-      <div class="buttons">
-        <button class="tag" routerLink="add_hobby">Add an hobby</button>
-        <button routerLink="modify_profile">Modify profile</button>
-        <button class="button2" routerLink="">Disconnect</button>
-      </div>
-    </div>
     <app-binder [buttons]="['Posts', 'Activities']"></app-binder>
 
     <app-post-list [postsDTO]="organizationDTO.postsDTO" *ngIf="type === 'posts'"></app-post-list>
