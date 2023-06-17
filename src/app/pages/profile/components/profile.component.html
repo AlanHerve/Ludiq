@@ -77,12 +77,7 @@
     <app-activity-flashcard-list *ngIf="type === 'activities'" [activitiesDTO]="profileDTO.activitiesDTO"></app-activity-flashcard-list>
   </div>
 
-  <div class="favorite-hobby" *ngIf="!isChoosingFavoriteHobby">
-    <p class="title-favorite-hobby">Favorite hobby</p>
-    <img *ngIf="profileDTO.favoriteHobby.image" [src]="'assets/images/hobbies/' + profileDTO.favoriteHobby.image" alt="favorite hobby img" class="image-favorite">
-    <app-hobby-button class="tag favorite" [hobbyDTO]="profileDTO.favoriteHobby"></app-hobby-button>
-    <button *ngIf="isConnectedUser()" (click)="changeFavoriteHobby()">Change favorite hobby</button>
-  </div>
+ 
 
   </div>
 
