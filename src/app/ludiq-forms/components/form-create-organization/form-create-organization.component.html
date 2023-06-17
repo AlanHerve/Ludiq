@@ -1,0 +1,11 @@
+<div class="background-form">
+  <form (ngSubmit)="onCreateOrganization()" [formGroup]="organizationForm">
+    <h1>Creation of an Organization</h1>
+    <span class="cross" (click)="onClose()">&times;</span>
+
+    <input name="name" [value]="this.organizationDTO.name_organization" formControlName="name">
+    <input name="username" [value]="this.organizationDTO.description" formControlName="description">
+
+    <button type="submit">Modify</button>
+  </form>
+</div>

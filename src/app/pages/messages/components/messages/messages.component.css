@@ -1,7 +1,7 @@
 .content {
   position: absolute;
-  left: 500px;
-  width: calc(100% - 1000px);
+  left: 22.5vw;
+  width: calc(100% - 45vw);
   display: flex;
   padding: 0;
   margin: 0;

@@ -1,6 +1,10 @@
 <?php
 
 require_once '../DTOs/UserDTO.php';
+
+/**
+ * Class of a Comment
+ */
 class CommentDTO
 {
   public $id;

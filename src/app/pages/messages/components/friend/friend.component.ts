@@ -2,13 +2,15 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FriendRequestDTO} from "../../../../models/friend-request-dto";
 import {FriendService} from "../../services/friend.service";
+import {Image} from "../../../../models/image";
+import {imagesUrl} from "../../../../services/urls";
 
 @Component({
   selector: 'app-friend',
   templateUrl: './friend.component.html',
   styleUrls: ['./friend.component.css', '../messages/messages.component.css']
 })
-export class FriendComponent implements OnInit {
+export class FriendComponent implements OnInit, Image {
   @Input() friendDTO!: FriendRequestDTO;
 
   constructor(private router: Router, private friendService: FriendService) {
@@ -59,5 +61,9 @@ export class FriendComponent implements OnInit {
         console.log('error while accessing to profile informations : ', error);
       }
     });
+  }
+
+  loadImage(image: string): string {
+    return imagesUrl + "/" + image;
   }
 }

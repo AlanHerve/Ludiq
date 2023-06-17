@@ -13,7 +13,11 @@ import { FormModifyProfileComponent } from './components/form-modify-profile/for
 
 import { FormActivityComponent } from './components/form-activity/form-activity/form-activity.component';
 import { FormActivityModule } from './components/form-activity/form-activity/form-activity.module';
+
 import { FormFavoriteHobbyComponent } from './components/form-favorite-hobby/form-favorite-hobby.component';
+
+import { FormCreateOrganizationComponent } from './components/form-create-organization/form-create-organization.component';
+
 
 
 
@@ -26,7 +30,9 @@ import { FormFavoriteHobbyComponent } from './components/form-favorite-hobby/for
     FormModifyProfileComponent,
     FormActivityComponent,
     FormNewPostComponent,
-    FormFavoriteHobbyComponent
+    FormFavoriteHobbyComponent,
+    FormCreateOrganizationComponent
+
   ],
     exports: [
       FormCreateAccountComponent,

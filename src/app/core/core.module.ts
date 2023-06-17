@@ -17,7 +17,10 @@ import {ActivitySearchComponent} from './components/search-bar/components/activi
 import {HobbyCountButtonComponent} from "../shared/components/hobby-count-button/hobby-count-button.component";
 import {HobbyButtonComponent} from "../shared/components/hobby-button/hobby-button.component";
 import {UserComponent} from "../pages/home/components/user/user.component";
+
 import {OrganizationButtonComponent} from "../shared/components/organization-button/organization-button.component";
+
+
 
 @NgModule({
   declarations: [

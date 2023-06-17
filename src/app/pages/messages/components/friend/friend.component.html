@@ -1,6 +1,9 @@
 <div (click)="onClickFriend()" class="friend">
   <div style = "display: flex">
-    <img src="assets/images/icons/user.png">
+    <img *ngIf ="this.friendDTO.user.avatar else elseBlock" [src]="this.loadImage(this.friendDTO.user.avatar)">
+    <ng-template #elseBlock>
+      <img src="assets/images/icons/user.png">
+    </ng-template>
     <div class="user-info">
       <p class="name">{{friendDTO.user.name}}</p>
       <p class="username">{{friendDTO.user.username}}</p>

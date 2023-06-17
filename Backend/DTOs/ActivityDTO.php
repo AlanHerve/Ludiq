@@ -2,6 +2,9 @@
 require_once '../DTOs/UserDTO.php';
 require_once '../DTOs/HobbyDTO.php';
 
+/**
+ * Class of an activity
+ */
 class ActivityDTO
 {
   public $userDTO;

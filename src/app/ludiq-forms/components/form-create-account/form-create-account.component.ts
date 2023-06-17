@@ -5,12 +5,14 @@ import {UserService} from "../../../services/user.service";
 import {CustomValidators} from "../../../custom-validators";
 import {Router} from "@angular/router";
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import {Form} from "../../models/form";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-form-create-account',
   templateUrl: './form-create-account.component.html',
   styleUrls: ['./form-create-account.component.css'],
-  animations:[
+  animations: [
     trigger('fadeIn', [
       state('void', style({ opacity: 0 })),
       state('*', style({ opacity: 1 })),
@@ -23,8 +25,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ])
   ]
 })
-export class FormCreateAccountComponent implements OnInit {
+export class FormCreateAccountComponent extends Form implements OnInit {
   createForm!: FormGroup;
+  protected userType: string = "classical_user";
   userDTO: UserDTO = {
     id: -1,
     name: '',
@@ -34,11 +37,10 @@ export class FormCreateAccountComponent implements OnInit {
   };
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
-              private router: Router) {}
-
-  onClose(): void {
-    this.router.navigate(['/']);
+              router: Router, location: Location) {
+    super(router, location);
   }
+
   ngOnInit(): void {
     this.createForm = this.formBuilder.group( {
       name: [null, [Validators.required
@@ -61,37 +63,25 @@ export class FormCreateAccountComponent implements OnInit {
         , Validators.maxLength(20)
         , Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/)
       ]],
-      confirm: [null, [Validators.required]]
+      confirm: [null, [Validators.required]],
+      option: [null]
     },{
       validators: [CustomValidators.confirmEqualValidator('password', 'confirm')]
     })
   }
 
   onCreateAccount() {
-    this.userService.registerUser(this.userDTO).subscribe({
+    this.userService.registerUser(this.userDTO, this.userType).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
-        console.log('Utilisateur enregistré avec succès:', response);
+        console.log('User registered : ', response);
+        this.onClose()
       },
       error: (error) => {
         // Gestion des erreurs en cas d'échec
-        console.error('Erreur lors de l\'enregistrement de l\'utilisateur:', error);
+        console.error('Error while trying to register : ', error);
       }
     })
   }
-
-  getFormValidationErrors() {
-    Object.keys(this.createForm.controls).forEach(key => {
-      let controlErrors: ValidationErrors;
-      // @ts-ignore
-      controlErrors = this.createForm.get(key).errors;
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach(keyError => {
-          console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
-        });
-      }
-    });
-  }
-
 
 }

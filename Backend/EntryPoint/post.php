@@ -1,8 +1,8 @@
 <?php
 
 header("Access-Control-Allow-Origin: *");
-header('Access-Control-Allow-Methods: GET, POST');
-header('Access-Control-Allow-Headers: Origin,Content-Type');
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type");
 
 require_once "../DTOs/PostDTO.php";
 require_once "../DTOs/UserDTO.php";
@@ -13,25 +13,29 @@ require_once "../Repositories/ImageRepository.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $body = file_get_contents('php://input');
+
   $data = json_decode($body, true);
 
-  if (isset($_POST['new_post'])) {
+
+  if (isset($data['id_post'])) {
+    $postId = $data['id_post'];
+  } else {
     newPost();
     return;
   }
 
-  $postId = $data['id_post'];
 
   $postRepository = PostRepository::getInstance();
   switch ($data['type']) {
     case 'like':
-      echo $postRepository->likePost($postId);
+      echo json_encode($postRepository->likePost($data['id_user'], $postId));
       break;
     case 'unlike':
-      echo $postRepository->unlikePost($postId);
+      echo json_encode($postRepository->unlikePost($data['id_user'], $postId));
       break;
     case 'deletePost':
       echo $postRepository->deletePost($postId);
+
   }
 
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -47,7 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       echo json_encode($postRepository->getHobbyPosts($_GET['id_hobby']));
     elseif ($_GET['type'] === 'find_post') {
       echo json_encode($postRepository->findPostById($_GET['postID']));
+    } elseif ($_GET['type'] === 'hasLiked') {
+      echo json_encode($postRepository->hasLiked($_GET['id_user'], $_GET['id_post']));
     }
+
   } elseif (isset($_GET['user_page']) && isset($_GET['id_user'])) {
     $id_user = $_GET['id_user'];
     $mode = $_GET['user_page'];
@@ -71,7 +78,9 @@ function newPost()
   $description = $_POST['description'];
 
   $images = null;
-  if(isset($_FILES['images'])) {
+
+  if (isset($_FILES['images'])) {
+
     $images = $_FILES['images'];
   }
 

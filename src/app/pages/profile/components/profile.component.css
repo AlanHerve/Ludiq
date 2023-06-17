@@ -63,12 +63,9 @@
 .buttons {
   margin-left: 40px;
   display: flex;
-
+  gap: 20px;
   justify-content: space-between;
   margin-right: 40px;
-}
-.buttons button:nth-child(2) {
-  margin-left: -100px;
 }
 
 .user {
@@ -95,7 +92,13 @@ img {
   width:clamp(7rem, 1rem + 10vw, 10rem);
   object-fit: contain;
 }
+.profile-image {
 
+  object-fit: cover;
+  width:clamp(7rem, 1rem + 10vw, 10rem);
+  height:clamp(7rem, 1rem + 10vw, 10rem);
+  border-radius: 100px;
+}
 
 @media (max-width: 1000px) {
   .top-bar {

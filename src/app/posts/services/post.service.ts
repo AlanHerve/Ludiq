@@ -5,11 +5,13 @@ import {apiUrl} from "../../services/urls";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
 import {CommentDTO} from "../models/comment-dto";
+import {UserService} from "../../services/user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
+
 
   private needDelete = new Subject<number>();
   currentDeleteState = this.needDelete.asObservable();
@@ -24,8 +26,9 @@ export class PostService {
   private needAddPost = new Subject<PostDTO>();
   currentneedAddPost = this.needAddPost.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userService: UserService) {
   }
+
 
   newPost(formData: FormData): Observable<PostDTO> {
     return this.http.post<PostDTO>(`${apiUrl}/post.php`, formData).pipe(
@@ -49,8 +52,8 @@ export class PostService {
     return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
   }
 
-  likePost(postId: number): Observable<any> {
-    const options = {'type': 'like', 'id_post': postId}
+  likePost(postId: number, userId: number): Observable<any> {
+    const options = {'type': 'like', 'id_post': postId, 'id_user': userId}
     return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
       map(response => {
         return response;
@@ -58,8 +61,8 @@ export class PostService {
     );
   }
 
-  unlikePost(postId: number): Observable<any> {
-    const options = {'type': 'unlike', 'id_post': postId}
+  unlikePost(postId: number, userId: number): Observable<any> {
+    const options = {'type': 'unlike', 'id_post': postId, 'id_user': userId}
     return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
       map(response => {
         return response;
@@ -108,6 +111,15 @@ export class PostService {
       .set('type', 'three_comments')
       .set('postID', postID)
     return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
+  }
+
+  hasLiked(postId: number): Observable<boolean> {
+    const userId = this.userService.getCurrentId();
+    const params = new HttpParams()
+      .set('type', 'hasLiked')
+      .set('id_user', userId)
+      .set('id_post', postId);
+    return this.http.get<boolean>(`${apiUrl}/post.php`, {params});
   }
 
   findPostById(postID: number): Observable<PostDTO> {

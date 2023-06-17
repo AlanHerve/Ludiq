@@ -10,7 +10,7 @@ import { OrganizationButtonComponent } from './shared/components/organization-bu
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -23,8 +23,8 @@ import { OrganizationButtonComponent } from './shared/components/organization-bu
   providers: [
     {provide: LOCALE_ID, useValue: 'fr-FR'},
   ],
-  exports: [
-  ],
+    exports: [
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,6 +4,8 @@ import {Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./urls";
+import {OrganizationDTO} from "../models/organization-dto";
+import {OrganizationService} from "./organization.services";
 
 
 @Injectable({
@@ -12,8 +14,12 @@ import {apiUrl} from "./urls";
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  registerUser(userDTO: UserDTO): Observable<UserDTO> {
-    return this.http.post<UserDTO>(`${apiUrl}/register.php`, userDTO);
+  registerUser(userDTO: UserDTO, userType: string): Observable<boolean> {
+    const options = {
+      'userDTO': userDTO,
+      'userType': userType
+    }
+    return this.http.post<boolean>(`${apiUrl}/register.php`, options);
   }
 
   logoutUser(): void {
@@ -70,8 +76,32 @@ export class UserService {
     return token.match(regex)!=null;
   }
 
+  isPartOfAnOrganization(userDTO: UserDTO): Observable<boolean> {
+    const params = new HttpParams()
+      .set('type', 'is_part_of_organization')
+      .set('userId', userDTO.id)
+    return this.http.get<boolean>(`${apiUrl}/user.php`, {params});
+  }
+
   isAbleToDelete(id: number) {
     const compare_id = JSON.parse(localStorage.getItem('currentUser')!).id;
     return compare_id == id;
+  }
+
+  updateUserProfile(userDTO: UserDTO, avatar: File | null): Observable<UserDTO> {
+    const formData = new FormData();
+    formData.append('userDTO', JSON.stringify(userDTO));
+    if (avatar) {
+      formData.append('avatar', avatar, avatar.name);
+    }
+    return this.http.post<UserDTO>(`${apiUrl}/updateUser.php`, formData);
+  }
+
+
+  findOrganization(userId: number): Observable<OrganizationDTO> {
+    const params = new HttpParams()
+      .set('type', 'find_organization')
+      .set('userId', userId)
+    return this.http.get<OrganizationDTO>(`${apiUrl}/user.php`, {params});
   }
 }

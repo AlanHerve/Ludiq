@@ -6,7 +6,6 @@ header('Access-Control-Allow-Headers: Origin,Content-Type');
 
 include("../Repositories/ProfileRepository.php");
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $profileRepository = ProfileRepository::getInstance();
     $organization = false;

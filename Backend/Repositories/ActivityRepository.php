@@ -163,11 +163,15 @@ class ActivityRepository
                 user u
             INNER JOIN activity act
                 ON act.ID_ACTIVITY_DIRECTOR = u.ID_USER
+            INNER JOIN activity_participants par
+                ON act.ID_ACTIVITY = par.ID_ACTIVITY
             WHERE
                 act.ID_ACTIVITY_DIRECTOR = ?
+                OR
+                par.ID_USER = ?
             ;
         ");
-    $stmt->bind_param('i', $id_user);
+    $stmt->bind_param('ii', $id_user, $id_user);
     $stmt->execute();
 
     $result = $stmt->get_result();
@@ -229,15 +233,14 @@ class ActivityRepository
       }
       return $activitiesDTO;
     }
-
-    return null;
-
   }
+
 
 
   public function getActivityParticipants($activityId)
   {
     $stmt = $this->db->prepare("
+
             SELECT
                 par.ID_USER
             FROM
@@ -348,7 +351,7 @@ class ActivityRepository
     return 0;
   }
 
-  public function deleteActivity(mixed $activityId)
+  public function deleteActivity($activityId)
   {
     $stmt = $this->db->prepare("
         DELETE FROM
@@ -356,7 +359,6 @@ class ActivityRepository
         WHERE
             activity.ID_ACTIVITY = ?
         ");
-
     $stmt->bind_param("i", $activityId);
     $stmt->execute();
     if ($stmt->affected_rows > 0) return "success";

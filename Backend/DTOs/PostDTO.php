@@ -1,5 +1,10 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type");
+
+
 require_once '../DTOs/UserDTO.php';
 require_once '../DTOs/HobbyDTO.php';
 
@@ -14,6 +19,7 @@ class PostDTO
     $description
   , $modified
   , $likes
+  , $comments
   , $time;
 
   public function __construct($id, $userDTO, $hobbyDTO, $description, $images, $modified = null, $likes = null, $time = null)

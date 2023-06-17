@@ -4,18 +4,21 @@ require_once '../Database.php';
 
 class ImageRepository
 {
-    private $db;
-    private static $instance = null;
+  private $db;
+  private static $instance = null;
 
-    public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
+  public function __construct()
+  {
+    $this->db = Database::getInstance()->getConnection();
+  }
+
+  public static function getInstance()
+  {
+    if (!self::$instance) {
+      self::$instance = new ImageRepository();
     }
-    public static function getInstance() {
-        if(!self::$instance) {
-            self::$instance = new ImageRepository();
-        }
-        return self::$instance;
-    }
+    return self::$instance;
+  }
 
   function saveImages($images)
   {
@@ -35,6 +38,22 @@ class ImageRepository
       }
     }
     return $uploadedFiles;
+  }
+
+  function saveAvatar($avatar)
+  {
+    $targetDir = '../assets/images/';
+
+    if (!isset($avatar)) return null;
+
+    $uniqueFilename = uniqid() . '_' . basename($avatar['name']);
+    $targetFilePath = $targetDir . $uniqueFilename;
+
+    if (move_uploaded_file($avatar['tmp_name'], $targetFilePath)) {
+      return $uniqueFilename;
+    } else {
+      echo 'Error while downloading file : ' . $avatar['tmp_name'] . '\n';
+    }
   }
 
 }

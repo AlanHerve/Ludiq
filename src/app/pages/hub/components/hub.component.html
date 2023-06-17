@@ -5,13 +5,13 @@
       <ng-template #elseBlock>
         <img class = "ludiq-image" src = "assets/images/ludiq_pride_month.svg">
       </ng-template>
-      <h1>Ludiq2</h1>
+      <h1>Ludiq</h1>
     </div>
     <h2>THE BEST WAY TO SHARE YOUR HOBBIES</h2>
   </div>
   <div *ngIf="!isLoggedIn()" class = "buttons">
     <button (click)="onRegister()">Register</button>
-    <button (click)="onLogin()" class = "button2">Connection</button>
+    <button (click)="onLogin()" class = "button2">Login</button>
   </div>
   <div *ngIf="isLoggedIn()" class = "buttons">
     <button (click)="onLogout()" class = "button2">Log Out</button>
