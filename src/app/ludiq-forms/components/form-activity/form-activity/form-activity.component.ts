@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {  Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {Location} from '@angular/common';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivityDTO} from "../../../../posts/models/activity-dto";
 import {ActivityService} from "../../../../posts/services/activity.service";
@@ -19,22 +19,22 @@ import {OrganizationDTO} from "../../../../models/organization-dto";
   selector: 'app-form-activity',
   templateUrl: './form-activity.component.html',
   styleUrls: ['./form-activity.component.css', '../../../ludiq-forms.css'],
-  animations:[
+  animations: [
     trigger('fadeIn', [
-      state('void', style({ opacity: 0 })),
-      state('*', style({ opacity: 1 })),
+      state('void', style({opacity: 0})),
+      state('*', style({opacity: 1})),
       transition('void => *', animate('200ms')),
     ]),
     trigger('fadeOut', [
-      state('*', style({ opacity: 1 })),
-      state('void', style({ opacity: 0 })),
+      state('*', style({opacity: 1})),
+      state('void', style({opacity: 0})),
       transition('* => void', animate('200ms')),
     ])
   ]
 })
 export class FormActivityComponent extends Form implements OnInit {
   index: number = 0;
-  hobbies : HobbyDTO[] = [];
+  hobbies: HobbyDTO[] = [];
 
   //previousRoute: string = '';
   activityDTO: ActivityDTO = { //define a new ActivityDTO
@@ -42,7 +42,7 @@ export class FormActivityComponent extends Form implements OnInit {
     id: -1,
     userDTO: new UserDTO(-1, '', ''),
     hobbyDTO: new HobbyDTO(-1, '', ''),
-    description:'',
+    description: '',
     advancement: '',
     time: '',
     date_post: '',
@@ -66,7 +66,7 @@ export class FormActivityComponent extends Form implements OnInit {
 
   constructor(private builder: FormBuilder,
               private formBuilder: FormBuilder,
-              private activityService:ActivityService,
+              private activityService: ActivityService,
               private hobbyService: HobbyService,
               router: Router,
               location: Location,
@@ -78,25 +78,24 @@ export class FormActivityComponent extends Form implements OnInit {
       hobby: [this.hobbies[0], [Validators.required]],
     })
 
+
     //form validators for the number of participants
     this.activityForm = this.formBuilder.group({
-      activityControl:new FormControl(),
+      activityControl: new FormControl(),
       number: [null, [Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(1)]],
     });
 
-
-
-
   }
+
   ngOnInit(): void {
     console.log(JSON.parse(localStorage.getItem('currentUser')!).token);
-    //
 
     this.activityDTO.organizationDTO.name_organization = this.activityService.getOrganizationName(JSON.parse(localStorage.getItem('currentUser')!).token);
-    //
+    //getting the name_organization using getOrganizationName
     console.log(this.activityDTO.organizationDTO.name_organization);
 
     this.activityDTO.id_organization = this.activityService.getOrganizationID(JSON.parse(localStorage.getItem('currentUser')!).token);
+    //getting the id_organization using getOrganizationID
 
     this.userService.findUserById(JSON.parse(localStorage.getItem('currentUser')!).id).subscribe({
       next: (response) => {
@@ -120,7 +119,7 @@ export class FormActivityComponent extends Form implements OnInit {
   }
 
 
-  getUserHobbies(){
+  /*getUserHobbies(){
     this.hobbyService.getHobbiesOfUser(this.activityDTO.hobbyDTO.id).subscribe({
       next: (response) => {
           this.hobbies= response
@@ -130,7 +129,7 @@ export class FormActivityComponent extends Form implements OnInit {
         console.error('Could not get the activity hobby', error);
       }
     });
-  }
+  }*/
 
 
   newActivityPost() {
@@ -145,19 +144,19 @@ export class FormActivityComponent extends Form implements OnInit {
     // @ts-ignore
     this.activityDTO.max_registrations = this.activityForm.value.number;
     formData.append('title', this.activityDTO.title);
-    formData.append('max_registration',this.activityDTO.max_registrations.toString());
-    formData.append('advancement',this.activityDTO.advancement);
+    formData.append('max_registration', this.activityDTO.max_registrations.toString());
+    formData.append('advancement', this.activityDTO.advancement);
 
     this.activityService.newActivity(formData).subscribe({
-       next: (response) => {
-         // Traitement de la réponse du serveur en cas de succès
-         console.log('Post avec succès', response);
-         this.onClose();
-       },
-       error: (error) => {
-         // Gestion des erreurs en cas d'échec
-         console.error('Erreur post : ', error);
-       }
-     });
-   }
+      next: (response) => {
+        // Traitement de la réponse du serveur en cas de succès
+        console.log('Post avec succès', response);
+        this.onClose();
+      },
+      error: (error) => {
+        // Gestion des erreurs en cas d'échec
+        console.error('Erreur post : ', error);
+      }
+    });
+  }
 }

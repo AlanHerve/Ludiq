@@ -42,7 +42,7 @@ class ActivityRepository
   }
 
   public function newActivity(ActivityDTO $activityDTO)
-  {
+  { //function to create a new activity with an activityDTO
 
     $id_user = $activityDTO->userDTO;
 
@@ -81,6 +81,9 @@ class ActivityRepository
     return json_encode($response);
   }
 
+  /**
+   * @return array|null
+   */
   public function getTop3()
   {
     $stmt = $this->db->prepare("
@@ -98,12 +101,12 @@ class ActivityRepository
             ORDER BY
 	            COUNT(*) DESC LIMIT 3
             ;
-        ");
+        "); //SQL request used to find the 3 activities with most posts in it
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-      $activitiesDTO = [];
+    if ($result->num_rows > 0) { // if the result has more than 0 rows it means he fetched something
+      $activitiesDTO = []; //initialize activitiesDTO as en empty array
       while ($row = $result->fetch_assoc()) {
         $activityDTO = $this->findActivityById($row['ID_ACTIVITY']);
         if ($activityDTO)
@@ -113,6 +116,11 @@ class ActivityRepository
     }
     return null;
   }
+
+  /**
+   * @param $id_activity
+   * @return ActivityDTO|null
+   */
 
   public function findActivityById($id_activity)
   {
@@ -132,7 +140,7 @@ class ActivityRepository
     GROUP BY
         act.ID_ACTIVITY
     ;
-    ");
+    ");// SQL request to find an activity with its ID
 
     $stmt->bind_param('i', $id_activity);
     $stmt->execute();
@@ -151,6 +159,10 @@ class ActivityRepository
     return null;
   }
 
+  /**
+   * @param $id_user
+   * @return array
+   */
   public function getUserActivities($id_user)
   {
     $stmt = $this->db->prepare("
@@ -180,6 +192,9 @@ class ActivityRepository
     return [];
   }
 
+  /**
+   * @return array|null
+   */
   public function getAllActivities()
   {
     $stmt = $this->db->prepare("
@@ -204,6 +219,10 @@ class ActivityRepository
     return null;
   }
 
+  /**
+   * @param $id_hobby
+   * @return array|null
+   */
   public function getHobbyActivities($id_hobby)
   {
     $stmt = $this->db->prepare("
@@ -213,12 +232,12 @@ class ActivityRepository
              activity act
         WHERE
             act.ID_HOBBY = ?
-        ");
+        ");// SQL request to get all the activities of a precise hobby
     $stmt->bind_param('i', $id_hobby);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) { //normalement la même que getAllActivities
+    if ($result->num_rows > 0) {
       $activitiesDTO = [];
       while ($row = $result->fetch_assoc()) {
         $activityDTO = $this->findActivityById($row['ID_ACTIVITY']);
@@ -245,7 +264,10 @@ class ActivityRepository
         return null;
     }
 
-
+  /**
+   * @param $activityId
+   * @return ActivityParticipantsDTO|null
+   */
     public function getActivityParticipants($activityId) {
         $stmt = $this->db->prepare("
 
@@ -264,17 +286,24 @@ class ActivityRepository
 
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
+      // find the activity details using its ID
       $activityDTO = $this->findActivityById($activityId);
       $usersDTO = [];
       while ($row = $result->fetch_assoc()) {
+        // find each user's details by their ID
         $usersDTO[] = $this->userRepository->findUserById($row['ID_USER']);
       }
       return new ActivityParticipantsDTO($usersDTO, $activityDTO);
     }
-
+      // return null if there are no participants found
     return null;
   }
 
+  /**
+   * @param $userId
+   * @param $activityId
+   * @return bool
+   */
   public function registerUserToActivity($userId, $activityId)
   {
     $stmt = $this->db->prepare("
@@ -294,6 +323,11 @@ class ActivityRepository
     return false;
   }
 
+  /**
+   * @param $userId
+   * @param $activityId
+   * @return bool
+   */
   public function deleteUserFromActivity($userId, $activityId)
   {
     $stmt = $this->db->prepare("
@@ -305,7 +339,7 @@ class ActivityRepository
                 ID_ACTIVITY = ?;
             ;
         ");
-
+    
     $stmt->bind_param('ii', $userId, $activityId);
     $stmt->execute();
 
@@ -315,6 +349,10 @@ class ActivityRepository
     return false;
   }
 
+  /**
+   * @param $userId
+   * @return int
+   */
   public function getNumActivitiesDirector($userId): int
   {
     $stmt = $this->db->prepare("
@@ -337,6 +375,10 @@ class ActivityRepository
     return 0;
   }
 
+  /**
+   * @param $userId
+   * @return int|mixed
+   */
   public function getNumActivitiesClassical($userId)
   {
     $stmt = $this->db->prepare("
@@ -359,6 +401,10 @@ class ActivityRepository
     return 0;
   }
 
+  /**
+   * @param mixed $activityId
+   * @return string
+   */
   public function deleteActivity(mixed $activityId)
   {
     $stmt = $this->db->prepare("

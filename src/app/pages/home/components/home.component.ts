@@ -48,14 +48,14 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  displayHobbyActivities(id : number):void{
+  displayHobbyActivities(id: number): void {
     this.activityService.getHobbyActivities(id).subscribe({
-      next: (response)=> {
+      next: (response) => {
         this.activitiesDTO = response;
         console.log("Got all related Activities", response)
       },
-      error: (error)=>{
-        console.log("Error while trying to find related activities:" , error)
+      error: (error) => {
+        console.log("Error while trying to find related activities:", error)
       }
     })
   }
@@ -74,8 +74,7 @@ export class HomeComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
         const id = params.get('id');
         if (!id) return;
-        else
-        {
+        else {
           this.id_hobby = parseInt(id);
           this.displayHobbyActivities(this.id_hobby)
         }
