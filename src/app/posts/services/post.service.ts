@@ -32,8 +32,8 @@ export class PostService {
     return this.http.get<PostDTO[]>(`${apiUrl}/post.php`, {params});
   }
 
-  likePost(postId: number): Observable<any> {
-    const options = {'type': 'like', 'id_post': postId}
+  likePost(postId: number, userId: number): Observable<any> {
+    const options = {'type': 'like', 'id_post': postId, 'id_user': userId}
     return this.http.post<any>(`${apiUrl}/post.php`, options).pipe(
       map(response => {
         return response;

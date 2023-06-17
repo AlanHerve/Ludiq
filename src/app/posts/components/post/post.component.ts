@@ -41,12 +41,12 @@ export class PostComponent implements OnInit, Image {
       }
     });*/
 
+    this.determineDetailedPostOrNot();
+
     this.postService.hasLiked(this.postDTO.id).subscribe(hasLiked => {
       this.isLiked = hasLiked;
       console.log("Has liked : " + hasLiked);
     });
-    this.loadImages();
-    this.determineDetailedPostOrNot();
   }
 
   /**
@@ -108,7 +108,7 @@ export class PostComponent implements OnInit, Image {
     this.isLiked = !this.isLiked;
 
     if (this.isLiked) {
-      this.postService.likePost(this.postDTO.id, this.userService.getCurrentId()).subscribe(() => {
+      this.postService.likePost(this.postDTO.id,  this.userService.getCurrentId()).subscribe(() => {
         this.postDTO.likes++;
       });
     } else {

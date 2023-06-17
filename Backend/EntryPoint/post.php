@@ -15,60 +15,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $body = file_get_contents('php://input');
   $data = json_decode($body,true);
 
-  $postId = $data['id_post'];
-
-  $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_pseudo']);
-
-
-  $postId = $data['id_post'];
+  if(isset($data['id_post'])) {
+    $postId = $data['id_post'];
+  }
+  else {
+      newPost();
+      return;
+  }
 
   $postRepository = PostRepository::getInstance();
   $commentRepository = CommentRepository::getInstance();
   switch ($data['type']) {
     case 'like':
-      echo $postRepository->likePost($postId);
+      echo json_encode($postRepository->likePost($data['id_user'], $postId));
       break;
     case 'unlike':
-      echo $postRepository->unlikePost($postId);
+      echo json_encode($postRepository->unlikePost($data['id_user'], $postId));
       break;
-
-    case 'post':
-      newPost();
-      break;
-    case 'addComment':
-      echo $commentRepository->addComment($data['id_user'], $data['content'], $data['id_regular_post']);
-      break;
-
 
   }
-}
-elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
+
+  if (isset($_POST['new_post'])) {
+    newPost();
+    return;
+  }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
   $id = $id_user = $id_hobby = $description = $images = $modified = $likes = $time = $mode = null;
   $valid = false;
 
-  if(isset($_GET['type'])) {
+  if (isset($_GET['type'])) {
     $postRepository = PostRepository::getInstance();
-    if($_GET['type'] === 'home')
+    if ($_GET['type'] === 'home')
       echo json_encode($postRepository->getAllPosts());
-    elseif($_GET['type'] === 'hobby' && isset($_GET['id_hobby']))
+    elseif ($_GET['type'] === 'hobby' && isset($_GET['id_hobby']))
       echo json_encode($postRepository->getHobbyPosts($_GET['id_hobby']));
-  }
-  elseif (isset($_GET['user_page']) && isset($_GET['id_user'])){
+    elseif ($_GET['type'] === 'find_post') {
+      echo json_encode($postRepository->findPostById($_GET['postID']));
+    }
+    elseif ($_GET['type'] === 'hasLiked') {
+      echo json_encode($postRepository->hasLiked($_GET['id_user'], $_GET['id_post']));
+    }
+  } elseif (isset($_GET['user_page']) && isset($_GET['id_user'])) {
     $id_user = $_GET['id_user'];
     $mode = $_GET['user_page'];
     $valid = true;
-  }
-  elseif (isset($_GET['search']) && isset($_GET['id_hobby'])){
+  } elseif (isset($_GET['search']) && isset($_GET['id_hobby'])) {
     $id_hobby = $_GET['id_hobby'];
     $mode = $_GET['search'];
     $valid = true;
   }
 }
 
-function newPost() {
-  $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
-  if(isset($_POST['id_hobby']) && $_POST['id_hobby'] != -1) {
+function newPost()
+{
+  if (isset($_POST['id_hobby']) && $_POST['id_hobby'] != -1) {
     $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
   } else {
     $hobbyDTO = new HobbyDTO(null);
@@ -76,16 +77,14 @@ function newPost() {
 
   $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
   $description = $_POST['description'];
-  $modified = null;
-  $likes = null;
-  $time = null;
 
-  if(isset($_POST['modified'])){
-    $modified = $_POST['modified'];
+  $images = null;
+  if(isset($_FILES['images'])) {
+    $images = $_FILES['images'];
   }
-  $images = $_FILES['images'];
 
-  $uploadedFiles = saveFiles($images);
+  $imageRepository = ImageRepository::getInstance();
+  $uploadedFiles = $imageRepository->saveImages($images);
 
   $postDTO = new PostDTO(null, $userDTO, $hobbyDTO, $description, $uploadedFiles);
 
@@ -93,56 +92,5 @@ function newPost() {
   echo json_encode($postRepository->newPost($postDTO));
 }
 
-function saveFiles($images) {
-  $targetDir = '../assets/images/';
 
-  if(!isset($images)) return null;
-
-  $uploadedFiles = [];
-  for ($i = 0; $i < count($images['name']); $i++) {
-    $uniqueFilename = uniqid() . '_' . basename($images['name'][$i]);
-    $targetFilePath = $targetDir . $uniqueFilename;
-
-    if (move_uploaded_file($images['tmp_name'][$i], $targetFilePath)) {
-      $uploadedFiles[] = $uniqueFilename;
-      echo 'File downloaded successfully!\n';
-
-    } else {
-      echo 'Error while downloading file : '.$images['tmp_name'][$i].'\n';
-    }
-
-  }
-  return $uploadedFiles;
-}
-
-
-    if (isset($_POST['new_post'])) {
-      newPost();
-      return;
-    } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
-      $id = $id_user = $id_hobby = $description = $images = $modified = $likes = $time = $mode = null;
-      $valid = false;
-
-      if (isset($_GET['type'])) {
-        $postRepository = PostRepository::getInstance();
-        if ($_GET['type'] === 'home')
-          echo json_encode($postRepository->getAllPosts());
-        elseif ($_GET['type'] === 'hobby' && isset($_GET['id_hobby']))
-          echo json_encode($postRepository->getHobbyPosts($_GET['id_hobby']));
-        elseif ($_GET['type'] === 'find_post') {
-          echo json_encode($postRepository->findPostById($_GET['postID']));
-        }
-      } elseif (isset($_GET['user_page']) && isset($_GET['id_user'])) {
-        $id_user = $_GET['id_user'];
-        $mode = $_GET['user_page'];
-        $valid = true;
-      } elseif (isset($_GET['search']) && isset($_GET['id_hobby'])) {
-        $id_hobby = $_GET['id_hobby'];
-        $mode = $_GET['search'];
-        $valid = true;
-      }
-    }
-  }
-}
 ?>

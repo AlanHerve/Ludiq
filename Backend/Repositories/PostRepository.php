@@ -54,8 +54,6 @@ class PostRepository
         } else {
             return false;
         }
-
-        return json_encode($response);
     }
 
     function likePost($userId, $postId)
@@ -254,7 +252,7 @@ class PostRepository
                 $postsDTO[] = $postDTO;
             }
         }
-        return json_encode($postsDTO);
+        return $postsDTO;
     }
 
 

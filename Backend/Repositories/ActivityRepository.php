@@ -186,41 +186,42 @@ class ActivityRepository
 
     }
 
-    public function findActivityById($id_activity)
-    {
-        $stmt = $this->db->prepare("
-            SELECT
-                act.*
-                , org.ID_ORGANIZATION
-                , org.NAME_ORGANIZATION
-            FROM
-                activity act
-                INNER JOIN
-                    activity_director actd ON act.ID_ACTIVITY_DIRECTOR = actd.ID_USER
-                INNER JOIN
-                    organization org on actd.ID_ORGANIZATION = org.ID_ORGANIZATION
-            WHERE
-                act.ID_ACTIVITY = ?
-        ");
+  public function findActivityById($id_activity)
+  {
+    $stmt = $this->db->prepare("
+    SELECT
+        act.*,
+        org.ID_ORGANIZATION,
+        org.NAME_ORGANIZATION,
+        COUNT(ap.ID_USER) AS participant_count
+    FROM
+        activity act
+        INNER JOIN activity_director actd ON act.ID_ACTIVITY_DIRECTOR = actd.ID_USER
+        INNER JOIN organization org ON actd.ID_ORGANIZATION = org.ID_ORGANIZATION
+        LEFT JOIN activity_participants ap ON act.ID_ACTIVITY = ap.ID_ACTIVITY
+    WHERE
+        act.ID_ACTIVITY = ?
+    GROUP BY
+        act.ID_ACTIVITY
+    ;
+    ");
 
-        $stmt->bind_param('i', $id_activity);
-        $stmt->execute();
+    $stmt->bind_param('i', $id_activity);
+    $stmt->execute();
 
-        $result = $stmt->get_result();
+    $result = $stmt->get_result();
 
-        if($result->num_rows == 1) {
-            $row = $result->fetch_assoc();
-            $userDTO = $this->userRepository->findUserById($row['ID_ACTIVITY_DIRECTOR']);
-            $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
+    if ($result->num_rows == 1) {
+      $row = $result->fetch_assoc();
+      $userDTO = $this->userRepository->findUserById($row['ID_ACTIVITY_DIRECTOR']);
+      $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
 
-          $title = isset($row['TITLE']) ? $row['TITLE'] : null;
-
-          return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
-            $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'], $row['MAX_REGISTRATIONS'], $row['IMAGE'], $title,$row['ID_ORGANIZATION'], $row['NAME_ORGANIZATION']);
-        }
-        return null;
+      return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
+        $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['participant_count'], $row['MAX_REGISTRATIONS'],
+        $row['IMAGE'], $row["TITLE"], $row['ID_ORGANIZATION'], $row['NAME_ORGANIZATION']);
     }
-
+    return null;
+  }
 
     public function getActivityParticipants($activityId) {
         $stmt = $this->db->prepare("
