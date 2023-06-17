@@ -215,9 +215,14 @@ class UserRepository
     $email = $userDTO->email;
     $password = password_hash($userDTO->password, PASSWORD_DEFAULT);
     $avatar = $userDTO->avatar;
-
-    $stmt = $this->db->prepare("UPDATE user SET USER_NAME = ?, USER_PSEUDO = ?, USER_PASSWORD = ?, EMAIL = ?, AVATAR = ? WHERE ID_USER = ?");
-    $stmt->bind_param("sssssi", $name, $username, $password, $email, $avatar, $id);
+    if($avatar == null) {
+      $stmt = $this->db->prepare("UPDATE user SET USER_NAME = ?, USER_PSEUDO = ?, USER_PASSWORD = ?, EMAIL = ? WHERE ID_USER = ?");
+      $stmt->bind_param("ssssi", $name, $username, $password, $email, $id);
+    }
+    else {
+      $stmt = $this->db->prepare("UPDATE user SET USER_NAME = ?, USER_PSEUDO = ?, USER_PASSWORD = ?, EMAIL = ?, AVATAR = ? WHERE ID_USER = ?");
+      $stmt->bind_param("sssssi", $name, $username, $password, $email, $avatar, $id);
+    }
 
     $stmt->execute();
   }

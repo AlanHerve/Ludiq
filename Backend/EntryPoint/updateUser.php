@@ -18,12 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $password = $userDTOData['password'];
   $email = $userDTOData['email'];
 
-  $tab = [$_FILES['avatar']];
+  $avatar_name = null;
+  if(isset($_FILES['avatar'])) {
+    $imageRepository = ImageRepository::getInstance();
+    $avatar_name = $imageRepository->saveAvatar($_FILES['avatar']);
+  }
 
-  $imageRepository = ImageRepository::getInstance();
-  $avatar_name = $imageRepository->saveAvatar($_FILES['avatar']);
-
-  $userDTO = new UserDTO($userId, $name, $username, $password, $email, $avatar_name[0]);
+  $userDTO = new UserDTO($userId, $name, $username, $password, $email, $avatar_name);
 
   $userRepository = UserRepository::getInstance();
   $userRepository->updateUser($userDTO);
