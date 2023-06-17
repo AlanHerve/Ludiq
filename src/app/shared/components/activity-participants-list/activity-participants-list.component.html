@@ -1,8 +1,11 @@
 <div class="right-sidebar">
   <h2>Participants</h2>
-  <ul class="list center" *ngIf="activityParticipants">
+  <ul class="list center" *ngIf="activityParticipants else elseBlock">
     <div *ngFor="let activityParticipant of activityParticipants.usersDTO" class="center">
       <app-user-search [userDTO]="activityParticipant"></app-user-search>
     </div>
   </ul>
+  <ng-template #elseBlock>
+    <p>There are no participants yet</p>
+  </ng-template>
 </div>
