@@ -80,13 +80,22 @@ export class ProfileComponent implements Image {
             });
 
 
-            this.hobbyService.currentMessage.subscribe((data)=>{
-              this.hobbyFlashcardsDTO.push(this.hobbyService.getNewPost());
+            this.hobbyService.currentMessage.subscribe({
+              next: (response) => {
+               this.profileDTO.numHobbies++;
+              }
+            });
+
+            this.hobbyService.currentDeleteState.subscribe({
+              next: (response) => {
+                this.profileDTO.numHobbies--;
+              }
             });
 
             this.hobbyService.currentDeleteState.subscribe((data) => {
               console.log("returned Data :" + data);
               this.hobbyFlashcardsDTO.splice(this.findHobbyDTOWithData(data), 1);
+              this
             });
           },
           error: (error) => {

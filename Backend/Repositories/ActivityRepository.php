@@ -6,6 +6,7 @@ require_once '../DTOs/UserDTO.php';
 require_once '../DTOs/ActivityParticipantsDTO.php';
 require_once '../Repositories/UserRepository.php';
 require_once '../Repositories/HobbyRepository.php';
+require_once '../Repositories/OrganizationRepository.php';
 
 
 class ActivityRepository
@@ -15,7 +16,9 @@ class ActivityRepository
   private $userRepository;
   private $hobbyRepository;
 
+
   //private $OrganizationRepository;
+
 
   public function __construct()
   {
@@ -33,6 +36,7 @@ class ActivityRepository
   {
     if (!self::$instance) { //if the instance doesn't exist then create a new one
       self::$instance = new ActivityRepository();
+
     }
     return self::$instance; //return the instance
   }
@@ -42,12 +46,17 @@ class ActivityRepository
 
     $id_user = $activityDTO->userDTO;
 
-    $id_hobby = $activityDTO->hobbyDTO;
-    $description = $activityDTO->description;
-    $images = $activityDTO->images;
-    $title = $activityDTO->title;
 
-    $stmt = $this->db->prepare("INSERT INTO
+
+
+        $id_hobby = $activityDTO->hobbyDTO;
+        $description = $activityDTO->description;
+        $images = $activityDTO->images;
+        $title = $activityDTO->title;
+        $time = $activityDTO->time;
+
+        $stmt = $this->db->prepare("INSERT INTO
+
                                                 activity
                                                 (ID_ACTIVITY_DIRECTOR
                                                 , ID_HOBBY
@@ -224,6 +233,7 @@ class ActivityRepository
     return null;
 
   }
+
 
   public function getActivityParticipants($activityId)
   {

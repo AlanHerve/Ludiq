@@ -11,6 +11,7 @@ import {FormsModule} from "@angular/forms";
 import {NewCommentComponent} from "./components/new-comment/new-comment.component";
 import {CommentComponent} from './components/comment/comment.component';
 import {CommentListComponent} from './components/comment-list/comment-list.component';
+import {AppModule} from "../app.module";
 
 @NgModule({
   declarations: [
@@ -31,12 +32,12 @@ import {CommentListComponent} from './components/comment-list/comment-list.compo
         HobbyFlashcardListComponent,
         HobbyFlashcardComponent
     ],
-  imports: [
-    DatePipe,
-    CommonModule,
-    PagesModule,
-    FormsModule
-  ]
+    imports: [
+        DatePipe,
+        CommonModule,
+        PagesModule,
+        FormsModule
+    ]
 })
 export class PostsModule {
 }

@@ -5,11 +5,10 @@ import {FormHobbyPostComponent} from "./components/form-hobby-post/form-hobby-po
 import {FormLoginComponent} from "./components/form-login/form-login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterLink, RouterOutlet} from "@angular/router";
-import { FormNewPostComponent } from './components/form-new-post/form-new-post.component';
 import {FormCreateAccountModule} from "./components/form-create-account/form-create-account.module";
 import { FormRegularPostComponent } from './components/form-regular-post/form-regular-post.component';
 import {FormRegularPostModule} from "./components/form-regular-post/form-regular-post.module";
-
+import {FormNewPostComponent} from "./components/form-new-post/form-new-post.component";
 import { FormModifyProfileComponent } from './components/form-modify-profile/form-modify-profile.component';
 
 import { FormActivityComponent } from './components/form-activity/form-activity/form-activity.component';
@@ -22,21 +21,21 @@ import { FormActivityModule } from './components/form-activity/form-activity/for
     FormCreateAccountComponent,
     FormHobbyPostComponent,
     FormLoginComponent,
-    FormNewPostComponent,
     FormRegularPostComponent,
     FormModifyProfileComponent,
-    FormActivityComponent
+    FormActivityComponent,
+    FormNewPostComponent
   ],
     exports: [
       FormCreateAccountComponent,
       FormLoginComponent,
-      FormNewPostComponent,
       FormCreateAccountModule,
       FormRegularPostComponent,
       FormRegularPostModule,
       FormHobbyPostComponent,
       FormActivityComponent,
-      FormActivityModule
+      FormActivityModule,
+      FormNewPostComponent
     ],
     imports: [
       CommonModule,

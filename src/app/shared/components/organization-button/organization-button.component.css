@@ -1,0 +1,18 @@
+.tag {
+  align-items: center;
+  padding: 10px 32px;
+
+  color: white;
+  background-color: #307473;
+  font-size: 20px;
+  border: none;
+
+  border-radius :50px;
+  transition: background-color 0.2s ease-out;
+}
+
+.tag:hover {
+  color:white;
+  background-color: #753D38;
+}
+
