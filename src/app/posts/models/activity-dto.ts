@@ -1,5 +1,6 @@
 import {UserDTO} from "../../models/user-dto";
 import {HobbyDTO} from "../../models/hobby-dto";
+import {OrganizationDTO} from "../../models/organization-dto";
 
 export class ActivityDTO {
   constructor(
@@ -15,7 +16,7 @@ export class ActivityDTO {
     public max_registrations: number,
     public images : (string | null)[],
     public id_organization: number,
-    public name_organization:string
+    public organizationDTO: OrganizationDTO
     ) {
   }
 }

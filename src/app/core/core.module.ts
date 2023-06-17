@@ -17,6 +17,7 @@ import {ActivitySearchComponent} from './components/search-bar/components/activi
 import {HobbyCountButtonComponent} from "../shared/components/hobby-count-button/hobby-count-button.component";
 import {HobbyButtonComponent} from "../shared/components/hobby-button/hobby-button.component";
 import {UserComponent} from "../pages/home/components/user/user.component";
+import {OrganizationButtonComponent} from "../shared/components/organization-button/organization-button.component";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {UserComponent} from "../pages/home/components/user/user.component";
     PostSearchComponent,
     ActivitySearchComponent,
     HobbyButtonComponent,
-    HobbyCountButtonComponent
+    HobbyCountButtonComponent,
+    OrganizationButtonComponent
   ],
   exports: [
     NavigationBarComponent,
@@ -42,7 +44,8 @@ import {UserComponent} from "../pages/home/components/user/user.component";
     RouterOutlet,
     UserSearchComponent,
     HobbyButtonComponent,
-    HobbyCountButtonComponent
+    HobbyCountButtonComponent,
+    OrganizationButtonComponent
   ],
   imports: [
     CommonModule,

@@ -10,6 +10,7 @@ import {TopActivityListComponent} from './components/top-activity-list/top-activ
 import {TopActivityComponent} from './components/top-activity/top-activity.component';
 import {BinderComponent} from "../../shared/components/binder/binder.component";
 import {TabComponent} from "../../shared/components/tab/tab.component";
+import {PagesModule} from "../pages.module";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import {TabComponent} from "../../shared/components/tab/tab.component";
   exports: [
     HomeRoutingModule,
     UserComponent,
-    BinderComponent,
+    BinderComponent
   ],
   providers: [],
   bootstrap: []

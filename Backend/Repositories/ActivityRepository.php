@@ -6,6 +6,7 @@ require_once '../DTOs/UserDTO.php';
 require_once '../DTOs/ActivityParticipantsDTO.php';
 require_once '../Repositories/UserRepository.php';
 require_once '../Repositories/HobbyRepository.php';
+require_once '../Repositories/OrganizationRepository.php';
 
 
 class ActivityRepository
@@ -15,7 +16,7 @@ class ActivityRepository
     private $userRepository;
     private $hobbyRepository;
 
-    //private $OrganizationRepository;
+    private $organizationRepository;
 
     public function __construct()
     {
@@ -25,7 +26,7 @@ class ActivityRepository
         // Initialize other repositories
         $this->hobbyRepository = HobbyRepository::getInstance();
         $this->userRepository = UserRepository::getInstance();
-        //$this->OrganizationRepository = OrganizationRepository::getInstance();
+        $this->organizationRepository = OrganizationRepository::getInstance();
     }
 
     // method to get an instance of ActivityRepository
@@ -212,9 +213,10 @@ class ActivityRepository
             $row = $result->fetch_assoc();
             $userDTO = $this->userRepository->findUserById($row['ID_ACTIVITY_DIRECTOR']);
             $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
+            $organizationDTO = $this->organizationRepository->findOrganizationById($row['ID_ORGANIZATION']);
 
             return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
-                                $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'], $row['MAX_REGISTRATIONS'], $row['IMAGE'], $row["TITLE"],$row['ID_ORGANIZATION'], $row['NAME_ORGANIZATION']);
+                                $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['CURRENT_REGISTERED'], $row['MAX_REGISTRATIONS'], $row['IMAGE'], $row["TITLE"],$row['ID_ORGANIZATION'], $organizationDTO);
         }
         return null;
     }

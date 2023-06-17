@@ -12,6 +12,7 @@ import {UserService} from "../../../../services/user.service";
 import {Form} from "../../../models/form";
 import {FriendService} from "../../../../pages/messages/services/friend.service";
 import {HobbyFlashcardDTO} from "../../../../models/hobby-flashcard-dto";
+import {OrganizationDTO} from "../../../../models/organization-dto";
 
 
 @Component({
@@ -51,7 +52,7 @@ export class FormActivityComponent extends Form implements OnInit {
     images: [],
     title: '',
     id_organization: -1,
-    name_organization: ''
+    organizationDTO: new OrganizationDTO(-1, '', '', '', [])
   }
 
   hobbyPostDTO: HobbyFlashcardDTO = {
@@ -90,8 +91,8 @@ export class FormActivityComponent extends Form implements OnInit {
   ngOnInit(): void {
     console.log(JSON.parse(localStorage.getItem('currentUser')!).token);
 
-    this.activityDTO.name_organization = this.activityService.getOrganizationName(JSON.parse(localStorage.getItem('currentUser')!).token);
-    console.log(this.activityDTO.name_organization);
+    this.activityDTO.organizationDTO.name_organization = this.activityService.getOrganizationName(JSON.parse(localStorage.getItem('currentUser')!).token);
+    console.log(this.activityDTO.organizationDTO.name_organization);
 
     this.activityDTO.id_organization = this.activityService.getOrganizationID(JSON.parse(localStorage.getItem('currentUser')!).token);
 

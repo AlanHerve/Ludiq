@@ -6,6 +6,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {PagesModule} from "./pages/pages.module";
 import {CommonModule} from "@angular/common";
+import { OrganizationButtonComponent } from './shared/components/organization-button/organization-button.component';
 
 @NgModule({
   declarations: [

@@ -7,7 +7,8 @@ class OrganizationDTO
     public $avatar;
     public $description;
 
-    public function __construct($id_organization,
+    public function __construct(
+              $id_organization,
               $name_organization,
               $avatar,
               $description)

@@ -15,6 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $body = file_get_contents('php://input');
   $data = json_decode($body, true);
 
+  if (isset($_POST['new_post'])) {
+    newPost();
+    return;
+  }
 
   $postId = $data['id_post'];
 
@@ -28,10 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       break;
   }
 
-  if (isset($_POST['new_post'])) {
-    newPost();
-    return;
-  }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
   $id = $id_user = $id_hobby = $description = $images = $modified = $likes = $time = $mode = null;
@@ -68,7 +68,10 @@ function newPost()
   $userDTO = new UserDTO($_POST['id_user'], $_POST['user_name'], $_POST['user_username']);
   $description = $_POST['description'];
 
-  $images = $_FILES['images'];
+  $images = null;
+  if(isset($_FILES['images'])) {
+    $images = $_FILES['images'];
+  }
 
   $imageRepository = ImageRepository::getInstance();
   $uploadedFiles = $imageRepository->saveImages($images);
