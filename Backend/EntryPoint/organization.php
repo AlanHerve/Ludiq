@@ -13,18 +13,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $function_to_call = $_GET['function_to_call'];
-
     if(isset($_GET['id_organization'])) $id_organization = $_GET['id_organization'];
 
     $organizationRepository = OrganizationRepository::getInstance();
 
     switch ($function_to_call) {
         case "fetchAllOrganization":
-            $organizationRepository->fetchAllOrganizations();
+            echo json_encode($organizationRepository->fetchAllOrganizations());
             break;
-        case "getOrganzationById":
-            $organizationRepository->getOrganzationById($id_organization);
+        case "getOrganizationById":
+            echo json_encode($organizationRepository->findOrganizationById($id_organization));
             break;
+        case "fetchOrganizationPosts":
+            echo json_encode($organizationRepository->fetchOrganizationPosts($id_organization));
+            break;
+        case "fetchOrganizationActivities":
+            echo json_encode($organizationRepository->fetchOrganizationActivities($id_organization));
+            break;
+
 
     }
 

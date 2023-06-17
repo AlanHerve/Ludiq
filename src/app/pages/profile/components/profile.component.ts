@@ -162,7 +162,6 @@ export class ProfileComponent implements Image {
 
   onTabChange(tab: string): void {
     this.type = tab.toLowerCase();
-    console.log(this.type);
   }
 
 

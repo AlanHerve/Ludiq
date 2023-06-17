@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div *ngIf="this.organizationDTO">
   <div class="content">
     <div class="user">
       <div class="top-user-info">
@@ -24,7 +24,7 @@
     <app-binder [buttons]="['Posts', 'Activities']"></app-binder>
 
     <app-post-list [postsDTO]="organizationDTO.postsDTO" *ngIf="type === 'posts'"></app-post-list>
-    <!--<app-activity-flashcard-flashcard-list [activitiesDTO]="this.activitiesDTO" *ngIf="type === 'activities'"></app-activity-flashcard-flashcard-list> -->
+    <app-activity-flashcard-list [activitiesDTO]="this.organizationDTO.activitiesDTO" *ngIf="type === 'activities'"></app-activity-flashcard-list>
 
 
   </div>

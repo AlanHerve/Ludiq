@@ -52,7 +52,7 @@ export class FormActivityComponent extends Form implements OnInit {
     images: [],
     title: '',
     id_organization: -1,
-    organizationDTO: new OrganizationDTO(-1, '', '', '', [])
+    organizationDTO: new OrganizationDTO(-1, '', '', '', [], [])
   }
 
   hobbyPostDTO: HobbyFlashcardDTO = {
