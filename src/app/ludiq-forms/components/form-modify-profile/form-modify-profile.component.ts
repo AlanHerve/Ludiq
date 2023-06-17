@@ -6,6 +6,8 @@ import { UserDTO } from "../../../models/user-dto";
 import { UserService } from "../../../services/user.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { CustomValidators } from "../../../custom-validators";
+import {Image} from "../../../models/image";
+import {imagesUrl} from "../../../services/urls";
 
 
 @Component({
@@ -13,7 +15,7 @@ import { CustomValidators } from "../../../custom-validators";
   templateUrl: './form-modify-profile.component.html',
   styleUrls: ['./form-modify-profile.component.css', '../../../ludiq-forms/ludiq-forms.css']
 })
-export class FormModifyProfileComponent extends Form implements OnInit {
+export class FormModifyProfileComponent extends Form implements OnInit, Image {
   protected userDTO: UserDTO = { id: 0, name: '', username: '', email: '', password: '', avatar: '', token: '' };
   profileForm!: FormGroup;
   isProfileModified: boolean = false;
@@ -102,6 +104,10 @@ export class FormModifyProfileComponent extends Form implements OnInit {
     } else {
       form.get('confirm_password')?.setErrors(null);
     }
+  }
+
+  loadImage(image: string): string {
+    return imagesUrl + "/" + image;
   }
 
 

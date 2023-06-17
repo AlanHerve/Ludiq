@@ -4,7 +4,10 @@
     <span class="cross" (click)="onClose()">&times;</span>
     <div class="image-container">
       <label for="avatar">
-        <img class="avatar-modification" src="assets/images/icons/user.png" alt="Search button" >
+        <img  class = "avatar-modification" *ngIf ="this.userDTO.avatar else elseBlock" [src]="this.loadImage(this.userDTO.avatar)">
+        <ng-template #elseBlock>
+          <img src="assets/images/icons/user.png" class = "avatar-modification">
+        </ng-template>
         <div class="overlay"></div>
       </label>
     </div>
