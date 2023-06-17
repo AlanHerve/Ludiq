@@ -14,6 +14,12 @@ export class PostService {
   private needDelete = new Subject<number>();
   currentDeleteState = this.needDelete.asObservable();
 
+  private needDeleteComment = new Subject<number>();
+  currentDeleteStateComment = this.needDeleteComment.asObservable();
+
+  private needAddComment = new Subject<CommentDTO>();
+  currentneedAddComment = this.needAddComment.asObservable();
+
   constructor(private http: HttpClient) {
   }
 
@@ -52,8 +58,17 @@ export class PostService {
     );
   }
 
-  addComment(comment: CommentDTO): Observable<any> {
-    return this.http.post<any>(`${apiUrl}/comment.php`, comment);
+  addComment(comment: CommentDTO): Observable<string> {
+    const params = {
+      type: "addComment",
+      comment: comment
+    }
+    return this.http.post<string>(`${apiUrl}/comment.php`, params).pipe(
+      map((response) => {
+        this.needAddComment.next(comment);
+        return response;
+      })
+    );
   }
 
   getAllComments(postID: number): Observable<CommentDTO[]> {
@@ -61,6 +76,22 @@ export class PostService {
       .set('type', 'all_comments')
       .set('postID', postID);
     return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
+  }
+
+  deleteComment(comment_id:number): Observable<number> {
+    const params =  {
+      type: 'deleteComment',
+      id_comment: comment_id
+    };
+
+    return this.http.post<any>(`${apiUrl}/comment.php`, params).pipe(
+      map(response => {
+        if(response == "success")
+        this.needDeleteComment.next(comment_id);
+        return comment_id;
+        }
+      )
+    );
   }
 
   getThreeComments(postID: number): Observable<CommentDTO[]> {

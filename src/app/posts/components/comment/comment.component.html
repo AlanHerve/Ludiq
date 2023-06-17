@@ -1,14 +1,18 @@
-<div (click)="onUserClicked()" class="profile-info">
-  <img *ngIf="this.commentDTO.userDTO.avatar else elseImage" [src]="this.loadImage(this.commentDTO.userDTO.avatar)"
-       class="profile-image">
-  <ng-template #elseImage>
-    <img class="profile-image" src="assets/images/icons/user.png">
-  </ng-template>
-  <div (click)="onUserClicked()" style="display: flex">
-    <div class="user-info">
-      <span class="username">{{this.commentDTO.userDTO.name}}</span>
-      <span class="nickname">{{this.commentDTO.userDTO.username}}</span>
+<div class="profile-info">
+  <div (click)="onUserClicked()">
+    <img *ngIf="this.commentDTO.userDTO.avatar else elseImage" [src]="this.loadImage(this.commentDTO.userDTO.avatar)"
+         class="profile-image">
+    <ng-template #elseImage>
+      <img class="profile-image" src="assets/images/icons/user.png">
+    </ng-template>
+
+    <div (click)="onUserClicked()" style="display: flex">
+      <div class="user-info">
+        <span class="username">{{this.commentDTO.userDTO.name}}</span>
+        <span class="nickname">{{this.commentDTO.userDTO.username}}</span>
+      </div>
     </div>
   </div>
+  <img *ngIf="isOwner()" class="delete" (click)="onDelete()" src = "assets/images/icons/delete.png">
 </div>
 <p class = "description">{{this.commentDTO.content}}</p>

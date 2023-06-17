@@ -36,18 +36,16 @@ export class HobbyFlashcardListComponent implements OnInit {
       }
     });
 
-    this.hobbyService.currentMessage.subscribe({
-      next: (response) => {
-        this.hobbyService.getHobbyById(response).subscribe({
+    this.hobbyService.currentNeedToAddHobby.subscribe({
+      next: (init_response) => {
+        this.hobbyService.getHobbyById(init_response.id_hobby).subscribe({
           next: (response) => {
             console.log("new post baby");
             console.log(response);
             this.hobbyDTOs.push(response);
-            this.hobbyFlashcardsDTO.push(this.hobbyService.getNewPost());
+            this.hobbyFlashcardsDTO.push(init_response);
           }
         });
-
-
       }
     });
   }

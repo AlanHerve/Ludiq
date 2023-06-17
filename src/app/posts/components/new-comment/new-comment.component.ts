@@ -45,7 +45,7 @@ export class NewCommentComponent implements OnInit {
     this.commentDTO.content = this.comment;
 
     this.postsService.addComment(this.commentDTO).subscribe(response => {
-      if (response.success) {
+      if (response) {
         this.comment = '';
       } else {
         // Gére l'erreur

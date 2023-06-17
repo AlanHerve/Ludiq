@@ -80,7 +80,7 @@ export class ProfileComponent implements Image {
             });
 
 
-            this.hobbyService.currentMessage.subscribe({
+            this.hobbyService.currentNeedToAddHobby.subscribe({
               next: (response) => {
                this.profileDTO.numHobbies++;
               }
