@@ -12,8 +12,12 @@ import {apiUrl} from "./urls";
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  registerUser(userDTO: UserDTO): Observable<UserDTO> {
-    return this.http.post<UserDTO>(`${apiUrl}/register.php`, userDTO);
+  registerUser(userDTO: UserDTO, userType: string): Observable<boolean> {
+    const options = {
+      'userDTO': userDTO,
+      'userType': userType
+    }
+    return this.http.post<boolean>(`${apiUrl}/register.php`, options);
   }
 
   logoutUser(): void {

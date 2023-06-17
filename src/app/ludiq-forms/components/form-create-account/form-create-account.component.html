@@ -32,7 +32,7 @@
            placeholder="Password" [ngClass]="{'valid-input': createForm.controls['password'].valid && createForm.controls['confirm'].valid && !createForm.getError('noMatch')}">
 
     <div *ngIf="createForm.controls['password'].dirty && !createForm.controls['password'].valid">
-      Password not
+      Password not valid confirm
       <p *ngIf="!createForm.controls['password'].hasError('pattern')">You need to have at least 1 capital letter, 1 number and 1 special character</p>
       <p *ngIf="createForm.controls['password'].hasError('minlength')">Your password must have more than 8 characters</p>
     </div>
@@ -41,12 +41,24 @@
            [ngClass]="{'valid-input': createForm.controls['confirm'].valid && !createForm.getError('noMatch')}">
 
     <div *ngIf="createForm.controls['password'].dirty && createForm.getError('noMatch')">
-      not valid confirm
+
       <p *ngIf="!createForm.controls['confirm'].dirty">Please confirm your password</p>
       <p *ngIf="createForm.getError('noMatch')">Password and confirmation don't match</p>
     </div>
 
-    <p *ngIf="createForm.valid">valid</p>
+    <div class = "select-user-type-container">
+      <label class = "select-user-type">
+        <input checked class="radio-button" [(ngModel)]="userType" name="option" formControlName = "option" type="radio" value="classical_user">
+        Classical user
+      </label>
+      <label class = "select-user-type">
+        <input class="radio-button" [(ngModel)]="userType" name="option" formControlName = "option" type="radio" value="activity_director">
+        Activity director
+      </label>
+    </div>
+
+
+    <p *ngIf="createForm.valid">Valid form</p>
 
     <button type="submit" class="submit" [disabled]="!createForm.valid">Submit</button>
   </form>

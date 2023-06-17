@@ -26,19 +26,42 @@ class UserRepository
    * Method to register a user in the User database
    *
    * @param UserDTO $userDTO
-   * @return void
+   * @return bool
    */
-  public function registerUser(UserDTO $userDTO)
+  public function registerUser(UserDTO $userDTO, string $userType)
   {
     $name = $userDTO->name;
     $email = $userDTO->email;
     $pseudo = $userDTO->username;
     $password = $userDTO->password;
 
+
     $stmt = $this->db->prepare("INSERT INTO user (USER_NAME, USER_PSEUDO, USER_PASSWORD, EMAIL, AVATAR) VALUES (?, ?, ?, ?, null)");
     $stmt->bind_param("ssss", $name, $pseudo, $password, $email);
 
+
     $stmt->execute();
+
+    $userId = $stmt->insert_id;
+
+    if ($userType === "activity_director") {
+      $organization_id = 1;
+      $stmt = $this->db->prepare("
+        INSERT INTO
+            activity_director (ID_USER, ID_ORGANIZATION)
+        VALUES
+            (?, ?)
+        ;
+      ");
+      $stmt->bind_param("ii", $userId, $organization_id);
+
+      $stmt->execute();
+    }
+
+    if($stmt->affected_rows > 0) {
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -89,7 +112,7 @@ class UserRepository
     $stmt->execute();
 
     $result = $stmt->get_result();
-    if($result){
+    if ($result) {
 
 
       // If user exists, verify user infos
@@ -108,8 +131,8 @@ class UserRepository
           $token = 'fake_token';
 
           //password_verify($password, $hashedPasswordFromDatabase)
-          if(isset($row["ID_ORGANIZATION"]) && isset($row["NAME_ORGANIZATION"])){
-            $token = $token."_".$row["ID_ORGANIZATION"]."_".$row["NAME_ORGANIZATION"];
+          if (isset($row["ID_ORGANIZATION"]) && isset($row["NAME_ORGANIZATION"])) {
+            $token = $token . "_" . $row["ID_ORGANIZATION"] . "_" . $row["NAME_ORGANIZATION"];
           }
           $userDTO = $this->findUserById($row['ID_USER']);
           $userDTO->token = $token;
@@ -118,7 +141,7 @@ class UserRepository
             'message' => 'Authentication successful',
             'user' => $userDTO
           );
-        }else {
+        } else {
           // Incorrect password
           $response = array(
             'success' => false,
@@ -132,7 +155,7 @@ class UserRepository
           'message' => 'Invalid username or password'
         );
       }
-    }else{
+    } else {
       $response = array(
         'success' => false,
         'message' => 'could not access bdd info'
@@ -161,7 +184,8 @@ class UserRepository
     return null;
   }
 
-  public function isActivityDirector($userId) {
+  public function isActivityDirector($userId)
+  {
     $stmt = $this->db->prepare("
             SELECT
                 *
@@ -173,13 +197,14 @@ class UserRepository
     $stmt->bind_param('i', $userId);
     $stmt->execute();
 
-    if($stmt->get_result()->num_rows > 0) {
+    if ($stmt->get_result()->num_rows > 0) {
       return true;
     }
     return false;
   }
 
-  public function getFavoriteHobby($userId) {
+  public function getFavoriteHobby($userId)
+  {
     $stmt = $this->db->prepare("
             SELECT
                 fav.ID_HOBBY
@@ -192,7 +217,7 @@ class UserRepository
     $stmt->execute();
 
     $result = $stmt->get_result();
-    if($result->num_rows  == 1) {
+    if ($result->num_rows == 1) {
       $row = $result->fetch_assoc();
       $hobbyRepository = HobbyRepository::getInstance();
       $hobbyDTO = $hobbyRepository->findHobbyById($row['ID_HOBBY']);
@@ -215,11 +240,10 @@ class UserRepository
     $email = $userDTO->email;
     $password = password_hash($userDTO->password, PASSWORD_DEFAULT);
     $avatar = $userDTO->avatar;
-    if($avatar == null) {
+    if ($avatar == null) {
       $stmt = $this->db->prepare("UPDATE user SET USER_NAME = ?, USER_PSEUDO = ?, USER_PASSWORD = ?, EMAIL = ? WHERE ID_USER = ?");
       $stmt->bind_param("ssssi", $name, $username, $password, $email, $id);
-    }
-    else {
+    } else {
       $stmt = $this->db->prepare("UPDATE user SET USER_NAME = ?, USER_PSEUDO = ?, USER_PASSWORD = ?, EMAIL = ?, AVATAR = ? WHERE ID_USER = ?");
       $stmt->bind_param("sssssi", $name, $username, $password, $email, $avatar, $id);
     }
