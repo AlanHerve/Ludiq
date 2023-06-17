@@ -74,4 +74,15 @@ export class UserService {
     const compare_id = JSON.parse(localStorage.getItem('currentUser')!).id;
     return compare_id == id;
   }
+
+  updateUserProfile(userDTO: UserDTO, avatar: File | null): Observable<UserDTO> {
+    const formData = new FormData();
+    formData.append('userDTO', JSON.stringify(userDTO));
+    if (avatar) {
+      formData.append('avatar', avatar, avatar.name);
+    }
+    return this.http.post<UserDTO>(`${apiUrl}/updateUser.php`, formData);
+  }
+
+
 }
