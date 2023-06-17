@@ -1,3 +1,8 @@
 .comments {
   padding: 1px 20px 10px 20px;
 }
+
+.no-comments {
+  color: gray;
+  font-size: 16px;
+}

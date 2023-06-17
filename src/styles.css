@@ -65,4 +65,12 @@ button:hover {
 }
 
 
-
+.right-sidebar {
+  width: 22.5vw;
+  height: 100vh;
+  border-left: rgba(116, 33, 194, 0.25) 1px solid;
+  position: fixed;
+  right: 0;
+  top:0;
+  text-align: center;
+}

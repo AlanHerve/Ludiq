@@ -1,15 +1,15 @@
 <!-- <button (click)="fetchDisplayHobbies()">fetch display</button> -->
-<div class = "right-sidebar">
-<h2>TOP 3</h2>
-<ul class = "list center">
-  <div class = "center" *ngFor="let top_hobby of top_hobbies">
-    <app-hobby-count-button [hobbyCountDTO]="top_hobby"></app-hobby-count-button>
-  </div>
-</ul>
-<h2>Suggestions</h2>
-<ul class = "list center">
-  <div class = "center" *ngFor="let rand_hobby of rand_hobbies">
-    <app-hobby-count-button [hobbyCountDTO]="rand_hobby"></app-hobby-count-button>
-  </div>
-</ul>
+<div class="right-sidebar">
+  <h2>TOP 3</h2>
+  <ul class="list center">
+    <div *ngFor="let top_hobby of top_hobbies" class="center">
+      <app-hobby-count-button [hobbyCountDTO]="top_hobby"></app-hobby-count-button>
+    </div>
+  </ul>
+  <h2>Suggestions</h2>
+  <ul class="list center">
+    <div *ngFor="let rand_hobby of rand_hobbies" class="center">
+      <app-hobby-count-button [hobbyCountDTO]="rand_hobby"></app-hobby-count-button>
+    </div>
+  </ul>
 </div>

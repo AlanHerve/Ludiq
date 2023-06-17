@@ -1,0 +1,8 @@
+<div class="right-sidebar">
+  <h2>Participants</h2>
+  <ul class="list center" *ngIf="activityParticipants">
+    <div *ngFor="let activityParticipant of activityParticipants.usersDTO" class="center">
+      <app-user-search [userDTO]="activityParticipant"></app-user-search>
+    </div>
+  </ul>
+</div>
