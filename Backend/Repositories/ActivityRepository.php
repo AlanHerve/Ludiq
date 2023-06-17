@@ -47,6 +47,7 @@ class ActivityRepository
         $description = $activityDTO->description;
         $images = $activityDTO->images;
         $title = $activityDTO->title;
+        $time = $activityDTO->time;
 
         $stmt = $this->db->prepare("INSERT INTO
                                                 activity

@@ -39,12 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($_POST['id_user']) && isset($_POST['id_hobby']) && isset($_POST['advancement']) && isset($_POST['description']) && isset($_POST['time']) && isset($_POST['max_registration']) && isset($_POST['title'])) {
-        echo json_encode("PONEY");
-        echo json_encode($_POST['title']);
-
 
         $value = $_POST['max_registration'];
-        echo json_encode("poney bien apres isset");
         $activityDTO = new ActivityDTO(null, $_POST['id_user'], $_POST['id_hobby'], $_POST['advancement'], $_POST['description'], null, $_POST['time'], null, $_POST['max_registration'], null, $_POST['title'], null, null);
         $activityRepository = ActivityRepository::getInstance();
         $result = $activityRepository->newActivity($activityDTO);

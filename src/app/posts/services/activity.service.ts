@@ -26,6 +26,7 @@ export class ActivityService {
     );
   }
   newActivity(formData: FormData): Observable<string> {
+    console.log("Phoey");
     return this.http.post<string>(`${apiUrl}/activity.php`, formData).pipe(
       map(response => {
         console.log(response);

@@ -13,7 +13,7 @@ export class OrganizationButtonComponent implements OnInit{
   constructor(private router: Router) {  }
 
   onClick(): void {
-    this.router.navigateByUrl(`home/hobby/${this.organizationDTO.id_organization}`)
+    this.router.navigateByUrl(`/organization/${this.organizationDTO.id_organization}`)
   }
 
   ngOnInit(): void {
