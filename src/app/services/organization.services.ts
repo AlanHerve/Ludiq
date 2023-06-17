@@ -38,7 +38,20 @@ export class OrganizationService {
     );
   }
 
+  addOrganization(organizationDTO: OrganizationDTO, userId: number): Observable<boolean> {
+    const options = {
+      'jsonOrganizationDTO' : organizationDTO,
+      'userId': userId
+    };
+    return this.http.put<boolean>(`${apiUrl}/organization.php`, options);
+  }
 
-
-
+  addInvitation(organizationId: any, userId: number) {
+    const options = {
+      type : 'add_invitation',
+      userId: userId,
+      organizationId: organizationId
+    };
+    return this.http.put<boolean>(`${apiUrl}/organization.php`, options);
+  }
 }

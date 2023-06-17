@@ -3,15 +3,18 @@
 
 require_once '../Database.php';
 require_once '../DTOs/UserDTO.php';
+require_once '../Repositories/OrganizationRepository.php';
 
 class UserRepository
 {
   private static $instance = null;
   private $db;
+  private $organizationRepository;
 
   public function __construct()
   {
     $this->db = Database::getInstance()->getConnection();
+    $this->organizationRepository = OrganizationRepository::getInstance();
   }
 
   public static function getInstance()
@@ -35,10 +38,8 @@ class UserRepository
     $pseudo = $userDTO->username;
     $password = $userDTO->password;
 
-
     $stmt = $this->db->prepare("INSERT INTO user (USER_NAME, USER_PSEUDO, USER_PASSWORD, EMAIL, AVATAR) VALUES (?, ?, ?, ?, null)");
     $stmt->bind_param("ssss", $name, $pseudo, $password, $email);
-
 
     $stmt->execute();
 
@@ -46,22 +47,13 @@ class UserRepository
 
     if ($userType === "activity_director") {
       $organization_id = 1;
-      $stmt = $this->db->prepare("
-        INSERT INTO
-            activity_director (ID_USER, ID_ORGANIZATION)
-        VALUES
-            (?, ?)
-        ;
-      ");
-      $stmt->bind_param("ii", $userId, $organization_id);
+      $this->organizationRepository->addActivityDirector($userId, $organization_id);
 
-      $stmt->execute();
+      if ($stmt->affected_rows > 0) {
+        return true;
+      }
+      return false;
     }
-
-    if ($stmt->affected_rows > 0) {
-      return true;
-    }
-    return false;
   }
 
   /**
@@ -230,7 +222,7 @@ class UserRepository
    * Method to update a user in the User database
    *
    * @param UserDTO $userDTO
-   * @return void
+   * @return bool
    */
   public function updateUser(UserDTO $userDTO)
   {
@@ -263,7 +255,11 @@ class UserRepository
       $stmt->bind_param($types, ...$params);
       $stmt->execute();
       $stmt->close();
+
+      return true;
     }
+
+    return false;
   }
 
 

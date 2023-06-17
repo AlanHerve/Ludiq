@@ -13,6 +13,8 @@ import {ActivityService} from "../../../posts/services/activity.service";
 import {TabService} from "../../../shared/service/tab.service";
 import {Image} from "../../../models/image";
 import {imagesUrl} from "../../../services/urls";
+import {OrganizationService} from "../../../services/organization.services";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-profile',
@@ -25,6 +27,7 @@ export class ProfileComponent implements Image {
   protected reward: string = "bronze";
   protected type: string = 'posts';
   protected isPartOfOrganization: boolean = false;
+  protected isInvitedToOrganization: boolean = false;
   protected profileDTO: ProfileDTO = {
     userDTO: new UserDTO(-1, '', ''),
     numPosts: 0,
@@ -47,6 +50,7 @@ export class ProfileComponent implements Image {
               private hobbyService: HobbyService,
               private friendService: FriendService,
               private communicationService: CommunicationService,
+              private organizationService: OrganizationService,
               private activityService: ActivityService,
               private tabService: TabService,
               private router: Router) {
@@ -136,6 +140,28 @@ export class ProfileComponent implements Image {
 
   isFriend(): boolean {
     return this.friendship_status == "friend";
+  }
+
+  onInviteOrganization(): void {
+    this.userService.findOrganization(this.userService.getCurrentId()).subscribe({
+      next: (organization) => {
+        this.organizationService.addInvitation(organization.id_organization, this.profileDTO.userDTO.id).subscribe({
+          next: (response) => {
+            console.log("Status of sending of invitation :", response)
+          },
+          error: (error) => {
+            console.log("Error while sending invitation : ", error)
+          }
+        })
+      },
+        error: () => {
+          console.log("Error while finding organization :", error)
+      }
+    })
+
+  }
+  onRemoveInvitationOrganization(): void {
+
   }
 
   isWaitingAcceptation(): boolean {

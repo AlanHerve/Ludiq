@@ -4,6 +4,8 @@ import {Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {apiUrl} from "./urls";
+import {OrganizationDTO} from "../models/organization-dto";
+import {OrganizationService} from "./organization.services";
 
 
 @Injectable({
@@ -96,4 +98,10 @@ export class UserService {
   }
 
 
+  findOrganization(userId: number): Observable<OrganizationDTO> {
+    const params = new HttpParams()
+      .set('type', 'find_organization')
+      .set('userId', userId)
+    return this.http.get<OrganizationDTO>(`${apiUrl}/user.php`, {params});
+  }
 }
