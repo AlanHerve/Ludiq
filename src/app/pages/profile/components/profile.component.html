@@ -16,12 +16,14 @@
         <div class="text-container">
           <img class="badge" src="assets/images/icons/hobbies.png">
           <p class="info">{{ profileDTO.numHobbies }} hobbies</p>
+          <!--<button (click)="showHobbyList()">Show hobbies</button>  Bouton pour afficher la liste des hobbies -->
         </div>
         <div class="text-container">
           <img class="badge" src="assets/images/icons/friends.png">
           <p class="info">{{ profileDTO.numFriends }} friends</p>
         </div>
       </div>
+
 
       <div class="favorite-hobby" *ngIf="profileDTO.favoriteHobby; else noFavorite">
         <p class="title-favorite-hobby">Favorite hobby</p>

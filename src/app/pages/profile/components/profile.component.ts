@@ -21,6 +21,8 @@ import { imagesUrl } from '../../../services/urls';
   styleUrls: ['./profile.component.css', '../../pages.css'],
 })
 export class ProfileComponent implements Image {
+  hobbies: HobbyDTO[] = [];
+
   activitiesDTO: ActivityDTO[] = [];
   protected reward: string = 'bronze';
   hobbyFlashcardsDTO: HobbyFlashcardDTO[] = [];
@@ -44,7 +46,6 @@ export class ProfileComponent implements Image {
   isChoosingFavoriteHobby: boolean = false;
   selectedHobby: HobbyDTO | undefined;
 
-
   constructor(
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
@@ -60,6 +61,7 @@ export class ProfileComponent implements Image {
       this.onTabChange(tab);
     });
   }
+
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
       this.userService.findUserById(parseInt(params['id'])).subscribe({
@@ -89,6 +91,17 @@ export class ProfileComponent implements Image {
               },
             });
 
+          this.hobbyService
+            .getHobbiesOfUser(this.profileDTO.userDTO.id)
+            .subscribe({
+              next: (response) => {
+                this.hobbies = response;
+              },
+              error: (error) => {
+                console.error('Could not get all hobbies', error);
+              },
+            });
+
           this.hobbyService.currentMessage.subscribe({
             next: (response) => {
               this.profileDTO.numHobbies++;
@@ -115,6 +128,7 @@ export class ProfileComponent implements Image {
         },
       });
     });
+    this.hobbies = [];
   }
 
   private determineReward(): void {
@@ -281,7 +295,10 @@ export class ProfileComponent implements Image {
     }
   }
 
-
-
+  showHobbyList(): void {
+    this.hobbyService.getAllHobbies().subscribe(response => {
+      this.hobbies = response.hobbies;
+    });
+  }
 
 }
