@@ -70,13 +70,14 @@ export class PostService {
     );
   }
 
-  addComment(comment: CommentDTO): Observable<string> {
+  addComment(comment: CommentDTO): Observable<number> {
     const params = {
       type: "addComment",
       comment: comment
     }
-    return this.http.post<string>(`${apiUrl}/comment.php`, params).pipe(
+    return this.http.post<number>(`${apiUrl}/comment.php`, params).pipe(
       map((response) => {
+        comment.id = response;
         this.needAddComment.next(comment);
         return response;
       })

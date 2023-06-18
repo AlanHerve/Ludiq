@@ -15,7 +15,8 @@
     <app-binder [buttons]="['Posts', 'Activities']"></app-binder>
 
     <app-post-list [postsDTO]="organizationDTO.postsDTO" *ngIf="type === 'posts'"></app-post-list>
-    <app-activity-flashcard-list [activitiesDTO]="this.organizationDTO.activitiesDTO" *ngIf="type === 'activities'"></app-activity-flashcard-list>
+    <app-activity-flashcard-list [activitiesDTO]="this.organizationDTO.activitiesDTO" *ngIf="type === 'activities' && validActivities()"></app-activity-flashcard-list>
+    <p *ngIf="!validActivities()">No activites from this organization</p>
 
 
   </div>

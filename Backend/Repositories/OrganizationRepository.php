@@ -293,7 +293,7 @@ class OrganizationRepository
       return $postsDTO;
     }
 
-    return [];
+    return [new PostDTO(-1, $id_organization, new HobbyDTO(-1, "a", null), "", null, null, null)];
   }
 
   public function fetchOrganizationActivities($id_organization){
@@ -320,6 +320,9 @@ class OrganizationRepository
       }
       return $activityDTO;
     }
+
+    return [new ActivityDTO(-1, null, null, null, null, null, null, null, null, null, null, $id_organization, null)];
+
   }
 
   public function sendInvitation($organizationId, $userId)

@@ -21,7 +21,7 @@ export class PostComponent implements OnInit, Image {
   showCommentBox: boolean = false;
   protected detailedPost: boolean = false;
 
-  protected commentsDTO!: CommentDTO[];
+  protected commentsDTO: CommentDTO[] = [];
 
 
   constructor(private userService: UserService,

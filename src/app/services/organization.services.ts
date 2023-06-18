@@ -62,7 +62,7 @@ export class OrganizationService {
    return this.http.get<ActivityDTO[]>(`${apiUrl}/organization.php`,{params}).pipe(
      map(response => {
        console.log("babayaga");
-       console.log(response);
+
        return response;
      })
    );
