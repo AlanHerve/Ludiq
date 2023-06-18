@@ -1,5 +1,5 @@
 <div>
-  <div *ngIf="postsDTO else elseBlock">
+  <div *ngIf="postsDTO && postsDTO.length > 0 else elseBlock">
     <app-post *ngFor="let post of postsDTO" [postDTO]="post"></app-post>
   </div>
   <ng-template #elseBlock>

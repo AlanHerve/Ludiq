@@ -9,6 +9,9 @@
         <button *ngIf="this.activityDirector && !isPartOfOrganization() && isInvited">
           <p (click)="onAcceptInvitation()">Accept invitation</p>
         </button>
+        <button *ngIf="this.activityDirector && !isPartOfOrganization() && isOnOrganization">
+          <p (click)="onQuitOrganization()">Quit organization</p>
+        </button>
       </div>
       <p class="username">{{this.organizationDTO.name_organization}}</p>
       <p class="nickname">{{this.organizationDTO.description}}</p>

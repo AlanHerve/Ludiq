@@ -1,4 +1,4 @@
-<div class = "activities" *ngIf="activitiesDTO.length > 0 else elseBlock">
+<div class = "activities" *ngIf="activitiesDTO && activitiesDTO.length > 0 else elseBlock">
   <app-activity-flashcard *ngFor="let activity of activitiesDTO" [activityDTO]="activity"></app-activity-flashcard>
 </div>
 <ng-template #elseBlock>

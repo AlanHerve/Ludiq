@@ -29,6 +29,7 @@ export class OrganizationComponent {
 
   protected activityDirector: boolean = false;
   protected isInvited: boolean = false;
+  protected isOnOrganization: boolean = false;
 
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -85,13 +86,24 @@ export class OrganizationComponent {
 
       this.isActivityDirector();
       this.isUserInvited();
+      this.isOnThisOrganization();
     });
 
   }
 
   isPartOfOrganization(): boolean {
-    console.log("ouloulou", this.userService.isPartOfOrganization(this.organizationDTO.id_organization))
     return this.userService.isPartOfOrganization(this.organizationDTO.id_organization);
+  }
+
+  isOnThisOrganization(): void {
+    this.organisationService.isOnThisOrganization(this.organizationDTO.id_organization, this.userService.getCurrentId()).subscribe({
+      next: (bool) => {
+        this.isOnOrganization = bool;
+      },
+      error: (error) => {
+        console.log("Error while finding if activity director is alreay on this organization ", error)
+      }
+    });
   }
 
   isActivityDirector(): void {
@@ -132,5 +144,16 @@ export class OrganizationComponent {
       }
     });
 
+  }
+
+  onQuitOrganization() {
+    this.organisationService.quitOrganization(this.organizationDTO.id_organization, this.userService.getCurrentId()).subscribe({
+      next: (bool) => {
+        console.log("status : ", bool)
+      },
+      error: (error) => {
+        console.log("Error while quitting organization ", error)
+      }
+    });
   }
 }

@@ -49,8 +49,8 @@
     <div class="buttons">
       <button (click)="onSendMessageClicked()" *ngIf="isFriend()">Send a message</button>
       <button (click)="addFriend()" *ngIf="!isFriend() else friendBlock">Add friend</button>
-      <button *ngIf="!isPartOfOrganization && !isConnectedUser() && !isInvited" (click)="onInviteOrganization()">Invite to the organization</button>
-      <button class = "button2" *ngIf="!isPartOfOrganization && !isConnectedUser() && isInvited" (click)="onRemoveInvitationOrganization()">Remove invitation</button>
+      <button *ngIf="!isPartOfOrganization && isConnectedUserPartOfOrganization && !isConnectedUser() && !isInvited" (click)="onInviteOrganization()">Invite to the organization</button>
+      <button class = "button2" *ngIf="!isPartOfOrganization && !isConnectedUser() && isInvited && isConnectedUserPartOfOrganization" (click)="onRemoveInvitationOrganization()">Remove invitation</button>
 
       <ng-template #friendBlock>
         <button (click)="removeFriend()" class="button2">Remove friend</button>

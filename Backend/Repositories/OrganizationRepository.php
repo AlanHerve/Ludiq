@@ -424,5 +424,72 @@ class OrganizationRepository
     return $stmt->affected_rows > 0;
   }
 
+  public function acceptInvitation(mixed $organizationId, mixed $userId)
+  {
+    $stmt = $this->db->prepare("
+        UPDATE
+            activity_director
+        SET
+            ID_ORGANIZATION = ?
+        WHERE
+            ID_USER = ?
+    ");
+
+    $stmt->bind_param("ii", $organizationId, $userId);
+    $stmt->execute();
+
+    if($stmt->affected_rows > 0) {
+      $this->removeInvitation($organizationId, $userId);
+      return $stmt->affected_rows > 0;
+    }
+    return false;
+  }
+
+  public function isOnThisOrganization(mixed $id_organization, mixed $userId)
+  {
+    $stmt = $this->db->prepare("
+        SELECT
+            act_d.ID_ORGANIZATION
+        FROM
+            activity_director act_d
+        WHERE
+            act_d.ID_USER = ?
+            AND
+            act_d.ID_ORGANIZATION = ?
+    ");
+
+    $stmt->bind_param("ii", $userId, $id_organization);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if($result->num_rows > 0) {
+      return true;
+    }
+    return false;
+  }
+
+  public function quitOrganization(mixed $organizationId, mixed $userId)
+  {
+    if($this->isOnThisOrganization($organizationId, $userId)) {
+      $stmt = $this->db->prepare("
+        UPDATE
+        activity_director
+        SET
+            ID_ORGANIZATION = 1
+        WHERE
+            ID_USER = ?
+            AND
+            ID_ORGANIZATION = ?
+    ");
+
+      $stmt->bind_param("ii", $userId, $organizationId);
+      $stmt->execute();
+      if($stmt->affected_rows > 0) {
+        return true;
+      }
+      return false;
+    }
+    return false;
+  }
+
 
 }
