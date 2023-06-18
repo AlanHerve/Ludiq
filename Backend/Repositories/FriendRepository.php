@@ -146,8 +146,8 @@ class FriendRepository
         $stmt->bind_param("ii", $id_user1, $id_user2);
         $stmt->execute();
 
-        if($stmt->affected_rows == 1) return "friend";
-        else return "phoeey";
+        if($stmt->affected_rows == 1) return "waiting";
+        else return "error";
     }
 
     public function getWaiting($id_user)
