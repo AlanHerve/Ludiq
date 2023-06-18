@@ -1,13 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CustomValidators} from "../../../custom-validators";
 import {Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {UserService} from "../../../services/user.service";
 import {Form} from "../../models/form";
 import {OrganizationDTO} from "../../../models/organization-dto";
 import {OrganizationService} from "../../../services/organization.services";
-
 @Component({
   selector: 'app-form-create-organization',
   templateUrl: './form-create-organization.component.html',
@@ -32,6 +30,7 @@ export class FormCreateOrganizationComponent extends Form implements OnInit {
   }
 
   ngOnInit(): void {
+    // Create the organization form with validators
     this.organizationForm = this.formBuilder.group(
       {
         name: ["", Validators.required],
@@ -41,15 +40,18 @@ export class FormCreateOrganizationComponent extends Form implements OnInit {
   }
 
   onCreateOrganization(): void {
-
+    // Update the organizationDTO object with form values
     this.organizationDTO.name_organization = this.organizationForm.value.name;
     this.organizationDTO.description = this.organizationForm.value.description;
 
+    // Call the organization service to add the organization
     this.organizationService.addOrganization(this.organizationDTO, this.userService.getCurrentId()).subscribe({
       next: (response) => {
+        // Log the successful creation of the organization
         console.log("Created a new organization : ", response);
       },
       error: (error) => {
+        // Log any error that occurred during organization creation
         console.log("Error while creating a new organization : ", error);
       }
     })

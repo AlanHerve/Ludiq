@@ -3,9 +3,13 @@
     <h1>Creation of an Organization</h1>
     <span class="cross" (click)="onClose()">&times;</span>
 
+    <!-- Input field for the organization name -->
     <input name="name" [value]="this.organizationDTO.name_organization" formControlName="name">
+
+    <!-- Input field for the organization description -->
     <input name="username" [value]="this.organizationDTO.description" formControlName="description">
 
+    <!-- Submit button for the form -->
     <button type="submit">Modify</button>
   </form>
 </div>
