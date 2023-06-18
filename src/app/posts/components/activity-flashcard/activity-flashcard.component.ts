@@ -10,6 +10,9 @@ import {ActivityService} from "../../services/activity.service";
   templateUrl: './activity-flashcard.component.html',
   styleUrls: ['./activity-flashcard.component.css']
 })
+/**
+ * Activity flashcards are a components used to display available activities without going too much into details
+ */
 export class ActivityFlashcardComponent implements OnInit {
 
   @Input() activityDTO!: ActivityDTO;

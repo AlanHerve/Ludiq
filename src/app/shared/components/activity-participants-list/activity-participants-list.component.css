@@ -5,6 +5,9 @@ h2 {
   margin-top: 40px;
 }
 
+/*
+When the size of the window is < 1000, we hide the right bar
+ */
 @media (max-width: 1000px) {
   .right-sidebar {
     display: none;

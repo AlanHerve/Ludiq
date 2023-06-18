@@ -18,13 +18,10 @@ export class ActivityService {
   constructor(private http: HttpClient) {}
 
 
-  getImage(imageName: string): Observable<Blob> {
-    const options = { responseType: 'arraybuffer' as 'json' };
-    const params = new HttpParams().set('imageName', imageName);
-    return this.http.get<Blob>(`${apiUrl}/images.php`, { params, ...options }).pipe(
-      map(response => new Blob([response], { type: 'image/jpeg' }))
-    );
-  }
+  /**
+   * publish an activity
+   * @param formData
+   */
   newActivity(formData: FormData): Observable<string> {
     console.log("Phoey");
     return this.http.post<string>(`${apiUrl}/activity.php`, formData).pipe(
@@ -44,6 +41,8 @@ export class ActivityService {
 
     return this.http.post<string>(`${apiUrl}/activity.php`, params).pipe(
       map(response => {
+
+        //notify the activity list componennt to remove the activity
         this.needDelete.next(activityId);
         return response;
       })
@@ -56,6 +55,9 @@ export class ActivityService {
     return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
   }
 
+  /**
+   * get the trendy activities
+   */
   getTop3Activities(): Observable<ActivityDTO[]> {
     const params = new HttpParams()
       .set('type', 'top3');
@@ -68,6 +70,10 @@ export class ActivityService {
     return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
   }
 
+  /**
+   * find activities about specified hobby
+   * @param id: id of the hobby
+   */
   getHobbyActivities(id: number): Observable<ActivityDTO[]> {
     const params = new HttpParams()
       .set('type', 'hobby_activities')
@@ -75,6 +81,10 @@ export class ActivityService {
     return this.http.get<ActivityDTO[]>(`${apiUrl}/activity.php`, {params});
   }
 
+  /**
+   * find all the informations of an activity depending on its id
+   * @param id
+   */
   findActivityById(id: number): Observable<ActivityDTO> {
     const params = new HttpParams()
       .set('type', 'activity')
@@ -83,6 +93,10 @@ export class ActivityService {
   }
 
 
+  /**
+   * find all user signed up for an activity
+   * @param activityId
+   */
   findActivityParticipants(activityId: number): Observable<ActivityParticipantsDTO> {
     const params = new HttpParams()
       .set('type', 'activity_participants')
@@ -90,6 +104,11 @@ export class ActivityService {
     return this.http.get<ActivityParticipantsDTO>(`${apiUrl}/activity.php`, {params});
   }
 
+  /**
+   * sign up a user
+   * @param userId
+   * @param activityId
+   */
   registerUserToActivity(userId: number, activityId: number) {
     const params =  {
       type: 'register_activity',
@@ -99,6 +118,11 @@ export class ActivityService {
     return this.http.post<ActivityParticipantsDTO>(`${apiUrl}/activity.php`, params);
   }
 
+  /**
+   * remove user from signed up users
+   * @param userId
+   * @param activityId
+   */
   deleteUserFromActivity(userId: number, activityId: number) {
     const params =  {
       type: 'unregister_activity',
@@ -108,6 +132,10 @@ export class ActivityService {
     return this.http.post<ActivityParticipantsDTO>(`${apiUrl}/activity.php`, params);
   }
 
+  /**
+   * get the name of the organization from the fake login token of the user
+   * @param token
+   */
   getOrganizationName(token: string): string {
 
     let to_return: string = token;
@@ -117,6 +145,10 @@ export class ActivityService {
     return to_return;
   }
 
+  /**
+   * get the id of the organization from the fake login token of the user
+   * @param token
+   */
   getOrganizationID(token: string): number{
 
     let to_return : string = token;

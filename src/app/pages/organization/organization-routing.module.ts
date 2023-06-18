@@ -1,12 +1,14 @@
-import { NgModule } from '@angular/core';
+import {inject, NgModule} from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {OrganizationComponent} from "./components/organization.component";
+import {AuthGuard} from "../../auth/auth.guard";
 
 const routes: Routes = [
-  {
-    path: '',
+   {
+    path: ':id',
     component: OrganizationComponent,
-  }
+    canActivate: [() => inject(AuthGuard).canActivate()]
+  },
 ];
 
 @NgModule({

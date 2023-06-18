@@ -6,7 +6,11 @@ import {ActivityParticipantsDTO} from "../../../pages/activity/models/activity-p
   templateUrl: './activity-participants-list.component.html',
   styleUrls: ['./activity-participants-list.component.css']
 })
+/**
+ * Class that represents a component for displaying the participants of an activity
+ */
 export class ActivityParticipantsListComponent implements OnInit {
+  // We stock the activity participants
   @Input() activityParticipants!: ActivityParticipantsDTO;
 
   ngOnInit(): void {
