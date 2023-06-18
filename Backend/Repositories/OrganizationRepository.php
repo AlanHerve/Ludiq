@@ -466,7 +466,8 @@ class OrganizationRepository
 
   public function quitOrganization(mixed $organizationId, mixed $userId)
   {
-    $stmt = $this->db->prepare("
+    if($this->isOnThisOrganization($organizationId, $userId)) {
+      $stmt = $this->db->prepare("
         DELETE FROM
         activity_director
         WHERE
@@ -475,10 +476,12 @@ class OrganizationRepository
             ID_ORGANIZATION = ?
     ");
 
-    $stmt->bind_param("ii", $userId, $organizationId);
-    $stmt->execute();
-    if($stmt->affected_rows > 0) {
-      return true;
+      $stmt->bind_param("ii", $userId, $organizationId);
+      $stmt->execute();
+      if($stmt->affected_rows > 0) {
+        return true;
+      }
+      return false;
     }
     return false;
   }

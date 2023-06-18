@@ -76,10 +76,10 @@ export class UserService {
     return token.match(regex)!=null;
   }
 
-  isPartOfAnOrganization(userDTO: UserDTO): Observable<boolean> {
+  isPartOfAnOrganization(userId: number): Observable<boolean> {
     const params = new HttpParams()
       .set('type', 'is_part_of_organization')
-      .set('userId', userDTO.id)
+      .set('userId', userId)
     return this.http.get<boolean>(`${apiUrl}/user.php`, {params});
   }
 

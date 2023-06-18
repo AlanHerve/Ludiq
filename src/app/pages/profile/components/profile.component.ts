@@ -27,6 +27,7 @@ export class ProfileComponent implements Image {
   protected type: string = 'posts';
   protected isPartOfOrganization: boolean = false;
   protected isInvited: boolean = false;
+  protected isConnectedUserPartOfOrganization: boolean = false;
   protected profileDTO: ProfileDTO = {
     userDTO: new UserDTO(-1, '', ''),
     numPosts: 0,
@@ -266,9 +267,20 @@ export class ProfileComponent implements Image {
   }
 
   isPartOfAnOrganization(): void {
-    this.userService.isPartOfAnOrganization(this.profileDTO.userDTO).subscribe({
+    this.userService.isPartOfAnOrganization(this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
         this.isPartOfOrganization = response;
+      },
+      error: (error) => {
+        console.log("Error while finding if part of a organization  : ", error)
+      }
+    })
+  }
+
+  isConnectedUserPartOfAnOrganization(): void {
+    this.userService.isPartOfAnOrganization(this.userService.getCurrentId()).subscribe({
+      next: (response) => {
+        this.isConnectedUserPartOfOrganization = response;
       },
       error: (error) => {
         console.log("Error while finding if part of a organization  : ", error)
