@@ -27,12 +27,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $postRepository = PostRepository::getInstance();
   switch ($data['type']) {
+    // Called when a user wants to like a post; he can only like it once
     case 'like':
       echo json_encode($postRepository->likePost($data['id_user'], $postId));
       break;
+    // To unlike a post
     case 'unlike':
       echo json_encode($postRepository->unlikePost($data['id_user'], $postId));
       break;
+    // Used to delete a post
     case 'deletePost':
       echo $postRepository->deletePost($postId);
 
@@ -48,10 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_GET['type'] === 'home')
       echo json_encode($postRepository->getAllPosts());
     elseif ($_GET['type'] === 'hobby' && isset($_GET['id_hobby']))
+      // Retrieve all posts
       echo json_encode($postRepository->getHobbyPosts($_GET['id_hobby']));
     elseif ($_GET['type'] === 'find_post') {
+      // Retrieve all hobby posts
       echo json_encode($postRepository->findPostById($_GET['postID']));
     } elseif ($_GET['type'] === 'hasLiked') {
+      // Checks if a user has liked a specific post
       echo json_encode($postRepository->hasLiked($_GET['id_user'], $_GET['id_post']));
     }
 
@@ -65,9 +71,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $valid = true;
   }
 }
-
+/**
+ * @return void
+ * Method used to create a new post
+ */
 function newPost()
 {
+  // Check if the hobby in the post exists and is selected
   if (isset($_POST['id_hobby']) && $_POST['id_hobby'] != -1) {
     $hobbyDTO = new HobbyDTO($_POST['id_hobby']);
   } else {
@@ -83,10 +93,10 @@ function newPost()
 
     $images = $_FILES['images'];
   }
-
+  // Create a new instance of ImageRepository and use of the saveImages method
   $imageRepository = ImageRepository::getInstance();
   $uploadedFiles = $imageRepository->saveImages($images);
-
+  // Create a new postDTO
   $postDTO = new PostDTO(null, $userDTO, $hobbyDTO, $description, $uploadedFiles);
 
   $postRepository = PostRepository::getInstance();
