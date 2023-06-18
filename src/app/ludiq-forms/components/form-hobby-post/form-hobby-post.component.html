@@ -1,28 +1,39 @@
 <div class = "background-form">
-<form [@fadeIn]="true" (ngSubmit)="submitted()">
-  <span (click)="onClose()" class="cross">&times;</span>
-  <h1>Add an hobby</h1>
+  <form [@fadeIn]="true" (ngSubmit)="submitted()">
+    <span (click)="onClose()" class="cross">&times;</span>
+    <h1>Add an hobby</h1>
 
-  <p>Hobby</p>
-  <select id="hobbyType" name="hobbyType" [(ngModel)]="this.hobbyPostDTO.id_hobby">
-    <option *ngFor="let hobby of hobbies" [value]="hobby.id">{{hobby.name}}</option>
-  </select>
+    <!-- Select hobby type -->
+    <p>Hobby</p>
+    <select id="hobbyType" name="hobbyType" [(ngModel)]="this.hobbyPostDTO.id_hobby">
+      <!-- Loop over the hobbies array and create an option for each hobby -->
+      <option *ngFor="let hobby of hobbies" [value]="hobby.id">{{hobby.name}}</option>
+    </select>
 
+    <!-- Select hobby level -->
     <p>Level</p>
     <select id="advancement" name="advancement" [(ngModel)]="this.hobbyPostDTO.advancement">
+      <!-- Loop over the advancement_options array and create an option for each advancement level -->
       <option *ngFor="let advancement of advancement_options" [value]="advancement">{{advancement}}</option>
     </select>
 
+    <!-- Select hobby frequency -->
     <p>Frequency</p>
     <select id="frequency" name="frequency" [(ngModel)]="this.hobbyPostDTO.frequency">
+      <!-- Loop over the frequency_options array and create an option for each frequency level -->
       <option *ngFor="let frequency of frequency_options" [value]="frequency">{{frequency}}</option>
     </select>
 
+    <!-- Select hobby availability -->
     <p>Availability</p>
     <select id="availability" name="availability" [(ngModel)]="this.hobbyPostDTO.availability">
+      <!-- Set the default option as "Available" and assign a value of 1 -->
       <option selected [value]="1">Available</option>
+      <!-- Assign the option "Not available" a value of 0 -->
       <option [value]="0">Not available</option>
     </select>
-    <button class = "submit" type="submit">Submit</button>
+
+    <!-- Submit button -->
+    <button class="submit" type="submit">Submit</button>
   </form>
 </div>
