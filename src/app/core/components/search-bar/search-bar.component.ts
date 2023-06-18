@@ -6,6 +6,7 @@ import {UserDTO} from "../../../models/user-dto";
 import { Router } from '@angular/router';
 import {PostDTO} from "../../../posts/models/post-dto";
 import {ActivityDTO} from "../../../posts/models/activity-dto";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-search-bar',
@@ -15,8 +16,8 @@ import {ActivityDTO} from "../../../posts/models/activity-dto";
 export class SearchBarComponent implements OnInit {
   buttons: boolean[] = [];
   searchResults: any[] = [];
-
-  constructor(private searchBarService: SearchBarService, private router:Router) {
+  protected activityDirector: boolean = false;
+  constructor(private searchBarService: SearchBarService, private router:Router, private userService: UserService) {
     this.buttons[0] = false;
     this.buttons[1] = false;
     this.buttons[2] = false;
@@ -43,7 +44,16 @@ export class SearchBarComponent implements OnInit {
     }
   }
 
-
+  isActivityDirector(): void {
+    this.userService.isActivityDirector(JSON.parse(localStorage.getItem('currentUser')!).id).subscribe({
+      next: (bool) => {
+        this.activityDirector = bool;
+      },
+      error: (error) => {
+        console.error("Error while determining if activity director or not : ", error)
+      }
+    });
+  }
 
 
   ngOnInit(): void {
@@ -57,6 +67,8 @@ export class SearchBarComponent implements OnInit {
         menu.classList.remove('open');
       }
     });
+
+    this.isActivityDirector();
   }
 
   onSearch(event: Event): void {
