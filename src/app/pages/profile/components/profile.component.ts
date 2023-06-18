@@ -144,7 +144,7 @@ export class ProfileComponent implements Image {
   }
 
   /**
-   * Method that disconnects the user when cliking on the disconnect button
+   * Method that disconnects the user when clicking on the disconnect button
    *
    * @protected
    */
@@ -154,7 +154,7 @@ export class ProfileComponent implements Image {
   }
 
   /**
-   * Method that get all the information of the user (number of hobbies, posts, activites, posts, hobbiesFlashcards...)
+   * Method that get all the information of the user (number of hobbies, posts, activities, posts, hobbiesFlashcards...)
    */
   getProfileInformation(): void {
     this.profileService.getProfileInformation(this.profileDTO.userDTO.id).subscribe({
