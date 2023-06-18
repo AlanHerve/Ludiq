@@ -13,3 +13,7 @@ When the size of the window is < 1000, we hide the right bar
     display: none;
   }
 }
+
+.margin {
+  margin: 20px 0;
+}

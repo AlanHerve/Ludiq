@@ -10,7 +10,7 @@ import {imagesUrl} from "../../../../services/urls";
   styleUrls: ['./user.component.css']
 })
 /**
- * Component that represents a user, implementing Image inteface in order to display user image
+ * Component that represents a user, implementing Image interface in order to display user image
  */
 export class UserComponent implements Image {
 
