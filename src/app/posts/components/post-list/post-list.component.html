@@ -1,8 +1,10 @@
 <div>
+  <!-- Display each post if there are posts -->
   <div *ngIf="postsDTO && postsDTO.length > 0 else elseBlock">
     <app-post *ngFor="let post of postsDTO" [postDTO]="post"></app-post>
   </div>
+  <!-- Display a message if there are no posts -->
   <ng-template #elseBlock>
-  <p class ="no-posts">There are no posts on this section.</p>
+    <p class ="no-posts">There are no posts on this section.</p>
   </ng-template>
 </div>
