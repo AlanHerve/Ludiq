@@ -1,0 +1,14 @@
+.content {
+  position:absolute;
+  left: 290px;
+}
+
+.top-bar {
+  background-color: rgba(255, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+  .content {
+    left: 0;
+  }
+}
