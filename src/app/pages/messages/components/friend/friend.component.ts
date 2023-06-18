@@ -19,17 +19,14 @@ export class FriendComponent implements OnInit, Image {
   ngOnInit(): void {
   }
 
-  // Method that redirects the user to the page of the activity
   onClickFriend(): void {
     this.router.navigateByUrl('messages/'+this.friendDTO.user.id);
   }
 
-  // Method that check if the user is waiting for a response
   isWaiting(): boolean {
     return this.friendDTO.status == 1;
   }
 
-  // Method that check if the user is waiting for a response
   formatStatus(): string {
     if(this.friendDTO.status==1) return "waiting..."
 
@@ -40,7 +37,6 @@ export class FriendComponent implements OnInit, Image {
     return this.friendDTO.requester == this.friendDTO.user.id;
   }
 
-  // Method that accept a friend request
   acceptFriendship() {
     const user_id = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
     this.friendService.acceptFriendship(this.friendDTO.user.id, user_id).subscribe({
@@ -54,7 +50,6 @@ export class FriendComponent implements OnInit, Image {
     });
   }
 
-  // Method that remove a friend
   removeFriend() {
     const user_id = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
     this.friendService.removeFriend(user_id, this.friendDTO.user.id).subscribe({
@@ -68,7 +63,6 @@ export class FriendComponent implements OnInit, Image {
     });
   }
 
-  // Method that load the image of the user
   loadImage(image: string): string {
     return imagesUrl + "/" + image;
   }

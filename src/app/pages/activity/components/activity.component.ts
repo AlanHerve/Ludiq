@@ -36,7 +36,6 @@ export class ActivityComponent implements OnInit{
     });
   }
 
-  // Get activity by id
   private findActivity(): Observable<ActivityDTO> {
     return this.activatedRoute.params.pipe(
       switchMap(params => {
@@ -51,7 +50,6 @@ export class ActivityComponent implements OnInit{
     );
   }
 
-  // Get user by id
   private findUser(): Observable<UserDTO | null> {
     const userId = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
     return this.userService.findUserById(userId).pipe(
@@ -65,7 +63,6 @@ export class ActivityComponent implements OnInit{
     );
   }
 
-  // Get activity participants
   private findActivityParticipants(): void {
     this.activityService.findActivityParticipants(this.activityDTO.id).subscribe({
       next: (response) => {
@@ -79,7 +76,6 @@ export class ActivityComponent implements OnInit{
     });
   }
 
-  // Check if user is registered to activity
   private isRegistered(): boolean {
     if (this.activityParticipants && this.activityParticipants.usersDTO) {
       return this.activityParticipants.usersDTO.some(userDTO => userDTO.id === this.userDTO.id);
@@ -87,7 +83,7 @@ export class ActivityComponent implements OnInit{
     return false;
   }
 
-  // Register user to activity
+
   protected onRegister(): void {
     this.activityService.registerUserToActivity(this.userDTO.id, this.activityDTO.id).subscribe({
       next: () => {
@@ -100,7 +96,6 @@ export class ActivityComponent implements OnInit{
     });
   }
 
-  // Unregister user from activity
   protected onUnregister(): void {
     this.activityService.deleteUserFromActivity(this.userDTO.id, this.activityDTO.id).subscribe({
       next: () => {
@@ -113,17 +108,14 @@ export class ActivityComponent implements OnInit{
     });
   }
 
-  // Check if user is activity director
   private isActivityDirector(): boolean {
     return this.activityDTO.userDTO.id == this.userDTO.id;
   }
 
-  // Check if user is part of organization
   public isPartOfOrganization(): boolean {
     return this.userService.isPartOfOrganization(this.activityDTO.id_organization);
   }
 
-  // Delete activity
   onDelete() {
     console.log("attempting delete");
     this.activityService.deleteActivity(this.activityDTO.id).subscribe({

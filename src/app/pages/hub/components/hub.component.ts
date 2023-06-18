@@ -16,32 +16,25 @@ export class HubComponent implements OnInit {
     this.currentMonth = new Date().getMonth() + 1;
   }
 
-  // We need to check if the user is logged in or not
   ngOnInit(): void {
     this.formService.isOpen = false;
   }
 
-  // We need to redirect the user to the register page
   onRegister(): void {
     this.router.navigateByUrl('hub/register');
   }
-
-  // We need to redirect the user to the login page
   onLogin(): void {
     this.router.navigateByUrl('hub/login');
   }
 
-  // We need to redirect the user to the home page
   onLogout(): void {
     this.userService.logoutUser();
   }
 
-  // We need to check if the user is logged in or not
   isLoggedIn(): boolean {
     return this.userService.isLoggedIn();
   }
 
-  // We need to redirect the user to the home page
   onHome(): void {
     this.router.navigateByUrl('/home');
   }

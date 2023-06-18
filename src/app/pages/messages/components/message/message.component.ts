@@ -16,7 +16,6 @@ export class MessageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // Method that returns true if the message is sent by the current user
   onVerifySender(): boolean {
     return JSON.parse(localStorage.getItem('currentUser')!).id == this.messageDTO.id_user;
   }
