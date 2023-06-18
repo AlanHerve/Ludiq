@@ -10,8 +10,6 @@ import {UserDTO} from "../../../../models/user-dto";
 import {HobbyDTO} from "../../../../models/hobby-dto";
 import {UserService} from "../../../../services/user.service";
 import {Form} from "../../../models/form";
-import {FriendService} from "../../../../pages/messages/services/friend.service";
-import {HobbyFlashcardDTO} from "../../../../models/hobby-flashcard-dto";
 import {OrganizationDTO} from "../../../../models/organization-dto";
 
 
@@ -59,15 +57,6 @@ export class FormActivityComponent extends Form implements OnInit {
     id_organization: -1,
     organizationDTO: new OrganizationDTO(-1, '', '', '', [], [])
   }
-
-  hobbyPostDTO: HobbyFlashcardDTO = { //define a new hobbyFlashcardDTO
-    id_hobby_post: 0,
-    id_user: 0,
-    id_hobby: 0,
-    advancement: '',
-    frequency: '',
-    availability: 1
-  }
   activityForm: FormGroup;
 
   constructor(private builder: FormBuilder,
@@ -94,29 +83,30 @@ export class FormActivityComponent extends Form implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(JSON.parse(localStorage.getItem('currentUser')!).token);
-
-    this.activityDTO.organizationDTO.name_organization = this.activityService.getOrganizationName(JSON.parse(localStorage.getItem('currentUser')!).token);
-    //getting the name_organization using getOrganizationName
-    console.log(this.activityDTO.organizationDTO.name_organization);
-
-    this.activityDTO.id_organization = this.activityService.getOrganizationID(JSON.parse(localStorage.getItem('currentUser')!).token);
-    //getting the id_organization using getOrganizationID
-
+    // We find the user that wants to post the activity :
     this.userService.findUserById(JSON.parse(localStorage.getItem('currentUser')!).id).subscribe({
       next: (response) => {
+        // We stock it into the activity
         this.activityDTO.userDTO = response;
-
+        // We check if the user is activity director or not
+        this.userService.isActivityDirector(this.activityDTO.userDTO.id).subscribe({
+          next : (bool) => {
+            // If he isn't, he isn't allow the post a new activity, we redirects him to home
+            if(!bool) this.router.navigateByUrl('/home');
+          },
+          error: (error) => {
+            console.error("Error while finding if activity director or not :" , error)
+          }
+        })
+        // We collect all the hobbies of the user, in order to allows him to select a hobby for the new activity
         this.hobbyService.getAllHobbies().subscribe({
           next: (hobbies) => {
-            console.log(hobbies);
-            console.log(hobbies.hobbies.length)
             for (let i = 0; i < hobbies.hobbies.length; i++) {
               this.hobbies.push(hobbies.hobbies[i]);
             }
           },
           error: (error) => {
-            console.log("Erreur lors de l'appel à getAllHobbies() :", error);
+            console.error("Error during the call of getAllHobbies() :", error);
           }
         });
       }
