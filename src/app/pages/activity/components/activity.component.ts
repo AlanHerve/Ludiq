@@ -117,7 +117,7 @@ export class ActivityComponent implements OnInit{
   }
 
   onDelete() {
-    console.log("attempting delete");
+
     this.activityService.deleteActivity(this.activityDTO.id).subscribe({
       next: (response) => {
         if(response=="success"){

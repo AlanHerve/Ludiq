@@ -49,7 +49,7 @@ export class FormFavoriteHobbyComponent extends Form {
 
 
   submitted() {
-    console.log(this.selectedHobbyDTO);
+
     this.hobbyService.setFavoriteHobby(this.selectedHobbyDTO, parseInt(JSON.parse(localStorage.getItem('currentUser')!).id)).subscribe({
       next: (response) => {
         //success
