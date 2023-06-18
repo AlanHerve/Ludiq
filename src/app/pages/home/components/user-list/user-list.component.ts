@@ -8,6 +8,9 @@ import {OrganizationService} from "../../../../services/organization.services";
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
+/**
+ * Class that represents a list of user components
+ */
 export class UserListComponent implements OnInit, OnChanges {
 
   @Input() id_hobby!: number;
@@ -21,6 +24,8 @@ export class UserListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    // Depending on the input that isn't null, we display the users
+    // It allows to display users of a certain hobby, or users of a certain organization
     if(this.id_hobby) {
       this.displayHobbyUsers();
       this.text = "hobby"
@@ -31,10 +36,15 @@ export class UserListComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Method that displays users of a certain hobby
+   */
   displayHobbyUsers() {
     if(!this.id_hobby) return;
+    // We get the hobby users
     this.hobbyService.getHobbyUsers(this.id_hobby).subscribe({
       next: (response) => {
+        // We stock them into the usersDTO array
         this.usersDTO = response;
         console.log("Successfully accessed to users that are related to this hobby : ", this.id_hobby);
       },
@@ -44,8 +54,12 @@ export class UserListComponent implements OnInit, OnChanges {
     });
   }
 
+  /**
+   * Method that displays users of a certain organization
+   */
   displayOrganizationUsers() {
     if(!this.id_organization) return;
+    // We do the same as hobbyUsers
     this.organizationService.getOrganizationUsers(this.id_organization).subscribe({
       next: (response) => {
         this.usersDTO = response;

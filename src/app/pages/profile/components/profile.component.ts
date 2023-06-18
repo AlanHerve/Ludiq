@@ -191,16 +191,20 @@ export class ProfileComponent implements Image {
     // We find the organization of the user that is navigating on the current profile
     this.userService.findOrganization(this.userService.getCurrentId()).subscribe({
       next: (organization) => {
-        // Then, we check if the user is already invited to the organization or not
-        this.organizationService.isUserAlreadyInvited(organization.id_organization, this.profileDTO.userDTO.id).subscribe({
-          next: (boolean) => {
-            // We stock the boolean returned by the backend
-            this.isInvited = boolean;
-          },
-          error: (error) => {
-            console.log("Can't determine if already invented on organization or not : ", error)
-          }
-        })
+
+        if(organization.id_organization != -1){
+          // Then, we check if the user is already invited to the organization or not
+          this.organizationService.isUserAlreadyInvited(organization.id_organization, this.profileDTO.userDTO.id).subscribe({
+            next: (boolean) => {
+              // We stock the boolean returned by the backend
+              this.isInvited = boolean;
+            },
+            error: (error) => {
+              console.log("Can't determine if already invented on organization or not : ", error)
+            }
+          })
+        }
+
       },
       error: (error) => {
         console.log("Error while finding organization :", error)
