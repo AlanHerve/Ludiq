@@ -3,24 +3,29 @@
     <h1>New activity</h1>
     <span (click)="onClose()" class="cross">&times;</span>
 
+    <!-- Title of the activity -->
     <p>Title of the activity</p>
     <input [(ngModel)]="activityDTO.title" name="title"  type="text" maxlength="64" placeholder="Activity" >
 
+    <!-- Description of the activity -->
     <p>Description of the activity</p>
     <textarea [(ngModel)]="activityDTO.description" class="description" name="description" placeholder="Description of the activity"></textarea>
 
-<br><br>
+    <br><br>
 
     <div class="date">
+      <!-- Date of the activity -->
       <p>Date of the activity</p>
       <input type="date" name="date" id='time' [(ngModel)]="activityDTO.time">
     </div>
 
+    <!-- Hobby -->
     <p>Hobby</p>
     <select id="hobbyType" name="hobbyType" [(ngModel)]="this.activityDTO.hobbyDTO.id">
       <option *ngFor="let hobby of hobbies" [value]="hobby.id">{{hobby.name}}</option>
     </select>
 
+    <!-- Choice of the related level -->
     <p>Choice of the related level</p>
     <select name="level" id="level">
       <option value="books">Beginner</option>
@@ -28,6 +33,8 @@
       <option value="books">Advanced</option>
       <option value="books">Expert</option>
     </select>
+
+    <!-- Number of participants -->
     <p>Number of participants</p>
     <div class="number" [formGroup]="activityForm">
       <input type="number" id='number' name="number" min="2" max="200" formControlName="number" placeholder="How many people can participate?"
@@ -45,9 +52,6 @@
       </div>
     </div>
 
-
     <button type="submit">Post</button>
-
   </form>
-  </div>
-
+</div>
