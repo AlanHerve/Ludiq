@@ -36,7 +36,7 @@ class ActivityRepository
   {
     if (!self::$instance) { //if the instance doesn't exist then create a new one
       self::$instance = new ActivityRepository();
-
+//j
     }
     return self::$instance; //return the instance
   }
