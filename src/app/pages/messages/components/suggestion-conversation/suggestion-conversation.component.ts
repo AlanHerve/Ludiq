@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {ConversationDTO} from "../../models/conversation-dto";
 import {Router} from "@angular/router";
 
@@ -17,8 +17,10 @@ export class SuggestionConversationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.croppedContent = this.cropContent(this.conversationDTO.messagesDTO[this.conversationDTO.messagesDTO.length - 1].content);
+    if(this.conversationDTO.messagesDTO[this.conversationDTO.messagesDTO.length - 1].content)
+      this.croppedContent = this.cropContent(this.conversationDTO.messagesDTO[this.conversationDTO.messagesDTO.length - 1].content);
   }
+
 
   cropContent(content: string): string {
     let cropped = content.substring(0, 40);

@@ -1,11 +1,9 @@
+<app-top-bar [content]="['Organization']"></app-top-bar>
+
 <div *ngIf="this.organizationDTO">
   <div class="content">
     <div class="user">
       <div class="top-user-info">
-        <img *ngIf ="this.organizationDTO.avatar else elseBlock" [src]="this.loadImage(this.organizationDTO.avatar)" class ="profile-image">
-        <ng-template #elseBlock>
-          <img src="assets/images/icons/user.png" class ="profile-image">
-        </ng-template>
         <button *ngIf="this.activityDirector && !isPartOfOrganization() && isInvited">
           <p (click)="onAcceptInvitation()">Accept invitation</p>
         </button>
@@ -22,7 +20,6 @@
 
     <app-post-list [postsDTO]="organizationDTO.postsDTO" *ngIf="type === 'posts'"></app-post-list>
     <app-activity-flashcard-list [activitiesDTO]="this.organizationDTO.activitiesDTO" *ngIf="type === 'activities' && validActivities()"></app-activity-flashcard-list>
-    <p *ngIf="!validActivities()">No activites from this organization</p>
 
   </div>
   <app-navigation-bar></app-navigation-bar>

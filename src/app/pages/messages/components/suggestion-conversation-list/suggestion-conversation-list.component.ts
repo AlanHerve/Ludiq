@@ -18,7 +18,7 @@ export class SuggestionConversationListComponent implements OnInit {
     const id_user = parseInt(JSON.parse(localStorage.getItem('currentUser')!).id);
     this.conversationService.getAllConversations(id_user).subscribe({
       next: (conversations) => {
-        this.conversationsDTO = conversations;
+        this.conversationsDTO = conversations.filter(conversation => conversation.messagesDTO.some(message => message.content !== null));
         console.log("Conversations successfully loaded");
       },
       error: (error) => {

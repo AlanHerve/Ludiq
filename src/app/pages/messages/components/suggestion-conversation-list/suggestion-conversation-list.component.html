@@ -1,4 +1,5 @@
 <div>
+  <div class = "gap"></div>
   <app-top-bar [content]="['Conversations']"></app-top-bar>
   <app-suggestion-conversation *ngFor="let conversation of conversationsDTO" [conversationDTO]="conversation"></app-suggestion-conversation>
   <div *ngIf ="conversationsDTO.length == 0">

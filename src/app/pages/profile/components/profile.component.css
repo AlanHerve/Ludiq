@@ -15,6 +15,7 @@
   gap: 20px;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap-reverse;
 }
 
 .favorite-hobby {
@@ -25,7 +26,6 @@
   border: 1px black solid;
   border-radius: 20px;
   padding:15px 15px 15px 15px;
-  height:90%;
 }
 
 .user-info {
@@ -50,18 +50,18 @@
 
 .title-favorite-hobby {
   margin-top: 0;
-  font-size: clamp(0.4rem, 0.4rem + 1.2vw, 1.2rem);;
+  font-size: 18px;
 }
 
 .tag.favorite {
   margin-top: 3px;
   padding:6px!important;
-  font-size: clamp(0.4rem, 0.4rem + 1.2vw, 1rem);;
 }
 
 
 .buttons {
   margin-left: 40px;
+  flex-wrap: wrap;
   display: flex;
   gap: 20px;
   justify-content: space-between;
@@ -93,11 +93,15 @@ img {
   object-fit: contain;
 }
 .profile-image {
-
   object-fit: cover;
   width:clamp(7rem, 1rem + 10vw, 10rem);
   height:clamp(7rem, 1rem + 10vw, 10rem);
   border-radius: 100px;
+}
+
+.change_favorite {
+  width: 20px;
+  height: 20px;
 }
 
 @media (max-width: 1000px) {
@@ -106,4 +110,5 @@ img {
     left: 0;
     right: 0;
   }
+
 }

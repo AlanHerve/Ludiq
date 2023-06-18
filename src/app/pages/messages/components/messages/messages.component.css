@@ -34,3 +34,11 @@ img {
   margin: 0;
   font-weight: 100;
 }
+
+@media (max-width: 1000px) {
+  .content {
+    left: 0;
+    width: 100%;
+    margin-top: 100px;
+  }
+}
