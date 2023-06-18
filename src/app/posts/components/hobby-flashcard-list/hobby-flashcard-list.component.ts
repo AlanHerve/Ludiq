@@ -28,7 +28,7 @@ export class HobbyFlashcardListComponent implements OnInit {
             this.hobbyFlashcardsDTO.splice(index_to_remove, 1);
             this.hobbyDTOs.splice(index_to_remove, 1);
         }
-        console.log(response);
+
       },
       error: (error) => {
         // in case of failure
@@ -40,8 +40,7 @@ export class HobbyFlashcardListComponent implements OnInit {
       next: (init_response) => {
         this.hobbyService.getHobbyById(init_response.id_hobby).subscribe({
           next: (response) => {
-            console.log("new post baby");
-            console.log(response);
+
             this.hobbyDTOs.push(response);
             this.hobbyFlashcardsDTO.push(init_response);
           }

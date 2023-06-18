@@ -54,7 +54,6 @@ export class UserService {
       .set('user_id', userId);
     return this.http.get<UserDTO>(`${apiUrl}/user.php`, {params}).pipe(
       map(response => {
-        console.log(response);
         return response;
       })
     );

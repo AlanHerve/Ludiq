@@ -42,7 +42,7 @@ export class FriendComponent implements OnInit, Image {
     this.friendService.acceptFriendship(this.friendDTO.user.id, user_id).subscribe({
       next: (response) => {
         if(response == "success") this.friendDTO.status = 0;
-        else console.log("Could not accept friendship");
+        else console.error("Could not accept friendship");
       },
       error: (error) => {
         console.log('error while accessing to profile informations : ', error);
@@ -55,7 +55,7 @@ export class FriendComponent implements OnInit, Image {
     this.friendService.removeFriend(user_id, this.friendDTO.user.id).subscribe({
       next: (response) => {
         if(response == "success") this.friendDTO.status = 0;
-        else console.log("Could not remove friendship");
+        else console.error("Could not remove friendship");
       },
       error: (error) => {
         console.log('error while accessing to profile informations : ', error);

@@ -34,11 +34,10 @@ export class FormFavoriteHobbyComponent extends Form {
 
     this.hobbyService.getHobbiesOfUser(JSON.parse(localStorage.getItem('currentUser')!).id).subscribe({
       next: (response) => {
-        console.log(response);
+
         this.hobbyDTOs = response;
-        console.log("baba");
         this.selectedHobbyDTO = this.hobbyDTOs[1].id;
-        console.log(this.selectedHobbyDTO);
+
       },
       error: (error) => {
         console.error("could not get hobbies of users ", error);
@@ -52,7 +51,7 @@ export class FormFavoriteHobbyComponent extends Form {
     console.log(this.selectedHobbyDTO);
     this.hobbyService.setFavoriteHobby(this.selectedHobbyDTO, parseInt(JSON.parse(localStorage.getItem('currentUser')!).id)).subscribe({
       next: (response) => {
-        console.log(response);
+
       },
       error: (error) => {
         console.error("Could not set/change favorite hobby", error);
