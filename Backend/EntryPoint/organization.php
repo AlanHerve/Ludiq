@@ -48,6 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       case "remove_invitation":
         echo json_encode($organizationRepository->removeInvitation($data['organizationId'], $data['userId']));
         return;
+      case "accept_invitation":
+        echo json_encode($organizationRepository->acceptInvitation($data['organizationId'], $data['userId']));
+        return;
     }
   }
 

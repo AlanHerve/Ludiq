@@ -421,5 +421,26 @@ class OrganizationRepository
     return $stmt->affected_rows > 0;
   }
 
+  public function acceptInvitation(mixed $organizationId, mixed $userId)
+  {
+    $stmt = $this->db->prepare("
+        UPDATE
+            activity_director
+        SET
+            ID_ORGANIZATION = ?
+        WHERE
+            ID_USER = ?
+    ");
+
+    $stmt->bind_param("ii", $organizationId, $userId);
+    $stmt->execute();
+
+    if($stmt->affected_rows > 0) {
+      $this->removeInvitation($organizationId, $userId);
+      return $stmt->affected_rows > 0;
+    }
+    return false;
+  }
+
 
 }
