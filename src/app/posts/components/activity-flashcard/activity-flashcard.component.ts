@@ -33,7 +33,7 @@ export class ActivityFlashcardComponent implements OnInit {
   onDelete() {
     this.activityService.deleteActivity(this.activityDTO.id).subscribe({
       next: (response) => {
-        console.log(response);
+
       },
       error: (error) => {
         console.error("could not delete activity flashcard", error);

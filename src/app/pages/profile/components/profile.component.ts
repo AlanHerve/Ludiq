@@ -8,7 +8,6 @@ import {FriendService} from "../../messages/services/friend.service";
 import {HobbyFlashcardDTO} from "../../../models/hobby-flashcard-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
 import {HobbyService} from "../../../services/hobby.service";
-import {CommunicationService} from "../../../services/communication.service";
 import {ActivityService} from "../../../posts/services/activity.service";
 import {TabService} from "../../../shared/service/tab.service";
 import {Image} from "../../../models/image";
@@ -49,7 +48,6 @@ export class ProfileComponent implements Image {
               private profileService: ProfileService,
               private hobbyService: HobbyService,
               private friendService: FriendService,
-              private communicationService: CommunicationService,
               private organizationService: OrganizationService,
               private activityService: ActivityService,
               private tabService: TabService,
@@ -73,7 +71,7 @@ export class ProfileComponent implements Image {
 
             this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
               next: (response) => {
-                console.log(response);
+
                 this.friendship_status = response;
               },
               error: (error) => {
@@ -122,7 +120,6 @@ export class ProfileComponent implements Image {
 
           this.friendService.isFriendWith(parseInt(JSON.parse(localStorage.getItem('currentUser')!).id), this.profileDTO.userDTO.id).subscribe({
             next: (response) => {
-              console.log(response);
               this.friendship_status = response;
             },
             error: (error) => {
@@ -171,8 +168,7 @@ export class ProfileComponent implements Image {
     this.profileService.getProfileInformation(this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
         this.profileDTO = response;
-        console.log(response);
-        if(!this.profileDTO.favoriteHobby) console.log("bobubou");
+
         this.determineReward();
         this.isPartOfAnOrganization();
         this.isInvitedToOrganization();
@@ -295,8 +291,8 @@ export class ProfileComponent implements Image {
     this.friendService.addFriend(id_user, this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
         if (response == "friend") this.friendship_status = response;
-        else console.log("Could not add friend");
-        console.log(response);
+        else console.error("Could not add friend");
+
       },
       error: (error) => {
         console.log("Error adding friend", error)
@@ -309,11 +305,11 @@ export class ProfileComponent implements Image {
     this.friendService.removeFriend(id_user, this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
         if (response == "success") this.friendship_status = "!friend";
-        else console.log("Could not remove friendship");
-        console.log(response);
+        else console.error("Could not remove friendship");
+
       },
       error: (error) => {
-        console.log("Error removing friend", error)
+        console.error("Error removing friend", error)
       }
     });
   }

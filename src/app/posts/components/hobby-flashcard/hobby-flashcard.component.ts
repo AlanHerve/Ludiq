@@ -47,7 +47,7 @@ export class HobbyFlashcardComponent implements OnInit {
     this.hobbyService.destroyHobbyPost(this.hobbyPost.id_hobby_post).subscribe({
       next: (response) => {
         // in case of success
-        console.log(response);
+
       },
       error: (error) => {
         // in case of failure

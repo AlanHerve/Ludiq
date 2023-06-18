@@ -24,7 +24,7 @@ export class UserHobbiesListComponent {
   }
 
   ngOnInit(){
-    console.log(this.id);
+
     //this.RequestDTO.id_user = this.id
     this.RequestDTO.id_user = this.id;
 

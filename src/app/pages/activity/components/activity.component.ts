@@ -113,7 +113,6 @@ export class ActivityComponent implements OnInit{
   }
 
   public isPartOfOrganization(): boolean {
-    console.log(this.userService.isPartOfOrganization(this.activityDTO.id_organization));
     return this.userService.isPartOfOrganization(this.activityDTO.id_organization);
   }
 

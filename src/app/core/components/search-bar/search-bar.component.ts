@@ -112,10 +112,8 @@ export class SearchBarComponent implements OnInit {
         response.forEach((user) => {
           if (user.id) {
             const userDTO = new UserDTO(user.id, user.name, user.username, user.password, user.email);
-            console.log(userDTO.id);
             const existingUser = this.searchResults.find(user => user.id == userDTO.id);
             console.log("not already existing!");
-            console.log(this.searchResults);
             if (!existingUser) {
               this.searchResults.push(userDTO);
             }

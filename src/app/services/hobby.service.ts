@@ -34,7 +34,7 @@ export class HobbyService {
     //const function_to_call: string = "fetchALLHobbies";
     return this.http.get<{hobbies: HobbyDTO[]}>(`${apiUrl}/hobbies.php`, {params}).pipe(
       map(response => {
-        console.log(response);
+
         return response;
 
       })
@@ -131,7 +131,6 @@ export class HobbyService {
     return this.http.post<{hobby: HobbyFlashcardDTO}>(`${apiUrl}/hobbies.php`, params).pipe(
       map(response => {
 
-        console.log(response);
         this.messageNeedToAddHobby.next(response.hobby);
         return response;
       })

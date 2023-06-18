@@ -14,9 +14,7 @@ export class CustomValidators {
 
       let check = mainValue === confirmValue
 
-      console.log("password:"+mainValue
-        +"\nconfirm:"+confirmValue
-        +"\ntrue: "+check );
+
       if(!check) return {'noMatch': true};
 
       return null;
