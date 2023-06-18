@@ -31,5 +31,5 @@
       No result found
     </ng-template>
   </div>
-  <button (click)="onClickNewActivity()" class="button2">New activity</button>
+  <button *ngIf = "activityDirector" (click)="onClickNewActivity()" class="button2">New activity</button>
 </div>

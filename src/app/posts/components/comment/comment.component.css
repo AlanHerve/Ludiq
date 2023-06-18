@@ -1,7 +1,15 @@
+/*
+This class is used for the div containing the profile information.
+An important flag is used to force the application of the margin-top property.
+*/
 .profile-info {
   margin-top: 30px!important;
 }
 
+/*
+This class is used for the paragraph containing the description.
+A margin-top property is applied to add space above the element.
+*/
 .description {
   margin-top: 10px;
 }

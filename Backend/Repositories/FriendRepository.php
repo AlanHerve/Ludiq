@@ -8,6 +8,8 @@ class FriendRepository
 {
     private $db;
     private static $instance = null;
+
+    //to call fonctions regarding users
     private UserRepository $userRepository;
 
     public function __construct(UserRepository $userRepository)
@@ -51,6 +53,8 @@ class FriendRepository
         if ($result->num_rows > 0) {
             $usersDTO = [];
             while ($row = $result->fetch_assoc()) {
+              //if $row['ID_USER_2']!=$id_user then the user is the one who has sent the friend request
+              // waiting=1 is other user has not accepted the friendship request
                 if($row['ID_USER_2']!=$id_user)
                 $usersDTO[] = new FriendRequestDTO($this->userRepository->findUserById($row['ID_USER_2']), $row["WAITING"], $row['ID_USER']);
                 else $usersDTO[] = new FriendRequestDTO($this->userRepository->findUserById($row['ID_USER']), $row["WAITING"], $row['ID_USER']);
