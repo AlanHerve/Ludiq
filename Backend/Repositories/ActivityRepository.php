@@ -161,13 +161,13 @@ class ActivityRepository
             SELECT
                 act.ID_ACTIVITY
             FROM
-                user u
-            INNER JOIN activity act
+                activity act
+            INNER JOIN user u
                 ON act.ID_ACTIVITY_DIRECTOR = u.ID_USER
-            INNER JOIN activity_participants par
+            LEFT JOIN activity_participants par
                 ON act.ID_ACTIVITY = par.ID_ACTIVITY
             WHERE
-                act.ID_ACTIVITY_DIRECTOR = ?
+                act.ID_ACTIVITY_DIRECTOR  = ?
                 OR
                 par.ID_USER = ?
             ;
