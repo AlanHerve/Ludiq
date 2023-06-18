@@ -1,11 +1,23 @@
+<!--
+This div contains the profile information.
+When clicked, it triggers the `onUserClicked()` method.
+-->
 <div class="profile-info">
   <div (click)="onUserClicked()">
+    <!--
+    An img element displays the avatar of the user who made the comment.
+    If the user has an avatar, it is displayed, otherwise a default image is used.
+    -->
     <img *ngIf="this.commentDTO.userDTO.avatar else elseImage" [src]="this.loadImage(this.commentDTO.userDTO.avatar)"
          class="profile-image">
     <ng-template #elseImage>
       <img class="profile-image" src="assets/images/icons/user.png">
     </ng-template>
 
+    <!--
+    This div contains the user information (name and username).
+    When clicked, it triggers the `onUserClicked()` method.
+    -->
     <div (click)="onUserClicked()" style="display: flex">
       <div class="user-info">
         <span class="username">{{this.commentDTO.userDTO.name}}</span>
@@ -13,6 +25,14 @@
       </div>
     </div>
   </div>
+
+  <!--
+  An img element displays a delete icon.
+  This icon is only displayed if the current user is the owner of the comment.
+  When clicked, it triggers the `onDelete()` method.
+  -->
   <img *ngIf="isOwner()" class="delete" (click)="onDelete()" src = "assets/images/icons/delete.png">
 </div>
+
+<!-- This paragraph displays the content of the comment. -->
 <p class = "description">{{this.commentDTO.content}}</p>
