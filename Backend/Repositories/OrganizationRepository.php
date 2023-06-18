@@ -26,6 +26,10 @@ class OrganizationRepository
     return self::$instance;
   }
 
+  /**
+   * get info of all organizations
+   * @return void
+   */
   public function fetchAllOrganizations()
   {
 
@@ -42,6 +46,7 @@ class OrganizationRepository
     $organizations = [];
 
     if ($result) {
+      //as long as there is a result, push a new organization DTO
       while ($row = $result->fetch_assoc()) array_push($organizations, new OrganizationDTO($row["ID_ORGANIZATION"], $row["NAME_ORGANIZATION"], $row["AVATAR"], $row["DESCRIPTION"]));
       $response = array(
         'success' => true,
@@ -91,12 +96,18 @@ class OrganizationRepository
   }
 
 
+  /**
+   * get all information of an activity thakns to its ID
+   * @param $id_activity
+   * @return ActivityDTO|null
+   */
   public function findActivityById($id_activity)
   {
 
     $userRep = UserRepository::getInstance();
     $hobRep = HobbyRepository::getInstance();
 
+    //find information on the activity, activity direcot, and counts the number of participants
     $stmt = $this->db->prepare("
     SELECT
         act.*,
@@ -175,6 +186,12 @@ class OrganizationRepository
     echo json_encode($organization);
   }
 
+  /**
+   * create an organization
+   * @param $userId
+   * @param $organization
+   * @return bool
+   */
   public function addOrganization($userId, $organization)
   {
     $stmt = $this->db->prepare("
@@ -189,6 +206,7 @@ class OrganizationRepository
 
     if ($stmt->affected_rows > 0) {
       $organizationId = $stmt->insert_id;
+      //modify the organization of the user who's created the organization
       $this->modifiyActivityDirectorOrganization($userId, $organizationId);
 
       return true;
@@ -196,8 +214,15 @@ class OrganizationRepository
     return false;
   }
 
+  /**
+   * if activity_director has created anorganization, update their organization to the newly created one
+   * @param $userId
+   * @param $organizationId
+   * @return void
+   */
   public function modifiyActivityDirectorOrganization($userId, $organizationId)
   {
+    // checks if user is activity director
     $stmt = $this->db->prepare("
       SELECT
           act_d.ID_USER
@@ -210,6 +235,7 @@ class OrganizationRepository
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows == 0) {
+      //if user is not activity director, makes them one
       $stmt = $this->db->prepare("
         INSERT INTO
             activity_director (ID_ORGANIZATION, ID_USER)
@@ -217,6 +243,7 @@ class OrganizationRepository
             (?, ?)
       ");
     } else {
+      //update the organization of the activity director
       $stmt = $this->db->prepare("
         UPDATE
             activity_director act_d
@@ -231,6 +258,12 @@ class OrganizationRepository
     $stmt->execute();
   }
 
+  /**
+   * sets a user as an activity director
+   * @param $userId
+   * @param $organizationId: organization to join
+   * @return void
+   */
   public function addActivityDirector($userId, $organizationId)
   {
     $stmt = $this->db->prepare("
@@ -245,6 +278,11 @@ class OrganizationRepository
     $stmt->execute();
   }
 
+  /**
+   * get information on an organization
+   * @param $organizationId
+   * @return OrganizationDTO|null
+   */
   public function findOrganizationById($organizationId)
   {
     $stmt = $this->db->prepare("
@@ -267,6 +305,11 @@ class OrganizationRepository
     return null;
   }
 
+  /**
+   * get the posts made by activity_director of an organization
+   * @param $id_organization
+   * @return array|PostDTO[]
+   */
   public function fetchOrganizationPosts($id_organization)
   {
     $postRepository = PostRepository::getInstance();
@@ -294,6 +337,11 @@ class OrganizationRepository
     return [new PostDTO(-1, $id_organization, new HobbyDTO(-1, "a", null), "", null, null, null)];
   }
 
+  /**
+   * get the activities posted by activity directors of this organization
+   * @param $id_organization
+   * @return ActivityDTO[]|array
+   */
   public function fetchOrganizationActivities($id_organization)
   {
 
@@ -324,8 +372,15 @@ class OrganizationRepository
 
   }
 
+  /**
+   * send invitation to ativity director to join organization
+   * @param $organizationId: organization asking to join
+   * @param $userId
+   * @return bool
+   */
   public function sendInvitation($organizationId, $userId)
   {
+    //checks if organization has not already sent an invitation to the user
     $stmt = $this->db->prepare("
         SELECT
           *
@@ -342,10 +397,12 @@ class OrganizationRepository
     $stmt->execute();
 
     $result = $stmt->get_result();
+    //user has already sent invitation
     if ($result->num_rows > 0) {
       return false;
     }
 
+    //insert invitation
     $stmt = $this->db->prepare("
         INSERT INTO
             invitation_organization (ID_ORGANIZATION, ID_USER)
@@ -363,6 +420,12 @@ class OrganizationRepository
     }
   }
 
+  /**
+   * checks if organization has already sent an invitation for a user to join them
+   * @param $id_organization
+   * @param $userId
+   * @return bool
+   */
   public function isUserAlreadyInvited($id_organization, $userId)
   {
     $stmt = $this->db->prepare("
@@ -385,6 +448,12 @@ class OrganizationRepository
     return false;
   }
 
+  /**
+   * accept invitation from an organization to join them
+   * @param mixed $organizationId
+   * @param mixed $userId
+   * @return bool
+   */
   public function acceptInvitation(mixed $organizationId, mixed $userId)
   {
     $stmt = $this->db->prepare("
@@ -406,9 +475,16 @@ class OrganizationRepository
     return false;
   }
 
+  /**
+   * cancel an invitation for a user to join an organization or refuse invitation
+   * @param $organizationId
+   * @param $userId
+   * @return bool
+   */
   public function removeInvitation($organizationId, $userId)
   {
 
+    //checks that invitation existss
     $stmt = $this->db->prepare("
         SELECT
           *
@@ -429,6 +505,7 @@ class OrganizationRepository
       return false;
     }
 
+    //delte invitation
     $stmt = $this->db->prepare("
         DELETE FROM
             invitation_organization
@@ -444,6 +521,12 @@ class OrganizationRepository
     return $stmt->affected_rows > 0;
   }
 
+  /**
+   * quit organization, sets activity_director to "independant"
+   * @param mixed $organizationId
+   * @param mixed $userId
+   * @return bool
+   */
   public function quitOrganization(mixed $organizationId, mixed $userId)
   {
     if ($this->isOnThisOrganization($organizationId, $userId)) {
@@ -469,6 +552,9 @@ class OrganizationRepository
     return false;
   }
 
+  /**
+   * checks if activity irector is part of organization
+   */
   public function isOnThisOrganization(mixed $id_organization, mixed $userId)
   {
     $stmt = $this->db->prepare("
@@ -491,6 +577,10 @@ class OrganizationRepository
     return false;
   }
 
+  /** get all the activity_directors of an organization
+   * @param mixed $id_organization
+   * @return array
+   */
   public function getOrganizationUsers(mixed $id_organization)
   {
     $stmt = $this->db->prepare("
@@ -516,14 +606,25 @@ class OrganizationRepository
     return [];
   }
 
+  /**
+   * checks if organization has more than  0 members
+   * @param mixed $organizationId
+   * @return void
+   */
   private function verifyIfStillMembers(mixed $organizationId)
   {
     $users = $this->getOrganizationUsers($organizationId);
     if(count($users) == 0) {
+      //if 0 members delete organization
       $this->deleteOrganization($organizationId);
     }
   }
 
+  /**
+   * delte an organization
+   * @param mixed $organizationId
+   * @return bool
+   */
   private function deleteOrganization(mixed $organizationId)
   {
     $stmt = $this->db->prepare("

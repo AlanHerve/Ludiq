@@ -84,6 +84,10 @@ class ActivityRepository
     return json_encode($response);
   }
 
+  /**
+   * get 3 activites from the most popular hobbies
+   * @return array|null
+   */
   public function getTop3()
   {
     $stmt = $this->db->prepare("
@@ -114,9 +118,15 @@ class ActivityRepository
       }
       return $activitiesDTO;
     }
+    // if no activity has been found
     return null;
   }
 
+  /**
+   * get all informations of a hobby depending on its id
+   * @param $id_activity
+   * @return ActivityDTO|null
+   */
   public function findActivityById($id_activity)
   {
     $stmt = $this->db->prepare("
@@ -144,7 +154,9 @@ class ActivityRepository
 
     if ($result->num_rows == 1) {
       $row = $result->fetch_assoc();
+      //fetch info of the activity director
       $userDTO = $this->userRepository->findUserById($row['ID_ACTIVITY_DIRECTOR']);
+      //fetch info on the hobby of the activty
       $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
 
       return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
@@ -155,6 +167,11 @@ class ActivityRepository
     return null;
   }
 
+  /**
+   * get all activites a user has organized or taken part in
+   * @param $id_user
+   * @return array
+   */
   public function getUserActivities($id_user)
   {
     $stmt = $this->db->prepare("
@@ -184,7 +201,7 @@ class ActivityRepository
       }
       return $activitiesDTO;
     }
-
+    //if no activities has been found
     return [];
   }
 
@@ -212,6 +229,11 @@ class ActivityRepository
     return null;
   }
 
+  /**
+   * get all activities about the mentioned hobby
+   * @param $id_hobby
+   * @return array|void
+   */
   public function getHobbyActivities($id_hobby)
   {
     $stmt = $this->db->prepare("
@@ -226,7 +248,7 @@ class ActivityRepository
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) { //normalement la même que getAllActivities
+    if ($result->num_rows > 0) {
       $activitiesDTO = [];
       while ($row = $result->fetch_assoc()) {
         $activityDTO = $this->findActivityById($row['ID_ACTIVITY']);
@@ -237,7 +259,11 @@ class ActivityRepository
   }
 
 
-
+  /**
+   * get all the user taking part in an activity (the activity_director will not be among them)
+   * @param $activityId
+   * @return ActivityParticipantsDTO|null
+   */
   public function getActivityParticipants($activityId)
   {
     $stmt = $this->db->prepare("
@@ -268,6 +294,12 @@ class ActivityRepository
     return null;
   }
 
+  /**
+   * signs up a user
+   * @param $userId
+   * @param $activityId
+   * @return bool
+   */
   public function registerUserToActivity($userId, $activityId)
   {
     $stmt = $this->db->prepare("
@@ -287,6 +319,12 @@ class ActivityRepository
     return false;
   }
 
+  /**
+   * remove user from the list of people who signed up for the activity
+   * @param $userId
+   * @param $activityId
+   * @return bool
+   */
   public function deleteUserFromActivity($userId, $activityId)
   {
     $stmt = $this->db->prepare("
@@ -308,6 +346,11 @@ class ActivityRepository
     return false;
   }
 
+  /**
+   * get the number of activities an activity_director has posted
+   * @param $userId
+   * @return int
+   */
   public function getNumActivitiesDirector($userId): int
   {
     $stmt = $this->db->prepare("
@@ -330,6 +373,11 @@ class ActivityRepository
     return 0;
   }
 
+  /**
+   * get the number of activites a user has taken part in
+   * @param $userId
+   * @return int|mixed
+   */
   public function getNumActivitiesClassical($userId)
   {
     $stmt = $this->db->prepare("

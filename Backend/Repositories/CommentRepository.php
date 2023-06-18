@@ -24,6 +24,13 @@ class CommentRepository
     return self::$instance;
   }
 
+  /**
+   * post a new comment
+   * @param $userDTO
+   * @param $content
+   * @param $id_regular_post
+   * @return int|string
+   */
   public function addComment($userDTO, $content, $id_regular_post)
   {
     $stmt = $this->db->prepare("INSERT INTO comment (ID_USER, CONTENT, ID_REGULAR_POST) VALUES (?, ?, ?)");
@@ -65,6 +72,11 @@ class CommentRepository
     return json_encode($response);
   }
 
+  /**
+   * delete a comment
+   * @param $id_comment
+   * @return string
+   */
   public function deleteComment($id_comment)
   {
     $stmt = $this->db->prepare("DELETE FROM comment WHERE ID_COMMENT = ?");
@@ -103,6 +115,11 @@ class CommentRepository
     return null;
   }
 
+  /**
+   * get three comments of a post, used when a user is not on a post's detailed page
+   * @param $postID
+   * @return array|null
+   */
   public function getThreeComments($postID)
   {
     $stmt = $this->db->prepare("

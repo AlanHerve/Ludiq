@@ -20,6 +20,11 @@ class ImageRepository
     return self::$instance;
   }
 
+  /**
+   * save multiple images
+   * @param $images
+   * @return array|null: uploaded files name
+   */
   function saveImages($images)
   {
     $targetDir = '../assets/images/';
@@ -40,15 +45,24 @@ class ImageRepository
     return $uploadedFiles;
   }
 
+  /**
+   * save avatar / single image
+   * @param $avatar
+   * @return string|void|null
+   */
   function saveAvatar($avatar)
   {
+    //file to send image to
     $targetDir = '../assets/images/';
 
     if (!isset($avatar)) return null;
 
+    // get the base name of the file
     $uniqueFilename = uniqid() . '_' . basename($avatar['name']);
+    //determine the final path
     $targetFilePath = $targetDir . $uniqueFilename;
 
+    //checks if uploading of the avatar has returned an error
     if (move_uploaded_file($avatar['tmp_name'], $targetFilePath)) {
       return $uniqueFilename;
     } else {

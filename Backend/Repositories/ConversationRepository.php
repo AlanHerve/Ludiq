@@ -24,21 +24,28 @@ class ConversationRepository {
         return self::$instance;
     }
 
+  /**
+   * get all converstion user has taken part in (all conversation are 1 on 1 conversations)
+   * @param $userId
+   * @return array
+   */
     public function getAllConversations($userId) {
         $friends = $this->friendRepository->getAllFriends($userId);
         $conversationsDTO = array();
 
         if(!$friends) return [];
 
+        //for each friend in a user's friend list
         foreach ($friends as $friend) {
             $friendId = $friend->user->id;
+            //if the friendship has been accepted load the conversation
             if($this->friendRepository->acceptedFriendship($userId, $friendId)) {
                 $messages = $this->messageRepository->getMessagesBetweenUsers($userId, $friendId);
                 $conversationDTO = new ConversationDTO($friend, $messages);
                 $conversationsDTO[] = $conversationDTO;
             }
         }
-
+        //if at least one conversation return all conversations found
         if(count($conversationsDTO) > 0) return $conversationsDTO;
         return [];
     }
