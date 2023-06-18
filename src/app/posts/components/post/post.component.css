@@ -1,22 +1,29 @@
+/* Styles for the post component */
+
+/* Cursor pointer for post */
 .post {
   cursor: pointer;
   padding: 30px 30px 10px;
 }
 
+/* Post title styles */
 .post-title {
   font-size: 20px;
   font-weight: bold;
 }
 
+/* Post content styles */
 .post-content {
   margin-top: 20px;
 }
 
+/* User profile styles */
 .user-profile {
   display: flex;
   align-items: center;
 }
 
+/* Profile image styles */
 .profile-image {
   width: 50px;
   height: 50px;
@@ -25,11 +32,13 @@
   object-fit: cover;
 }
 
+/* Profile info styles */
 .profile-info {
   display: flex;
   align-items: center;
 }
 
+/* Username styles */
 .username {
   margin-top: 5px;
   font-size: 24px;
@@ -37,6 +46,7 @@
   margin-right: 10px;
 }
 
+/* Post date styles */
 .date {
   margin-left: 50px;
   font-size: 15px;
@@ -44,47 +54,56 @@
   color: #333333;
 }
 
+/* Nickname styles */
 .nickname {
   font-size: 17px;
   font-weight: 100;
 }
 
+/* User info styles */
 .user-info {
   display: flex;
   flex-direction: column;
   cursor: pointer;
 }
 
+/* Interaction buttons styles */
 .interaction {
   width: 30px;
   margin-top: 10px;
   height: 30px;
 }
 
+/* Likes count styles */
 .count {
   margin-left: 5px;
   margin-right: 20px;
 }
 
+/* Post info styles */
 .post-info {
   margin: 20px 0 0 0;
 }
 
+/* Image max sizes */
 img {
   max-height:200px;
   max-width: 500px;
 }
 
+/* Post image styles */
 .post-image {
   border-radius: 10px;
 }
 
+/* Images container styles */
 .images {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
+/* Delete button styles */
 .delete {
   bottom: 20px;
   right: 15px;
@@ -97,14 +116,15 @@ img {
   transition: color 0.2s ease-out;
 }
 
+/* Hover effect for the delete button */
 .delete:hover {
   color: #333333;
 }
 
+/* Top post information styles */
 .top-post-information {
   display: flex;
   justify-content: space-between;
   width: 100%;
   align-items: center;
-
 }

@@ -1,7 +1,15 @@
+/*
+This class is used for the div containing all the comments.
+Padding is applied on all four sides.
+*/
 .comments {
   padding: 1px 20px 10px 20px;
 }
 
+/*
+This class is used for the paragraph displaying the message when there are no comments.
+Color and font size properties are applied.
+*/
 .no-comments {
   color: gray;
   font-size: 16px;
