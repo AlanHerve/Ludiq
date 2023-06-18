@@ -4,8 +4,8 @@ header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Headers: Origin,Content-Type');
 
-include("../DTOs/HobbyDTO.php");
-include("../Repositories/SearchRepository.php");
+require_once("../DTOs/HobbyDTO.php");
+require_once("../Repositories/SearchRepository.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 

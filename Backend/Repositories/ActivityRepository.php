@@ -49,13 +49,13 @@ class ActivityRepository
 
 
 
-        $id_hobby = $activityDTO->hobbyDTO;
-        $description = $activityDTO->description;
-        $images = $activityDTO->images;
-        $title = $activityDTO->title;
-        $time = $activityDTO->time;
+    $id_hobby = $activityDTO->hobbyDTO;
+    $description = $activityDTO->description;
+    $images = $activityDTO->images;
+    $title = $activityDTO->title;
+    $time = $activityDTO->time;
 
-        $stmt = $this->db->prepare("INSERT INTO
+    $stmt = $this->db->prepare("INSERT INTO
 
                                                 activity
                                                 (ID_ACTIVITY_DIRECTOR
@@ -365,4 +365,3 @@ class ActivityRepository
     else return "failure";
   }
 }
-

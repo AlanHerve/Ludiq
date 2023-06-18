@@ -4,6 +4,8 @@ import {map} from "rxjs/operators";
 import {apiUrl} from "./urls";
 import {Injectable} from "@angular/core";
 import {OrganizationDTO} from "../models/organization-dto";
+import {PostDTO} from "../posts/models/post-dto";
+import {ActivityDTO} from "../posts/models/activity-dto";
 
 
 
@@ -15,14 +17,15 @@ export class OrganizationService {
 
  constructor(private http: HttpClient) {
  }
-  getOrganzationById(organizationDTO: OrganizationDTO): Observable<{organization: OrganizationDTO}> {
+  getOrganizationById(id: number): Observable<OrganizationDTO> {
+
     //const function_to_call: string = "fetchALLHobbies";
     const params = new HttpParams()
-      .set('function_to_call', "getOrganzationById")
-      .set('id_organization', organizationDTO.id_organization);
-    return this.http.get<{organization: OrganizationDTO}>(`${apiUrl}/organization.php`, {params}).pipe(
-      map(response => {
-        console.log(response);
+      .set('function_to_call', "getOrganizationById")
+      .set('id_organization', id);
+    return this.http.get<OrganizationDTO>(`${apiUrl}/organization.php`, {params}).pipe(
+      map (response => {
+        console.log("returned");
         return response;
       })
     );
@@ -37,13 +40,27 @@ export class OrganizationService {
       })
     );
   }
+  fetchOrganizationPosts(id: number): Observable<PostDTO[]> {
+   const params = new HttpParams()
+     .set('function_to_call', "fetchOrganizationPosts")
+     .set('id_organization', id);
+   return this.http.get<PostDTO[]>(`${apiUrl}/organization.php`, {params});
+  }
+
 
   addOrganization(organizationDTO: OrganizationDTO, userId: number): Observable<boolean> {
     const options = {
-      'jsonOrganizationDTO' : organizationDTO,
+      'jsonOrganizationDTO': organizationDTO,
       'userId': userId
     };
     return this.http.put<boolean>(`${apiUrl}/organization.php`, options);
+  }
+  fetchOrganizationActivities(id:number): Observable<ActivityDTO[]> {
+   const params = new HttpParams()
+     .set('function_to_call', "fetchOrganizationActivities")
+     .set('id_organization', id);
+   return this.http.get<ActivityDTO[]>(`${apiUrl}/organization.php`,{params});
+
   }
 
   addInvitation(organizationId: any, userId: number) {

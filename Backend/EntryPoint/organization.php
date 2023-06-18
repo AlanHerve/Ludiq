@@ -20,11 +20,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case "fetchAllOrganization":
       $organizationRepository->fetchAllOrganizations();
       break;
-    case "getOrganzationById":
+    case "getOrganizationById":
       $organizationRepository->getOrganzationById($id_organization);
       break;
     case "isAlreadyInvited":
       echo json_encode($organizationRepository->isUserAlreadyInvited($id_organization, $_GET['userId']));
+      break;
+    case "fetchOrganizationActivities":
+      echo json_encode($organizationRepository->fetchOrganizationActivities($id_organization));
+      break;
+    case "fetchOrganizationPosts":
+      echo json_encode($organizationRepository->fetchOrganizationPosts($id_organization));
       break;
 
   }

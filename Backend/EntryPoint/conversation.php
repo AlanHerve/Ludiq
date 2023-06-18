@@ -3,7 +3,7 @@ header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Origin,Content-Type');
 
-include("../Repositories/ConversationRepository.php");
+require_once("../Repositories/ConversationRepository.php");
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {

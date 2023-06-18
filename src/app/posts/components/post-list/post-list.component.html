@@ -1,6 +1,8 @@
 <div>
-  <app-post *ngFor="let post of postsDTO" [postDTO]="post"></app-post>
-  <div *ngIf = "postsDTO.length == 0">
-    <p class ="no-posts">There are no posts on this section.</p>
+  <div *ngIf="postsDTO else elseBlock">
+    <app-post *ngFor="let post of postsDTO" [postDTO]="post"></app-post>
   </div>
+  <ng-template #elseBlock>
+  <p class ="no-posts">There are no posts on this section.</p>
+  </ng-template>
 </div>

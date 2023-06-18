@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Headers: Origin,Content-Type');
 
-include("../Repositories/ProfileRepository.php");
+require_once("../Repositories/ProfileRepository.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $profileRepository = ProfileRepository::getInstance();

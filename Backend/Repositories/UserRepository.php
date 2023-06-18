@@ -4,6 +4,7 @@
 require_once '../Database.php';
 require_once '../DTOs/UserDTO.php';
 require_once '../Repositories/OrganizationRepository.php';
+require_once '../Repositories/HobbyRepository.php';
 
 class UserRepository
 {

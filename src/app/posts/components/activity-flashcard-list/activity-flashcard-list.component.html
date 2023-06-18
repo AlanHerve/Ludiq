@@ -1,6 +1,8 @@
-<div class = "activities" *ngIf="activitiesDTO.length > 0 else elseBlock">
-  <app-activity-flashcard *ngFor="let activity of activitiesDTO" [activityDTO]="activity"></app-activity-flashcard>
+<div *ngIf="this.activitiesDTO">
+  <div class = "activities" *ngIf="activitiesDTO.length > 0 else elseBlock">
+    <app-activity-flashcard *ngFor="let activity of activitiesDTO" [activityDTO]="activity"></app-activity-flashcard>
+  </div>
+  <ng-template #elseBlock>
+    <p class = "no-activities">There are no activities on this section.</p>
+  </ng-template>
 </div>
-<ng-template #elseBlock>
-  <p class = "no-activities">There are no activities on this section.</p>
-</ng-template>

@@ -4,8 +4,8 @@ header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Origin,Content-Type');
 
-include("../DTOs/UserDTO.php");
-include("../Repositories/UserRepository.php");
+require_once("../DTOs/UserDTO.php");
+require_once("../Repositories/UserRepository.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = file_get_contents('php://input');

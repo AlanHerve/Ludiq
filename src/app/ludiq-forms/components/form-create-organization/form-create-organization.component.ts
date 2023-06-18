@@ -21,6 +21,7 @@ export class FormCreateOrganizationComponent extends Form implements OnInit {
     description: '',
     avatar: '',
     postsDTO: [],
+    activitiesDTO: []
   };
 
   constructor(router: Router, location: Location,
