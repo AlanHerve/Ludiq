@@ -12,6 +12,7 @@ class OrganizationRepository
   private static $instance = null;
   private $db;
 
+
   public function __construct()
   {
     $this->db = Database::getInstance()->getConnection();
@@ -92,6 +93,10 @@ class OrganizationRepository
 
   public function findActivityById($id_activity)
   {
+
+    $userRep = UserRepository::getInstance();
+    $hobRep = HobbyRepository::getInstance();
+
     $stmt = $this->db->prepare("
     SELECT
         act.*,
@@ -117,8 +122,8 @@ class OrganizationRepository
 
     if ($result->num_rows == 1) {
       $row = $result->fetch_assoc();
-      $userDTO = $this->userRepository->findUserById($row['ID_ACTIVITY_DIRECTOR']);
-      $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
+      $userDTO = $userRep->findUserById($row['ID_ACTIVITY_DIRECTOR']);
+      $hobbyDTO = $hobRep->findHobbyById($row['ID_HOBBY']);
 
       return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
         $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['participant_count'], $row['MAX_REGISTRATIONS'],
