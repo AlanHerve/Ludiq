@@ -42,22 +42,34 @@ export class OrganizationComponent {
     });
   }
 
+  /**
+   *  Method used to return an image with its url
+   * @param image
+   */
   loadImage(image: string): string {
     return imagesUrl + "/" + image;
   }
 
+  /**
+   * Method used to change the tab between posts and activities
+   * @param tab
+   */
   onTabChange(tab: string): void {
     this.type = tab.toLowerCase();
     console.log(this.type);
   }
 
+
   ngOnInit() {
+    // get the organization id from the url params
     this.activatedRoute.params.subscribe(params => {
       this.organizationDTO.id_organization = parseInt(params['id']);
+      // get the organization information from its ID
       this.organisationService.getOrganizationById(this.organizationDTO.id_organization).subscribe({
         next: (response) => {
           // in case of success
           this.organizationDTO = response;
+          // We redirect if the organization doesn't exist
           if(!this.organizationDTO || this.organizationDTO.id_organization == 1) this.router.navigateByUrl("/home");
         },
         error: (error) => {
@@ -65,25 +77,24 @@ export class OrganizationComponent {
           console.error('Could not get user info', error);
         }
       });
+      // Used to fetch all the posts done by members of an organization
       this.organisationService.fetchOrganizationPosts(this.organizationDTO.id_organization).subscribe({
         next: (response) => {
           if(response[0].id != -1)
           this.organizationDTO.postsDTO = response;
         }
       });
+      // Used to fetch all the activities done by members of an organizaton
       this.organisationService.fetchOrganizationActivities(this.organizationDTO.id_organization).subscribe({
         next: (response) => {
-          console.log("zeng");
           if(response[0].id !=-1 ){
             this.organizationDTO.activitiesDTO = response;
             this.validAct = true;
           }
 
-
-
         }
       });
-
+      // We do different checks about the user to see if he is an activity director, if he is in an organization or if he has been invited to one
       this.isActivityDirector();
       this.isUserInvited();
       this.isOnThisOrganization();
@@ -91,21 +102,30 @@ export class OrganizationComponent {
 
   }
 
+  /**
+   * Method that
+   */
   isPartOfOrganization(): boolean {
     return this.userService.isPartOfOrganization(this.organizationDTO.id_organization);
   }
 
+  /**
+   * Method that
+   */
   isOnThisOrganization(): void {
     this.organisationService.isOnThisOrganization(this.organizationDTO.id_organization, this.userService.getCurrentId()).subscribe({
       next: (bool) => {
         this.isOnOrganization = bool;
       },
       error: (error) => {
-        console.log("Error while finding if activity director is alreay on this organization ", error)
+        console.log("Error while finding if activity director is already on this organization ", error)
       }
     });
   }
 
+  /**
+   * Method that checks if an user is an activity director, which means he can create activities
+   */
   isActivityDirector(): void {
     this.userService.isActivityDirector(this.userService.getCurrentId()).subscribe({
       next: (bool) => {

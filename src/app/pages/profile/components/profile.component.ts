@@ -117,7 +117,6 @@ export class ProfileComponent implements Image {
 
             this.hobbyService.currentDeleteState.subscribe((data) => {
               this.hobbyFlashcardsDTO.splice(this.findHobbyDTOWithData(data), 1);
-              this
             });
           },
           error: (error) => {
