@@ -6,7 +6,9 @@
         <ng-template #elseBlock>
           <img src="assets/images/icons/user.png" class ="profile-image">
         </ng-template>
-
+        <button *ngIf="this.activityDirector && !isPartOfOrganization() && isInvited">
+          <p (click)="onAcceptInvitation()">Accept invitation</p>
+        </button>
       </div>
       <p class="username">{{this.organizationDTO.name_organization}}</p>
       <p class="nickname">{{this.organizationDTO.description}}</p>
@@ -16,7 +18,6 @@
 
     <app-post-list [postsDTO]="organizationDTO.postsDTO" *ngIf="type === 'posts'"></app-post-list>
     <app-activity-flashcard-list [activitiesDTO]="this.organizationDTO.activitiesDTO" *ngIf="type === 'activities'"></app-activity-flashcard-list>
-
 
   </div>
   <app-navigation-bar></app-navigation-bar>

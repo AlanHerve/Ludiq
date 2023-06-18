@@ -189,7 +189,9 @@ class UserRepository
     $stmt->bind_param('i', $userId);
     $stmt->execute();
 
-    if ($stmt->get_result()->num_rows > 0) {
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
       return true;
     }
     return false;

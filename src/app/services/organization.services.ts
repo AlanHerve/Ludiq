@@ -96,4 +96,14 @@ export class OrganizationService {
     };
     return this.http.put<boolean>(`${apiUrl}/organization.php`, options);
   }
+
+  acceptInvitation(organizationId: number, userId: number): Observable<boolean> {
+    const options = {
+      type : 'accept_invitation',
+      userId: userId,
+      organizationId: organizationId
+    };
+
+    return this.http.put<boolean>(`${apiUrl}/organization.php`, options);
+  }
 }

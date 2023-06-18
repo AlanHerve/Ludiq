@@ -24,6 +24,8 @@ export class OrganizationComponent {
   }
 
   protected type: string = 'posts';
+  protected activityDirector: boolean = false;
+  protected isInvited: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute,
               private organisationService: OrganizationService,
@@ -70,17 +72,50 @@ export class OrganizationComponent {
           console.log(response[0].organizationDTO.name_organization);
         }
       });
+
+      this.isActivityDirector();
+      this.isUserInvited();
     });
 
   }
 
-  onSwitchTo(type: string): void {
-    this.type = type;
+  isPartOfOrganization(): boolean {
+    console.log("ouloulou", this.userService.isPartOfOrganization(this.organizationDTO.id_organization))
+    return this.userService.isPartOfOrganization(this.organizationDTO.id_organization);
   }
 
-  isPartOfOrganization() {
-    this.userService.isPartOfOrganization(this.organizationDTO.id_organization);
+  isActivityDirector(): void {
+    this.userService.isActivityDirector(this.userService.getCurrentId()).subscribe({
+      next: (bool) => {
+        this.activityDirector = bool;
+        console.log("poney aaa", this.activityDirector);
+      },
+      error: (error) => {
+        console.log("Error while finding if activity director or not ", error)
+      }
+    })
   }
 
 
+  isUserInvited(): void {
+    this.organisationService.isUserAlreadyInvited(this.organizationDTO.id_organization, this.userService.getCurrentId()).subscribe({
+      next: (bool) => {
+        this.isInvited = bool;
+      },
+      error: (error) => {
+        console.log("Error while finding if activity director is invited ", error)
+      }
+    });
+  }
+
+  onAcceptInvitation() {
+    this.organisationService.acceptInvitation(this.organizationDTO.id_organization, this.userService.getCurrentId()).subscribe({
+      next: (bool) => {
+        console.log("status : ", bool)
+      },
+      error: (error) => {
+        console.log("Error while finding if activity director is invited ", error)
+      }
+    });
+  }
 }
