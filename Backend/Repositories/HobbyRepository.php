@@ -334,6 +334,11 @@ class HobbyRepository
         return $row['num_hobbies'];
     }
 
+  /**
+   * return all users taking part in a hobby
+   * @param $id_hobby
+   * @return array|null
+   */
     public function getHobbyUsers($id_hobby) {
         $stmt = $this->db->prepare("
             SELECT
@@ -361,6 +366,11 @@ class HobbyRepository
         return null;
     }
 
+  /**
+   * Post a new hobby flashcard
+   * @param HobbyPostDTO $hobbyPost
+   * @return false|string : returns success and hobbyPostDTO
+   */
   function newHobbyPost(HobbyPostDTO $hobbyPost)
   {
     $stmt = $this->db->prepare("
@@ -376,6 +386,7 @@ class HobbyRepository
     if ($stmt->affected_rows > 0) {
       $hobbyPost->insertIdHobbyPost($stmt->insert_id);
 
+      //get the name of the hobby in the flashcard
       $stmt = $this->db->prepare("
             SELECT
                 hob.HOBBY_NAME
@@ -406,10 +417,13 @@ class HobbyRepository
         'message' => $hobbyPost
       );
     }
-
     return json_encode($response);
   }
 
+  /** get all the informations of a hobby
+   * @param $id: id of the hobby
+   * @return HobbyDTO|null
+   */
     function findHobbyById($id)
     {
         $stmt = $this->db->prepare("
@@ -432,6 +446,11 @@ class HobbyRepository
         return null;
     }
 
+  /**
+   * delete a hobby flashcard from the database
+   * @param mixed $id_hobby_post
+   * @return void
+   */
     public function destroyHobbyPost(mixed $id_hobby_post)
     {
         $stmt = $this->db->prepare("DELETE FROM hobby_post WHERE ID_HOBBY_POST = ?");
@@ -474,9 +493,14 @@ class HobbyRepository
 
     }
 
+  /**
+   * set the favorite hobby of a user
+   * @param mixed $id
+   * @param mixed $id_user
+   * @return false|string|void
+   */
     public function setFavoriteHobby(mixed $id, mixed $id_user)
     {
-
 
       $stmt = $this->db->prepare("
         DELETE FROM
@@ -489,7 +513,6 @@ class HobbyRepository
       $stmt->execute();
 
       if($stmt->error == null){
-
 
         $stmt = $this->db->prepare("
         INSERT INTO
@@ -504,7 +527,6 @@ class HobbyRepository
         if($stmt->affected_rows == 1){
           return json_encode($this->findHobbyById($id));
         }
-
 
       }
 

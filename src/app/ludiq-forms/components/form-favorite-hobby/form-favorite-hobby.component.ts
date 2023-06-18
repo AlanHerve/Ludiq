@@ -13,30 +13,31 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   templateUrl: './form-favorite-hobby.component.html',
   styleUrls: ['./form-favorite-hobby.component.css', '../../ludiq-forms.css']
 })
+/**
+ * allows user to set and change their favorite hobby
+ */
 export class FormFavoriteHobbyComponent extends Form {
 
+  //information of all the available hobbies
   hobbyDTOs: HobbyDTO[] = [];
 
+  //id of the selected hobby
   selectedHobbyDTO: number = 0;
 
-  favoriteHobbyForm: FormGroup;
-
-  constructor(private formBuilder: FormBuilder,private hobbyService: HobbyService,
+  constructor(private hobbyService: HobbyService,
               router: Router,
               location: Location
   ) {
     super(router, location);
 
-    this.favoriteHobbyForm = this.formBuilder.group({
-      hobby: [this.hobbyDTOs[0], [Validators.required]]
-      }
-    );
 
+    //get all hobbies in the user's bio
     this.hobbyService.getHobbiesOfUser(JSON.parse(localStorage.getItem('currentUser')!).id).subscribe({
       next: (response) => {
 
         this.hobbyDTOs = response;
-        this.selectedHobbyDTO = this.hobbyDTOs[1].id;
+        //preselects a value
+        this.selectedHobbyDTO = this.hobbyDTOs[0].id;
 
       },
       error: (error) => {
@@ -51,12 +52,13 @@ export class FormFavoriteHobbyComponent extends Form {
     console.log(this.selectedHobbyDTO);
     this.hobbyService.setFavoriteHobby(this.selectedHobbyDTO, parseInt(JSON.parse(localStorage.getItem('currentUser')!).id)).subscribe({
       next: (response) => {
-
+        //success
       },
       error: (error) => {
         console.error("Could not set/change favorite hobby", error);
       }
     });
-    this.router.navigateByUrl(this.previousRoute);
+    //close the form
+    this.onClose();
   }
 }

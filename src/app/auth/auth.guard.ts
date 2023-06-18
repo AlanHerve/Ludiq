@@ -36,5 +36,4 @@ export class AuthGuard {
     // If the user is logged in, return 'true' which means the route can be activated
     return true;
   }
-
 }

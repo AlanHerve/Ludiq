@@ -1,3 +1,7 @@
+<!-- We use a dynamic CSS style, that display a number of column thanks to the length of the buttons array
+It allows to create 3 columns when the array has 3 elements, 2 when the array has 2 and so on.
+-->
 <div class="binder" [ngStyle]="{ 'grid-template-columns': 'repeat(' + buttons.length + ', 1fr)' }">
+  <!-- We create n tabs -->
   <app-tab *ngFor="let tab of buttons" [tab]="tab" [isActive]="tab === activeTab" (click)="onSwitchTo(tab)"></app-tab>
 </div>

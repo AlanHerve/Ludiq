@@ -1,3 +1,7 @@
+
+/*
+A tag is a button that owns a red color with a radius & a transition on hover
+ */
 .tag {
   align-items: center;
   padding: 10px 32px;
@@ -16,6 +20,9 @@
   background-color: #753D38;
 }
 
+/*
+CSS of the number of users related to this hobby
+ */
 .number {
   background-color: #307473;
   border-radius: 100px;

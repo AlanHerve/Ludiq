@@ -1,7 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import { FormService } from 'src/app/form.service';
 import {UserService} from "../../../services/user.service";
+import {FormService} from "../../../form.service";
 
 @Component({
   selector: 'app-hub',
