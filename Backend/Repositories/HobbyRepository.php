@@ -361,22 +361,22 @@ class HobbyRepository
         return null;
     }
 
-    function newHobbyPost(HobbyPostDTO $hobbyPost)
-    {
-        $stmt = $this->db->prepare("
+  function newHobbyPost(HobbyPostDTO $hobbyPost)
+  {
+    $stmt = $this->db->prepare("
             INSERT INTO
 	            hobby_post (ID_HOBBY, ID_USER, EXPERIENCE, FREQUENCY, AVAILABLE)
             VALUES
                 (?, ?, ?, ?, ?)
             ;
         ");
-        $stmt->bind_param("iissi", $hobbyPost->id_hobby, $hobbyPost->id_user, $hobbyPost->advancement, $hobbyPost->frequency, $hobbyPost->availability);
-        $stmt->execute();
+    $stmt->bind_param("iissi", $hobbyPost->id_hobby, $hobbyPost->id_user, $hobbyPost->advancement, $hobbyPost->frequency, $hobbyPost->availability);
+    $stmt->execute();
 
-        if ($stmt->affected_rows > 0) {
-            $hobbyPost->insertIdHobbyPost($stmt->insert_id);
+    if ($stmt->affected_rows > 0) {
+      $hobbyPost->insertIdHobbyPost($stmt->insert_id);
 
-            $stmt = $this->db->prepare("
+      $stmt = $this->db->prepare("
             SELECT
                 hob.HOBBY_NAME
             FROM
@@ -385,31 +385,47 @@ class HobbyRepository
                 hob.ID_HOBBY = ?
             ");
 
+      $stmt->bind_param("i", $hobbyPost->id_hobby);
+      $stmt->execute();
+      $result = $stmt->get_result();
 
-            $stmt->bind_param("i", $hobbyPost->id_hobby);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if($result){
-                if ($result->num_rows == 1){
-                    $row = $result->fetch_assoc();
-                    $hobbyPost->insertHobbyName($row["HOBBY_NAME"]);
-                }
-            }
-
-            $response = array(
-                'success' => true,
-                'hobby'   => $hobbyPost
-            );
-        } else {
-            $response = array(
-                'success' => false,
-                'message' => $hobbyPost
-            );
+      if($result){
+        if ($result->num_rows == 1){
+          $row = $result->fetch_assoc();
+          $hobbyPost->insertHobbyName($row["HOBBY_NAME"]);
         }
+      }
 
-        return json_encode($response);
+      $stmt = $this->db->prepare("
+            SELECT
+                fav.*
+            FROM
+                favorite_hobby fav
+            WHERE
+                fav.ID_USER = ?
+            ");
+
+      $stmt->bind_param("i", $hobbyPost->id_user);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      if ($result->num_rows == 0){
+        $this->setFavoriteHobby($hobbyPost->id_hobby, $hobbyPost->id_user);
+      }
+
+      $response = array(
+        'success' => true,
+        'hobby'   => $hobbyPost
+      );
+    } else {
+      $response = array(
+        'success' => false,
+        'message' => $hobbyPost
+      );
     }
+
+    return json_encode($response);
+  }
 
     function findHobbyById($id)
     {
