@@ -9,7 +9,8 @@ const routes: Routes = [
     children: [
       { path: 'hobby_post', loadChildren: () => import('../../ludiq-forms/components/form-new-post/form-new-post.module').then(m => m.FormNewPostModule) },
       { path: 'regular_post', loadChildren: () => import('../../ludiq-forms/components/form-regular-post/form-regular-post.module').then(m => m.FormRegularPostModule) },
-      {path: 'activity', loadChildren: () => import('../../ludiq-forms/components/form-activity/form-activity/form-activity.module').then(m => m.FormActivityModule)}
+      {path: 'activity', loadChildren: () => import('../../ludiq-forms/components/form-activity/form-activity/form-activity.module').then(m => m.FormActivityModule)},
+      {path: 'favorite_hobby', loadChildren: () => import('../../ludiq-forms/components/form-favorite-hobby/form-favorite-hobby.module').then(m => m.FormFavoriteHobbyModule)},
     ]
   },
   {
@@ -18,7 +19,8 @@ const routes: Routes = [
     children: [
       { path: 'hobby_post', loadChildren: () => import('../../ludiq-forms/components/form-new-post/form-new-post.module').then(m => m.FormNewPostModule) },
       { path: 'regular_post', loadChildren: () => import('../../ludiq-forms/components/form-regular-post/form-regular-post.module').then(m => m.FormRegularPostModule) },
-      {path: 'activity', loadChildren: () => import('../../ludiq-forms/components/form-activity/form-activity/form-activity.module').then(m => m.FormActivityModule)}
+      {path: 'activity', loadChildren: () => import('../../ludiq-forms/components/form-activity/form-activity/form-activity.module').then(m => m.FormActivityModule)},
+      {path: 'favorite_hobby', loadChildren: () => import('../../ludiq-forms/components/form-favorite-hobby/form-favorite-hobby.module').then(m => m.FormFavoriteHobbyModule)},
     ]
   },
 ];

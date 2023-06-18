@@ -7,6 +7,19 @@
       <ng-template #elseBlock>
         <img src="assets/images/icons/user.png" class="profile-image">
       </ng-template>
+      <div class="favorite-hobby" *ngIf="profileDTO.favoriteHobby; else noFavorite">
+        <p class="title-favorite-hobby">Favorite hobby</p>
+        <img *ngIf="profileDTO.favoriteHobby.image" [src]="'assets/images/hobbies/' + profileDTO.favoriteHobby.image" alt="favorite hobby img" class="image-favorite">
+        <app-hobby-button class="tag favorite" [hobbyDTO]="profileDTO.favoriteHobby"></app-hobby-button>
+        <button (click)="onClickChooseFavoriteHobby()">Change Favorite Hobby</button>
+      </div>
+
+
+      <ng-template #noFavorite>
+        <div class="favorite-hobby" *ngIf="isConnectedUser()">
+          <button (click)="onClickChooseFavoriteHobby()">Choose favorite hobby</button>
+        </div>
+      </ng-template>
 
       <div class="user-info">
         <div class="text-container">
@@ -16,33 +29,15 @@
         <div class="text-container">
           <img class="badge" src="assets/images/icons/hobbies.png">
           <p class="info">{{ profileDTO.numHobbies }} hobbies</p>
-          <!--<button (click)="showHobbyList()">Show hobbies</button>  Bouton pour afficher la liste des hobbies -->
-        </div>
+          </div>
         <div class="text-container">
           <img class="badge" src="assets/images/icons/friends.png">
           <p class="info">{{ profileDTO.numFriends }} friends</p>
         </div>
       </div>
-
-
-      <div class="favorite-hobby" *ngIf="profileDTO.favoriteHobby; else noFavorite">
-        <p class="title-favorite-hobby">Favorite hobby</p>
-        <img *ngIf="profileDTO.favoriteHobby.image" [src]="'assets/images/hobbies/' + profileDTO.favoriteHobby.image" alt="favorite hobby img" class="image-favorite">
-        <app-hobby-button class="tag favorite" [hobbyDTO]="profileDTO.favoriteHobby"></app-hobby-button>
-        <button *ngIf="isConnectedUser()" (click)="changeFavoriteHobby()">Change favorite hobby</button>
-      </div>
-
-      <ng-template #noFavorite>
-        <div class="favorite-hobby" *ngIf="isConnectedUser()">
-          <button (click)="changeFavoriteHobby()">Choose favorite hobby</button>
-        </div>
-      </ng-template>
     </div>
-    <div *ngIf="isChoosingFavoriteHobby">
-      <div *ngFor="let hobby of favoriteHobbyList">
-        <button (click)="selectFavoriteHobby(hobby)">{{ hobby.name }}</button>
-      </div>
-    </div>
+
+
 
     <p class="username">{{ profileDTO.userDTO.name }}</p>
     <p class="nickname">{{ profileDTO.userDTO.username }}</p>

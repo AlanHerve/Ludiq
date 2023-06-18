@@ -1,0 +1,107 @@
+.background-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.selection {
+  width: 70%;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-input-label {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  margin: 5px;
+}
+
+.file-input-label span {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #e9e9e9;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease-out;
+  border-radius: 100px;
+}
+
+.file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 200;
+}
+
+.file-input-label:hover span {
+  background-color: #ccc;
+  color: #7421C2;
+}
+
+.hobby-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.file-container {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.cross-file {
+  margin-left: 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.file-input-text {
+  margin: 10px;
+  align-self: center;
+}
+
+.file-input-label.disabled span {
+  /* styles pour l'état disabled */
+  background-color: rgba(173, 0, 0, 0.3);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: not-allowed;
+}
+
+textarea {
+  border: #9B9B9B solid 1px;
+  border-radius: 14px;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 300;
+  overflow-wrap: break-word;
+  resize: none;
+  height: 70px !important;
+  width: 70%;
+  margin: 10px 0;
+}
+
+button {
+  align-self: flex-end;
+  margin-top: 10px;
+}
+
+.file-name {
+  margin-top: 3px;
+}

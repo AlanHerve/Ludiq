@@ -301,4 +301,15 @@ export class ProfileComponent implements Image {
     });
   }
 
+  onClickChooseFavoriteHobby(): void {
+    /*
+    We determine the route that we are currently on
+     */
+    const currentRoute = this.router.url;
+    /*
+    We navigate to the pop-up's route in order to display it
+     */
+    this.router.navigateByUrl(`${currentRoute}/favorite_hobby`);
+  }
+
 }

@@ -475,5 +475,61 @@ class HobbyRepository
 
     }
 
+  /**
+   * Updates the favorite hobby of a user
+   *
+   * @param int $id_user The id of the user
+   * @param int $id_hobby The id of the hobby to be set as favorite
+   * @return string JSON string that tells whether the operation was successful or not
+   */
+  public function updateFavoriteHobby($id_user, $id_hobby)
+  {
+    // First, we have to check if the user already has a favorite hobby
+    $stmt = $this->db->prepare("
+            SELECT ID_FAVORITE_HOBBY
+            FROM favorite_hobby
+            WHERE ID_USER = ?
+        ");
+    $stmt->bind_param("i", $id_user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $favorite_hobby_id = $result->fetch_assoc()['ID_FAVORITE_HOBBY'];
+
+    if ($favorite_hobby_id) {
+      // If the user has a favorite hobby, we update it
+      $stmt = $this->db->prepare("
+                UPDATE favorite_hobby
+                SET ID_HOBBY = ?
+                WHERE ID_FAVORITE_HOBBY = ?
+            ");
+      $stmt->bind_param("ii", $id_hobby, $favorite_hobby_id);
+    } else {
+      // If the user doesn't have a favorite hobby, we insert a new record
+      $stmt = $this->db->prepare("
+                INSERT INTO favorite_hobby
+                (ID_USER, ID_HOBBY)
+                VALUES (?, ?)
+            ");
+      $stmt->bind_param("ii", $id_user, $id_hobby);
+    }
+
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+      $response = array(
+        'success' => true,
+        'message' => 'Favorite hobby updated successfully'
+      );
+    } else {
+      $response = array(
+        'success' => false,
+        'message' => 'Failed to update favorite hobby'
+      );
+    }
+
+    return json_encode($response);
+  }
+
+
 
 }
