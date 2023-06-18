@@ -1,7 +1,10 @@
 <div class="content">
   <div *ngIf="friend else elseBlock">
     <div class="top-bar">
-      <img src="../../../../../assets/images/icons/user.png">
+      <img *ngIf ="this.friend.avatar else elseBlock" [src]="this.loadImage(this.friend.avatar!)">
+      <ng-template #elseBlock>
+        <img src="assets/images/icons/user.png">
+      </ng-template>
       <div class="user">
         <p class="name">{{friend.name}}</p>
         <p class="username">{{friend.username}}</p>
