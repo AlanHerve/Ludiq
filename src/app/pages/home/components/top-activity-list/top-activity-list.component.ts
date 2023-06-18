@@ -7,15 +7,19 @@ import {ActivityService} from "../../../../posts/services/activity.service";
   templateUrl: './top-activity-list.component.html',
   styleUrls: ['./top-activity-list.component.css']
 })
+/**
+ * Class that represents a list of activities on trends
+ */
 export class TopActivityListComponent implements OnInit {
   activitiesDTO: ActivityDTO[] = [];
   constructor(private activityService: ActivityService) {
   }
   ngOnInit(): void {
+    // We load the top 3 activities
     this.activityService.getTop3Activities().subscribe({
       next: (response) => {
+        // We stock them into the activities array
         this.activitiesDTO = response;
-        console.log("Loaded TOP 3 activites successfully !");
       },
       error: (error) => {
         console.log("Error while loading TOP 3 activies : ", error);
