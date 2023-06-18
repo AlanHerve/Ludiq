@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {OrganizationService} from "../../../services/organization.services";
 import {UserService} from "../../../services/user.service";
 import {TabService} from "../../../shared/service/tab.service";
+import {imagesUrl} from "../../../services/urls";
 
 @Component({
   selector: 'app-organization',
@@ -31,6 +32,10 @@ export class OrganizationComponent {
     this.tabService.tabChange$.subscribe(tab => {
       this.onTabChange(tab);
     });
+  }
+
+  loadImage(image: string): string {
+    return imagesUrl + "/" + image;
   }
 
   onTabChange(tab: string): void {
@@ -61,6 +66,8 @@ export class OrganizationComponent {
       this.organisationService.fetchOrganizationActivities(this.organizationDTO.id_organization).subscribe({
         next: (response) => {
           this.organizationDTO.activitiesDTO = response;
+          console.log("zeng");
+          console.log(response[0].organizationDTO.name_organization);
         }
       });
     });
