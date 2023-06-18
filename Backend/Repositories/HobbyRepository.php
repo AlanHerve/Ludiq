@@ -467,6 +467,11 @@ class HobbyRepository
 
     }
 
+  /**
+   * find information of a hobby
+   * @param $id_hobby
+   * @return false|string
+   */
     public function getHobbyById($id_hobby)
     {
       $stmt = $this->db->prepare("
@@ -501,7 +506,7 @@ class HobbyRepository
    */
     public function setFavoriteHobby(mixed $id, mixed $id_user)
     {
-
+      //delete previous favorite hobby
       $stmt = $this->db->prepare("
         DELETE FROM
             favorite_hobby
@@ -514,6 +519,7 @@ class HobbyRepository
 
       if($stmt->error == null){
 
+        //set a new favorite hobby
         $stmt = $this->db->prepare("
         INSERT INTO
             favorite_hobby
