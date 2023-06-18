@@ -11,5 +11,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Create a new ImageRepository instance
     $imageRepository = ImageRepository::getInstance();
     // Used to create a new image file
-    return $imageRepository->createFile($imageName);
+    return $imageRepository->saveImages($imageName);
 }
