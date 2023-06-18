@@ -111,6 +111,7 @@ class CommentRepository
                 comment com
             WHERE
                 com.ID_REGULAR_POST = ?
+            ORDER BY 1
             DESC
             LIMIT 3
             ;
