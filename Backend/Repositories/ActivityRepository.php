@@ -149,7 +149,8 @@ class ActivityRepository
 
       return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
         $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['participant_count'], $row['MAX_REGISTRATIONS'],
-        $row['IMAGE'], $row["TITLE"], $row['ID_ORGANIZATION'], $row['NAME_ORGANIZATION']);
+        $row['IMAGE'], $row["TITLE"], $row['ID_ORGANIZATION'], new OrganizationDTO($row['ID_ORGANIZATION'], $row['NAME_ORGANIZATION'], null, null));
+
     }
     return null;
   }

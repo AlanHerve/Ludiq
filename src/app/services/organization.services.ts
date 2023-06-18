@@ -59,7 +59,13 @@ export class OrganizationService {
    const params = new HttpParams()
      .set('function_to_call', "fetchOrganizationActivities")
      .set('id_organization', id);
-   return this.http.get<ActivityDTO[]>(`${apiUrl}/organization.php`,{params});
+   return this.http.get<ActivityDTO[]>(`${apiUrl}/organization.php`,{params}).pipe(
+     map(response => {
+       console.log("babayaga");
+       console.log(response);
+       return response;
+     })
+   );
 
   }
 
