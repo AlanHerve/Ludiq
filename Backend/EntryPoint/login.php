@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $username = $data['username'];
     $password = $data['password'];
+    // Create a new UserDTO with provided username and password
     $userDTO = new UserDTO(null,'', $username, $password, '', null);
 
     $userRepository = UserRepository::getInstance();
