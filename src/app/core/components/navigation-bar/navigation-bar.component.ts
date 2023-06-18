@@ -29,10 +29,4 @@ export class NavigationBarComponent implements  OnInit{
      */
     this.router.navigateByUrl(`${currentRoute}/regular_post`);
   }
-
-  onClick(url: string): void {
-    this.router.navigateByUrl(url)
-}
-
-
 }
