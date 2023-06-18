@@ -2,9 +2,14 @@
   <form [@fadeIn]="true" (ngSubmit)="submitted()">
     <span (click)="onClose()" class="cross">&times;</span>
     <h1>Select new favorite hobby</h1>
+
+    <!-- Dropdown menu for selecting a new favorite hobby -->
     <select id="advancement" name="advancement" [(ngModel)]="selectedHobbyDTO">
+      <!-- Loop over the hobbyDTOs array and create an option for each hobby -->
       <option *ngFor="let hobby of hobbyDTOs" [value]="hobby.id">{{hobby.name}}</option>
     </select>
+
+    <!-- Submit button -->
     <button class = "submit" type="submit">Submit</button>
   </form>
 </div>
