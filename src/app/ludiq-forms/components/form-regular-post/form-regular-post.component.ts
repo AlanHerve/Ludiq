@@ -1,3 +1,4 @@
+// Import statements
 import {Component, OnInit} from '@angular/core';
 import {PostDTO} from "../../../posts/models/post-dto";
 import {PostService} from "../../../posts/services/post.service";
@@ -10,12 +11,12 @@ import {HobbyDTO} from "../../../models/hobby-dto";
 import {UserService} from "../../../services/user.service";
 import {UserDTO} from "../../../models/user-dto";
 
-
 @Component({
   selector: 'app-form-regular-post',
   templateUrl: './form-regular-post.component.html',
   styleUrls: ['./form-regular-post.component.css', '../../ludiq-forms.css'],
   animations: [
+    // Animation triggers
     trigger('fadeIn', [
       state('void', style({ opacity: 0 })),
       state('*', style({ opacity: 1 })),
@@ -30,9 +31,7 @@ import {UserDTO} from "../../../models/user-dto";
 })
 export class FormRegularPostComponent extends Form implements OnInit {
   index: number = 0;
-
   hobbies : HobbyDTO[] = [];
-
   imagesData: (File|null)[] = [];
 
   postDTO: PostDTO = {
@@ -48,6 +47,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
   }
 
   ngOnInit() {
+    // Get the user's details and their hobbies on initialization
     this.userService.findUserById(JSON.parse(localStorage.getItem('currentUser')!).id).subscribe({
       next: (response) => {
         this.postDTO.userDTO = response;
@@ -61,10 +61,11 @@ export class FormRegularPostComponent extends Form implements OnInit {
               private userService: UserService,
               router: Router,
               location: Location) {
+    // Call the superclass constructor
     super(router, location);
   }
 
-
+  // Event handler for file selection
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     const reader: FileReader = new FileReader();
@@ -82,6 +83,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  // Event handler for removing an image
   onRemoveImage(image: string) {
     const index = this.postDTO.images.findIndex(img => img === image);
     if (index !== -1) {
@@ -90,7 +92,7 @@ export class FormRegularPostComponent extends Form implements OnInit {
       this.index--;
     }
 
-    // Réinitialiser les valeurs vides à la fin de la liste
+    // Reset empty values at the end of the list
     if (this.postDTO.images.length < 4) {
       this.postDTO.images.push(null);
       this.imagesData.push(null);
@@ -99,21 +101,23 @@ export class FormRegularPostComponent extends Form implements OnInit {
     console.log(this.postDTO.images);
   }
 
+  // Get the user's hobbies
   getUserHobbies(){
     this.hobbyService.getHobbiesOfUser(this.postDTO.userDTO.id).subscribe({
       next: (response) => {
-        // in case of success
+        // In case of success
         for (let i = 0; i < response.length; i++) {
           this.hobbies.push(response[i]);
         }
       },
       error: (error) => {
-        // in case of failure
+        // In case of failure
         console.error('Could not get all hobbies', error);
-      }
+      },
     });
   }
 
+  // Create a new regular post
   newRegularPost() {
     const formData = new FormData();
     formData.append('new_post','1');
@@ -133,15 +137,14 @@ export class FormRegularPostComponent extends Form implements OnInit {
 
     this.postsService.newPost(formData).subscribe({
       next: (response) => {
-        // Traitement de la réponse du serveur en cas de succès
+        // Handling server response on success
         console.log('Posted with success! ', response);
         this.onClose();
       },
       error: (error) => {
-        // Gestion des erreurs en cas d'échec
+        // Handling errors on failure
         console.error('Error while posting post : ', error);
       }
     });
   }
-
 }

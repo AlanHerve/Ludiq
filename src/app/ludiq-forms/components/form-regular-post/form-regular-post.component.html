@@ -1,8 +1,10 @@
+<!-- Background form -->
 <div class="background-form">
-
+  <!-- Form -->
   <form [@fadeIn]="true" (ngSubmit)="newRegularPost()">
     <h1>New post</h1>
 
+    <!-- Cross button -->
     <span (click)="onClose()" class="cross">&times;</span>
 
     <p>Description of the post</p>
@@ -23,15 +25,16 @@
       </label>
     </div>
 
+    <!-- Hobby container -->
     <div class="hobby-container" *ngIf="this.postDTO.images[0] != null">
+      <!-- File container -->
       <div class="file-container" *ngFor="let image of this.postDTO.images">
         <span class = "file-name" *ngIf="image != null">{{ image }}</span>
         <span class="cross-file" *ngIf="image != null" (click)="onRemoveImage(image)">&times;</span>
       </div>
     </div>
 
-
-
+    <!-- Submit button -->
     <button type="submit">Post</button>
   </form>
 </div>
