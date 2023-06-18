@@ -2,7 +2,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CommentDTO} from "../../models/comment-dto";
 import {PostService} from "../../services/post.service";
-import {UserDTO} from "../../../models/user-dto";
 
 /*
 CommentListComponent is a component to display a list of comments.

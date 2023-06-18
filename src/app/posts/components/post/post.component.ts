@@ -31,15 +31,6 @@ export class PostComponent implements OnInit, Image {
   }
 
   ngOnInit(): void {
-    /*this.postsService.getPost(this.postDTO.id.toString()).subscribe({
-      next: (response) => {
-        this.postDTO = response;
-        this.postDTO.comments = response.comments; // Ajoutez cette ligne
-      },
-      error: (error) => {
-        console.error('Erreur lors de la récupération du post : ', error);
-      }
-    });*/
 
     this.determineDetailedPostOrNot();
 
@@ -92,18 +83,22 @@ export class PostComponent implements OnInit, Image {
     return imagesUrl + "/" + image;
   }
 
+  // Method to toggle the comment box visibility
   onCommentClicked(): void {
     this.showCommentBox = !this.showCommentBox;
   }
 
+  // Method to navigate to post details
   onPostClicked(): void {
     this.router.navigateByUrl(`/post/${this.postDTO.id}`)
   }
 
+  // Method to navigate to the user's profile
   onUserClicked(): void {
     this.router.navigateByUrl('profile/' + this.postDTO.userDTO.id);
   }
 
+  // Method to like or unlike the post
   likePost() {
     this.isLiked = !this.isLiked;
 
@@ -118,10 +113,7 @@ export class PostComponent implements OnInit, Image {
     }
   }
 
-  onClose() {
-
-  }
-
+  // Method to get the first three comments
   private getThreeComments(): void {
     this.postService.getThreeComments(this.postDTO.id).subscribe({
       next: (comments) => {
@@ -133,6 +125,7 @@ export class PostComponent implements OnInit, Image {
     })
   }
 
+  // Method to get all comments
   private getAllComments(): void {
     this.postService.getAllComments(this.postDTO.id).subscribe({
       next: (comments) => {
@@ -144,11 +137,13 @@ export class PostComponent implements OnInit, Image {
     })
   }
 
+  // Method to check if the current user is the post's owner
   isOwner(): boolean {
     const user = JSON.parse(localStorage.getItem('currentUser')!).id;
     return user == this.postDTO.userDTO.id;
   }
 
+  // Method to delete the post
   onDelete(): void {
     console.log("attempting delete");
     this.postService.deletePost(this.postDTO.id).subscribe({
