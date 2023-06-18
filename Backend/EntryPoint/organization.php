@@ -32,6 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case "fetchOrganizationPosts":
       echo json_encode($organizationRepository->fetchOrganizationPosts($id_organization));
       break;
+    case "is_on_this_organization":
+      echo json_encode($organizationRepository->isOnThisOrganization($id_organization, $_GET['userId']));
+      break;
 
   }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
@@ -50,6 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return;
       case "accept_invitation":
         echo json_encode($organizationRepository->acceptInvitation($data['organizationId'], $data['userId']));
+        return;
+      case "quit_organization":
+        echo json_encode($organizationRepository->quitOrganization($data['organizationId'], $data['userId']));
         return;
     }
   }

@@ -106,4 +106,24 @@ export class OrganizationService {
 
     return this.http.put<boolean>(`${apiUrl}/organization.php`, options);
   }
+
+  isOnThisOrganization(organizationId: any, userId: number): Observable<boolean> {
+    const params = new HttpParams()
+      .set('function_to_call', 'is_on_this_organization')
+      .set('userId', userId)
+      .set('id_organization', organizationId)
+
+    return this.http.get<boolean>(`${apiUrl}/organization.php`, {params});
+  }
+
+  quitOrganization(organizationId: number, userId: number): Observable<boolean> {
+    const options = {
+      type : 'quit_organization',
+      userId: userId,
+      organizationId: organizationId
+    };
+
+    return this.http.put<boolean>(`${apiUrl}/organization.php`, options);
+  }
+
 }
