@@ -73,9 +73,6 @@ export class HobbyFlashcardListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("ONINIT");
-    for (let i = 0; i < this.hobbyDTOs.length; i++) {
-      console.log(this.hobbyDTOs[i]);
-    }
+
   }
 }

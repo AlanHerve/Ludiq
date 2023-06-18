@@ -36,7 +36,6 @@ export class PostComponent implements OnInit, Image {
 
     this.postService.hasLiked(this.postDTO.id).subscribe(hasLiked => {
       this.isLiked = hasLiked;
-      console.log("Has liked : " + hasLiked);
     });
   }
 

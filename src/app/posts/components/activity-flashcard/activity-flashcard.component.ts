@@ -21,7 +21,7 @@ export class ActivityFlashcardComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    console.log(this.activityDTO.organizationDTO.id_organization);
+    
   }
 
   onActivityClicked(): void {
