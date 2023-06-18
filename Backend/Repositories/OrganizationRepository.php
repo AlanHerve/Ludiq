@@ -468,8 +468,10 @@ class OrganizationRepository
   {
     if($this->isOnThisOrganization($organizationId, $userId)) {
       $stmt = $this->db->prepare("
-        DELETE FROM
+        UPDATE
         activity_director
+        SET
+            ID_ORGANIZATION = 1
         WHERE
             ID_USER = ?
             AND
