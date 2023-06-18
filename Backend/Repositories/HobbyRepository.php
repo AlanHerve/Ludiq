@@ -385,7 +385,6 @@ class HobbyRepository
                 hob.ID_HOBBY = ?
             ");
 
-
             $stmt->bind_param("i", $hobbyPost->id_hobby);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -396,6 +395,23 @@ class HobbyRepository
                     $hobbyPost->insertHobbyName($row["HOBBY_NAME"]);
                 }
             }
+
+          $stmt = $this->db->prepare("
+            SELECT
+                fav.*
+            FROM
+                favorite_hobby fav
+            WHERE
+                fav.ID_USER = ?
+            ");
+
+          $stmt->bind_param("i", $hobbyPost->id_user);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          if ($result->num_rows == 0){
+            $this->setFavoriteHobby($hobbyPost->id_hobby, $hobbyPost->id_user);
+          }
 
             $response = array(
                 'success' => true,
@@ -477,7 +493,6 @@ class HobbyRepository
 
     public function setFavoriteHobby(mixed $id, mixed $id_user)
     {
-
 
       $stmt = $this->db->prepare("
         DELETE FROM
