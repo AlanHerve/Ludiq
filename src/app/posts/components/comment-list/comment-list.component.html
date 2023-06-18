@@ -1,5 +1,15 @@
+<!--
+This div contains all the comments.
+A title "Comments" is displayed at the top.
+-->
 <div class = "comments">
   <p>Comments</p>
+
+  <!--
+  This div contains the list of comments.
+  If comments exist, each comment is displayed by using the CommentComponent.
+  If no comments exist, a message "There are no comments on this post." is displayed.
+  -->
   <div *ngIf="commentsDTO else elseBlock">
     <app-comment *ngFor="let comment of commentsDTO" [commentDTO]="comment"></app-comment>
   </div>

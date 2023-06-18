@@ -42,22 +42,34 @@ export class OrganizationComponent {
     });
   }
 
+  /**
+   *  Method used to return an image with its url
+   * @param image
+   */
   loadImage(image: string): string {
     return imagesUrl + "/" + image;
   }
 
+  /**
+   * Method used to change the tab between posts and activities
+   * @param tab
+   */
   onTabChange(tab: string): void {
     this.type = tab.toLowerCase();
     console.log(this.type);
   }
 
+
   ngOnInit() {
+    // get the organization id from the url params
     this.activatedRoute.params.subscribe(params => {
       this.organizationDTO.id_organization = parseInt(params['id']);
+      // get the organization information from its ID
       this.organisationService.getOrganizationById(this.organizationDTO.id_organization).subscribe({
         next: (response) => {
           // in case of success
           this.organizationDTO = response;
+          // We redirect if the organization doesn't exist
           if(!this.organizationDTO || this.organizationDTO.id_organization == 1) this.router.navigateByUrl("/home");
         },
         error: (error) => {
@@ -65,25 +77,24 @@ export class OrganizationComponent {
           console.error('Could not get user info', error);
         }
       });
+      // Used to fetch all the posts done by members of an organization
       this.organisationService.fetchOrganizationPosts(this.organizationDTO.id_organization).subscribe({
         next: (response) => {
           if(response[0].id != -1)
           this.organizationDTO.postsDTO = response;
         }
       });
+      // Used to fetch all the activities done by members of an organization
       this.organisationService.fetchOrganizationActivities(this.organizationDTO.id_organization).subscribe({
         next: (response) => {
-          console.log("zeng");
           if(response[0].id !=-1 ){
             this.organizationDTO.activitiesDTO = response;
             this.validAct = true;
           }
 
-
-
         }
       });
-
+      // We do different checks about the user to see if he is an activity director, if he is in an organization or if he has been invited to one
       this.isActivityDirector();
       this.isUserInvited();
       this.isOnThisOrganization();
@@ -91,26 +102,34 @@ export class OrganizationComponent {
 
   }
 
+  /**
+   * Method that verifies if the user is part of an organization or not
+   */
   isPartOfOrganization(): boolean {
     return this.userService.isPartOfOrganization(this.organizationDTO.id_organization);
   }
 
+  /**
+   * Method that checks if the user is in a specific organization
+   */
   isOnThisOrganization(): void {
     this.organisationService.isOnThisOrganization(this.organizationDTO.id_organization, this.userService.getCurrentId()).subscribe({
       next: (bool) => {
         this.isOnOrganization = bool;
       },
       error: (error) => {
-        console.log("Error while finding if activity director is alreay on this organization ", error)
+        console.log("Error while finding if activity director is already on this organization ", error)
       }
     });
   }
 
+  /**
+   * Method that checks if a user is an activity director, which means he can create activities
+   */
   isActivityDirector(): void {
     this.userService.isActivityDirector(this.userService.getCurrentId()).subscribe({
       next: (bool) => {
         this.activityDirector = bool;
-        console.log("poney aaa", this.activityDirector);
       },
       error: (error) => {
         console.log("Error while finding if activity director or not ", error)
@@ -119,10 +138,16 @@ export class OrganizationComponent {
   }
 
 
-
+  /**
+   * Method used to check if an activity is valid
+   */
   validActivities() {
     return this.validAct;
   }
+
+  /**
+   * Method used to check if an user is invited to an organization
+   */
   isUserInvited(): void {
     this.organisationService.isUserAlreadyInvited(this.organizationDTO.id_organization, this.userService.getCurrentId()).subscribe({
       next: (bool) => {
@@ -134,6 +159,10 @@ export class OrganizationComponent {
     });
   }
 
+  /**
+   * Method used to accept the invitation to join an organization
+   * It calls the "acceptInvitation" method to do so
+   */
   onAcceptInvitation() {
     this.organisationService.acceptInvitation(this.organizationDTO.id_organization, this.userService.getCurrentId()).subscribe({
       next: (bool) => {
@@ -146,6 +175,10 @@ export class OrganizationComponent {
 
   }
 
+  /**
+   * Method used to quit an organization the user is part
+   * of by calling the "quitOrganization" method in the organization Service
+   */
   onQuitOrganization() {
     this.organisationService.quitOrganization(this.organizationDTO.id_organization, this.userService.getCurrentId()).subscribe({
       next: (bool) => {
