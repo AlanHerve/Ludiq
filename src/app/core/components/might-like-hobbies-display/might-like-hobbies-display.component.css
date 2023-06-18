@@ -14,11 +14,8 @@ h2 {
 }
 
 
-
 @media (max-width: 1000px) {
-  @media (max-width: 1000px) {
-    .right-sidebar {
-      display: none;
-    }
+  .right-sidebar {
+    display: none;
   }
 }

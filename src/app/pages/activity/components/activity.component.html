@@ -11,8 +11,7 @@
     </div>
     <h1>{{activityDTO.title}}</h1>
     <div class="information">
-      <app-organization-button [organizationDTO]="activityDTO.organizationDTO"></app-organization-button>
-      <table>
+       <table>
         <tr>
           <th>Hobby</th>
           <th>Advancement</th>
@@ -28,21 +27,27 @@
           <td>
             <p class="num_registered">{{activityDTO.current_registered}}/{{activityDTO.max_registrations}}</p>
           </td>
-          <td>
-            <button *ngIf="isPartOfOrganization()" (click)="onDelete()">Delete Activity</button>
-          </td>
         </tr>
       </table>
     </div>
+    <div class = "organization" *ngIf="this.activityDTO.organizationDTO.id_organization != 1">
+      <p>Organization :</p>
+      <app-organization-button style ="margin-left: 20px" [organizationDTO]="activityDTO.organizationDTO"></app-organization-button>
+    </div>
+
     <p class="date">Date of the activity : {{activityDTO.time | date:'dd/MM HH:mm'}}</p>
 
     <div>
-      <p>Description</p>
+      <p>Description :</p>
       <p class="description">{{activityDTO.description}}</p>
     </div>
     <div *ngIf="!this.registered && !this.activityDirector else elseBlock" class="register-container">
       <button (click) = "onRegister()">Register for the activity</button>
     </div>
+    <div class="register-container">
+      <button *ngIf="isPartOfOrganization()" (click)="onDelete()">Delete Activity</button>
+    </div>
+
     <ng-template #elseBlock>
       <div *ngIf="!this.activityDirector" class="register-container">
         <button (click)="onUnregister()" class="button2">Unregister for the activity</button>
@@ -51,7 +56,7 @@
 
   </div>
 </div>
-<app-navigation-bar></app-navigation-bar>
+<app-navigation-bar class = "nav-bar"></app-navigation-bar>
 <app-activity-participants-list [activityParticipants]="activityParticipants"></app-activity-participants-list>
 
 <router-outlet></router-outlet>

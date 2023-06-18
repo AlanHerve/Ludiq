@@ -4,3 +4,9 @@ h2 {
   margin-bottom: 5px;
   margin-top: 40px;
 }
+
+@media (max-width: 1000px) {
+  .right-sidebar {
+    display: none;
+  }
+}

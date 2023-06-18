@@ -12,6 +12,6 @@
     </div>
   </div>
   <div class = "organisation">
-    <app-organization-button [organizationDTO]="activityDTO.organizationDTO"></app-organization-button>
+    <app-organization-button *ngIf="this.activityDTO.organizationDTO.id_organization != 1" [organizationDTO]="activityDTO.organizationDTO"></app-organization-button>
   </div>
 </div>

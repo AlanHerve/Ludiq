@@ -396,23 +396,6 @@ class HobbyRepository
         }
       }
 
-      $stmt = $this->db->prepare("
-            SELECT
-                fav.*
-            FROM
-                favorite_hobby fav
-            WHERE
-                fav.ID_USER = ?
-            ");
-
-      $stmt->bind_param("i", $hobbyPost->id_user);
-      $stmt->execute();
-      $result = $stmt->get_result();
-
-      if ($result->num_rows == 0){
-        $this->setFavoriteHobby($hobbyPost->id_hobby, $hobbyPost->id_user);
-      }
-
       $response = array(
         'success' => true,
         'hobby'   => $hobbyPost

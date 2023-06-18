@@ -26,10 +26,10 @@
         <p class="title-favorite-hobby">Favorite hobby</p>
         <img *ngIf = "this.profileDTO.favoriteHobby.image" [src]="'assets/images/hobbies/' + this.profileDTO.favoriteHobby.image" alt="favorite hobby img" class="image-favorite">
         <app-hobby-button class="tag favorite" [hobbyDTO]="this.profileDTO.favoriteHobby"></app-hobby-button>
-        <button *ngIf="isConnectedUser()" routerLink="favorite_hobby">Change favorite hobby</button>
+        <img *ngIf="isConnectedUser()" routerLink="favorite_hobby" src="assets/images/icons/edit.png" class = "change_favorite">
       </div>
       <ng-template #noFavorite>
-        <div class="favorite-hobby" *ngIf = "this.profileDTO.favoriteHobby else noFavorite">
+        <div class="favorite-hobby" *ngIf = "this.profileDTO.favoriteHobby.id == -1 && isConnectedUser()">
           <button *ngIf="isConnectedUser()" routerLink="favorite_hobby">Set favorite hobby</button>
         </div>
       </ng-template>

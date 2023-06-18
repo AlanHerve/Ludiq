@@ -118,15 +118,15 @@
 
 .username {
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
+  font-size: 50px;
   font-weight: 600;
-  font-size: 22px;
 }
 
 .nickname {
   margin-top: 0;
   font-weight: 100;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 
 .friends {

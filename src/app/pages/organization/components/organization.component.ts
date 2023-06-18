@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {OrganizationDTO} from "../../../models/organization-dto";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {OrganizationService} from "../../../services/organization.services";
 import {UserService} from "../../../services/user.service";
 import {TabService} from "../../../shared/service/tab.service";
@@ -35,7 +35,8 @@ export class OrganizationComponent {
   constructor(private activatedRoute: ActivatedRoute,
               private organisationService: OrganizationService,
               private userService: UserService,
-              private tabService: TabService) {
+              private tabService: TabService,
+              private router: Router) {
     this.tabService.tabChange$.subscribe(tab => {
       this.onTabChange(tab);
     });
@@ -57,8 +58,7 @@ export class OrganizationComponent {
         next: (response) => {
           // in case of success
           this.organizationDTO = response;
-          console.log("baya");
-          console.log(response.name_organization);
+          if(!this.organizationDTO || this.organizationDTO.id_organization == 1) this.router.navigateByUrl("/home");
         },
         error: (error) => {
           // in case of failure

@@ -1,4 +1,4 @@
-<div *ngIf ="usersDTO">
+<div *ngIf ="usersDTO && usersDTO.length > 0">
   <h2 class = "top-text">Users related to this {{this.text}}</h2>
   <div class = "list">
     <app-user *ngFor="let user of usersDTO" [userDTO]="user"></app-user>
