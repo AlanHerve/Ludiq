@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {UserDTO} from "../../../../models/user-dto";
 import {UserService} from "../../../../services/user.service";
+import {imagesUrl} from "../../../../services/urls";
 
 @Component({
   selector: 'app-messages',
@@ -31,6 +32,10 @@ export class MessagesComponent implements OnInit {
         });
       }
     });
+  }
+
+  loadImage(image: string): string {
+    return imagesUrl + "/" + image;
   }
 
 }
