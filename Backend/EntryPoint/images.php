@@ -8,6 +8,8 @@ require_once '../Repositories/ImageRepository.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $imageName = $_GET['image_name'];
+    // Create a new ImageRepository instance
     $imageRepository = ImageRepository::getInstance();
+    // Used to create a new image file
     return $imageRepository->createFile($imageName);
 }
