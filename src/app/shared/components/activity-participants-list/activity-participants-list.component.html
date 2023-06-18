@@ -4,7 +4,9 @@
   <ul class="list center" *ngIf="activityParticipants else elseBlock">
     <div *ngFor="let activityParticipant of activityParticipants.usersDTO" class="center">
       <!-- For each participant, we display it thanks to the UserSearchComponent -->
+      <div class = "margin">
       <app-user-search [userDTO]="activityParticipant"></app-user-search>
+      </div>
     </div>
   </ul>
   <!-- Else, we display that there are no participants -->
