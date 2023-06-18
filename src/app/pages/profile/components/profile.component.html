@@ -41,7 +41,7 @@
     <div class="buttons">
       <button class="tag" routerLink="add_hobby">Add an hobby</button>
       <button routerLink="modify_profile">Modify profile</button>
-      <button *ngIf="!isPartOfOrganization && isConnectedUser()" routerLink="create_organization">Create an organization</button>
+      <button *ngIf="!isPartOfOrganization && isConnectedUser() && isActivityDirector()" routerLink="create_organization">Create an organization</button>
       <button class="button2" (click)="onLogout()">Disconnect</button>
     </div>
   </div>

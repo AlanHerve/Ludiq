@@ -336,7 +336,7 @@ class UserRepository
     }
 
     //if no match has been found
-    return null;
+    return new OrganizationDTO(-1, null, null, null);
   }
 
 
