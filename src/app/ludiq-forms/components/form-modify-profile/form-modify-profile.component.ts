@@ -1,3 +1,4 @@
+// Import the required Angular modules and classes
 import { Component, OnInit } from '@angular/core';
 import { Form } from "../../models/form";
 import { Router } from "@angular/router";
@@ -9,25 +10,31 @@ import { CustomValidators } from "../../../custom-validators";
 import {Image} from "../../../models/image";
 import {imagesUrl} from "../../../services/urls";
 
-
+// Component decorator configuration
 @Component({
   selector: 'app-form-modify-profile',
   templateUrl: './form-modify-profile.component.html',
   styleUrls: ['./form-modify-profile.component.css', '../../../ludiq-forms/ludiq-forms.css']
 })
+// Component class
 export class FormModifyProfileComponent extends Form implements OnInit, Image {
+
+  // Variable declarations
   protected userDTO: UserDTO = { id: 0, name: '', username: '', email: '', password: '', avatar: '', token: '' };
   profileForm!: FormGroup;
   isProfileModified: boolean = false;
   selectedFile: File | null = null;
 
+  // Inject required services into the constructor
   constructor(router: Router, location: Location,
               private userService: UserService,
               private formBuilder: FormBuilder) {
     super(router, location);
   }
 
+  // OnInit lifecycle hook
   ngOnInit(): void {
+    // Fetch the current user details
     this.userService.findUserById(this.userService.getCurrentId()).subscribe({
       next: (user) => {
         this.userDTO = user;
@@ -37,6 +44,7 @@ export class FormModifyProfileComponent extends Form implements OnInit, Image {
       }
     });
 
+    // Initialize the form
     this.profileForm = this.formBuilder.group(
       {
         name: ["", Validators.required],
@@ -51,20 +59,25 @@ export class FormModifyProfileComponent extends Form implements OnInit, Image {
     );
   }
 
+  // Method to modify profile
   modifyProfile(): void {
+    // Assigning form input to variables
     const name = this.profileForm.value.name;
     const username = this.profileForm.value.username;
     const password = this.profileForm.value.password;
     const confirm = this.profileForm.value.confirm_password;
     const avatar = this.selectedFile;
 
+    // Check if the password matches the confirmation
     if (password !== confirm) {
       console.error('Password and confirmation password do not match.');
       return;
     }
 
+    // Update the userDTO object
     const updatedUser: UserDTO = { ...this.userDTO };
 
+    // Check if each form control has been changed and assign the new value
     if (this.profileForm.controls['name'].dirty) {
       updatedUser.name = name;
     }
@@ -78,11 +91,13 @@ export class FormModifyProfileComponent extends Form implements OnInit, Image {
       updatedUser.password = '';
     }
 
+    // Update user profile
     this.userService.updateUserProfile(updatedUser, avatar)
       .subscribe({
         next: (user) => {
           console.log('Profile updated successfully!', user);
           this.isProfileModified = true;
+          // Reset modification flag after a delay
           setTimeout(() => {
             this.isProfileModified = false;
             this.onClose();
@@ -94,24 +109,15 @@ export class FormModifyProfileComponent extends Form implements OnInit, Image {
       });
   }
 
+  // Method to handle avatar change
   onAvatarChange(event: any): void {
     const files: FileList = event.target.files;
     this.selectedFile = files.item(0);
   }
 
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password')?.value;
-    const confirm = form.get('confirm_password')?.value;
-    if (password !== confirm) {
-      form.get('confirm_password')?.setErrors({ passwordMismatch: true });
-    } else {
-      form.get('confirm_password')?.setErrors(null);
-    }
-  }
-
+  // Method to load image
   loadImage(image: string): string {
     return imagesUrl + "/" + image;
   }
-
 
 }

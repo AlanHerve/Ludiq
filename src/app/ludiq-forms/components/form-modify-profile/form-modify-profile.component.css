@@ -1,3 +1,7 @@
+/*
+ * Styles for the avatar modification container.
+ * Sets the width and height, makes it circular, centers it and ensures the image fits properly.
+ */
 .avatar-modification {
   width: 10vw;
   height: 10vw;
@@ -7,20 +11,32 @@
   object-fit: cover;
 }
 
+/*
+ * Class to make elements invisible by setting their display to none.
+ */
 .invisible {
   display: none;
 }
 
+/*
+ * Specific width for form elements, overriding any existing width.
+ */
 form {
   width:35% !important;
 }
 
+/*
+ * Styles for button elements, setting specific margin and width.
+ */
 button {
   margin: 20px;
   width:70%;
 }
 
-
+/*
+ * Styles for the overlay, used for a hover effect on the avatar.
+ * Sets position, centering, size, circular shape, margin, background color and transition.
+ */
 .overlay {
   position: relative;
   top: 50%;
@@ -34,6 +50,9 @@ button {
   transition: opacity 0.3s ease;
 }
 
+/*
+ * Removes the overlay when the image container is hovered over.
+ */
 .image-container:hover .overlay {
   opacity: 0;
 }
