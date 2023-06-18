@@ -17,6 +17,7 @@
       <p class="nickname">{{this.organizationDTO.description}}</p>
     </div>
 
+    <app-user-list [id_organization]="organizationDTO.id_organization"></app-user-list>
     <app-binder [buttons]="['Posts', 'Activities']"></app-binder>
 
     <app-post-list [postsDTO]="organizationDTO.postsDTO" *ngIf="type === 'posts'"></app-post-list>

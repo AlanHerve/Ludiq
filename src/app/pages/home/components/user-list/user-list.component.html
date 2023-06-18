@@ -1,5 +1,5 @@
 <div *ngIf ="usersDTO">
-  <h2 class = "top-text">Users related to this hobby</h2>
+  <h2 class = "top-text">Users related to this {{this.text}}</h2>
   <div class = "list">
     <app-user *ngFor="let user of usersDTO" [userDTO]="user"></app-user>
   </div>

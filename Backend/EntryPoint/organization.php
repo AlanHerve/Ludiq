@@ -35,6 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case "is_on_this_organization":
       echo json_encode($organizationRepository->isOnThisOrganization($id_organization, $_GET['userId']));
       break;
+    case "organization_users":
+      echo json_encode($organizationRepository->getOrganizationUsers($id_organization));
+      break;
 
   }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {

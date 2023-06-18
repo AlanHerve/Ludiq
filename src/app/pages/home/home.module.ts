@@ -27,11 +27,12 @@ import {PagesModule} from "../pages.module";
     CommonModule,
     PostsModule
   ],
-  exports: [
-    HomeRoutingModule,
-    UserComponent,
-    BinderComponent
-  ],
+    exports: [
+        HomeRoutingModule,
+        UserComponent,
+        BinderComponent,
+        UserListComponent
+    ],
   providers: [],
   bootstrap: []
 })

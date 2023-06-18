@@ -1,5 +1,7 @@
 .list {
+  /*
   border-bottom: rgba(116, 33, 194, 0.25) 1px solid;
+   */
   padding: 20px;
   display: flex;
   overflow-x: auto; /* Allows horizontal scroll */

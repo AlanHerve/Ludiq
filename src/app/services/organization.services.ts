@@ -6,6 +6,7 @@ import {Injectable} from "@angular/core";
 import {OrganizationDTO} from "../models/organization-dto";
 import {PostDTO} from "../posts/models/post-dto";
 import {ActivityDTO} from "../posts/models/activity-dto";
+import {UserDTO} from "../models/user-dto";
 
 
 
@@ -126,4 +127,11 @@ export class OrganizationService {
     return this.http.put<boolean>(`${apiUrl}/organization.php`, options);
   }
 
+  getOrganizationUsers(organizationId: number) {
+
+    const params = new HttpParams()
+      .set('function_to_call', "organization_users")
+      .set('id_organization', organizationId);
+    return this.http.get<UserDTO[]>(`${apiUrl}/organization.php`, {params});
+  }
 }

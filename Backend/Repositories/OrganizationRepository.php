@@ -133,7 +133,6 @@ class OrganizationRepository
   }
 
 
-
   public function getOrganzationById($id_organization)
   {
 
@@ -149,7 +148,6 @@ class OrganizationRepository
     $stmt->bind_param("i", $id_organization);
     $stmt->execute();
     $result = $stmt->get_result();
-
 
 
     if ($result) {
@@ -262,9 +260,9 @@ class OrganizationRepository
 
     $result = $stmt->get_result();
 
-    if($result->num_rows > 0) {
+    if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
-      return new OrganizationDTO($row['ID_ORGANIZATION'],$row['NAME_ORGANIZATION'], $row['AVATAR'], $row['DESCRIPTION']);
+      return new OrganizationDTO($row['ID_ORGANIZATION'], $row['NAME_ORGANIZATION'], $row['AVATAR'], $row['DESCRIPTION']);
     }
     return null;
   }
@@ -296,7 +294,8 @@ class OrganizationRepository
     return [];
   }
 
-  public function fetchOrganizationActivities($id_organization){
+  public function fetchOrganizationActivities($id_organization)
+  {
 
     $activityRepository = ActivityRepository::getInstance();
 
@@ -340,7 +339,7 @@ class OrganizationRepository
     $stmt->execute();
 
     $result = $stmt->get_result();
-    if($result->num_rows > 0) {
+    if ($result->num_rows > 0) {
       return false;
     }
 
@@ -376,10 +375,31 @@ class OrganizationRepository
     $stmt->bind_param("ii", $id_organization, $userId);
     $stmt->execute();
     $result = $stmt->get_result();
-    if($result->num_rows > 0) {
+    if ($result->num_rows > 0) {
       return true;
     }
 
+    return false;
+  }
+
+  public function acceptInvitation(mixed $organizationId, mixed $userId)
+  {
+    $stmt = $this->db->prepare("
+        UPDATE
+            activity_director
+        SET
+            ID_ORGANIZATION = ?
+        WHERE
+            ID_USER = ?
+    ");
+
+    $stmt->bind_param("ii", $organizationId, $userId);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+      $this->removeInvitation($organizationId, $userId);
+      return $stmt->affected_rows > 0;
+    }
     return false;
   }
 
@@ -402,7 +422,7 @@ class OrganizationRepository
     $stmt->execute();
 
     $result = $stmt->get_result();
-    if($result->num_rows == 0) {
+    if ($result->num_rows == 0) {
       return false;
     }
 
@@ -421,23 +441,27 @@ class OrganizationRepository
     return $stmt->affected_rows > 0;
   }
 
-  public function acceptInvitation(mixed $organizationId, mixed $userId)
+  public function quitOrganization(mixed $organizationId, mixed $userId)
   {
-    $stmt = $this->db->prepare("
+    if ($this->isOnThisOrganization($organizationId, $userId)) {
+      $stmt = $this->db->prepare("
         UPDATE
-            activity_director
+        activity_director
         SET
-            ID_ORGANIZATION = ?
+            ID_ORGANIZATION = 1
         WHERE
             ID_USER = ?
-    ");
+            AND
+            ID_ORGANIZATION = ?
+      ");
 
-    $stmt->bind_param("ii", $organizationId, $userId);
-    $stmt->execute();
-
-    if($stmt->affected_rows > 0) {
-      $this->removeInvitation($organizationId, $userId);
-      return $stmt->affected_rows > 0;
+      $stmt->bind_param("ii", $userId, $organizationId);
+      $stmt->execute();
+      if ($stmt->affected_rows > 0) {
+        $this->verifyIfStillMembers($organizationId);
+        return true;
+      }
+      return false;
     }
     return false;
   }
@@ -458,34 +482,57 @@ class OrganizationRepository
     $stmt->bind_param("ii", $userId, $id_organization);
     $stmt->execute();
     $result = $stmt->get_result();
-    if($result->num_rows > 0) {
+    if ($result->num_rows > 0) {
       return true;
     }
     return false;
   }
 
-  public function quitOrganization(mixed $organizationId, mixed $userId)
+  public function getOrganizationUsers(mixed $id_organization)
   {
-    if($this->isOnThisOrganization($organizationId, $userId)) {
-      $stmt = $this->db->prepare("
-        UPDATE
-        activity_director
-        SET
-            ID_ORGANIZATION = 1
+    $stmt = $this->db->prepare("
+        SELECT
+            act_d.ID_USER
+        FROM
+            activity_director act_d
         WHERE
-            ID_USER = ?
-            AND
+            act_d.ID_ORGANIZATION = ?
+    ");
+    $stmt->bind_param("i", $id_organization);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+      $usersDTO = [];
+      while ($row = $result->fetch_assoc()) {
+        require_once '../Repositories/UserRepository.php';
+        $userRepository = UserRepository::getInstance();
+        $usersDTO[] = $userRepository->findUserById($row['ID_USER']);
+      }
+      return $usersDTO;
+    }
+    return [];
+  }
+
+  private function verifyIfStillMembers(mixed $organizationId)
+  {
+    $users = $this->getOrganizationUsers($organizationId);
+    if(count($users) == 0) {
+      $this->deleteOrganization($organizationId);
+    }
+  }
+
+  private function deleteOrganization(mixed $organizationId)
+  {
+    $stmt = $this->db->prepare("
+        DELETE FROM
+            organization
+        WHERE
             ID_ORGANIZATION = ?
     ");
+    $stmt->bind_param("i", $organizationId);
+    $stmt->execute();
 
-      $stmt->bind_param("ii", $userId, $organizationId);
-      $stmt->execute();
-      if($stmt->affected_rows > 0) {
-        return true;
-      }
-      return false;
-    }
-    return false;
+    return $stmt->affected_rows > 0;
   }
 
 
