@@ -92,6 +92,7 @@ export class FormCreateAccountComponent extends Form implements OnInit {
         // Gestion des erreurs en cas d'échec
         console.error('Error while trying to register : ', error);
       }
-    })
+    });
+    this.onClose();
   }
 }

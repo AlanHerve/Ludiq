@@ -30,9 +30,7 @@ export class FriendListComponent implements OnInit {
       next: (response: FriendRequestDTO[]) => {
         console.log('success searching all friends :', response);
         this.friendsDTO = response;
-        for (let i = 0; i < response.length; i++) {
-          console.log(this.friendsDTO[i]);
-        }
+
 
       },
       error: (error) => {
