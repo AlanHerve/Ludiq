@@ -5,8 +5,6 @@ header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Origin,Content-Type');
 
 include("../Repositories/FriendRepository.php");
-include("../DTOs/HobbyPostDTO.php");
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $friendRepository = FriendRepository::getInstance();
