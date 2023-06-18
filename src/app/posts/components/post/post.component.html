@@ -1,11 +1,16 @@
+<!-- Root div element for the PostComponent -->
 <div class="post">
+  <!-- User profile information -->
   <div class="user-profile">
     <div class="profile-info" (click)="onUserClicked()">
+      <!-- User's profile image -->
       <img *ngIf="this.postDTO.userDTO.avatar else elseImage" [src]="this.loadImage(this.postDTO.userDTO.avatar)"
            class="profile-image">
+      <!-- Fallback image if the user has no avatar -->
       <ng-template #elseImage>
         <img class="profile-image" src="assets/images/icons/user.png">
       </ng-template>
+      <!-- User's name and username -->
       <div style="display: flex" (click)="onUserClicked()">
         <div class="user-info">
           <span class="username">{{postDTO.userDTO.name}}</span>
@@ -13,25 +18,29 @@
         </div>
       </div>
     </div>
+    <!-- Top post information -->
     <div class ="top-post-information">
+      <!-- Date of post creation or modification -->
       <div (click)="onPostClicked()">
         <p *ngIf="postDTO.modified === 1; else elseBlock" class="date">Modified
           - {{ postDTO.time | date:'dd/MM HH:mm' }}</p>
         <ng-template #elseBlock>
           <p class="date">{{ postDTO.time | date:'dd/MM HH:mm' }}</p>
         </ng-template>
-
       </div>
+      <!-- Delete post button for the post owner -->
       <img *ngIf="isOwner()" class="delete" (click)="onDelete()" src = "assets/images/icons/delete.png">
     </div>
-
-
   </div>
+  <!-- Post content, images and interaction buttons -->
   <div (click)="onPostClicked()">
+    <!-- Hobby button for the related hobby -->
     <div *ngIf="postDTO.hobbyDTO != null" class="post-info">
       <app-hobby-button [hobbyDTO]="this.postDTO.hobbyDTO"></app-hobby-button>
     </div>
+    <!-- Post description -->
     <p class="post-content">{{ postDTO.description }}</p>
+    <!-- Post images -->
     <div class="images">
       <div *ngFor="let image of postDTO.images">
         <div *ngIf="image">
@@ -40,18 +49,22 @@
       </div>
     </div>
   </div>
+  <!-- Like button and the count of likes -->
   <img (click)="likePost()"
        [src]="isLiked ? '../../../../assets/images/icons/heart-liked.png' : '../../../../assets/images/icons/heart.png'"
        alt="Like image"
        class="interaction">
   <span class="count">{{ postDTO.likes }}</span>
+  <!-- Comment button -->
   <img (click)="onCommentClicked()" *ngIf="!this.detailedPost" alt="Comment image"
        class="interaction" src="../../../../assets/images/icons/comment.png">
 </div>
+<!-- Comment box and new comment form -->
 <div *ngIf="showCommentBox && !this.detailedPost">
   <app-comment-list [commentsDTO]="commentsDTO"></app-comment-list>
   <app-new-comment [postDTO]="postDTO"></app-new-comment>
 </div>
+<!-- Detailed post with new comment form and comment list -->
 <div *ngIf="this.detailedPost">
   <app-new-comment [postDTO]="postDTO"></app-new-comment>
   <app-comment-list [commentsDTO]="commentsDTO"></app-comment-list>
