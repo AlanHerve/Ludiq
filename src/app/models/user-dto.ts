@@ -1,3 +1,6 @@
+/**
+ * Information of a user
+ */
 export class UserDTO {
   constructor(public id:number,
               public name: string,

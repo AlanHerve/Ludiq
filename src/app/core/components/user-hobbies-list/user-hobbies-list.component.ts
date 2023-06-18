@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {HobbyService} from "../../../services/hobby.service";
-import {RequestDTO} from "../../../models/request-dto";
 import {HobbyDTO} from "../../../models/hobby-dto";
 
 @Component({
@@ -14,10 +13,7 @@ export class UserHobbiesListComponent {
 
   hobbies: HobbyDTO[] = [];
 
-  RequestDTO : RequestDTO = {
-    function_to_call: "fetchHobbiesOfUser",
-    id_user: 0
-  };
+
 
   constructor(private hobbyService: HobbyService) {
 
@@ -25,8 +21,6 @@ export class UserHobbiesListComponent {
 
   ngOnInit(){
 
-    //this.RequestDTO.id_user = this.id
-    this.RequestDTO.id_user = this.id;
 
     this.hobbyService.getHobbiesOfUser(this.id).subscribe({
       next: (response) => {
