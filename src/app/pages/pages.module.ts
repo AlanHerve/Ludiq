@@ -14,7 +14,7 @@ import {NotificationsComponent} from "./notifications/components/notifications.c
     TopBarComponent,
   ],
   imports: [
-    CoreModule,
+    CoreModule
   ]
 })
 export class PagesModule { }

@@ -1,3 +1,4 @@
+/* Styles for the file input label */
 .file-input-label {
   position: relative;
   display: inline-block;
@@ -5,16 +6,13 @@
   float: left;
   margin: 5px 5px 5px 20px;
 }
-/*
-.background-form{
-  height: 400px;
-  overflow-y: auto;
-}*/
 
+/* Styles for the form */
 form {
   position: absolute!important;
 }
 
+/* Styles for the file input label span */
 .file-input-label span {
   display: inline-block;
   padding: 6px 12px;
@@ -25,6 +23,7 @@ form {
   border-radius: 100px;
 }
 
+/* Styles for the description textarea */
 .description {
   border: 2px solid #ccc;
   border-radius: 10px;
@@ -40,13 +39,14 @@ form {
   margin: 10px auto;
 }
 
+/* Styles for the focused description textarea */
 .description:focus {
   outline: none;
   border-color: #7421C2;
   box-shadow: 0 0 4px rgba(116, 33, 194, 0.4);
 }
 
-
+/* Styles for the file input */
 .file-input {
   position: absolute;
   top: 0;
@@ -58,34 +58,39 @@ form {
   z-index: 200;
 }
 
+/* Styles for the file input label hover */
 .file-input-label:hover span {
   background-color: #ccc;
   color: #7421C2;
 }
 
+/* Styles for the files container */
 .files {
   display: flex;
   flex-direction: column;
 }
 
+/* Styles for the file container */
 .file-container {
   display: flex;
 }
 
+/* Styles for the cross-file icon */
 .cross-file {
   margin-left: 20px;
   font-size: 22px;
   cursor: pointer;
 }
 
+/* Styles for the disabled file input label */
 .file-input-label.disabled span {
-  /* styles pour l'état disabled */
+  /* Styles for the disabled state */
   background-color: rgba(173, 0, 0, 0.3);
   color: rgba(255, 255, 255, 0.7);
   cursor: not-allowed;
 }
 
-
+/* Styles for the textarea */
 textarea {
   border: #9B9B9B solid 1px;
   border-radius: 14px;
@@ -95,17 +100,16 @@ textarea {
   overflow-wrap: break-word;
   resize: none;
   height: 70px !important;
-  /*width:-webkit-fill-available;*/
   margin: 10px 20px;
 }
 
-
+/* Styles for the button */
 button {
   display: block;
   margin: 20px auto;
 }
 
-
+/* Styles for the file name */
 .file-name {
   margin-top: 3px;
 }

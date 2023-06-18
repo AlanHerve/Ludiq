@@ -224,8 +224,11 @@ export class ProfileComponent implements Image {
    * @return boolean
    */
   isFriend(): boolean {
+
     return this.friendship_status == "friend";
   }
+
+
 
   /**
    * Method that invite the profile user to the organization of the user who looks at the profile
@@ -276,7 +279,7 @@ export class ProfileComponent implements Image {
    * @return boolean
    */
   isWaitingAcceptation(): boolean {
-    return this.friendship_status == "waiting"
+    return this.friendship_status == "waiting";
   }
 
   /**
@@ -341,8 +344,8 @@ export class ProfileComponent implements Image {
     // We add a new friend request :
     this.friendService.addFriend(id_user, this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
-        if (response == "friend") this.friendship_status = response;
-        else console.error("Could not add friend");
+        if (response == "waiting") this.friendship_status = response;
+        else console.error("Could not add friend " + response);
 
       },
       error: (error) => {
@@ -397,4 +400,6 @@ export class ProfileComponent implements Image {
       this.reward = "nothing"
     }
   }
+
+
 }

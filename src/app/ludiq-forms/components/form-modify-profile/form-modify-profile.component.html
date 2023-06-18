@@ -1,76 +1,57 @@
-<!--
-  Wrapper div that provides a background for the form.
--->
 <div class="background-form">
-
-  <!--
-    The form for profile modification, calls the modifyProfile function on submit,
-    and uses profileForm FormGroup.
-  -->
   <form (ngSubmit)="modifyProfile()" [formGroup]="profileForm">
-
-    <!-- Heading for the form -->
     <h1>Profile modification</h1>
-
-    <!--
-      Span element styled as a cross (X) for closing the form,
-      calls the onClose function when clicked.
-    -->
     <span class="cross" (click)="onClose()">&times;</span>
-
-    <!--
-      Container for the avatar image, label is associated with the avatar input field
-      which becomes triggered on clicking this label due to for="avatar".
-    -->
     <div class="image-container">
       <label for="avatar">
-
-        <!--
-          Conditionally display the user's avatar if it exists, else display a default image.
-          The "*ngIf" directive is Angular's way of rendering content conditionally.
-        -->
-        <img  class = "avatar-modification" *ngIf ="this.userDTO.avatar else elseBlock" [src]="this.loadImage(this.userDTO.avatar)">
-        <!--
-          This is displayed when the condition in *ngIf directive is false,
-          i.e. if userDTO.avatar is undefined or null.
-        -->
+        <!-- Display user's avatar -->
+        <img class="avatar-modification" *ngIf="this.userDTO.avatar else elseBlock" [src]="this.loadImage(this.userDTO.avatar)">
         <ng-template #elseBlock>
-          <img src="assets/images/icons/user.png" class = "avatar-modification">
+          <img src="assets/images/icons/user.png" class="avatar-modification">
         </ng-template>
-
-        <!-- Overlay div for avatar hover effect -->
         <div class="overlay"></div>
       </label>
     </div>
-
-    <!--
-      Invisible file input field for avatar image upload,
-      calls the onAvatarChange function when the file is changed.
-    -->
     <input id="avatar" class="invisible" type="file" name="avatar" (change)="onAvatarChange($event)" formControlName="avatar">
 
-    <!-- Input fields for name and username, pre-filled with current values -->
+    <!-- Form field for name -->
     <input name="name" [value]="userDTO.name" formControlName="name">
-    <input name="username" [value]="userDTO.username" formControlName="username">
-
-    <!-- Input fields for new password and its confirmation -->
-    <input name="password" placeholder="New password" formControlName="password">
-    <input name="confirm" placeholder="Confirm new password" formControlName="confirm_password">
-
-    <!--
-      Error message displayed if the password and confirmation do not match
-      and the form has been touched.
-    -->
-    <div class="error-message" *ngIf="profileForm.hasError('passwordMismatch') && profileForm.touched">
-      Password and confirmation do not match.
+    <div *ngIf="profileForm.controls['name'].dirty && !profileForm.controls['name'].valid">
+      Name not valid
+      <p *ngIf="profileForm.controls['name'].hasError('minlength')">Minimum length not respected (4)</p>
+      <p *ngIf="profileForm.controls['name'].hasError('maxlength')">Maximum length not respected (20)</p>
     </div>
 
-    <!-- Confirmation message displayed if the profile was successfully updated -->
+    <!-- Form field for pseudo/username -->
+    <input name="pseudo" [value]="userDTO.username" formControlName="pseudo">
+    <div *ngIf="profileForm.controls['pseudo'].dirty && !profileForm.controls['pseudo'].valid">
+      Username not valid
+      <p *ngIf="profileForm.controls['pseudo'].hasError('minlength')">Minimum length not respected (4)</p>
+      <p *ngIf="profileForm.controls['pseudo'].hasError('maxlength')">Maximum length not respected (20)</p>
+    </div>
+
+    <!-- Form field for new password -->
+    <input name="password" type="password" placeholder="New password" formControlName="password">
+    <div *ngIf="profileForm.controls['password'].dirty && !profileForm.controls['password'].valid">
+      Password not valid
+      <p *ngIf="profileForm.controls['password'].hasError('pattern')">You need to have at least 1 capital letter, 1 number, and 1 special character</p>
+      <p *ngIf="profileForm.controls['password'].hasError('minlength')">Your password must have more than 8 characters</p>
+    </div>
+
+    <!-- Form field for confirming new password -->
+    <input name="confirm" type="password" placeholder="Confirm new password" formControlName="confirm">
+    <div *ngIf="profileForm.controls['password'].dirty && profileForm.getError('noMatch')">
+      Confirmation password not valid
+      <p *ngIf="!profileForm.controls['confirm'].dirty">Please confirm your password</p>
+      <p *ngIf="profileForm.getError('noMatch')">Password and confirmation don't match</p>
+    </div>
+
+    <!-- Confirmation message for successful profile update -->
     <div class="confirmation-message" *ngIf="isProfileModified">
       Profile updated successfully!
     </div>
 
     <!-- Submit button for the form -->
-    <button type="submit">Modify</button>
+    <button type="submit" class="submit" [disabled]="!profileForm.valid">Modify</button>
   </form>
 </div>

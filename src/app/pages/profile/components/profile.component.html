@@ -48,12 +48,12 @@
   <ng-template #notConnected>
     <div class="buttons">
       <button (click)="onSendMessageClicked()" *ngIf="isFriend()">Send a message</button>
-      <button (click)="addFriend()" *ngIf="!isFriend() else friendBlock">Add friend</button>
-      <button *ngIf="!isPartOfOrganization && isConnectedUserPartOfOrganization && !isConnectedUser() && !isInvited" (click)="onInviteOrganization()">Invite to the organization</button>
+      <button (click)="addFriend()" *ngIf="!isFriend() && !isWaitingAcceptation() else friendBlock">Add friend</button>
+      <button *ngIf="!isPartOfOrganization && isConnectedUserPartOfOrganization && !isConnectedUser() && !isInvited  && isActivityDirector()" (click)="onInviteOrganization()">Invite to the organization</button>
       <button class = "button2" *ngIf="!isPartOfOrganization && !isConnectedUser() && isInvited && isConnectedUserPartOfOrganization" (click)="onRemoveInvitationOrganization()">Remove invitation</button>
 
       <ng-template #friendBlock>
-        <button (click)="removeFriend()" class="button2">Remove friend</button>
+        <button *ngIf="!isWaitingAcceptation()" (click)="removeFriend()" class="button2">Remove friend</button>
       </ng-template>
 
       <button (click)="removeFriend()" *ngIf="isWaitingAcceptation()" class="button2">Cancel friendship request</button>

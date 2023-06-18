@@ -5,7 +5,6 @@ import {UserService} from "../../../services/user.service";
 import {Router} from "@angular/router";
 import {trigger,style,state,transition,animate,} from '@angular/animations';
 
-
 @Component({
   selector: 'app-form-login',
   templateUrl: './form-login.component.html',
@@ -23,7 +22,7 @@ import {trigger,style,state,transition,animate,} from '@angular/animations';
     ])
   ]
 })
-export class FormLoginComponent implements OnInit  {
+export class FormLoginComponent implements OnInit {
 
   userDTO: UserDTO = {
     id: -1,
@@ -38,6 +37,7 @@ export class FormLoginComponent implements OnInit  {
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private router: Router){
+    // Create the loginForm with form controls and validators
     this.loginForm = this.formBuilder.group({
       authentification: [null, [Validators.required
         , Validators.minLength(4)
@@ -49,32 +49,29 @@ export class FormLoginComponent implements OnInit  {
         , Validators.maxLength(20)]
       ],
     })
-    }
+  }
 
   ngOnInit(): void {
   }
 
-
+  // Handle login form submission
   onLogin(): void {
     this.userService.loginUser(this.userDTO).subscribe({
       next: (response) => {
-        // Traitement de la réponse du serveur en cas de succès
-        console.log('Status de connexion de l\'utilisateur :', response);
+        // Handle the response from the server on successful login
+        console.log('User login status:', response);
 
-        // Redirige vers 'home' uniquement si la connexion est réussie
+        // Redirect to 'home' only if the login is successful
         this.router.navigateByUrl('home');
-
       },
       error: (error) => {
-        // Gestion des erreurs en cas d'échec
-        console.error('Erreur lors de la connexion de l\'utilisateur :', error);
+        // Handle errors on login failure
+        console.error('Error while logging in:', error);
       }
-    })
+    });
   }
 
-  // A SUPPRIMER ? DEJA EXISTANTE DANS LA CLASSE FORM.TS NON ?
   onClose(): void {
     this.router.navigate(['/']);
   }
-
 }

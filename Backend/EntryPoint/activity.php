@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // If this is the case, we create a new instance of an activityRepository
     $activityRepository = ActivityRepository::getInstance();
     // We check the value of the type passed in parameter of the http request
-    // If this is a register_activity
+    // If this is a register_activity:
     if ($data['type'] === 'register_activity') {
       // We call the function that is registering the user into an activity
       echo json_encode($activityRepository->registerUserToActivity($data['userId'], $data['activityId']));
@@ -57,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $activityRepository = ActivityRepository::getInstance();
       // We create the new activity
       $result = $activityRepository->newActivity($activityDTO);
-      // We echo the result of the creation
       echo $result;
     }
   }
@@ -67,43 +66,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Otherwise, if we want to get elements :
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   if (isset($_GET['type'])) {
+    // We create a new instance of ActivityRepository
     $activityRepository = ActivityRepository::getInstance();
+    // To get the top3 activities
     if ($_GET['type'] === 'top3') {
       echo json_encode($activityRepository->getTop3());
     }
+    // To get all available activities
     if ($_GET['type'] === 'all_activities') {
       echo json_encode($activityRepository->getAllActivities());
     }
+    // To find an activity with its ID only
     if ($_GET['type'] === 'activity') {
       echo json_encode($activityRepository->findActivityById($_GET['activityId']));
     }
+    // To get all the users registered to a specific activity
     if ($_GET['type'] === 'activity_participants') {
       echo json_encode($activityRepository->getActivityParticipants($_GET['activityId']));
     }
+    // To get all the activities tht concern a specific hobby
     if ($_GET['type'] === 'hobby_activities') {
       echo json_encode($activityRepository->getHobbyActivities($_GET['hobbyId']));
     }
   }
-}
-
-function saveFiles($images)
-{
-  $targetDir = '../assets/images/';
-
-  if (!isset($images)) return null;
-
-  $uploadedFiles = [];
-  for ($i = 0; $i < count($images['name']); $i++) {
-    $uniqueFilename = uniqid() . '_' . basename($images['name'][$i]);
-    $targetFilePath = $targetDir . $uniqueFilename;
-
-    if (move_uploaded_file($images['tmp_name'][$i], $targetFilePath)) {
-      $uploadedFiles[] .= $uniqueFilename;
-      echo 'File downloaded successfully!\n';
-    } else {
-      echo 'Error while downloading file : ' . $images['tmp_name'][$i] . '\n';
-    }
-  }
-  return $uploadedFiles;
-
 }

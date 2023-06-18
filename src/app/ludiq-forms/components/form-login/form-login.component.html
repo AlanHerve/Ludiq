@@ -1,33 +1,41 @@
 <div class = "background-form">
-<form [@fadeIn]="true" (ngSubmit)="onLogin()"  [formGroup]="loginForm" >
+  <form [@fadeIn]="true" (ngSubmit)="onLogin()"  [formGroup]="loginForm" >
     <h1>Login</h1>
-    <a [@fadeOut]="true" class="cross" (click)="onClose()" >&times;</a>
-        <input required type="text" [(ngModel)]="userDTO.username" id="authentification" name="authentification"
+    <a [@fadeOut]="true" class="cross" (click)="onClose()">&times;</a>
+
+    <!-- Input field for username or email -->
+    <input required type="text" [(ngModel)]="userDTO.username" id="authentification" name="authentification"
            formControlName="authentification" placeholder="E-mail or Username"
            [ngClass]="{'valid-input': loginForm.controls['authentification'].valid}">
+
+    <!-- Validation error messages for the username/email field -->
     <div *ngIf="loginForm.controls['authentification'].dirty && !loginForm.controls['authentification'].valid">
       <p *ngIf="loginForm.controls['authentification'].hasError('minlength')">
-        La taille minimum n'est pas respectée (4)
+        Minimum length not respected (4)
       </p>
       <p *ngIf="loginForm.controls['authentification'].hasError('maxlength')">
-        La taille maximum n'est pas respectée (20)
+        Maximum length not respected (20)
       </p>
       <p *ngIf="loginForm.controls['authentification'].hasError('pattern')">
-        N'est ni un nom d'utilisateur valide, ni une addresse mail valide
+        Not a valid username or email address
       </p>
     </div>
 
+    <!-- Input field for password -->
     <input [ngClass]="{'valid-input': loginForm.controls['password'].valid}"
            required type="password" [(ngModel)]="userDTO.password" id="password" name="password" formControlName="password" placeholder="Password">
+
+    <!-- Validation error messages for the password field -->
     <div *ngIf="loginForm.controls['password'].dirty && !loginForm.controls['authentification'].valid">
       <p *ngIf="loginForm.controls['password'].hasError('minlength')">
-        La taille minimum n'est pas respectée (4)
+        Minimum length not respected (4)
       </p>
-      <p  *ngIf="loginForm.controls['password'].hasError('maxlength')">
-        La taille maximum n'est pas respectée (20)
+      <p *ngIf="loginForm.controls['password'].hasError('maxlength')">
+        Maximum length not respected (20)
       </p>
     </div>
-    <button type="submit" class = "submit" [disabled]="!loginForm.valid">Submit</button>
 
+    <!-- Submit button -->
+    <button type="submit" class="submit" [disabled]="!loginForm.valid">Submit</button>
   </form>
 </div>

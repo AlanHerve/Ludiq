@@ -13,6 +13,7 @@ import {Location} from "@angular/common";
   templateUrl: './form-create-account.component.html',
   styleUrls: ['./form-create-account.component.css'],
   animations: [
+    // Définition des animations pour la transition d'affichage
     trigger('fadeIn', [
       state('void', style({ opacity: 0 })),
       state('*', style({ opacity: 1 })),
@@ -35,6 +36,7 @@ export class FormCreateAccountComponent extends Form implements OnInit {
     email: '',
     password: ''
   };
+
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               router: Router, location: Location) {
@@ -42,10 +44,14 @@ export class FormCreateAccountComponent extends Form implements OnInit {
   }
 
   ngOnInit(): void {
+    // Initialisation du formulaire avec les validateurs
     this.createForm = this.formBuilder.group( {
       name: [null, [Validators.required
+        // Longueur minimale de 4 caractères
         , Validators.minLength(4)
+        // Longueur maximale de 20 caractères
         , Validators.maxLength(20)
+        // Validation du format (lettres et chiffres uniquement)
         , Validators.pattern(/^[a-zA-Z0-9]*$/)
       ]],
       pseudo: [null, [Validators.required
@@ -63,18 +69,23 @@ export class FormCreateAccountComponent extends Form implements OnInit {
         , Validators.maxLength(20)
         , Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/)
       ]],
+      // Confirmation du mot de passe
       confirm: [null, [Validators.required]],
+      // Option facultative
       option: [null]
     },{
+      // Validation personnalisée pour confirmer que les mots de passe correspondent
       validators: [CustomValidators.confirmEqualValidator('password', 'confirm')]
     })
   }
 
   onCreateAccount() {
+    // Appel du service pour enregistrer l'utilisateur
     this.userService.registerUser(this.userDTO, this.userType).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
         console.log('User registered : ', response);
+        // Fermeture de la fenêtre/formulaire
         this.onClose()
       },
       error: (error) => {
@@ -83,5 +94,4 @@ export class FormCreateAccountComponent extends Form implements OnInit {
       }
     })
   }
-
 }

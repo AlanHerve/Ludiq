@@ -4,6 +4,9 @@ import {HobbyDTO} from "../../../models/hobby-dto";
 import {ActivityDTO} from "../../../posts/models/activity-dto";
 import {HobbyFlashcardDTO} from "../../../models/hobby-flashcard-dto";
 
+/**
+ * Information of a user
+ */
 export class ProfileDTO {
 
   constructor(public userDTO: UserDTO,

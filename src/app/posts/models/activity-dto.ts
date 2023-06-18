@@ -2,6 +2,10 @@ import {UserDTO} from "../../models/user-dto";
 import {HobbyDTO} from "../../models/hobby-dto";
 import {OrganizationDTO} from "../../models/organization-dto";
 
+/**
+ * informations of an activity
+ * time: time of the activity
+ */
 export class ActivityDTO {
   constructor(
     public id: number,
