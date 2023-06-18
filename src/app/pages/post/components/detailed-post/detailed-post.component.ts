@@ -32,6 +32,7 @@ export class DetailedPostComponent implements OnInit {
     });
   }
 
+  // function to find the post by id
   private findPost(): Observable<PostDTO> {
     return this.activatedRoute.params.pipe(
       switchMap(params => {

@@ -33,6 +33,7 @@ export class MessageListComponent implements OnInit, OnChanges {
     this.loadMessages();
   }
 
+  //function to search a message by id and return its index in the array
   findMessageIndexByID(id:number) :number{
     let i = 0;
     while (this.messagesDTO[i].id != id){
@@ -52,6 +53,7 @@ export class MessageListComponent implements OnInit, OnChanges {
     }
   }
 
+  // Method that loads all messages between the current user and the friend
   loadMessages(): void {
     let user = JSON.parse(localStorage.getItem('currentUser')!).id;
     this.messageService.getMessagesBetweenUsers(user, this.id_friend).subscribe({

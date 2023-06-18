@@ -17,6 +17,7 @@ export class FriendListComponent implements OnInit {
     });
   }
 
+  // Method that returns the index of the friendDTO with the given data
   findfriendsDToWithData(data: number): number{
     for(let i =0; i<this.friendsDTO.length; i++) {
       if (this.friendsDTO[i].user.id == data) return i
