@@ -40,13 +40,17 @@ class PostRepository
 
   public function newPost(PostDTO $regularPostDTO)
   {
+    // get the user ID, hobby ID, description, and images from the PostDTO
     $id_user = $regularPostDTO->userDTO->id;
     $id_hobby = $regularPostDTO->hobbyDTO->id;
     $description = $regularPostDTO->description;
     $images = $regularPostDTO->images;
-    $stmt = $this->db->prepare("INSERT INTO regular_post (ID_USER, ID_HOBBY, DESCRIPTION, IMAGE1, IMAGE2, IMAGE3, IMAGE4) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("iisssss", $id_user, $id_hobby, $description, $images[0], $images[1], $images[2], $images[3]);
 
+    // prepare the SQL statement to insert the data into the regular_post table
+    $stmt = $this->db->prepare("INSERT INTO regular_post (ID_USER, ID_HOBBY, DESCRIPTION, IMAGE1, IMAGE2, IMAGE3, IMAGE4) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    // binding the values to the prepared statement parameters
+    $stmt->bind_param("iisssss", $id_user, $id_hobby, $description, $images[0], $images[1], $images[2], $images[3]);
+    // execute the request
     $stmt->execute();
 //TODO
     if ($stmt->affected_rows > 0) {
@@ -74,6 +78,7 @@ class PostRepository
     $stmt->bind_param('i', $id_user);
     $stmt->execute();
     $result = $stmt->get_result();
+
     if ($result->num_rows > 0) {
       $postsDTO = [];
       while ($row = $result->fetch_assoc()) {

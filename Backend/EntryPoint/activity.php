@@ -85,3 +85,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
   }
 }
+
+function saveFiles($images)
+{
+  $targetDir = '../assets/images/';
+
+  if (!isset($images)) return null;
+
+  $uploadedFiles = [];
+  for ($i = 0; $i < count($images['name']); $i++) {
+    $uniqueFilename = uniqid() . '_' . basename($images['name'][$i]);
+    $targetFilePath = $targetDir . $uniqueFilename;
+
+    if (move_uploaded_file($images['tmp_name'][$i], $targetFilePath)) {
+      $uploadedFiles[] .= $uniqueFilename;
+      echo 'File downloaded successfully!\n';
+    } else {
+      echo 'Error while downloading file : ' . $images['tmp_name'][$i] . '\n';
+    }
+  }
+  return $uploadedFiles;
+
+}

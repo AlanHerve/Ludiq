@@ -3,6 +3,9 @@
 require_once '../Database.php';
 require_once '../DTOs/OrganizationDTO.php';
 
+require_once '../Repositories/ActivityRepository.php';
+require_once '../Repositories/PostRepository.php';
+
 class OrganizationRepository
 {
 
@@ -53,6 +56,78 @@ class OrganizationRepository
     echo json_encode($response);
   }
 
+  public function getTop3()
+  {
+    $stmt = $this->db->prepare("
+            SELECT
+	            act.ID_ACTIVITY
+                , hob.HOBBY_NAME
+                , COUNT(*)
+            FROM
+	            activity act
+	            INNER JOIN hobby hob
+	                ON hob.ID_HOBBY = act.ID_HOBBY
+            GROUP BY
+	            act.ID_HOBBY
+                , hob.HOBBY_NAME
+            ORDER BY
+	            COUNT(*) DESC LIMIT 3
+            ;
+        "); //SQL request used to find the 3 activities with most posts in it
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) { // if the result has more than 0 rows it means he fetched something
+      $activitiesDTO = []; //initialize activitiesDTO as en empty array
+      while ($row = $result->fetch_assoc()) {
+        $activityDTO = $this->findActivityById($row['ID_ACTIVITY']);
+        if ($activityDTO)
+          $activitiesDTO[] = $activityDTO;
+      }
+      return $activitiesDTO;
+    }
+    return null;
+  }
+
+
+  public function findActivityById($id_activity)
+  {
+    $stmt = $this->db->prepare("
+    SELECT
+        act.*,
+        org.ID_ORGANIZATION,
+        org.NAME_ORGANIZATION,
+        COUNT(ap.ID_USER) AS participant_count
+    FROM
+        activity act
+        INNER JOIN activity_director actd ON act.ID_ACTIVITY_DIRECTOR = actd.ID_USER
+        INNER JOIN organization org ON actd.ID_ORGANIZATION = org.ID_ORGANIZATION
+        LEFT JOIN activity_participants ap ON act.ID_ACTIVITY = ap.ID_ACTIVITY
+    WHERE
+        act.ID_ACTIVITY = ?
+    GROUP BY
+        act.ID_ACTIVITY
+    ;
+    ");// SQL request to find an activity with its ID
+
+    $stmt->bind_param('i', $id_activity);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {
+      $row = $result->fetch_assoc();
+      $userDTO = $this->userRepository->findUserById($row['ID_ACTIVITY_DIRECTOR']);
+      $hobbyDTO = $this->hobbyRepository->findHobbyById($row['ID_HOBBY']);
+
+      return new ActivityDTO($row['ID_ACTIVITY'], $userDTO, $hobbyDTO, $row['ADVANCEMENT'], $row['DESCRIPTION'],
+        $row['DATE_POST'], $row['DATE_ACTIVITY'], $row['participant_count'], $row['MAX_REGISTRATIONS'],
+        $row['IMAGE'], $row["TITLE"], $row['ID_ORGANIZATION'], new OrganizationDTO($row['ID_ORGANIZATION'], $row['NAME_ORGANIZATION'], null, null));
+    }
+    return null;
+  }
+
+
 
   public function getOrganzationById($id_organization)
   {
@@ -69,6 +144,7 @@ class OrganizationRepository
     $stmt->bind_param("i", $id_organization);
     $stmt->execute();
     $result = $stmt->get_result();
+
 
 
     if ($result) {
@@ -93,7 +169,7 @@ class OrganizationRepository
     }
 
 
-    echo json_encode($response);
+    echo json_encode($organization);
   }
 
   public function addOrganization($userId, $organization)
@@ -186,6 +262,59 @@ class OrganizationRepository
       return new OrganizationDTO($row['ID_ORGANIZATION'],$row['NAME_ORGANIZATION'], $row['AVATAR'], $row['DESCRIPTION']);
     }
     return null;
+  }
+
+  public function fetchOrganizationPosts($id_organization)
+  {
+    $postRepository = PostRepository::getInstance();
+    $stmt = $this->db->prepare("
+      	  SELECT
+       reg.ID_REGULAR_POST
+      FROM
+        ACTIVITY_DIRECTOR act_d
+      INNER JOIN REGULAR_POST reg
+      	ON act_d.ID_USER = reg.ID_USER
+      WHERE
+        act_d.ID_ORGANIZATION = ?
+       ;");
+    $stmt->bind_param("i", $id_organization);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+      $postsDTO = [];
+      while ($row = $result->fetch_assoc()) {
+        $postsDTO[] = $postRepository->findPostById($row['ID_REGULAR_POST']);
+      }
+      return $postsDTO;
+    }
+
+    return [];
+  }
+
+  public function fetchOrganizationActivities($id_organization){
+
+    $activityRepository = ActivityRepository::getInstance();
+
+    $stmt = $this->db->prepare("
+      SELECT
+        act.ID_ACTIVITY
+      FROM
+        ACTIVITY_DIRECTOR act_d
+      INNER JOIN ACTIVITY act
+        ON act_d.ID_USER = act.ID_ACTIVITY_DIRECTOR
+      WHERE
+          act_d.ID_ORGANIZATION = ?
+        ;");
+    $stmt->bind_param("i", $id_organization);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+      $activityDTO = [];
+      while ($row = $result->fetch_assoc()) {
+        $activityDTO[] = $activityRepository->findActivityById($row['ID_ACTIVITY']);
+      }
+      return $activityDTO;
+    }
   }
 
   public function sendInvitation($organizationId, $userId)
