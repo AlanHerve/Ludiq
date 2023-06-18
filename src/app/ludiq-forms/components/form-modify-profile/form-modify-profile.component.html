@@ -31,7 +31,7 @@
     </div>
 
     <!-- Form field for new password -->
-    <input name="password" placeholder="New password" formControlName="password">
+    <input name="password" type="password" placeholder="New password" formControlName="password">
     <div *ngIf="profileForm.controls['password'].dirty && !profileForm.controls['password'].valid">
       Password not valid
       <p *ngIf="profileForm.controls['password'].hasError('pattern')">You need to have at least 1 capital letter, 1 number, and 1 special character</p>
@@ -39,7 +39,7 @@
     </div>
 
     <!-- Form field for confirming new password -->
-    <input name="confirm" placeholder="Confirm new password" formControlName="confirm">
+    <input name="confirm" type="password" placeholder="Confirm new password" formControlName="confirm">
     <div *ngIf="profileForm.controls['password'].dirty && profileForm.getError('noMatch')">
       Confirmation password not valid
       <p *ngIf="!profileForm.controls['confirm'].dirty">Please confirm your password</p>
