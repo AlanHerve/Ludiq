@@ -48,9 +48,10 @@ class PostRepository
     $stmt->bind_param("iisssss", $id_user, $id_hobby, $description, $images[0], $images[1], $images[2], $images[3]);
 
     $stmt->execute();
-
+//TODO
     if ($stmt->affected_rows > 0) {
-      return true;
+      $inserted = $stmt->insert_id;
+      return $this->findPostById($inserted);
     } else {
       return false;
     }
@@ -257,23 +258,7 @@ class PostRepository
     }
 
 
-    public function getNumPosts($id_user)
-    {
-        $stmt = $this->db->prepare("
-      SELECT
-        COUNT(*)    AS num_posts
-      FROM
-        regular_post reg
-      WHERE
-        reg.ID_USER = ?
-      ;
-    ");
-        $stmt->bind_param("i", $id_user);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        return $row['num_posts'];
-    }
+
 
     public function getPosts($mode, PostDTO $regularPostDTO)
     {
@@ -364,7 +349,7 @@ class PostRepository
     public function getHobbyPosts($id_hobby)
     {
         $stmt = $this->db->prepare("
->>>>>>> origin/eileen2
+
             SELECT
                 *
             FROM
@@ -386,6 +371,48 @@ class PostRepository
     }
     return $postsDTO;
   }
+
+  public function getNumPosts($id_user)
+  {
+    $stmt = $this->db->prepare("
+            SELECT
+                COUNT(*)    AS num_posts
+            FROM
+                regular_post reg
+            WHERE
+                reg.ID_USER = ?
+            ;
+        ");
+    $stmt->bind_param("i", $id_user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return $row['num_posts'];
+  }
+
+    public function deletePost($postId)
+    {
+
+      $stmt = $this->db->prepare("
+          DELETE FROM
+                regular_post
+          WHERE
+                regular_post.ID_REGULAR_POST = ?
+      ");
+
+
+
+      $stmt->bind_param("i", $postId);
+      $stmt->execute();
+
+      if($stmt->affected_rows == 1){
+        return json_encode("success");
+      }else{
+        return json_encode("failure");
+      }
+
+    }
+
 }
 
 ?>

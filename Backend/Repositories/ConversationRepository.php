@@ -31,7 +31,7 @@ class ConversationRepository {
         if(!$friends) return [];
 
         foreach ($friends as $friend) {
-            $friendId = $friend->id;
+            $friendId = $friend->user->id;
             if($this->friendRepository->acceptedFriendship($userId, $friendId)) {
                 $messages = $this->messageRepository->getMessagesBetweenUsers($userId, $friendId);
                 $conversationDTO = new ConversationDTO($friend, $messages);

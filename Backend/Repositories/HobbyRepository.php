@@ -449,5 +449,67 @@ class HobbyRepository
 
     }
 
+    public function getHobbyById($id_hobby)
+    {
+      $stmt = $this->db->prepare("
+        SELECT
+          *
+         FROM
+             hobby hob
+        WHERE
+            hob.ID_HOBBY = ?
+      ");
+      $stmt->bind_param("i", $id_hobby);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      if($result){
+
+        $row = $result->fetch_assoc();
+
+        return json_encode(new HobbyDTO($row["ID_HOBBY"], $row["HOBBY_NAME"], $row["IMAGE"]));
+
+      }else{
+        return json_encode($stmt->error);
+      }
+
+    }
+
+    public function setFavoriteHobby(mixed $id, mixed $id_user)
+    {
+
+
+      $stmt = $this->db->prepare("
+        DELETE FROM
+            favorite_hobby
+        WHERE
+            ID_USER = ?
+
+      ");
+      $stmt->bind_param("i", $id_user);
+      $stmt->execute();
+
+      if($stmt->error == null){
+
+
+        $stmt = $this->db->prepare("
+        INSERT INTO
+            favorite_hobby
+            (ID_USER, ID_HOBBY)
+        VALUES
+            (?, ?)
+        ");
+        $stmt->bind_param("ii", $id_user, $id);
+        $stmt->execute();
+
+        if($stmt->affected_rows == 1){
+          return json_encode($this->findHobbyById($id));
+        }
+
+
+      }
+
+    }
+
 
 }

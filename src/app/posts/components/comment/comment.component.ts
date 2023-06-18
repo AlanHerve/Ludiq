@@ -3,6 +3,7 @@ import {CommentDTO} from "../../models/comment-dto";
 import {Image} from "../../../models/image";
 import {imagesUrl} from "../../../services/urls";
 import {Router} from "@angular/router";
+import {PostService} from "../../services/post.service";
 
 @Component({
   selector: 'app-comment',
@@ -12,7 +13,7 @@ import {Router} from "@angular/router";
 export class CommentComponent implements OnInit, Image {
   @Input() commentDTO!: CommentDTO
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private postService: PostService) {
   }
 
   ngOnInit(): void {
@@ -30,4 +31,15 @@ export class CommentComponent implements OnInit, Image {
 
   }
 
+  onDelete() {
+    this.postService.deleteComment(this.commentDTO.id).subscribe({
+      error: (error) => {
+        console.error("error deleting comment ", error);
+      }
+    });
+  }
+
+  isOwner(): boolean {
+    return this.commentDTO.userDTO.id == JSON.parse(localStorage.getItem('currentUser')!).id;
+  }
 }

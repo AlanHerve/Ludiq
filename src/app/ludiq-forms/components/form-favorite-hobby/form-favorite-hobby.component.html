@@ -1,0 +1,10 @@
+<div class = "background-form">
+  <form [@fadeIn]="true" (ngSubmit)="submitted()">
+    <span (click)="onClose()" class="cross">&times;</span>
+    <h1>Select new favorite hobby</h1>
+    <select id="advancement" name="advancement" [(ngModel)]="selectedHobbyDTO">
+      <option *ngFor="let hobby of hobbyDTOs" [value]="hobby.id">{{hobby.name}}</option>
+    </select>
+    <button class = "submit" type="submit">Submit</button>
+  </form>
+</div>

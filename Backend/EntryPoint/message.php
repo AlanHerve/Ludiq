@@ -16,9 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $messageRepository = MessageRepository::getInstance();
         echo json_encode($messageRepository->getMessagesBetweenUsers($user1, $user2));
     }
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+}elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $body = file_get_contents('php://input');
     $data = json_decode($body, true);
 
@@ -26,4 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 
     $messageRepository = MessageRepository::getInstance();
     echo $messageRepository->createMessage($messageDTO);
+
+}elseif ($_SERVER['REQUEST_METHOD'] === 'POST'){
+  $body = file_get_contents('php://input');
+  $data = json_decode($body, true);
+
+  $id = $data["message_id"];
+
+  $messageRepository = MessageRepository::getInstance();
+  echo $messageRepository->deleteMessage($id);
 }

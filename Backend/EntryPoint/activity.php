@@ -37,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Or we delete the activity
     elseif ($data['type'] === 'deleteActivity') {
       echo json_encode($activityRepository->deleteActivity($data['activityId']));
+
     }
 
   }

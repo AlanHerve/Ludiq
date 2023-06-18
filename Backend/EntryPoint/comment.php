@@ -10,8 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $body = file_get_contents('php://input');
   $data = json_decode($body, true);
   $commentRepository = CommentRepository::getInstance();
+  switch ($data['type']){
+    case "addComment": echo json_encode($commentRepository->addComment($data['comment']['userDTO']['id'], $data['comment']['content'], $data['comment']['postID']));
+      break;
+    case "deleteComment": echo json_encode($commentRepository->deleteComment($data['id_comment']));
+      break;
+  }
 
-  echo json_encode($commentRepository->addComment($data['userDTO']['id'], $data['content'], $data['postID']));
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {

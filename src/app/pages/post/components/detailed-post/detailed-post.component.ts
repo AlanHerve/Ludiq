@@ -17,6 +17,11 @@ export class DetailedPostComponent implements OnInit {
               private router: Router) {
   }
   ngOnInit(): void {
+    this.postService.currentDeleteState.subscribe({
+      next: (response) => {
+       this.router.navigateByUrl('/home');
+      }
+    });
     combineLatest([
       this.findPost()
     ]).subscribe((postResult) => {

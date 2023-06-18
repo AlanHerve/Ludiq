@@ -69,9 +69,9 @@ class CommentRepository
     $stmt->bind_param("i", $id_comment);
     $stmt->execute();
     if ($stmt->affected_rows > 0) {
-      $response = array('success' => true);
+      return "success";
     } else {
-      $response = array('success' => false);
+      return "failure";
     }
     return json_encode($response);
   }
@@ -111,8 +111,7 @@ class CommentRepository
                 comment com
             WHERE
                 com.ID_REGULAR_POST = ?
-            ORDER BY
-                com.TIME
+            ORDER BY 1
             DESC
             LIMIT 3
             ;

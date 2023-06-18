@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {apiUrl} from "../../services/urls";
 import {PostDTO} from "../models/post-dto";
 import {map} from "rxjs/operators";
@@ -12,11 +12,31 @@ import {UserService} from "../../services/user.service";
 })
 export class PostService {
 
-  constructor(private http: HttpClient, private userService: UserService) {}
+
+  private needDelete = new Subject<number>();
+  currentDeleteState = this.needDelete.asObservable();
+
+  private needDeleteComment = new Subject<number>();
+  currentDeleteStateComment = this.needDeleteComment.asObservable();
+
+  private needAddComment = new Subject<CommentDTO>();
+  currentneedAddComment = this.needAddComment.asObservable();
 
 
-  newPost(formData: FormData): Observable<boolean> {
-    return this.http.post<boolean>(`${apiUrl}/post.php`, formData);
+  private needAddPost = new Subject<PostDTO>();
+  currentneedAddPost = this.needAddPost.asObservable();
+
+  constructor(private http: HttpClient, private userService: UserService) {
+  }
+
+
+  newPost(formData: FormData): Observable<PostDTO> {
+    return this.http.post<PostDTO>(`${apiUrl}/post.php`, formData).pipe(
+      map(response => {
+        this.needAddPost.next(response);
+        return response;
+      })
+    );
   }
 
   getAllPosts(): Observable<PostDTO[]> {
@@ -50,15 +70,40 @@ export class PostService {
     );
   }
 
-  addComment(comment: CommentDTO): Observable<any> {
-    return this.http.post<any>(`${apiUrl}/comment.php`, comment);
+  addComment(comment: CommentDTO): Observable<string> {
+    const params = {
+      type: "addComment",
+      comment: comment
+    }
+    return this.http.post<string>(`${apiUrl}/comment.php`, params).pipe(
+      map((response) => {
+        this.needAddComment.next(comment);
+        return response;
+      })
+    );
   }
 
   getAllComments(postID: number): Observable<CommentDTO[]> {
     const params = new HttpParams()
       .set('type', 'all_comments')
-      .set('postID', postID)
+      .set('postID', postID);
     return this.http.get<CommentDTO[]>(`${apiUrl}/comment.php`, {params});
+  }
+
+  deleteComment(comment_id:number): Observable<number> {
+    const params =  {
+      type: 'deleteComment',
+      id_comment: comment_id
+    };
+
+    return this.http.post<any>(`${apiUrl}/comment.php`, params).pipe(
+      map(response => {
+        if(response == "success")
+        this.needDeleteComment.next(comment_id);
+        return comment_id;
+        }
+      )
+    );
   }
 
   getThreeComments(postID: number): Observable<CommentDTO[]> {
@@ -82,5 +127,20 @@ export class PostService {
       .set('type', 'find_post')
       .set('postID', postID)
     return this.http.get<PostDTO>(`${apiUrl}/post.php`, {params});
+  }
+
+  deletePost(postId: number): Observable<string> {
+    const params =  {
+      type: 'deletePost',
+      id_post: postId
+    };
+
+    return this.http.post<string>(`${apiUrl}/post.php`, params).pipe(
+      map(response => {
+        console.log("attempted");
+        this.needDelete.next(postId);
+        return response;
+      })
+    );
   }
 }

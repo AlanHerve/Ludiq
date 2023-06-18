@@ -23,8 +23,12 @@ img {
   color: #307473;
 }
 
-.info {
+.info{
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.organisation{
+  margin-top: 10px;
 }

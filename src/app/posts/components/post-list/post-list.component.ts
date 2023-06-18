@@ -11,9 +11,36 @@ export class PostListComponent implements OnInit {
   @Input() postsDTO: PostDTO[] = [];
 
   constructor(private postsService: PostService) {
+    this.postsService.currentDeleteState.subscribe({
+      next: (id_to_delete) => {
+        let index_to_delete: number;
+        if((index_to_delete = this.findIndexToDeleteById(id_to_delete))!=-1){
+          this.postsDTO.splice(index_to_delete, 1);
+        }
+      }
+    });
+
+    this.postsService.currentneedAddPost.subscribe({
+      next: (response) => {
+        this.postsDTO.push(response);
+      }
+    })
   }
 
   ngOnInit(): void {
+  }
+
+  findIndexToDeleteById(id_to_delete: number) : number{
+    let i = 0;
+    while (this.postsDTO[i].id != id_to_delete){
+      i++;
+      if(i == this.postsDTO.length){
+        i = -1;
+        break;
+      }
+    }
+
+    return  i;
   }
 
 }

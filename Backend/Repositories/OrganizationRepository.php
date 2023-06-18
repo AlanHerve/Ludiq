@@ -53,6 +53,7 @@ class OrganizationRepository
     echo json_encode($response);
   }
 
+
   public function getOrganzationById($id_organization)
   {
 
@@ -68,6 +69,7 @@ class OrganizationRepository
     $stmt->bind_param("i", $id_organization);
     $stmt->execute();
     $result = $stmt->get_result();
+
 
     if ($result) {
       if ($result->num_rows == 1) {
@@ -269,7 +271,7 @@ class OrganizationRepository
     if($result->num_rows == 0) {
       return false;
     }
-    
+
     $stmt = $this->db->prepare("
         DELETE FROM
             invitation_organization
@@ -284,7 +286,6 @@ class OrganizationRepository
 
     return $stmt->affected_rows > 0;
   }
-
 
 
 }

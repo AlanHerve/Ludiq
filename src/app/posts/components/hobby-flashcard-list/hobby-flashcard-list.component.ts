@@ -26,6 +26,7 @@ export class HobbyFlashcardListComponent implements OnInit {
         let index_to_remove: number;
         if ((index_to_remove = this.findIndexByIDHobbyPost(response)) != -1) {
             this.hobbyFlashcardsDTO.splice(index_to_remove, 1);
+            this.hobbyDTOs.splice(index_to_remove, 1);
         }
         console.log(response);
       },
@@ -35,7 +36,18 @@ export class HobbyFlashcardListComponent implements OnInit {
       }
     });
 
-    console.log("list");
+    this.hobbyService.currentNeedToAddHobby.subscribe({
+      next: (init_response) => {
+        this.hobbyService.getHobbyById(init_response.id_hobby).subscribe({
+          next: (response) => {
+            console.log("new post baby");
+            console.log(response);
+            this.hobbyDTOs.push(response);
+            this.hobbyFlashcardsDTO.push(init_response);
+          }
+        });
+      }
+    });
   }
 
   findIndexByIDHobbyPost(id_hobby_post: number): number {

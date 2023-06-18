@@ -16,11 +16,15 @@ export class HobbyService {
 
   newPost!: HobbyFlashcardDTO;
 
-  private messageSource = new Subject<string>();
-  currentMessage = this.messageSource.asObservable();
+  private messageNeedToAddHobby = new Subject<HobbyFlashcardDTO>();
+  currentNeedToAddHobby = this.messageNeedToAddHobby.asObservable();
 
   private needDelete = new Subject<number>();
   currentDeleteState = this.needDelete.asObservable();
+
+  private needChangeFavorite = new Subject<HobbyDTO>();
+  currentNeedChangeFavorite = this.needChangeFavorite.asObservable();
+
   constructor(private http: HttpClient) {}
 
   getAllHobbies(): Observable<{hobbies: HobbyDTO[]}> {
@@ -88,8 +92,16 @@ export class HobbyService {
     );
   }
 
-  getNewPost(){
-    return this.newPost;
+  getHobbyById(id_hobby: number): Observable<HobbyDTO> {
+    const params = new HttpParams()
+      .set('function_to_call', "getHobbyById")
+      .set('id_hobby', id_hobby);
+
+    return this.http.get<HobbyDTO>(`${apiUrl}/hobbies.php`, {params}).pipe(
+      map(response => {
+        return response;
+      })
+    );
   }
 
   getHobbyUsers(id_hobby: number): Observable<UserDTO[]> {
@@ -112,11 +124,15 @@ export class HobbyService {
   }
 
   newHobbyPost(hobbyPostDTO: HobbyFlashcardDTO): Observable<{hobby: HobbyFlashcardDTO}> {
-    return this.http.post<{hobby: HobbyFlashcardDTO}>(`${apiUrl}/hobbies.php`, hobbyPostDTO).pipe(
+    const params =  {
+      type: 'newHobbyPost',
+      hobbyPostDTO: hobbyPostDTO
+    }
+    return this.http.post<{hobby: HobbyFlashcardDTO}>(`${apiUrl}/hobbies.php`, params).pipe(
       map(response => {
-        this.newPost = response.hobby;
+
         console.log(response);
-        this.messageSource.next("a");
+        this.messageNeedToAddHobby.next(response.hobby);
         return response;
       })
     );
@@ -129,4 +145,21 @@ export class HobbyService {
     return this.http.get<HobbyDTO>(`${apiUrl}/hobbies.php`, {params});
   }
 
+
+  setFavoriteHobby(hobbyDTO: number, id_user: number): Observable<HobbyDTO> {
+    const params = {
+      type: "setFavoriteHobby",
+      hobbyDTO: hobbyDTO,
+      id_user: id_user
+    };
+    console.log("logging");
+    console.log(params.hobbyDTO);
+    console.log("logged");
+    return this.http.post<HobbyDTO>(`${apiUrl}/hobbies.php`, params).pipe(
+      map(response => {
+        this.needChangeFavorite.next(response);
+        return response;
+      })
+    );
+  }
 }

@@ -33,6 +33,15 @@ class PostDTO
     $this->likes = $likes;
     $this->time = $time;
   }
+
+  public function setPostID($id){
+    $this->id = $id;
+  }
+
+  public function setTime($time){
+    $this->time = $time;
+  }
+
 }
 
 ?>
