@@ -154,11 +154,15 @@ class UserRepository
       );
     }
 
-
     // Echo response as a json
     return json_encode($response);
   }
 
+  /**
+   * get all information of a user
+   * @param $id
+   * @return UserDTO|null
+   */
   public function findUserById($id)
   {
     $stmt = $this->db->prepare("SELECT * FROM user WHERE ID_USER = ?");
@@ -176,6 +180,11 @@ class UserRepository
     return null;
   }
 
+  /**
+   * checks if user is activity director
+   * @param $userId
+   * @return bool
+   */
   public function isActivityDirector($userId)
   {
     $stmt = $this->db->prepare("
@@ -197,6 +206,11 @@ class UserRepository
     return false;
   }
 
+  /**
+   * get the favorite hobby of a user
+   * @param $userId
+   * @return HobbyDTO|null
+   */
   public function getFavoriteHobby($userId)
   {
     $stmt = $this->db->prepare("
@@ -217,6 +231,7 @@ class UserRepository
       $hobbyDTO = $hobbyRepository->findHobbyById($row['ID_HOBBY']);
       return $hobbyDTO;
     }
+    //if no favorite hobby, returns a fake hobby with id = -1
     return new HobbyDTO(-1, null, null);
   }
 
@@ -264,7 +279,11 @@ class UserRepository
     return false;
   }
 
-
+  /**
+   * checks if user is part of an organization
+   * @param int $userId
+   * @return bool
+   */
   public function isPartOfAnOrganization(int $userId)
   {
     $stmt = $this->db->prepare("
@@ -281,11 +300,17 @@ class UserRepository
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
+
+      // 1 is the organization of a fake organization for independant activity director
       return $row['ID_ORGANIZATION'] != 1;
     }
     return false;
   }
 
+  /** find the organization of an activity's activity director
+   * @param $userId
+   * @return OrganizationDTO|null
+   */
   public function findUserOrganization($userId)
   {
     $stmt = $this->db->prepare("
@@ -303,11 +328,14 @@ class UserRepository
     $stmt->execute();
 
     $result = $stmt->get_result();
+
+    //if a match has been found
     if($result->num_rows > 0) {
       $row = $result->fetch_assoc();
       return $this->organizationRepository->findOrganizationById($row['ID_ORGANIZATION']);
     }
 
+    //if no match has been found
     return null;
   }
 
