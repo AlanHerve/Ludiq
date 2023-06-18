@@ -21,9 +21,13 @@ import {OrganizationButtonComponent} from "../shared/components/organization-but
 
 @NgModule({
   declarations: [
+    // The code module has the core elements such as the navigation bar that is on all pages
     NavigationBarComponent,
+    // The search bar that is on home
     SearchBarComponent,
+    // The right sider bar with the display of top3 & suggestions
     MightLikeHobbiesDisplayComponent,
+    // And the components required for the search bar in order to display users/posts...
     UserComponent,
     UserSearchComponent,
     HobbySearchComponent,
