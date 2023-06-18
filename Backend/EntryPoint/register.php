@@ -24,5 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userDTO = new UserDTO(null, $name, $username, $hashedPassword, $email, null);
 
     $userRepository = UserRepository::getInstance();
+    // Register the user with the UserRepository calling the registerUser method
     echo json_encode($userRepository->registerUser($userDTO, $userType));
 }
