@@ -17,6 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
       $organizationRepository = OrganizationRepository::getInstance();
       echo json_encode($userRepository->findUserOrganization($_GET['userId']));
     }
+    elseif($_GET['type'] == 'is_activity_director') {
+      $organizationRepository = UserRepository::getInstance();
+      echo json_encode($userRepository->isActivityDirector($_GET['userId']));
+    }
     return;
   }
 

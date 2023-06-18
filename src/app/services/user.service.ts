@@ -104,4 +104,11 @@ export class UserService {
       .set('userId', userId)
     return this.http.get<OrganizationDTO>(`${apiUrl}/user.php`, {params});
   }
+
+  isActivityDirector(userId: number): Observable<boolean> {
+    const params = new HttpParams()
+      .set('type', 'is_activity_director')
+      .set('userId', userId)
+    return this.http.get<boolean>(`${apiUrl}/user.php`, {params});
+  }
 }

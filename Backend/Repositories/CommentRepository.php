@@ -75,7 +75,6 @@ class CommentRepository
     } else {
       return "failure";
     }
-    return json_encode($response);
   }
 
   public function getAllComments($postID)
