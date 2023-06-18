@@ -30,15 +30,19 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 
+/**
+ * component used to add a hobby to an user's bio
+ */
 export class FormHobbyPostComponent extends Form implements OnInit {
 
-  @Output() hobbyPosted = new EventEmitter<string>();
-
+  //information of all hobbies user does not already have in their bio
   hobbies : HobbyDTO[] = [];
 
+  //static options
   advancement_options: string[] = ["Beginner", "Intermediate", "Advanced", "Expert"];
   frequency_options: string[] = ["Daily", "3-4/week", "2-3/week", "Weekly", "Monthly", "Rarely"];
 
+  //informations of the future hobby flashcard
   hobbyPostDTO: HobbyFlashcardDTO = {
     id_hobby_post: 0,
     id_user: 0,
@@ -101,6 +105,13 @@ export class FormHobbyPostComponent extends Form implements OnInit {
         for (let i = 0; i < response.length; i++) {
           this.hobbies.push(response[i]);
         }
+
+        //if user already has all available hobbies in their bio
+        if(this.hobbies.length == 0) {
+          alert("You already have all possible hobbies in your bio");
+          this.onClose();
+        }
+        //preselect options
         this.hobbyPostDTO.id_hobby = this.hobbies[0].id;
         this.hobbyPostDTO.advancement = this.advancement_options[0];
         this.hobbyPostDTO.frequency = this.frequency_options[0];

@@ -32,6 +32,12 @@ import {OrganizationDTO} from "../../../../models/organization-dto";
     ])
   ]
 })
+
+
+/**
+ * form used to pusblish an activity
+ * an activty can only be published be an activity director
+ */
 export class FormActivityComponent extends Form implements OnInit {
   index: number = 0;
   hobbies: HobbyDTO[] = [];
@@ -118,21 +124,8 @@ export class FormActivityComponent extends Form implements OnInit {
 
   }
 
-
-  /*getUserHobbies(){
-    this.hobbyService.getHobbiesOfUser(this.activityDTO.hobbyDTO.id).subscribe({
-      next: (response) => {
-          this.hobbies= response
-      },
-      error: (error) => {
-        // in case of failure
-        console.error('Could not get the activity hobby', error);
-      }
-    });
-  }*/
-
-
   newActivityPost() {
+    //append content of the form to the form data
     const formData = new FormData();
     // @ts-ignore
     formData.append('id_user', this.activityDTO.userDTO.id);
@@ -150,7 +143,8 @@ export class FormActivityComponent extends Form implements OnInit {
     this.activityService.newActivity(formData).subscribe({
       next: (response) => {
         // Traitement de la réponse du serveur en cas de succès
-        console.log('Post avec succès', response);
+
+        //close the form
         this.onClose();
       },
       error: (error) => {

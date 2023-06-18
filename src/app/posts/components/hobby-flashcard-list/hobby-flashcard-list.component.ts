@@ -9,9 +9,14 @@ import {HobbyDTO} from "../../../models/hobby-dto";
   templateUrl: './hobby-flashcard-list.component.html',
   styleUrls: ['./hobby-flashcard-list.component.css']
 })
+/**
+ * class to contain all the hobby flashcards of a user
+ */
 export class HobbyFlashcardListComponent implements OnInit {
 
+  //store informations of theflaschard
   @Input() hobbyFlashcardsDTO!: HobbyFlashcardDTO[];
+  //store informations of the hobbies
   @Input() hobbyDTOs!: HobbyDTO[];
   private id_user: number = 0;
 
@@ -20,10 +25,12 @@ export class HobbyFlashcardListComponent implements OnInit {
       this.id_user = parseInt(params['id']);
     });
 
+    //subscribe to an observer to know when a hobby flashcard has been deleted
     this.hobbyService.currentDeleteState.subscribe({
       next: (response) => {
         // in case of success
         let index_to_remove: number;
+        //checks if flashcard to be removed exists in the list
         if ((index_to_remove = this.findIndexByIDHobbyPost(response)) != -1) {
             this.hobbyFlashcardsDTO.splice(index_to_remove, 1);
             this.hobbyDTOs.splice(index_to_remove, 1);
@@ -36,11 +43,12 @@ export class HobbyFlashcardListComponent implements OnInit {
       }
     });
 
+    //subscribe to an observer to know when a hobby flashcard has been added
     this.hobbyService.currentNeedToAddHobby.subscribe({
       next: (init_response) => {
+        //get information of the hobby in the hobby flashcard (especially the image)
         this.hobbyService.getHobbyById(init_response.id_hobby).subscribe({
           next: (response) => {
-
             this.hobbyDTOs.push(response);
             this.hobbyFlashcardsDTO.push(init_response);
           }
@@ -49,6 +57,7 @@ export class HobbyFlashcardListComponent implements OnInit {
     });
   }
 
+  //find the index of a hobby flashcard needing to be removed depending of its id
   findIndexByIDHobbyPost(id_hobby_post: number): number {
     let i = 0;
     while (this.hobbyFlashcardsDTO[i].id_hobby_post != id_hobby_post) {
@@ -61,11 +70,6 @@ export class HobbyFlashcardListComponent implements OnInit {
 
     return i;
 
-  }
-
-  addElementToArray(hobbyFlashcard: HobbyFlashcardDTO) {
-    console.log("adding");
-    this.hobbyFlashcardsDTO.push(hobbyFlashcard);
   }
 
   ngOnInit(): void {

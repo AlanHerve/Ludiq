@@ -8,10 +8,21 @@ import {HobbyDTO} from "../../../models/hobby-dto";
   templateUrl: './hobby-flashcard.component.html',
   styleUrls: ['./hobby-flashcard.component.css']
 })
+/**
+ * component containing :
+ * - name of a hobby
+ * - advancement or experience in that hobby
+ * - if user would be available to take part in this hobby with others
+ * - the frequency at which a user take part in the hobby
+ *
+ * allows user to add hobbies in his bio
+ */
 export class HobbyFlashcardComponent implements OnInit {
+
+  //DTO to store informations of a hobby flashcard
   @Input() hobbyPost!: HobbyFlashcardDTO;
 
-
+  //DTO to store the informations of a hobby (id, name, image)
   @Input() hobbyDTO!: HobbyDTO;
 
   protected clicked: boolean = false;
@@ -20,29 +31,22 @@ export class HobbyFlashcardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("FLASHCARD");
-    console.log(this.hobbyPost);
-
-    /*this.hobbyService.findHobbyById(this.hobbyPost.id_hobby).subscribe({
-      next: (hobby) => {
-        this.hobbyDTO = hobby;
-        console.log("BABABABAAFFAFAAF");
-        console.log(this.hobbyDTO);
-      },
-      error: (error) => {
-        console.log("Error while trying to find hobbyDTO on hobby flashcard : ", error)
-      }
-    });*/
   }
 
   onClick(): void {
     this.clicked = !this.clicked;
   }
 
+  /**
+   * checks if user is owner of the flashcard
+   */
   isOwner(): boolean{
     return parseInt(JSON.parse(localStorage.getItem('currentUser')!).id) == this.hobbyPost.id_user;
   }
 
+  /**
+   * When flashcard is deleted
+   */
   onDelete() {
     this.hobbyService.destroyHobbyPost(this.hobbyPost.id_hobby_post).subscribe({
       next: (response) => {

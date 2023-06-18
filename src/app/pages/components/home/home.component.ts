@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PostDTO} from "../../../posts/models/post-dto";
-import {PostsService} from "../../../posts/services/posts.service";
+import {PostService} from "../../../posts/services/post.service";
 
 @Component({
   selector: 'app-home',
@@ -9,7 +9,7 @@ import {PostsService} from "../../../posts/services/posts.service";
 })
 export class HomeComponent implements OnInit {
   postsDTO: PostDTO[] = [];
-  constructor(private postsService: PostsService) {
+  constructor(private postsService: PostService) {
   }
   ngOnInit(): void {
     this.postsService.getAllPosts().subscribe({
