@@ -1,3 +1,8 @@
+<!--
+ * A div element with class 'comment-box' contains an input for new comment and a send button.
+ * ngModel is used for two-way data binding for 'comment'.
+ * Click event on the image triggers the 'addComment' method.
+ -->
 <div class = "comment-box">
   <input class = "comment" type="text" [(ngModel)]="this.comment" placeholder="Add a comment">
   <img class = "send" (click)="addComment()" src = "assets/images/icons/send.png">

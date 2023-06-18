@@ -1,12 +1,24 @@
-
+/**
+ * CSS styling for an image element.
+ * The width is set to 30 pixels.
+ */
 img {
   width:30px;
 }
 
+/**
+ * CSS styling for elements with the class 'comment'.
+ * The font-size is responsive and clamped between 1rem and 1.1rem.
+ */
 .comment {
   font-size: clamp(1rem, 0.4rem + 1.2vw, 1.1rem);
 }
 
+/**
+ * CSS styling for elements with the class 'comment-box'.
+ * It applies flex layout with centered alignment and justify content space between.
+ * Background color is set to #E6D3F8 and padding is defined.
+ */
 .comment-box {
   display: flex;
   align-items: center;
@@ -15,6 +27,10 @@ img {
   padding:10px 25px 10px 10px;
 }
 
+/**
+ * CSS styling for input elements.
+ * The width is set to 85%, padding to 10px, no border, background color is white and border radius is 12px.
+ */
 input {
   width: 85%;
   padding:10px;
