@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CommentDTO} from "../../models/comment-dto";
 import {PostService} from "../../services/post.service";
+import {UserDTO} from "../../../models/user-dto";
 
 @Component({
   selector: 'app-comment-list',
@@ -8,7 +9,7 @@ import {PostService} from "../../services/post.service";
   styleUrls: ['./comment-list.component.css']
 })
 export class CommentListComponent implements OnInit {
-  @Input() commentsDTO!: CommentDTO[];
+  @Input() commentsDTO: CommentDTO[] = [];
 
   constructor(private postService: PostService) {
   }
@@ -22,11 +23,15 @@ export class CommentListComponent implements OnInit {
         }
       }
     });
-
+  
     this.postService.
     currentneedAddComment.subscribe({
       next: (response) => {
-        this.commentsDTO.push(response);
+        console.log("added commnt");
+        this.commentsDTO.push(new CommentDTO(response.id, response.userDTO, response.content, response.postID, response.time));
+        for (let i = 0; i < this.commentsDTO.length; i++) {
+          console.log(this.commentsDTO[i]);
+        }
       }
     })
   }

@@ -24,9 +24,13 @@ export class OrganizationComponent {
   }
 
   protected type: string = 'posts';
+
+  private validAct: boolean = false;
+
   protected activityDirector: boolean = false;
   protected isInvited: boolean = false;
   protected isOnOrganization: boolean = false;
+
 
   constructor(private activatedRoute: ActivatedRoute,
               private organisationService: OrganizationService,
@@ -63,14 +67,20 @@ export class OrganizationComponent {
       });
       this.organisationService.fetchOrganizationPosts(this.organizationDTO.id_organization).subscribe({
         next: (response) => {
+          if(response[0].id != -1)
           this.organizationDTO.postsDTO = response;
         }
       });
       this.organisationService.fetchOrganizationActivities(this.organizationDTO.id_organization).subscribe({
         next: (response) => {
-          this.organizationDTO.activitiesDTO = response;
           console.log("zeng");
-          console.log(response[0].organizationDTO.name_organization);
+          if(response[0].id !=-1 ){
+            this.organizationDTO.activitiesDTO = response;
+            this.validAct = true;
+          }
+
+
+
         }
       });
 
@@ -109,6 +119,10 @@ export class OrganizationComponent {
   }
 
 
+
+  validActivities() {
+    return this.validAct;
+  }
   isUserInvited(): void {
     this.organisationService.isUserAlreadyInvited(this.organizationDTO.id_organization, this.userService.getCurrentId()).subscribe({
       next: (bool) => {
@@ -129,6 +143,7 @@ export class OrganizationComponent {
         console.log("Error while finding if activity director is invited ", error)
       }
     });
+
   }
 
   onQuitOrganization() {

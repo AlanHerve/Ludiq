@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $data = json_decode($body, true);
   $commentRepository = CommentRepository::getInstance();
   switch ($data['type']){
-    case "addComment": echo json_encode($commentRepository->addComment($data['comment']['userDTO']['id'], $data['comment']['content'], $data['comment']['postID']));
+    case "addComment": echo json_encode($commentRepository->addComment($data['comment']['userDTO'], $data['comment']['content'], $data['comment']['postID']));
       break;
     case "deleteComment": echo json_encode($commentRepository->deleteComment($data['id_comment']));
       break;

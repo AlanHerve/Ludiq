@@ -24,17 +24,19 @@ class CommentRepository
     return self::$instance;
   }
 
-  public function addComment($userId, $content, $id_regular_post)
+  public function addComment($userDTO, $content, $id_regular_post)
   {
     $stmt = $this->db->prepare("INSERT INTO comment (ID_USER, CONTENT, ID_REGULAR_POST) VALUES (?, ?, ?)");
-    $stmt->bind_param("isi", $userId, $content, $id_regular_post);
+    $stmt->bind_param("isi", $userDTO['id'], $content, $id_regular_post);
     $stmt->execute();
     if ($stmt->affected_rows > 0) {
+      $index = $stmt->insert_id;
       $response = array('success' => true);
     } else {
+      $index = -1;
       $response = array('success' => false);
     }
-    return $response;
+    return $index;
   }
 
   public function getComments($id_regular_post)

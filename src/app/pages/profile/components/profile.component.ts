@@ -171,6 +171,8 @@ export class ProfileComponent implements Image {
     this.profileService.getProfileInformation(this.profileDTO.userDTO.id).subscribe({
       next: (response) => {
         this.profileDTO = response;
+        console.log(response);
+        if(!this.profileDTO.favoriteHobby) console.log("bobubou");
         this.determineReward();
         this.isPartOfAnOrganization();
         this.isInvitedToOrganization();

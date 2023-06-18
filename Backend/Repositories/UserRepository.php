@@ -217,7 +217,7 @@ class UserRepository
       $hobbyDTO = $hobbyRepository->findHobbyById($row['ID_HOBBY']);
       return $hobbyDTO;
     }
-    return null;
+    return new HobbyDTO(-1, null, null);
   }
 
   /**
