@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {PostDTO} from "../../models/post-dto";
 import {PostService} from "../../services/post.service";
 

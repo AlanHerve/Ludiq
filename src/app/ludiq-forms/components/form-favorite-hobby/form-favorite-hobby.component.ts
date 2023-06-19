@@ -41,6 +41,8 @@ export class FormFavoriteHobbyComponent extends Form {
   }
 
   submitted() {
+
+    // Call the hobby service to set/change the favorite hobby for the user
     this.hobbyService.setFavoriteHobby(this.selectedHobbyDTO, parseInt(JSON.parse(localStorage.getItem('currentUser')!).id)).subscribe({
       next: (response) => {
         // Success
